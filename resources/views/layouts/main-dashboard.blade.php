@@ -27,7 +27,7 @@
 <div class="preloader">
     <div class="loader">
         <div class="loader__figure"></div>
-        <p class="loader__label text-center">دریک</p>
+        <p class="loader__label text-center">isBug</p>
     </div>
 </div>
 <!-- Main wrapper -->
@@ -155,7 +155,7 @@
 <script src="{{asset('admin/assets/node_modules/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js')}}"></script>
 <!-- Select 2 -->
 <script src="{{asset('admin/assets/node_modules/select2/dist/js/select2.full.min.js')}}"></script>
-<!-- Wave Effects -->
+<!-- Wave Effects -->bootstrap forum
 <script src="{{asset('admin/assets/node_modules/waves/waves.js')}}"></script>
 <!-- Toast Massage -->
 <script src="{{asset('admin/assets/node_modules/toast-master/js/jquery.toast.js')}}"></script>
@@ -182,10 +182,7 @@
     <script src="{{ asset('admin/assets/node_modules/ckeditor/ckeditor.js')}}"></script>
 
     <script src="{{asset('admin/assets/node_modules/timepicker/js/timepicker.min.js')}}"></script>
-    <!-- Clock Picker  Javascript -->
-    <script src="{{asset('admin/assets/node_modules/clockpicker/jquery-clockpicker.min.js')}}"></script>
-    <!-- Custom Admin JavaScript -->
-    <script src="{{asset('admin/assets/js/bd604be227ff962aa698fb753290751a/custom-admin.js')}}"></script>
+    <script src="{{asset('admin/assets/js/custom-admin.js')}}"></script>
     <script>
         CKEDITOR.replace('editor1', {
 
@@ -215,8 +212,6 @@
 
     <script src="{{asset('admin/assets/node_modules/timepicker/js/timepicker.min.js')}}"></script>
     <!-- Clock Picker  Javascript -->
-    <script src="{{asset('admin/assets/node_modules/clockpicker/jquery-clockpicker.min.js')}}"></script>
-    <!-- Custom Admin JavaScript -->
     <script>
         CKEDITOR.replace('editor1', {
 
@@ -241,7 +236,7 @@
         });
     </script>
     <!-- Custom User JavaScript -->
-    <script src="{{asset('admin/assets/js/ce13f565170fdd2066c2a5b34a138295/custom.js')}}"></script>
+    <script src="{{asset('admin/assets/js/custom.js')}}"></script>
 
 @endif
 <script>

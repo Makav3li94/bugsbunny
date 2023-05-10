@@ -83,46 +83,6 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>درصد سود صندوق از مطالبات اینده</label>
-                                    <input type="text" class="form-control" name="monthly_profit"
-                                           value="{{$settings!=null ? $settings->monthly_profit : old('monthly_profit') }}">
-                                    @if($errors->has('monthly_profit'))
-                                        <small class="invalid-text">{{$errors->first('monthly_profit')}}</small>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>پیش پرداخت</label>
-                                    <input type="text" class="form-control" placeholder="" name="pre_payment"
-                                           value="{{$settings!=null ? $settings->pre_payment : old('pre_payment') }}">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>میان پرداخت</label>
-                                    <input type="text" class="form-control" placeholder="" name="mid_payment"
-                                           value="{{$settings!=null ? $settings->mid_payment : old('mid_payment') }}">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>پس پرداخت</label>
-                                    <input type="text" class="form-control" placeholder="" name="pass_payment"
-                                           value="{{$settings!=null ? $settings->pass_payment : old('pass_payment') }}">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>حسن انجام</label>
-                                    <input type="text" class="form-control" placeholder="" name="guaranty_payment"
-                                           value="{{$settings!=null ? $settings->guaranty_payment : old('guaranty_payment') }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>متن خوش آمد گویی</label>

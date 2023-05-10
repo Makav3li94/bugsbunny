@@ -23,7 +23,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title font-12">تعداد صورت حساب امروز</h5>
+                        <h5 class="card-title font-12">تعداد چالش امروز</h5>
                         <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                             <span class="text-info"><i class="icon-envelope-open display-5"></i></span>
                             <a class="link font-28 ml-auto">{{number_format(1)}}</a>
@@ -34,10 +34,10 @@
             <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title font-12">آخرین حساب اصلی عضو شده</h5>
+                        <h5 class="card-title font-12">تعداد کل کاربران</h5>
                         <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
-                            <span class="text-purple"><i class="icon-user-follow display-5"></i></span>
-                            <a class="link font-16 ml-auto">{{$lastPrimary}}</a>
+                            <span class="text-success"><i class="icon-user display-5"></i></span>
+                            <a class="link font-28 ml-auto">{{number_format($primaryUsers)}}</a>
                         </div>
                     </div>
                 </div>
@@ -53,29 +53,29 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title font-12">تعداد کارهای امروز</h5>
-                        <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
-                            <span class="text-danger"><i class="icon-check display-5"></i></span>
-                            <a class="link font-28 ml-auto">{{number_format(1)}}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title font-12">تعداد حساب های اصلی</h5>
-                        <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
-                            <span class="text-success"><i class="icon-user display-5"></i></span>
-                            <a class="link font-28 ml-auto">{{number_format($primaryUsers)}}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
+            <div class="col-lg-6 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title font-12">تعداد چالش ها</h5>
+                        <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
+                            <span class="text-primary"><i class="icon-bubbles display-5"></i></span>
+                            <a class="link font-28 ml-auto">{{number_format($openTickets)}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title font-12">تعداد پاسخ ها</h5>
+                        <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
+                            <span class="text-primary"><i class="icon-bubbles display-5"></i></span>
+                            <a class="link font-28 ml-auto">{{number_format($openTickets)}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <!-- End Status -->

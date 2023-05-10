@@ -57,7 +57,7 @@
 <script src="{{asset('admin/assets/node_modules/countdown/jquery.countdown.min.js')}}"></script>
 <!-- Custom JavaScript -->
 @yield('scripts')
-<script src="{{asset('admin/assets/js/ce13f565170fdd2066c2a5b34a138295/custom.js')}}"></script>
+<script src="{{asset('admin/assets/js/custom.js')}}"></script>
 @if(session()->get('resetPass')=='sent')
     <!-- Toast Javascript -->
     <script>

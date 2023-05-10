@@ -87,8 +87,7 @@ class AuthController extends Controller
                             $name = '';
                         }
                         $this->setKeys();
-                        $this->sendFastSmsMokhaberat([$mobile], $smsSetting->p_confirm_code,
-                            ["code" => $randomDigits]);
+                        $bulk = $this->sendVerification($randomDigits, $mobile);
                         if (session()->get('sms') == 'error') {
                             return response()->json(['sms' => 'error', 'array' => $array]);
                         }
@@ -108,8 +107,7 @@ class AuthController extends Controller
 
                     $this->preRegister($randomDigits, $mobile);
 //                    $this->setKeys();
-                    $bulk = $this->sendFastSmsMokhaberat([$mobile], $smsSetting->p_confirm_code,
-                        ["VerificationCode" => $randomDigits]);
+                    $bulk = $this->sendVerification($randomDigits, $mobile);
 //                    $sms = Sms::create([
 //                        'sms_sender_id' => 1,
 //                        'description' => 'ثبت نام',
@@ -197,7 +195,6 @@ class AuthController extends Controller
             $request->validate([
                 'name' => 'required|string',
                 'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/',
-                'mobile' => 'required|numeric|unique:users,mobile,NULL,id,deleted_at,NULL',
                 'email' => 'required|email|string|unique:users,email,NULL,id,deleted_at,NULL',
                 'password' => 'nullable|string|min:6',
                 'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:512',
@@ -205,7 +202,6 @@ class AuthController extends Controller
                 'birthDate' => 'required',
                 'cats' => 'required',
             ]);
-            $mobile = $request['mobile'];
             $password = $request['password'];
             if ($password == null) {
                 $password = Hash::make($mobile);
@@ -223,7 +219,6 @@ class AuthController extends Controller
             $user->update([
                 'name' => $request['name'],
                 'username' => $request['username'],
-                'mobile' => $mobile,
                 'email' => $request['email'],
                 'password' => $password,
                 'familiarity_id' => $request['familiarity'],
@@ -295,7 +290,7 @@ class AuthController extends Controller
                         } else {
                             $name = '';
                         }
-                        $bulk = $this->sendFastSmsMokhaberat([$mobile], $smsSetting->p_confirm_code,
+                        $bulk = $this->sendFastSmsMokhaberat($mobile, $smsSetting->p_confirm_code,
                             ["VerificationCode" => $code]);
                         return response()->json(['code' => 'resent', 'bulk' => $bulk, 'mobile' => $mobile]);
                     } else {

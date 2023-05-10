@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\Ticket;
@@ -22,10 +23,10 @@ class UserController extends Controller
         else{
             $setting=null;
         }
-
+        $cats = Category::all();
         //Sliders
         $sliders=Slider::all();
-        return view('user.dashboard',compact('tickets','setting','sliders'));
+        return view('user.dashboard',compact('tickets','setting','sliders','cats'));
     }
 
 }

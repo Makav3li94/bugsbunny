@@ -195,10 +195,10 @@ Route::group(['namespace' => 'User', 'middleware' => 'auth', 'prefix' => 'dashbo
 });
 
 Route::get('/', 'Front\HomeController@index')->name('home');
-Route::get('/blogs', 'Front\HomeController@blogs')->name('blogs');
+Route::get('/forum', 'Front\HomeController@forum')->name('forum');
 
 Route::get('/markAsRead', function(){auth()->user()->unreadNotifications->markAsRead();return redirect()->back();});
 //Search
 
 // Front Pages !
-Route::get('{slug}', 'Front\HomeController@show')->name('blog');
+Route::get('page/{slug}', 'Front\HomeController@show')->name('page');

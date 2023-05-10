@@ -1,218 +1,109 @@
 @if(request()->route()->getName() == "home")
-    <!-- Navbar STart -->
-    <header id="topnav" class="defaultscroll sticky">
-        <div class="container">
-            <!-- Logo container-->
-            <div>
-                <a class="logo" href="{{route('home')}}">
-                    <img src="{{asset('front/images/logo-dark.png')}}" class="l-dark" height="24" alt="">
-                    <img src="{{asset('front/images/logo-light.png')}}" class="l-light" height="24" alt="">
-                    {{--                    <img src="{{asset('front/images/logo-light.png')}}" class="l-light" height="24" alt="">--}}
-                </a>
-            </div>
-            <div class="buy-button">
-                @if(auth()->check())
-                    <a href="{{route('register')}}" target="_blank">
-                        <div class="btn btn-primary login-btn-primary">پنل کاربری</div>
-                        <div class="btn btn-light login-btn-light">پنل کاربری</div>
-                    </a>
-                @else
-                    <a href="{{route('login')}}" target="_blank">
-                        <div class="btn btn-primary login-btn-primary">ورود</div>
-                        <div class="btn btn-light login-btn-light">ورود</div>
-                    </a>
-                    <a href="{{route('register')}}" target="_blank">
-                        <div class="btn btn-primary login-btn-primary">ثبت نام</div>
-                        <div class="btn btn-light login-btn-light">ثبت نام</div>
-                    </a>
-                @endif
-
-            </div><!--end login button-->
-            <!-- End Logo container-->
-            <div class="menu-extras">
-                <div class="menu-item">
-                    <!-- Mobile menu toggle-->
-                    <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
-                        <div class="lines">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </a>
-                    <!-- End mobile menu toggle-->
+    <div id="preloader">
+        <div id="ctn-preloader" class="ctn-preloader">
+            <div class="round_spinner">
+                <div class="spinner"></div>
+                <div class="text">
+                    <img src="{{asset('front/img/spinner_logo.png')}}" alt="">
+                    <h4><span>ایز</span>باگ</h4>
                 </div>
             </div>
-
-            <div id="navigation">
-                <!-- Navigation Menu-->
-                <ul class="navigation-menu nav-light">
-                    <li><a href="{{route('home')}}" class="sub-menu-item">صفحه اصلی </a></li>
-                    <li><a href="{{route('shop')}}" class="sub-menu-item">بازار</a></li>
-                    <li><a href="{{route('businesses')}}" class="sub-menu-item">کسب و کار ها</a></li>
-                    <li class="has-submenu parent-menu-item">
-                        <a href="javascript:void(0)">ىرباره </a><span class="menu-arrow"></span>
-                        <ul class="submenu">
-                            <li><a href="{{route('blog','about-us')}}" class="sub-menu-item">درباره ما</a></li>
-                            <li><a href="{{route('blog','Challenges-and-solutions')}}" class="sub-menu-item">چالش‌ها و راهکارها</a></li>
-                            <li><a href="{{route('blog','platform-daryek')}}" class="sub-menu-item">پلتفرم دریک</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="{{route('blog','faq')}}" class="sub-menu-item">سوالات متداول</a></li>
-                    <li><a href="{{route('blog','contact-us')}}" class="sub-menu-item">تماس با ما</a></li>
-                </ul><!--end navigation menu-->
-            </div><!--end navigation-->
-        </div><!--end container-->
-    </header><!--end header-->
-    <!-- Navbar End -->
-    <!-- Hero Start -->
-    <section class="bg-half-260 bg-primary d-table w-100"
-             style="background: url('{{asset('front/images/software/bg.png')}}') center center;">
-        <div class="bg-overlay"></div>
-        <div class="container">
-            <div class="row align-items-center position-relative mt-5" style="z-index: 1;">
-                <div class="col-lg-6 col-md-12">
-                    <div class="title-heading mt-4 text-center text-lg-start">
-                        <h1 class="heading mb-3 title-dark text-white">دریک - خلق آینده با نوآوری در شبکه‌های
-                            کسب‌و‌کاری</h1>
-                        <p class="para-desc text-white-50">راهکارهای هوشمند در یکپارچه‌سازی گردش اقلام، وجوه، اعتبارات،
-                            اطلاعات</p>
-                        <div class="mt-4">
-                            <a href="{{route('register')}}" class="btn btn-light"><i class="uil uil-registered"></i>
-                                عضویت در سامانه</a>
-                        </div>
-                    </div>
-                </div><!--end col-->
-
-                <div class="col-lg-6 col-md-12 mt-4 pt-2">
-                    <div class="position-relative">
-                        <div class="software_hero">
-                            <img src="{{asset('front/images/software/software.png')}}" class="img-fluid d-block" alt="">
-                        </div>
-                    </div>
-                </div><!--end col-->
-            </div><!--end row-->
-        </div><!--end container-->
-    </section><!--end section-->
-    <div class="position-relative">
-        <div class="shape overflow-hidden text-white">
-            <svg viewBox="0 0 2880 250" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M720 125L2160 0H2880V250H0V125H720Z" fill="currentColor"></path>
-            </svg>
+            <h2 class="head">در حال آماده هسازی</h2>
+            <p></p>
         </div>
     </div>
-    <!-- Hero End -->
+    <div class="click_capture"></div>
 
-@else
-    <!-- Navbar STart -->
-    <header id="topnav" class="defaultscroll sticky">
-        <div class="container">
-            <!-- Logo container-->
-            <div>
-                <a class="logo" href="{{route('home')}}">
-                    <img src="{{asset('front/images/logo-dark.png')}}" class="l-light" height="24" alt="">
+    <div class="body_wrapper">
+        <nav class="navbar navbar-expand-lg menu_one" id="sticky">
+            <div class="container">
+                <a class="navbar-brand sticky_logo" href="{{route('home')}}">
+                    <img
+                        src="{{isset($setting) && $setting->first_logo!=null ? $setting->first_logo : asset('admin/assets/images/logo-light-text.png')}}"
+                        alt="{{!isset($setting) ? '' : $setting->brand}}" width="100"/>
                 </a>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="menu_toggle">
+                        <span class="hamburger">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <span class="hamburger-cross">
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </span>
+                </button>
+
+                @include('layouts.components.menu')
             </div>
-            <ul class="buy-button list-inline mb-0">
-                <li class="list-inline-item mb-0">
-                    <div class="dropdown">
-                        <button type="button" class="btn btn-link text-decoration-none dropdown-toggle p-0 pe-2"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="uil uil-search h5 text-muted"></i>
-                        </button>
-                        <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 py-0"
-                             style="width: 300px;">
-                            <form class="company-search" autocomplete="off">
-                                <input type="text" id="text" name="name" class="form-control border bg-white"
-                                       placeholder="جستجو شرکت">
-                                <div class="list-group">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </li>
-                <li class="list-inline-item mb-0 pe-1">
+        </nav>
 
-                        <a href="{{route('cart')}}" class="btn btn-icon btn-soft-primary ">
-                            <i class="uil uil-shopping-cart align-middle icons"></i></a>
-
-
-                </li>
-
-                <li class="list-inline-item mb-0">
-                    <div class="dropdown dropdown-primary">
-                        <button type="button" class="btn btn-icon btn-soft-primary dropdown-toggle"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
-                                class="uil uil-user align-middle icons"></i></button>
-                        <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 py-3"
-                             style="width: 200px;">
-                            @if(auth()->check())
-                                <a class="dropdown-item text-dark" href="{{route('register')}}"><i
-                                        class="uil uil-user align-middle me-1"></i>
-                                    حساب کاربری</a>
-                                <a class="dropdown-item text-dark" href="#"><i
-                                        class="uil uil-sign-out-alt align-middle me-1"></i> خروج </a>
-                            @else
-                                <a class="dropdown-item text-dark" href="{{route('login')}}"><i
-                                        class="uil uil-user align-middle me-1"></i>
-                                    ورود</a>
-                                <a class="dropdown-item text-dark" href="{{route('register')}}"><i
-                                        class="uil uil-user align-middle me-1"></i>
-                                    ثبت نام</a>
-                            @endif
-
-
-                        </div>
-                    </div>
-                </li>
-            </ul><!--end login button-->
-            <!-- End Logo container-->
-            <div class="menu-extras">
-                <div class="menu-item">
-                    <!-- Mobile menu toggle-->
-                    <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
-                        <div class="lines">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </a>
-                    <!-- End mobile menu toggle-->
+        <section class="doc_banner_area_one">
+            <img class="dark" src="{{asset('front/img/home_one/wave_one.svg')}}" alt="">
+            <img class="dark_two" src="{{asset('front/img/home_one/wave_two.svg')}}" alt="">
+            <img class="p_absolute star_one" src="{{asset('front/img/home_one/star.png')}}" alt="">
+            <img class="p_absolute star_two" src="{{asset('front/img/home_one/star.png')}}" alt="">
+            <img class="p_absolute star_three" src="{{asset('front/img/home_one/star.png')}}" alt="">
+            <img class="p_absolute one wow fadeInLeft" data-wow-delay="0.1s"
+                 src="{{asset('front/img/home_one/b_man.png')}}"
+                 alt="">
+            <img class="p_absolute two wow fadeInRight" data-wow-delay="0.2s"
+                 src="{{asset('front/img/home_one/b_man_two.png')}}" alt="">
+            <img class="p_absolute three wow fadeInUp" data-wow-delay="0.3s"
+                 src="{{asset('front/img/home_one/flower.png')}}"
+                 alt="">
+            <img class="p_absolute four wow fadeInRight" data-wow-delay="0.4s"
+                 src="{{asset('front/img/home_one/girl_img.png')}}" alt="">
+            <img class="p_absolute five wow fadeIn" data-wow-delay="0.5s" src="{{asset('front/img/home_one/file.png')}}"
+                 alt="">
+            <img class="p_absolute bl_left" src="{{asset('front/img/v.svg')}}" alt="">
+            <img class="p_absolute bl_right" src="{{asset('front/img/home_one/b_leaf.svg')}}" alt="">
+            <div class="container">
+                <div class="doc_banner_text">
+                    <h2 class="wow fadeInUp" data-wow-delay="0.3s">دنبال باگ خاصی می گردید ؟</h2>
+                    <p class="wow fadeInUp" data-wow-delay="0.5s">
+                        مشکل خودتون رو جست و جو کنید.
+                    </p>
+                    <form action="#" class="banner_search_form">
+                        <input type="search" class="form-control" placeholder='چی میخوای ؟'>
+                        <button type="submit"><i class="icon_search"></i></button>
+                    </form>
                 </div>
             </div>
+        </section>
+        @else
+            <nav class="navbar navbar-expand-lg menu_one" id="sticky">
+                <div class="container">
+                    <a class="navbar-brand sticky_logo" href="{{route('home')}}">
+                        <img
+                            src="{{isset($setting) && $setting->first_logo!=null ? $setting->first_logo : asset('admin/assets/images/logo-light-text.png')}}"
+                            alt="{{!isset($setting) ? '' : $setting->brand}}"/>
+                    </a>
+                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation">
+                    <span class="menu_toggle">
+                        <span class="hamburger">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <span class="hamburger-cross">
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </span>
+                    </button>
 
-            <div id="navigation">
-                <!-- Navigation Menu-->
-                <ul class="navigation-menu">
-                    <li><a href="{{route('home')}}" class="sub-menu-item">صفحه اصلی </a></li>
-                                        <li><a href="{{route('shop')}}" class="sub-menu-item">بازار</a></li>
-                    <li><a href="{{route('businesses')}}" class="sub-menu-item">کسب و کار ها</a></li>
-                    <li class="has-submenu parent-menu-item">
-                        <a href="javascript:void(0)">ىرباره </a><span class="menu-arrow"></span>
-                        <ul class="submenu">
-                            <li><a href="{{route('blog','about-us')}}" class="sub-menu-item">درباره ما</a></li>
-                            <li><a href="{{route('blog','Challenges-and-solutions')}}" class="sub-menu-item">چالش‌ها و راهکارها</a></li>
-                            <li><a href="{{route('blog','platform-daryek')}}" class="sub-menu-item">پلتفرم دریک</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="{{route('blog','faq')}}" class="sub-menu-item">سوالات متداول</a></li>
-                    <li><a href="{{route('blog','contact-us')}}" class="sub-menu-item">تماس با ما</a></li>
-                </ul><!--end navigation menu-->
+                    @include('layouts.components.menu')
+                </div>
+            </nav>
 
-            </div><!--end navigation-->
-        </div><!--end container-->
-    </header><!--end header-->
-    <!-- Navbar End -->
-    <!-- Hero Start -->
     @include('layouts.front.bread',['title'=>$title,'sub'=>$sub,'sl'=>$sl,'subLink' => $subLink,'page'=>$page])
-    <!-- Hero End -->
-    <!-- Shape Start -->
-    <div class="position-relative">
-        <div class="shape overflow-hidden text-white">
-            <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
-            </svg>
-        </div>
-    </div>
-    <!--Shape End-->
+
 @endif

@@ -1,36 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <title>{{"buggy - ".$title ?? "buggy"}}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="buggy "/>
-    <meta name="keywords" content="buggy"/>
-    <meta name="author" content=""/>
-    <meta name="email" content=""/>
-    <meta name="website" content=""/>
-    <meta name="Version" content="v-0.1"/>
-    <!-- favicon -->
-    <link rel="shortcut icon" href="{{asset('front/images/fav.png')}}">
-    <!-- Bootstrap -->
-    <link href="{{asset('front/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css"/>
+<!doctype html>
+<html lang="en" dir="rtl">
 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{{asset('front/img/favicon.png')}}" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{asset('front/assets/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('front/assets/slick/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('front/assets/slick/slick-theme.css')}}">
+    <!-- icon css-->
+    <link rel="stylesheet" href="{{asset('front/assets/elagent-icon/style.css')}}">
+    <link rel="stylesheet" href="{{asset('front/assets/animation/animate.css')}}">
+    <link rel="stylesheet" href="{{asset('front/assets/mcustomscrollbar/jquery.mCustomScrollbar.min.css')}}">
+    <link rel="stylesheet" href="{{asset('front/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('front/css/responsive.css')}}">
+    <link rel="stylesheet" href="{{asset('front/css/rtl.css')}}">
+    <title>{{"buggy - ".$title ?? "buggy"}}</title>
 </head>
 
-<body>
-<!-- Header Start -->
+<body data-scroll-animation="true">
 
-{{--@include('layouts.front.front_header',['title'=>$title,'sub'=>$sub,'sl'=>$sl,'subLink'=>$subLink,'page'=>$page])--}}
-<div class="main-wrapper ">
+@include('layouts.front.front_header')
 
-    <!-- Header Close -->
-    @yield('content')
-
-{{--    @include('layouts.front.front_footer')--}}
-
-
+@yield('content')
+    @include('layouts.front.front_footer')
 </div>
 
-
-
+<!-- Back to top button -->
+<a id="back-to-top" title="Back to Top"></a>
 @include('layouts.front.front_footer_scripts')
+</body>
+</html>
+
+
+
+
+
+
+
