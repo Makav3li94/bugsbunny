@@ -11,7 +11,6 @@ class CreateForeignKeys extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreign('familiarity_id')->references('id')->on('familiarities')->onDelete('cascade');
-            //TODO::Should Add connection_id Foreign Key To Database
         });
 
         Schema::table('files', function (Blueprint $table) {
