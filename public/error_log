@@ -1,0 +1,16 @@
+[31-May-2022 20:12:24 Asia/Tehran] PHP Fatal error:  During inheritance of ArrayAccess: Uncaught ErrorException: Return type of Illuminate\Support\Collection::offsetExists($key) should either be compatible with ArrayAccess::offsetExists(mixed $offset): bool, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /home/parhamak/crm-demo.parham-akbari.ir/vendor/laravel/framework/src/Illuminate/Support/Collection.php:2060
+Stack trace:
+#0 /home/parhamak/crm-demo.parham-akbari.ir/vendor/laravel/framework/src/Illuminate/Support/Collection.php(40): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError()
+#1 /home/parhamak/crm-demo.parham-akbari.ir/vendor/composer/ClassLoader.php(444): include('/home/parhamak/...')
+#2 /home/parhamak/crm-demo.parham-akbari.ir/vendor/composer/ClassLoader.php(322): Composer\Autoload\includeFile()
+#3 /home/parhamak/crm-demo.parham-akbari.ir/vendor/laravel/framework/src/Illuminate/Support/helpers.php(471): Composer\Autoload\ClassLoader->loadClass()
+#4 /home/parhamak/crm-demo.parham-akbari.ir/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(123): collect()
+#5 /home/parhamak/crm-demo.parham-akbari.ir/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(97): Illuminate\Foundation\PackageManifest->build()
+#6 /home/parhamak/crm-demo.parham-akbari.ir/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(80): Illuminate\Foundation\PackageManifest->getManifest()
+#7 /home/parhamak/crm-demo.parham-akbari.ir/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterFacades.php(26): Illuminate\Foundation\PackageManifest->aliases()
+#8 /home/parhamak/crm-demo.parham-akbari.ir/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(210): Illuminate\Foundation\Bootstrap\RegisterFacades->bootstrap()
+#9 /home/parhamak/crm-demo.parham-akbari.ir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(162): Illuminate\Foundation\Application->bootstrapWith()
+#10 /home/parhamak/crm-demo.parham-akbari.ir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(146): Illuminate\Foundation\Http\Kernel->bootstrap()
+#11 /home/parhamak/crm-demo.parham-akbari.ir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(116): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter()
+#12 /home/parhamak/crm-demo.parham-akbari.ir/public/index.php(59): Illuminate\Foundation\Http\Kernel->handle()
+#13 {main} in /home/parhamak/crm-demo.parham-akbari.ir/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 40

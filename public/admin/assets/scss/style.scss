@@ -1,0 +1,36 @@
+/* ====================================>>
+    Theme Name: Mohajergram
+	Theme URI: https://Mohajergram.ir/
+	Description: premium themes. and crm is laravel by copyright
+	Version: 1.0
+	License: Private Public License
+	License URI: https://mohajergram.com/
+    Front-End: Parham Akbari
+    Front-End Contact: https://www.parham-akbari.ir/ - neogood@yahoo.com - 09356766574
+====================================>> */
+@import 'variable';
+@import 'colors/blue-dark';
+// Import Bootstrap source files
+@import "../node_modules/bootstrap/scss/bootstrap";
+//This is for the icons
+@import '../icons/font-awesome/css/font-awesome.min.css';
+@import '../icons/simple-line-icons/css/simple-line-icons.css';
+@import '../icons/themify-icons/themify-icons.css';
+//This is for Page
+@import "pages/error-pages";
+@import "pages/other-pages";
+@import "pages/login-register-lock";
+//This is for the scripts
+@import "../node_modules/toast-master/css/jquery.toast.css";
+@import "../node_modules/select2/dist/css/select2.min.css";
+@import "../node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css";
+@import "../node_modules/switchery/dist/switchery.min.css";
+@import "../node_modules/sweetalert/sweetalert.css";
+@import "../node_modules/persian-datepicker/persian-datepicker.min.css";
+@import "../node_modules/clockpicker/jquery-clockpicker.min.css";
+//This is the core files
+@import 'core/core';
+@import "widgets/topbar-mail";
+@import 'responsive';
+// RTL
+@import 'rtl';

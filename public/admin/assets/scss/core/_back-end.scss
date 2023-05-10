@@ -1,0 +1,44 @@
+/*******************
+ Custom Back-End
+*******************/
+.invalid-input {
+  border: 1px red solid;
+}
+
+.invalid-text {
+  color: red;
+}
+
+#registerInputWrapper, #verificationInputWrapper {
+  position: relative;
+}
+
+#registerInputWrapper .fa-spin, #verificationInputWrapper .fa-spin {
+  position: absolute;
+  top: 10px;
+  left: 7px;
+  font-size: 20px;
+  display: none;
+}
+#verificationForm{
+  display: none;
+}
+#loginform input::-webkit-input-placeholder ,
+#recoverform input::-webkit-input-placeholder,
+#registerForm input::-webkit-input-placeholder,
+#verificationForm input::-webkit-input-placeholder
+{
+  text-align: center;
+}
+#loginform input::-moz-placeholder ,
+#recoverform input::-moz-placeholder,
+#registerForm input::-moz-placeholder,
+#verificationForm input::-moz-placeholder{
+  text-align: center;
+}
+#loginform input::-ms-input-placeholder ,
+#recoverform input::-ms-input-placeholder,
+#registerForm input::-ms-input-placeholder,
+#verificationForm input::-ms-input-placeholder{
+  text-align: center;
+}
