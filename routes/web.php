@@ -84,6 +84,8 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     Route::get('download/faq', 'FaqController@downloadFile')->name('faq.download');
     //Sliders Manipulation
     Route::resource('slider', 'SliderController', ['names' => 'admin.slider'])->except(['show']);
+    //challenges  Manipulation
+    Route::resource('challenge', 'SectionController', ['names' => 'admin.challenge'])->except(['show']);
     //========================== AJAX ROUTES START =====================================================================
     //Search Ajax
     Route::get('search', 'AdminController@search');
@@ -161,7 +163,7 @@ Route::group(['namespace' => 'User'], function () {
         Route::get('/', 'UserController@dashboard')->name('user.dashboard');
         //Primary Users Manipulation
         Route::patch('user/{user}', 'PrimaryUserController@update')->name('user.primary.update');
-        Route::resource('user', 'PrimaryUserController', ['names' => 'user.primary'])->only(['edit'])->withoutMiddleware([\App\Http\Middleware\CheckStatus::class]);
+        Route::resource('user', 'PrimaryUserController', ['names' => 'user.primary'])->only(['edit']);
         Route::get('files', 'PrimaryUserController@files')->name('user.files');
 
 

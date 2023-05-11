@@ -47,6 +47,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'support', 'guard_name' => 'admin']);
         Permission::create(['name' => 'blog', 'guard_name' => 'admin']);
         Permission::create(['name' => 'category', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'challenge', 'guard_name' => 'admin']);
 
         Role::truncate();
         $role = Role::create(['name' => 'مدیر ارشد', 'guard_name' => 'admin'])

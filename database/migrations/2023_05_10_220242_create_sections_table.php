@@ -18,11 +18,12 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->unsignedBigInteger('category_id')->index();
-            $table->tinyInteger('type')->comment('admin or user');
+            $table->tinyInteger('type')->comment('1 admin or  0 user');
             $table->unsignedBigInteger('user_id');
             $table->longText('description');
             $table->string('excerpt');
             $table->text('prize_text');
+            $table->date('expire_date');
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

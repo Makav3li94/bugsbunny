@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Section;
+use App\Http\Controllers\Controller;
+use App\Models\Quiz;
 use Illuminate\Http\Request;
 
-class SectionController extends Controller
+class QuizController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class SectionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Section  $section
+     * @param  \App\Models\Quiz  $quiz
      * @return \Illuminate\Http\Response
      */
-    public function show(Section $section)
+    public function show(Quiz $quiz)
     {
         //
     }
@@ -52,10 +53,10 @@ class SectionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Section  $section
+     * @param  \App\Models\Quiz  $quiz
      * @return \Illuminate\Http\Response
      */
-    public function edit(Section $section)
+    public function edit(Quiz $quiz)
     {
         //
     }
@@ -64,10 +65,10 @@ class SectionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Section  $section
+     * @param  \App\Models\Quiz  $quiz
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Section $section)
+    public function update(Request $request, Quiz $quiz)
     {
         //
     }
@@ -75,10 +76,10 @@ class SectionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Section  $section
+     * @param  \App\Models\Quiz  $quiz
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Section $section)
+    public function destroy(Quiz $quiz)
     {
         //
     }
