@@ -57,10 +57,11 @@
                                     <label class="col-sm-3 text-right control-label col-form-label">دسته چالش: </label>
                                     <div class="col-3">
                                         <select class="select2 form-control custom-select" style="width: 100%;"
-                                                name="category_id ">
+                                                name="category_id">
                                             <option></option>
                                             @forelse($categories as $cat)
-                                                <option value="{{$cat->id}}">{{$cat->title}}</option>
+                                                <option value="{{$cat->id}}"
+                                                        @if(collect(old('category_id'))->contains($cat->id)) selected @endif>{{$cat->title}}</option>
                                             @empty
 
                                             @endforelse

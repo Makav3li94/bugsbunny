@@ -86,6 +86,8 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     Route::resource('slider', 'SliderController', ['names' => 'admin.slider'])->except(['show']);
     //challenges  Manipulation
     Route::resource('challenge', 'SectionController', ['names' => 'admin.challenge'])->except(['show']);
+    Route::resource('question', 'QuestionController', ['names' => 'admin.question'])->except(['create','show']);
+    Route::resource('answer', 'AnswerController', ['names' => 'admin.answer'])->except(['create','edit','show']);
     //========================== AJAX ROUTES START =====================================================================
     //Search Ajax
     Route::get('search', 'AdminController@search');

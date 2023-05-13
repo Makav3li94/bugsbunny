@@ -18,7 +18,6 @@
     <link href="{{asset('admin/assets/css/style.css')}}" rel="stylesheet">
     <link rel="stylesheet"
           href="{{ asset('admin/assets/node_modules/bootstrap4-toggle-master/css/bootstrap4-toggle.min.css')}}">
-    <link href="{{asset('admin/assets/node_modules/timepicker/css/timepicker.min.css')}}" rel="stylesheet"/>
 
 </head>
 
@@ -181,7 +180,6 @@
     <!-- wysiwyg - Froala Editor Javascript -->
     <script src="{{ asset('admin/assets/node_modules/ckeditor/ckeditor.js')}}"></script>
 
-    <script src="{{asset('admin/assets/node_modules/timepicker/js/timepicker.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/custom-admin.js')}}"></script>
     <script>
         CKEDITOR.replace('editor1', {
@@ -195,22 +193,11 @@
 
         });
 
-        var timepicker = new TimePicker('publish_time', {
-            lang: 'en',
-            theme: 'dark',
-        });
-        timepicker.on('change', function (evt) {
-
-            var value = (evt.hour || '00') + ':' + (evt.minute || '00');
-            evt.element.value = value;
-
-        });
     </script>
 @else
     @yield('user_script');
     <script src="{{ asset('admin/assets/node_modules/ckeditor/ckeditor.js')}}"></script>
 
-    <script src="{{asset('admin/assets/node_modules/timepicker/js/timepicker.min.js')}}"></script>
     <!-- Clock Picker  Javascript -->
     <script>
         CKEDITOR.replace('editor1', {
@@ -224,16 +211,6 @@
 
         });
 
-        var timepicker = new TimePicker('publish_time', {
-            lang: 'en',
-            theme: 'dark',
-        });
-        timepicker.on('change', function (evt) {
-
-            var value = (evt.hour || '00') + ':' + (evt.minute || '00');
-            evt.element.value = value;
-
-        });
     </script>
     <!-- Custom User JavaScript -->
     <script src="{{asset('admin/assets/js/custom.js')}}"></script>

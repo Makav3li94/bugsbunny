@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Models\Question;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -13,70 +15,96 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $challenge = Section::findOrFail($request->id);
+
+        return view('admin.challenges.questions.index', compact('challenge'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'question' => 'required|string',
+            'explanation' => 'required|string',
+            'answer.*' => 'required|string',
+            'answer' => "required|array|min:4",
+            'is_active_answer.*' => 'required|string',
+            'is_active_answer' => "required|array|min:1",
+        ]);
+
+        $question = Question::create([
+            'question' => $request->question,
+            'explanation' => $request->explanation,
+            'is_active' => isset($request->is_active) ? '1' : '0',
+            'unit' => isset($request->unit) ? $request->unit : 1,
+            'user_id' => auth()->id(),
+            'section_id' => $request->id,
+        ]);
+        foreach ($request->answer as $key => $answer)
+            Answer::create([
+                'answer' => $answer,
+                'is_checked' => isset($request->is_active_answer[$key]) ? '1' : '0',
+                'question_id' => $question->id,
+            ]);
+
+        return redirect()->back()->with('create', 'success');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Question $question)
+    public function edit(Request $request, Question $question)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Question $question)
-    {
-        //
+        $question = $question->with('answers')->get();
+        if ($request->ajax()) {
+            return response()->json(['question' => $question]);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Question  $question
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Question $question
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Question $question)
     {
-        //
+        $request->validate([
+            'question' => 'required|string',
+            'explanation' => 'required|string',
+            'answer.*' => 'required|string',
+            'answer' => "required|array|min:4",
+            'is_active_answer.*' => 'required|string',
+            'is_active_answer' => "required|array|min:1",
+        ]);
+
+        $question->update([
+            'question' => $request->question,
+            'explanation' => $request->explanation,
+            'is_active' => isset($request->is_active) ? '1' : '0',
+            'unit' => isset($request->unit) ? $request->unit : 1,
+        ]);
+        $counter = 0;
+        foreach ($question->answers as $answer) {
+            $answer->update([
+                'answer' => $request->answer[$counter],
+                'is_checked' => isset($request->is_active_answer[$counter]) ? '1' : '0',
+            ]);
+            $counter++;
+        }
+        return redirect()->back()->with('update', 'success');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Question  $question
+     * @param \App\Models\Question $question
      * @return \Illuminate\Http\Response
      */
     public function destroy(Question $question)

@@ -48,17 +48,22 @@
                                             <span class="badge badge-pill badge-danger">تایید نشده</span>
                                         @endif
                                     </td>
+
                                     <td style="width: 120px;">
+                                        <a href="{{route('admin.question.index',['id'=>$challenge->id])}}"
+                                           class="btn btn-warning btn-sm"><i
+                                                class="d-inline-flex align-middle ti-pencil-alt  ml-1"></i>سوالات
+                                        </a>
                                         <a href="{{route('admin.challenge.edit',$challenge->id)}}"
                                            class="btn btn-success btn-sm"><i
                                                 class="d-inline-flex align-middle ti-pencil ml-1"></i>ویرایش
                                         </a>
-                                        <button type="button" class="btn btn-danger btn-sm delete-user"
+                                        <button type="button" class="btn btn-danger btn-sm delete-section"
                                                 id="{{$challenge->id}}"><i
                                                 class="d-inline-flex align-middle ti-close"></i></button>
                                         <form method="post"
                                               action="{{route('admin.challenge.destroy',$challenge->id)}}"
-                                              id="{{$user->id}}">
+                                              id="{{$challenge->id}}">
                                             @csrf
                                             @method('DELETE')
                                         </form>
