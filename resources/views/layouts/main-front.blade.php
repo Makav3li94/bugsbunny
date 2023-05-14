@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{asset('front/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/responsive.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/rtl.css')}}">
+    @yield('style')
     <title>{{"buggy - ".$title ?? "buggy"}}</title>
 </head>
 

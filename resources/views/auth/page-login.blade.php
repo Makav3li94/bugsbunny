@@ -1,6 +1,6 @@
 @extends('layouts.reglog-front')
 @section('content')
-    <section class="signup_area signup_area_height">
+    <section class="signup_area signup_area_height" >
         <div class="row ml-0 mr-0">
             <div class="sign_left signup_left">
                 <img class="position-absolute top" src="{{asset('front/img/signup/top_ornamate.png')}}" alt="top">

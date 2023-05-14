@@ -22,10 +22,10 @@ class AppServiceProvider extends ServiceProvider
     {
 
         Schema::defaultStringLength(191);
+        $categories = Category::all();
+        $setting = Setting::all()->first();
+        view()->composer('*', function ($view) use ($categories,$setting) {
 
-        view()->composer('*', function ($view) {
-            $categories = Category::all();
-            $setting = Setting::all()->first();
             $view->with(
                 [
                     'categories' => $categories,

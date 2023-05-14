@@ -85,7 +85,7 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     //Sliders Manipulation
     Route::resource('slider', 'SliderController', ['names' => 'admin.slider'])->except(['show']);
     //challenges  Manipulation
-    Route::resource('challenge', 'SectionController', ['names' => 'admin.challenge'])->except(['show']);
+    Route::resource('challenge', 'SectionController', ['names' => 'admin.challenge']);
     Route::resource('question', 'QuestionController', ['names' => 'admin.question'])->except(['create','show']);
     Route::resource('answer', 'AnswerController', ['names' => 'admin.answer'])->except(['create','edit','show']);
     //========================== AJAX ROUTES START =====================================================================
@@ -200,8 +200,10 @@ Route::group(['namespace' => 'User', 'middleware' => 'auth', 'prefix' => 'dashbo
 
 Route::get('/', 'Front\HomeController@index')->name('home');
 Route::get('/forum', 'Front\HomeController@forum')->name('forum');
-
+Route::get('forum/{slug}', 'Front\HomeController@section')->name('section');
+Route::post('quiz/{section}', 'Front\HomeController@quiz')->name('quiz');
 Route::get('/markAsRead', function(){auth()->user()->unreadNotifications->markAsRead();return redirect()->back();});
+Route::resource('reply', 'User\ReplyController', ['names' => 'reply'])->middleware('auth');
 //Search
 
 // Front Pages !

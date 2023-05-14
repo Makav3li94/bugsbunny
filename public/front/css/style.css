@@ -8710,7 +8710,7 @@ blockquote .author {
 /*----------------------------------------------------*/
 /*================ signup_area css ==============*/
 .signup_area {
-    height: 100vh;
+    /*height: 100vh;*/
   min-height: 580px;
   background: #fbfcfd;
 }

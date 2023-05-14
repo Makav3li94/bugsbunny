@@ -32,19 +32,15 @@ class User extends Authenticatable
         return $this->hasOne(Familiarity::class);
     }
 
-    public function files(): HasMany
-    {
-        return $this->hasMany(File::class);
-    }
-
-
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class);
     }
 
-
-
+    public function quizHeader()
+    {
+        return $this->hasMany(QuizHeader::class);
+    }
 
     public function primary(): BelongsTo
     {
@@ -56,7 +52,10 @@ class User extends Authenticatable
         return $this->hasMany(Sms::class);
     }
 
-
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
 
     public function sendUserVerifyNotification($user, $details)
     {

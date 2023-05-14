@@ -13,10 +13,10 @@
                 <div class="col-lg-8">
                     <div class="communities-boxes">
                         @forelse($categories as $cat)
-                        <div class="docly-com-box">
-                            <div class="icon-container">
-                                <img src="{{asset('front/img/home_support/rc1.png')}}" alt="communinity-box">
-                            </div>
+                            <div class="docly-com-box">
+                                <div class="icon-container">
+                                    <img src="{{asset('front/img/home_support/rc1.png')}}" alt="communinity-box">
+                                </div>
 
                                 <div class="docly-com-box-content">
                                     <h3 class="title"><a href="#">{{$cat->title}}</a></h3>
@@ -24,7 +24,7 @@
                                 </div>
 
 
-                        </div>
+                            </div>
                         @empty
                         @endforelse
                     </div>
@@ -128,68 +128,53 @@
                         <!-- /.support-info -->
                         <div class="col-md-6 col-sm-6 support-category-menus">
                             <ul class="forum-titles">
-                                <li class="forum-topic-count">نام</li>
-                                <li class="forum-reply-count">چالش</li>
-                                <li class="forum-freshness">آامتیاز</li>
+                                <li class="forum-reply-count">دسته</li>
+                                <li class="forum-freshness">تاریخ اتمام</li>
                             </ul>
                         </div>
                         <!-- /.support-category-menus -->
                     </div>
                     <!-- /.post-header -->
+                    @forelse($mainSection as $item)
+                        <div class="community-posts-wrapper bb-radius">
 
-                    <div class="community-posts-wrapper bb-radius">
-
-                        <!-- Forum Item -->
-                        <div class="community-post style-two forum-item bug">
-                            <div class="col-md-6 post-content">
-                                <div class="author-avatar forum-icon">
-                                    <img src="{{asset('front/img/home_support/rc1.png')}}" alt="community post">
+                            <!-- Forum Item -->
+                            <div class="community-post style-two forum-item bug">
+                                <div class="col-md-6 post-content">
+                                    <div class="author-avatar forum-icon">
+                                        <img src="{{asset('front/img/home_support/rc1.png')}}" alt="community post">
+                                    </div>
+                                    <div class="entry-content">
+                                        <h3 class="post-title">
+                                            <a href="{{route('section',$item->slug)}}">{{$item->title}}</a>
+                                        </h3>
+                                        <p>{{$item->excerpt}}</p>
+                                    </div>
                                 </div>
-                                <div class="entry-content">
-                                    <h3 class="post-title">
-                                        <a href="forum-topics.html">عنوان</a>
-                                    </h3>
-                                    <p>چکیده</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 post-meta-wrapper">
-                                <ul class="forum-titles">
-                                    <li class="forum-topic-count">1</li>
-                                    <li class="forum-reply-count">1</li>
-                                    <li class="forum-freshness">
-                                        <div class="freshness-box">
-                                            <div class="freshness-top">
-                                                <div class="freshness-link">
-                                                    <a href="#" title="Reply To: Main Forum Rules &amp; Policies">2
-                                                        تاریخ</a>
-                                                </div>
-                                            </div>
-                                            <div class="freshness-btm">
-                                                <a href="#" title="View Eh Jewel's profile" class="bbp-author-link">
-                                                    <div class="freshness-name">
-                                                        <a href="#" title="View Eh Jewel's profile"
-                                                           class="bbp-author-link">
-                                                            <span class="bbp-author-name">Eh Jewel</span>
+                                <div class="col-md-6 post-meta-wrapper">
+                                    <ul class="forum-titles">
+                                        <li class="forum-topic-count">{{$item->category->title}}</li>
+                                        <li class="forum-freshness">
+                                            <div class="freshness-box">
+                                                <div class="freshness-top">
+                                                    <div class="freshness-link">
+                                                        <a href="#" title="Reply To: Main Forum Rules &amp; Policies">
+                                                            {{Verta::instance($item->expire_date)->format('Y-m-d')}}
                                                         </a>
                                                     </div>
-                                                    <span class="bbp-author-avatar">
-                                                            <img alt="Eh Jewel"
-                                                                 src="{{asset('front/img/home_support/cp5.jpg')}}"
-                                                                 class="avatar photo">
-                                                        </span>
-                                                </a>
+                                                </div>
+
                                             </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+                            <!-- /.forum-item  -->
+
+
                         </div>
-                        <!-- /.forum-item  -->
-
-
-                    </div>
-                    {{--                  END  important chalanges in last week--}}
-
+                    @empty
+                    @endforelse
                     <div class="post-header forums-header">
                         <div class="col-md-6 col-sm-6 support-info">
                             <span>آخرین چالش ها </span>

@@ -54,6 +54,10 @@
                                            class="btn btn-warning btn-sm"><i
                                                 class="d-inline-flex align-middle ti-pencil-alt  ml-1"></i>سوالات
                                         </a>
+                                        <a href="{{route('admin.challenge.show',$challenge->id)}}"
+                                           class="btn btn-secondary btn-sm"><i
+                                                class="d-inline-flex align-middle ti-pencil-alt  ml-1"></i>شرکت کنندگان
+                                        </a>
                                         <a href="{{route('admin.challenge.edit',$challenge->id)}}"
                                            class="btn btn-success btn-sm"><i
                                                 class="d-inline-flex align-middle ti-pencil ml-1"></i>ویرایش

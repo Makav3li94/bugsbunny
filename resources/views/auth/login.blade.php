@@ -1,6 +1,6 @@
 @extends('layouts.reglog-front')
 @section('content')
-    <section class="signup_area">
+    <section class="signup_area" style="height: 100vh">
         <div class="row ml-0 mr-0">
             <div class="sign_left signin_left">
                 <h2>ورود به ایزباگ</h2>

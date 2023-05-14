@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('section_id')->index();
+            $table->integer('quiz_size')->index();
+            $table->text('questions_taken')->nullable()->default(null);
             $table->boolean('completed')->default(false)->comment('completed or expired');
             $table->boolean('status')->default(false)->comment('show score only if time expired');
-            $table->tinyInteger('score');
+            $table->integer('score')->default(0);
             $table->timestamps();
         });
     }
