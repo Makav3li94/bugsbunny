@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('excerpt');
             $table->text('prize_text');
             $table->date('expire_date');
+            $table->integer('total_views')->default(0)->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -34,6 +34,8 @@ class HomeController extends Controller
         $section = Section::where('slug', $slug)->with(['questions' => function ($q) {
             $q->with('answers');
         }])->first();
+        $section->increment('total_views');
+
         $replies = Reply::where([['section_id',$section->id],['parent_id',0]])->with(['user','children' => function ($q) {
             $q->with('user');
         }])->get();
