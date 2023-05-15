@@ -204,6 +204,8 @@ Route::get('forum/{slug}', 'Front\HomeController@section')->name('section');
 Route::post('quiz/{section}', 'Front\HomeController@quiz')->name('quiz');
 Route::get('/markAsRead', function(){auth()->user()->unreadNotifications->markAsRead();return redirect()->back();});
 Route::resource('reply', 'User\ReplyController', ['names' => 'reply'])->middleware('auth');
+Route::post('/like-reply/{reply}','Front\LikeController@like')->name('likeReply');
+Route::post('/dislike-reply/{reply}','Front\LikeController@dislike')->name('dislikeReply');
 //Search
 
 // Front Pages !

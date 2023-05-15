@@ -35,10 +35,9 @@ class HomeController extends Controller
             $q->with('answers');
         }])->first();
         $section->increment('total_views');
-
         $replies = Reply::where([['section_id',$section->id],['parent_id',0]])->with(['user','children' => function ($q) {
             $q->with('user');
-        }])->get();
+        }])->withCount(['likes', 'dislikes'])->get();
         return view('front.section', compact('section','replies'));
     }
 

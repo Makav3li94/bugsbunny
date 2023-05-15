@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Notifications\UserProductNotification;
 use App\Notifications\UserTicketNotification;
 use App\Notifications\UserVerifyNotification;
+use App\Traits\HasLikeable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,7 +16,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasFactory;
+    use Notifiable, HasFactory, HasLikeable;
 
     protected $dates = ['deleted_at'];
     use SoftDeletes;

@@ -128,7 +128,7 @@
                     </div>
 
                     <!-- Best answer -->
-                    @if(true)
+                    @if(false)
                         <div class="best-answer">
                             <div class="row">
                                 <div class="col-lg-9">
@@ -207,8 +207,19 @@
                                         <button type="button" class="action_btn btn-ans ask-btn reply-btn"
                                                 data-toggle="collapse" href="#collapseReplyChild{{$reply->id}}">پاسخ به این کامنت
                                         </button>
-                                        <a href="#" class="action_btn btn-ans ask-btn too-btn">مثبت</a>
-                                        <a href="#" class="action_btn btn-ans ask-btn too-btn">منفی</a>
+{{--                                        <a href="#" class="action_btn btn-ans ask-btn too-btn">مثبت</a>--}}
+                                        <form action="{{route('likeReply',$reply->id)}}" method="post">
+                                            @csrf
+                                            <button type="submit" class="action_btn btn-ans ask-btn too-btn">
+                                                مثبت <span>{{$reply->likes_count}}</span>
+                                            </button>
+                                        </form>
+                                        <form action="{{route('dislikeReply',$reply->id)}}" method="post">
+                                            @csrf
+                                            <button type="submit" class="action_btn btn-ans ask-btn too-btn">
+                                                منفی <span>{{$reply->dislikes_count}}</span>
+                                            </button>
+                                        </form>
 
                                         <form class="form-horizontal clearfix collapse mt-5"
                                               action="{{route('reply.store')}}"
@@ -267,6 +278,20 @@
                                         </div>
                                     </div>
                                     <div class="best-ans-content d-flex">
+                                        <div class="action-button-container action-btns">
+                                        <form action="{{route('likeReply',$reply->id)}}" method="post">
+                                            @csrf
+                                            <button type="submit" class="action_btn btn-ans ask-btn too-btn">
+                                                مثبت <span>{{$replyChild->likes_count}}</span>
+                                            </button>
+                                        </form>
+                                        <form action="{{route('dislikeReply',$reply->id)}}" method="post">
+                                            @csrf
+                                            <button type="submit" class="action_btn btn-ans ask-btn too-btn">
+                                                منفی <span>{{$replyChild->dislikes_count}}</span>
+                                            </button>
+                                        </form>
+                                        </div>
                                         <p>
                                             {!! $replyChild->body !!}
                                         </p>
