@@ -88,6 +88,8 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     Route::resource('challenge', 'SectionController', ['names' => 'admin.challenge']);
     Route::resource('question', 'QuestionController', ['names' => 'admin.question'])->except(['create','show']);
     Route::resource('answer', 'AnswerController', ['names' => 'admin.answer'])->except(['create','edit','show']);
+    Route::resource('score', 'TotalScoreController', ['names' => 'admin.score'])->except(['create','edit','show']);
+    Route::post('score/{user}', 'TotalScoreController@store')->name('admin.score.store');
     //========================== AJAX ROUTES START =====================================================================
     //Search Ajax
     Route::get('search', 'AdminController@search');
@@ -163,6 +165,7 @@ Route::group(['namespace' => 'User'], function () {
     Route::patch('essentials/{user}', 'AuthController@storeEssentials')->name('essentials.store');
     Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
         Route::get('/', 'UserController@dashboard')->name('user.dashboard');
+        Route::patch('/{user}', 'UserController@update')->name('user.update');
         //Primary Users Manipulation
         Route::patch('user/{user}', 'PrimaryUserController@update')->name('user.primary.update');
         Route::resource('user', 'PrimaryUserController', ['names' => 'user.primary'])->only(['edit']);

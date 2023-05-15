@@ -64,6 +64,33 @@ class User extends Authenticatable
 
     }
 
+    public function totalScore()
+    {
+        return $this->hasMany(TotalScore::class);
+    }
+
+    public function score()
+    {
+        $negative = 0;
+        $positive = 0;
+
+        foreach ($this->totalScore as  $value) {
+
+
+            if ($value->type) {
+                $positive += $value->score;
+            } else {
+                $negative += $value->score;
+            }
+        }
+
+        $total = $positive - $negative;
+        return  [
+            'positive' => $positive,
+            'negative' => $negative,
+            'total' => $total,
+        ];
+    }
 
     public function sendUserTicketNotification($user)
     {

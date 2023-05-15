@@ -916,7 +916,7 @@ $(document).ready(function () {
                             $('#collapseQuestionForm #is_active_answer' + key + '').prop('checked', true).trigger('click');
                         }
                     });
-                    $('#collapseQuestionForm').attr('action', '/admin/dashboard/question/' + id ,);
+                    $('#collapseQuestionForm').attr('action', '/admin/dashboard/question/' + id,);
                 }
             }
         });
@@ -1224,6 +1224,51 @@ $(document).ready(function () {
                     }
                 }
             });
+        });
+    });
+
+
+    // Score Manipulation
+    $(document).on('click', '.edit-score', function () {
+        var id = $(this).attr('id');
+
+        $('#collapseScoreEdit').modal('show');
+
+        $('#submitCollapseScore').attr('data-id', id);
+
+    });
+
+    $('#submitCollapseScore').on('click', function () {
+        console.log(111)
+        var id = $('#submitCollapseScore').attr('data-id');
+        var score = $('#collapseScoreForm input[name=score]').val();
+        var type = 0;
+        if ($('#collapseScoreForm input[name=type]').is(":checked")) {
+            type = 1
+        }
+        console.log(123)
+        $.ajax({
+            'url': '/admin/dashboard/score/' + id,
+            'type': 'post',
+            'dataType': 'json',
+            data: {
+                score: score,
+                type: type,
+            },
+            success: function (response) {
+                if (response.scoreCreate == 'submitted') {
+                    $('#collapseScoreEdit').modal('hide');
+                    $.toast({
+                        heading: 'موفقیت!',
+                        text: 'امتیاز اختصاص یافت.',
+                        position: 'bottom-left',
+                        textAlign: 'right',
+                        loaderBg: '#ff6849',
+                        icon: 'success',
+                        hideAfter: 3500
+                    });
+                }
+            }
         });
     });
     //=================== wysiwyg Manipulation ============================================================================

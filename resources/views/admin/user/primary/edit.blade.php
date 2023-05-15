@@ -238,6 +238,3 @@
     </div>
     <!-- End Note -->
 @stop
-@section('script')
-
-@endsection

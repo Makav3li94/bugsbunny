@@ -29,6 +29,15 @@
                         </ul>
                     </li>
                 @endif
+{{--                @if(auth()->user()->can('score'))--}}
+                    <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
+                                class="ti-files"></i><span class="hide-menu">مدیریت امتیازات</span></a>
+                        <ul aria-expanded="false" class="collapse">
+{{--                            <li><a href="{{route('admin.challenge.create')}}">اختصاص امتیاز جدید</a></li>--}}
+                            <li><a href="{{route('admin.challenge.index')}}">لیست امتیازات</a></li>
+                        </ul>
+                    </li>
+{{--                @endif--}}
                 @if(auth()->user()->can('blog'))
                     <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
                                 class="ti-notepad"></i><span class="hide-menu">مدیریت صفحات</span></a>

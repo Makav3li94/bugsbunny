@@ -178,22 +178,10 @@
     @yield('script');
 
     <!-- wysiwyg - Froala Editor Javascript -->
-    <script src="{{ asset('admin/assets/node_modules/ckeditor/ckeditor.js')}}"></script>
+
 
     <script src="{{asset('admin/assets/js/custom-admin.js')}}"></script>
-    <script>
-        CKEDITOR.replace('editor1', {
 
-            contentsLangDirection: 'rtl',
-            // language: 'fa',
-            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
-            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
-
-        });
-
-    </script>
 @else
     @yield('user_script');
     <script src="{{ asset('admin/assets/node_modules/ckeditor/ckeditor.js')}}"></script>

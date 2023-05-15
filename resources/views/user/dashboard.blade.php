@@ -6,14 +6,18 @@
         'page'=>'پروفایل'
         ]
     )
+@section('style')
+    <link rel="stylesheet" href="{{asset('front/user/persian-datepicker/persian-datepicker.min')}}">
+    <link rel="stylesheet" href="{{asset('front/user/select2/dist/css/select2.min.css')}}">
+@endsection
 @section('content')
     <div class="container emp-profile">
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <img src="{{asset('images/user/'.auth()->user()->avatar)}}" alt=""/>
+                        <img src="{{asset('images/user/'.$user->avatar)}}" alt=""/>
                         <div class="file btn btn-lg btn-primary">
-                            تغییر پروفایل
+                            {{$user->username}}
                             <input type="file" name="file"/>
                         </div>
                     </div>
@@ -21,10 +25,10 @@
                 <div class="col-md-6">
                     <div class="profile-head">
                         <h5>
-                            {{auth()->user()->name}}
+                            {{$user->name}}
                         </h5>
                         <h6>
-                            {{auth()->user()->username}}
+                            {{$user->username}}
                         </h6>
                         <p class="proile-rating">امتیاز شما : <span>8/10</span></p>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -73,7 +77,7 @@
                 <div class="col-md-8">
                     <div class="tab-content profile-tab" id="myTabContent">
                         <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <form class="clearfix" action="{{route('user.primary.update',auth()->user()->id)}}" method="POST"
+                            <form class="clearfix" action="{{route('user.update',$user->id)}}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
                                 @method('PATCH')
@@ -83,7 +87,7 @@
                                         <div class="form-group">
                                             <label>نام<span class="text-danger mr-1">*</span></label>
                                             <input type="text" class="form-control" placeholder=""
-                                                   value="{{auth()->user()->name}}" name="name">
+                                                   value="{{$user->name}}" name="name">
                                             @if($errors->has('name'))
                                                 <small class="invalid-text">{{$errors->first('name')}}</small>
                                             @endif
@@ -93,7 +97,7 @@
                                         <div class="form-group">
                                             <label>نام کاربری<span class="text-danger mr-1">*</span></label>
                                             <input type="text" class="form-control" placeholder=""
-                                                   value="{{auth()->user()->username}}" name="username" required>
+                                                   value="{{$user->username}}" name="username" required>
                                             @if($errors->has('username'))
                                                 <small class="invalid-text">{{$errors->first('username')}}</small>
                                             @endif
@@ -103,7 +107,7 @@
                                         <div class="form-group">
                                             <label>ایمیل <span class="text-danger mr-1">*</span></label>
                                             <input dir="ltr" type="text" class="form-control" placeholder=""
-                                                   value="{{auth()->user()->email}}" name="email">
+                                                   value="{{$user->email}}" name="email">
                                             @if($errors->has('email'))
                                                 <small class="invalid-text">{{$errors->first('email')}}</small>
                                             @endif
@@ -115,7 +119,7 @@
                                         <div class="form-group">
                                             <label>موبایل <span class="text-danger mr-1">*</span></label>
                                             <input dir="ltr" type="text" class="form-control" placeholder=""
-                                                   value="{{auth()->user()->mobile}}" name="mobile">
+                                                   value="{{$user->mobile}}" name="mobile">
                                             @if($errors->has('mobile'))
                                                 <small class="invalid-text">{{$errors->first('mobile')}}</small>
                                             @endif
@@ -125,7 +129,7 @@
                                         <div class="form-group">
                                             <label>تاریخ تولد</label>
                                             <input type="text" class="form-control datepicker-year" placeholder=""
-                                                   value="{{auth()->user()->birthDate}}" name="birthDate">
+                                                   value="{{$user->birthDate}}" name="birthDate">
                                             @if($errors->has('birthDate'))
                                                 <small class="invalid-text">{{$errors->first('birthDate')}}</small>
                                             @endif
@@ -140,7 +144,7 @@
                                                 <option></option>
                                                 @forelse($cats as $cat)
                                                     <option value="{{$cat->id}}"
-                                                            @if(in_array($cat->id,json_decode(auth()->user()->cats))) selected @endif>{{$cat->title}}</option>
+                                                            @if(in_array($cat->id,json_decode($user->cats))) selected @endif>{{$cat->title}}</option>
                                                 @empty
 
                                                 @endforelse
@@ -152,7 +156,20 @@
                                         </div>
                                     </div>
 
-
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label >تصویر:</label>
+                                            <div >
+                                                <input type="file" name="avatar" class="form-control"
+                                                       placeholder="">
+                                                @if($errors->has('avatar'))
+                                                    <div class="alert alert-danger">
+                                                        {{$errors->first('avatar')}}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>رمز عبور جدید </label>
@@ -262,3 +279,52 @@
 
 
 @stop
+@section('scripts')
+    <script src="{{asset('front/user/persian-datepicker/persian-date.min.js')}}"></script>
+    <script src="{{asset('front/user/persian-datepicker/persian-datepicker.min.js')}}"></script>
+    <script src="{{asset('front/user/select2/dist/js/select2.full.min.js')}}"></script>
+
+    <script>
+        // ==============================================================
+        // Date Picker
+        // ==============================================================
+        $(".datepicker-year").pDatepicker({
+            "format": "YYYY/MM/DD",
+            "viewMode": "year",
+            "initialValue": false,
+            "autoClose": true,
+            "position": "auto",
+            "onlyTimePicker": false,
+            "onlySelectOnDate": true,
+            "calendarType": "persian",
+            "observer": true,
+            "responsive": true
+        });
+        $(".custom-select").select2({
+            placeholder: "انتخاب کنید",
+            minimumResultsForSearch: -1,
+            language: {
+                "noResults": function () {
+                    return "نتیجه ای وجود نداشت.";
+                }
+            }
+        });
+        $(".custom-select-2").select2({
+            placeholder: "انتخاب کنید",
+            minimumResultsForSearch: 3,
+            language: {
+                "noResults": function () {
+                    return "نتیجه ای وجود نداشت.";
+                }
+            }
+        });
+        $(".select2-multiple").select2({
+            placeholder: "انتخاب کنید",
+            language: {
+                "noResults": function () {
+                    return "نتیجه ای وجود نداشت.";
+                }
+            }
+        });
+    </script>
+@endsection
