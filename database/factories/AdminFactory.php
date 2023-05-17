@@ -19,10 +19,10 @@ class AdminFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'buggy',
-            'email' => 'info@buggy.com',
+            'name' => 'isbug',
+            'email' => 'info@isbug.com',
             'mobile' => '09356766574',
-            'password' => Hash::make('Buggy@12346'),
+            'password' => Hash::make('Isbug@123456'),
             'remember_token' => Str::random(10),
         ];
     }

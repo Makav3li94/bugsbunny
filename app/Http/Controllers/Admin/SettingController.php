@@ -56,8 +56,19 @@ class SettingController extends Controller
                 'domain' => $request['domain'],
                 'first_logo' => $first_logo,
                 'second_logo' => $second_logo,
+                'comment_score' => $request['comment_score'],
+                'reply_score' => $request['reply_score'],
+                'section_score' => $request['section_score'],
+                'skip_section_score' => $request['skip_section_score'],
+                'admin_section_score' => $request['admin_section_score'],
+                'user_section_score' => $request['user_section_score'],
+                'reg_type' => $request['reg_type'],
                 'wysiwyg' => $request['wysiwyg'],
             ]);
+
+
+
+
 
         } else {
             if ($request->file('first_logo')) {
@@ -78,10 +89,26 @@ class SettingController extends Controller
                 'domain' => $request['domain'],
                 'first_logo' => $first_logo,
                 'second_logo' => $second_logo,
+                'comment_score' => $request['comment_score'],
+                'reply_score' => $request['reply_score'],
+                'section_score' => $request['section_score'],
+                'skip_section_score' => $request['skip_section_score'],
+                'admin_section_score' => $request['admin_section_score'],
+                'user_section_score' => $request['user_section_score'],
+                'reg_type' => $request['reg_type'],
                 'wysiwyg' => $request['wysiwyg'],
             ]);
+
         }
         return back()->with(['update' => 'success']);
+
+    }
+
+
+    public function editFront(){
+
+    }
+    public function updateFront(){
 
     }
 }

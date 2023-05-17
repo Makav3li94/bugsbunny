@@ -4,8 +4,8 @@
             <div class="round_spinner">
                 <div class="spinner"></div>
                 <div class="text">
-                    <img src="{{asset('front/img/spinner_logo.png')}}" alt="">
-                    <h4><span>ایز</span>باگ</h4>
+                    <img src="{{asset('front/img/favicon.png')}}" width="30px" alt="">
+                    <h4 class="mt-2"><span>ایز</span>باگ</h4>
                 </div>
             </div>
             <h2 class="head">در حال آماده هسازی</h2>
@@ -64,12 +64,12 @@
             <img class="p_absolute bl_right" src="{{asset('front/img/home_one/b_leaf.svg')}}" alt="">
             <div class="container">
                 <div class="doc_banner_text">
-                    <h2 class="wow fadeInUp" data-wow-delay="0.3s">دنبال باگ خاصی می گردید ؟</h2>
+                    <h2 class="wow fadeInUp" data-wow-delay="0.3s">{{$frontHeros->title}}</h2>
                     <p class="wow fadeInUp" data-wow-delay="0.5s">
-                        مشکل خودتون رو جست و جو کنید.
+                        {{$frontHeros->sub}}
                     </p>
                     <form action="#" class="banner_search_form">
-                        <input type="search" class="form-control" placeholder='چی میخوای ؟'>
+                        <input type="search" class="form-control" placeholder='{{$frontHeros->search_placeholder}}'>
                         <button type="submit"><i class="icon_search"></i></button>
                     </form>
                 </div>

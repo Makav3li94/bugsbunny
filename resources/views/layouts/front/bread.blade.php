@@ -44,7 +44,7 @@
                 </nav>
             </div>
             <div class="col-sm-5">
-                <a href="#" class="date"><i class="icon_quotations"></i>{{Verta::now()}}</a>
+                <a href="#" class="date"><i class="icon_quotations"></i>{{Verta::now()->format('%d %B، %Y')}}</a>
             </div>
         </div>
     </div>

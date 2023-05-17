@@ -29,7 +29,7 @@
                         </ul>
                     </li>
                 @endif
-{{--                @if(auth()->user()->can('score'))--}}
+                @if(auth()->user()->can('score'))
                     <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
                                 class="ti-files"></i><span class="hide-menu">مدیریت امتیازات</span></a>
                         <ul aria-expanded="false" class="collapse">
@@ -37,7 +37,7 @@
                             <li><a href="{{route('admin.challenge.index')}}">لیست امتیازات</a></li>
                         </ul>
                     </li>
-{{--                @endif--}}
+                @endif
                 @if(auth()->user()->can('blog'))
                     <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
                                 class="ti-notepad"></i><span class="hide-menu">مدیریت صفحات</span></a>
@@ -94,6 +94,23 @@
                         </ul>
                     </li>
                 @endif
+                @if(auth()->user()->can('main_page'))
+
+                    <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
+                                class=" ti-support"></i><span class="hide-menu">ویرایش صفحه اصلی</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="{{route('admin.front_menu.edit')}}">منوها</a></li>
+                            <li><a href="{{route('admin.front_hero.edit')}}">بنر اصلی</a></li>
+                            <li><a href="{{route('admin.front_feature.edit')}}">ویژگی ها</a></li>
+                            <li><a href="{{route('admin.front_way.edit')}}">مسیر همکاری</a></li>
+                            <li><a href="{{route('admin.front_overlay.edit')}}">اورلی</a></li>
+                            <li><a href="{{route('admin.front_faq.edit')}}">سوالات متداول</a></li>
+                            <li><a href="{{route('admin.front_call.edit')}}">کال تو</a></li>
+                            <li><a href="{{route('admin.front_social.edit')}}">شبکه های اجتماعی</a></li>
+                        </ul>
+                    </li>
+                @endif
+
                 @if(auth()->user()->can('sms'))
                     <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
                                 class="icon-compass"></i><span class="hide-menu">پیامک</span></a>
@@ -110,7 +127,16 @@
                         </ul>
                     </li>
                 @endif
+                @if(auth()->user()->can('email'))
+                    <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
+                                class="icon-compass"></i><span class="hide-menu">ایمیل</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="{{route('admin.sms.index')}}">لیست ایمیل های ارسال شده</a></li>
 
+                            <li><a href="{{route('admin.sms.setting.show')}}">تنظیمات ایمیل</a></li>
+                        </ul>
+                    </li>
+                @endif
 
             </ul>
         </nav>

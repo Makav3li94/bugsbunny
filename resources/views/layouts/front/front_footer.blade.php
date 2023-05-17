@@ -20,43 +20,45 @@
                             <button type="submit" class="s_btn">ارسال</button>
                         </form>
                         <ul class="list-unstyled f_social_icon">
-                            <li><a href="#"><i class="social_facebook"></i></a></li>
-                            <li><a href="#"><i class="social_twitter"></i></a></li>
-                            <li><a href="#"><i class="social_vimeo"></i></a></li>
-                            <li><a href="#"><i class="social_linkedin"></i></a></li>
+                            @forelse($frontSocail as $socail)
+                                <li><a href="{{$socail->link}}" title="{{$socail->title}}"><img src="{{asset('/images/front/socail/'.$socail->icon)}}" width="20" alt=""></a></li>
+
+                            @empty
+
+                            @endforelse
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="f_widget link_widget pl_30">
-                        <h3 class="f_title">لینک</h3>
+                        <h3 class="f_title">صغحات</h3>
                         <ul class="list-unstyled link_list">
-                            <li><a href="#">انجمن</a></li>
-                            <li><a href="#">درباره ما</a></li>
-                            <li><a href="#">تماس با ما</a></li>
-                            <li><a href="#">چرا ایزباگ</a></li>
+                            @forelse($frontMenusFooter1 as $menu)
+                                <li ><a href="{{route($menu->link)}}">{{$menu->title}}</a></li>
+                            @empty
+                            @endforelse
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-2 col-sm-6">
                     <div class="f_widget link_widget">
-                        <h3 class="f_title">لینک</h3>
+                        <h3 class="f_title">کاربری</h3>
                         <ul class="list-unstyled link_list">
-                            <li><a href="#">پنل کاربری</a></li>
-                            <li><a href="#">ثبت نام</a></li>
-                            <li><a href="#">ورود</a></li>
-                            <li><a href="#">پروفایل</a></li>
+                            @forelse($frontMenusFooter2 as $menu)
+                                <li ><a href="{{route($menu->link)}}">{{$menu->title}}</a></li>
+                            @empty
+                            @endforelse
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="f_widget link_widget pl_70">
-                        <h3 class="f_title">لینک</h3>
+                        <h3 class="f_title">لینک مفید</h3>
                         <ul class="list-unstyled link_list">
-                            <li><a href="#">قوانین انجمن</a></li>
-                            <li><a href="#">سوالات متداول</a></li>
-                            <li><a href="#">مقررات</a></li>
-                            <li><a href="#">مرام نامه</a></li>
+                            @forelse($frontMenusFooter3 as $menu)
+                                <li ><a href="{{route($menu->link)}}">{{$menu->title}}</a></li>
+                            @empty
+                            @endforelse
                         </ul>
                     </div>
                 </div>

@@ -17,35 +17,35 @@
                           enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>نام برند</label>
                                     <input type="text" class="form-control" placeholder="" name="brand"
                                            value="{{$settings!=null ? $settings->brand : old('brand')}}">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>نام کامل سایت</label>
                                     <input type="text" class="form-control" placeholder="" name="name"
                                            value="{{$settings!=null ? $settings->name : old('name') }}">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>توضیحات سایت</label>
                                     <input type="text" class="form-control" placeholder="" name="description"
                                            value="{{$settings!=null ? $settings->description : old('description')}}">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>کلمات کلیدی</label>
                                     <input type="text" class="form-control" placeholder="" name="keywords"
                                            value="{{$settings!=null ? $settings->keywords : old('keywords')}}">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>آدرس سایت اصلی</label>
                                     <input dir="ltr" type="text" class="form-control" placeholder="https://domain.com"
@@ -53,7 +53,7 @@
                                            value="{{$settings!=null ? $settings->domain : old('domain')}}">
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>لوگوی اول: </label>
                                     @if(isset($settings) && $settings->first_logo != null)
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>لوگوی دوم</label>
                                     @if(isset($settings) && $settings->second_logo != null)
@@ -79,7 +79,61 @@
                                 </div>
                             </div>
                             <hr>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>امتیاز شرکت در چالش اصلی</label>
+                                    <input type="number" class="form-control" placeholder="" name="admin_section_score"
+                                           value="{{$settings!=null ? $settings->admin_section_score : old('admin_section_score')}}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>امتیاز شرکت در چالش کاربر</label>
+                                    <input type="number" class="form-control" placeholder="" name="user_section_score"
+                                           value="{{$settings!=null ? $settings->user_section_score : old('user_section_score')}}">
+                                </div>
+                            </div>
 
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>امتیاز کامنت</label>
+                                    <input type="number" class="form-control" placeholder="" name="comment_score"
+                                           value="{{$settings!=null ? $settings->comment_score : old('comment_score')}}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>امتیاز پاسخ به کامنت</label>
+                                    <input type="number" class="form-control" placeholder="" name="reply_score"
+                                           value="{{$settings!=null ? $settings->reply_score : old('reply_score')}}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>امتیاز ثبت چالش کاربر</label>
+                                    <input type="number" class="form-control" placeholder="" name="section_score"
+                                           value="{{$settings!=null ? $settings->section_score : old('section_score')}}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>امتیاز منفی عدم شرکت در چالش</label>
+                                    <input type="number" class="form-control" placeholder="" name="skip_section_score"
+                                           value="{{$settings!=null ? $settings->skip_section_score : old('skip_section_score')}}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>نوع ثبت نام</label>
+                                    <select name="reg_type" id="" class="form-control">
+                                        <option value="0">sms</option>
+                                        <option value="1">email</option>
+                                        <option value="2">هردو</option>
+                                    </select>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="row">

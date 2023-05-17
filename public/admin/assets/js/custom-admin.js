@@ -1271,6 +1271,115 @@ $(document).ready(function () {
             }
         });
     });
+
+
+    // Menu Manipulation
+
+    $(document).on('click', '.edit-menu', function () {
+        var id = $(this).attr('id');
+        $('#collapseMenuEdit').modal('show');
+        $.ajax({
+            'url': '/admin/dashboard/front/menus/' + id,
+            'type': 'get',
+            'dataType': 'json',
+
+            success: function (response) {
+                if (!$.isEmptyObject(response.menu)) {
+                    $('#collapseMenuForm input[name=title]').val(response.menu.title);
+                    $('#collapseMenuForm input[name=link]').val(response.menu.link);
+                    $('#collapseMenuForm').attr('action', '/admin/dashboard/front/menus/' + id,);
+                    $("#collapseMenuForm select").val(response.menu.type);
+                    $('#submitCollapseMenu').attr('data-id', response.menu.id);
+                }
+            }
+        });
+    });
+    // Feature Manipulation
+
+    $(document).on('click', '.edit-feature', function () {
+        var id = $(this).attr('id');
+        $('#collapseFeatureEdit').modal('show');
+        $.ajax({
+            'url': '/admin/dashboard/front/features/' + id,
+            'type': 'get',
+            'dataType': 'json',
+
+            success: function (response) {
+                if (!$.isEmptyObject(response.feature)) {
+                    $('#collapseFeatureForm input[name=title]').val(response.feature.title);
+                    $('#collapseFeatureForm input[name=sub]').val(response.feature.sub);
+                    $('#collapseFeatureForm').attr('action', '/admin/dashboard/front/features/' + id,);
+                    $('#frontFeatureIcon').attr('src',response.feature.icon);
+                    $('#submitCollapseFeature').attr('data-id', response.feature.id);
+                }
+            }
+        });
+    });
+
+    // way Manipulation
+
+    $(document).on('click', '.edit-way', function () {
+        var id = $(this).attr('id');
+        $('#collapseWayEdit').modal('show');
+        $.ajax({
+            'url': '/admin/dashboard/front/way/' + id,
+            'type': 'get',
+            'dataType': 'json',
+
+            success: function (response) {
+                if (!$.isEmptyObject(response.way)) {
+                    $('#collapseWayForm input[name=title]').val(response.way.title);
+                    $('#collapseWayForm input[name=sub]').val(response.way.sub);
+                    $('#collapseWayForm').attr('action', '/admin/dashboard/front/way/' + id,);
+                    $('#frontWayIcon').attr('src',response.way.icon);
+                    $('#submitCollapseWay').attr('data-id', response.way.id);
+                }
+            }
+        });
+    });
+
+    // way Manipulation
+
+    $(document).on('click', '.edit-social', function () {
+        var id = $(this).attr('id');
+        $('#collapseSocialEdit').modal('show');
+        $.ajax({
+            'url': '/admin/dashboard/front/social/' + id,
+            'type': 'get',
+            'dataType': 'json',
+
+            success: function (response) {
+                if (!$.isEmptyObject(response.social)) {
+                    $('#collapseSocialForm input[name=title]').val(response.social.title);
+                    $('#collapseSocialForm input[name=link]').val(response.social.link);
+                    $('#collapseSocialForm').attr('action', '/admin/dashboard/front/social/' + id,);
+                    $('#frontSocialIcon').attr('src',response.social.icon);
+                    $('#submitCollapseSocial').attr('data-id', response.social.id);
+                }
+            }
+        });
+    });
+
+    // faq Manipulation
+
+    $(document).on('click', '.edit-faq', function () {
+        var id = $(this).attr('id');
+        $('#collapseFaqEdit').modal('show');
+        $.ajax({
+            'url': '/admin/dashboard/front/faq/' + id,
+            'type': 'get',
+            'dataType': 'json',
+
+            success: function (response) {
+                if (!$.isEmptyObject(response.faq)) {
+                    $('#collapseFaqForm input[name=question]').val(response.faq.question);
+                    $('#collapseFaqForm input[name=answer]').val(response.faq.answer);
+                    $('#collapseFaqForm').attr('action', '/admin/dashboard/front/faq/' + id,);
+                    $('#submitCollapseFaq').attr('data-id', response.faq.id);
+                }
+            }
+        });
+    });
     //=================== wysiwyg Manipulation ============================================================================
     if ($('#wysiwyg').length) {
         CKEDITOR.replace('wysiwyg');

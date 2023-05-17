@@ -127,6 +127,53 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     Route::get('/settings', 'SettingController@edit')->name('admin.settings.edit');
     Route::post('/settings', 'SettingController@updateOrCreate')->name('admin.settings.updateOrCreate');
 
+    Route::get('/settings/front', 'SettingController@editFront')->name('admin.settings_front.edit');
+    Route::post('/settings/front', 'SettingController@updateFront')->name('admin.settings_front.update');
+
+    //========================== Front ROUTES  =======================================================================
+    Route::get('/front/menus', 'FrontController@editMenu')->name('admin.front_menu.edit');
+    Route::post('/front/menus', 'FrontController@storeMenu')->name('admin.front_menu.store');
+    Route::patch('/front/menus/{frontMenu}', 'FrontController@updateMenu')->name('admin.front_menu.update');
+    Route::delete('/front/menus/{frontMenu}', 'FrontController@deleteMenu')->name('admin.front_menu.delete');
+    Route::get('/front/menus/{frontMenu}', 'FrontController@editMenuInfo')->name('admin.front_menu.ajax');
+
+    Route::get('/front/hero', 'FrontController@editHero')->name('admin.front_hero.edit');
+    Route::patch('/front/hero/{frontHero}', 'FrontController@updateHero')->name('admin.front_hero.update');
+
+    Route::get('/front/features', 'FrontController@editFeature')->name('admin.front_feature.edit');
+    Route::post('/front/features', 'FrontController@storeFeature')->name('admin.front_feature.store');
+    Route::patch('/front/features/{frontFeature}', 'FrontController@updateFeature')->name('admin.front_feature.update');
+    Route::delete('/front/features/{frontFeature}', 'FrontController@deleteFeature')->name('admin.front_feature.delete');
+    Route::get('/front/features/{frontFeature}', 'FrontController@editFeatureInfo')->name('admin.front_feature.ajax');
+
+    Route::get('/front/way', 'FrontController@editWay')->name('admin.front_way.edit');
+    Route::post('/front/way', 'FrontController@storeWay')->name('admin.front_way.store');
+    Route::patch('/front/way/{frontWay}', 'FrontController@updateWay')->name('admin.front_way.update');
+    Route::delete('/front/way/{frontWay}', 'FrontController@deleteWay')->name('admin.front_way.delete');
+    Route::get('/front/way/{frontWay}', 'FrontController@editWayInfo')->name('admin.front_way.ajax');
+
+
+    Route::get('/front/overlay', 'FrontController@editOverlay')->name('admin.front_overlay.edit');
+    Route::patch('/front/overlay/{frontOverlay}', 'FrontController@updateOverlay')->name('admin.front_overlay.update');
+
+    Route::get('/front/call', 'FrontController@editCall')->name('admin.front_call.edit');
+    Route::patch('/front/call/{id}', 'FrontController@updateCall')->name('admin.front_call.update');
+
+
+    Route::get('/front/social', 'FrontController@editSocial')->name('admin.front_social.edit');
+    Route::post('/front/social', 'FrontController@storeSocial')->name('admin.front_social.store');
+    Route::patch('/front/social/{frontSocail}', 'FrontController@updateSocial')->name('admin.front_social.update');
+    Route::delete('/front/social/{frontSocail}', 'FrontController@deleteSocial')->name('admin.front_social.delete');
+    Route::get('/front/social/{frontSocail}', 'FrontController@editSocialInfo')->name('admin.front_social.ajax');
+
+
+
+    Route::get('/front/faq', 'FrontController@editFaq')->name('admin.front_faq.edit');
+    Route::post('/front/faq', 'FrontController@storeFaq')->name('admin.front_faq.store');
+    Route::patch('/front/faq/{frontFaq}', 'FrontController@updateFaq')->name('admin.front_faq.update');
+    Route::delete('/front/faq/{frontFaq}', 'FrontController@deleteFaq')->name('admin.front_faq.delete');
+    Route::get('/front/faq/{frontFaq}', 'FrontController@editFaqInfo')->name('admin.front_faq.ajax');
+
     //========================== TODOS MANIPULATION ====================================================================
     Route::get('todos', 'TodosController@index')->name('admin.todos.index');
 

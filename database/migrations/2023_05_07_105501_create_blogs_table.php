@@ -21,7 +21,7 @@ class CreateBlogsTable extends Migration
             $table->string('img_cover', 200)->nullable();
             $table->longText('description')->nullable();
             $table->tinyInteger('is_page')->default(0)->comment("0 for blog 1 for page");
-            $table->dateTime('published_at');
+            $table->dateTime('published_at')->nullable();
             $table->timestamps();
         });
     }

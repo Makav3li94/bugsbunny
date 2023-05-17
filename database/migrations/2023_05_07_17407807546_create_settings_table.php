@@ -18,6 +18,13 @@ class CreateSettingsTable extends Migration
             $table->string('domain')->nullable();
             $table->string('first_logo')->nullable();
             $table->string('second_logo')->nullable();
+            $table->integer('comment_score')->nullable()->default(1);
+            $table->integer('reply_score')->nullable()->default(1);
+            $table->integer('section_score')->nullable()->default(1);
+            $table->integer('admin_section_score')->nullable()->default(1);
+            $table->integer('user_section_score')->nullable()->default(1);
+            $table->integer('skip_section_score')->nullable()->default(1);
+            $table->tinyInteger('reg_type')->nullable()->default(0)->comment("0 for sms and 1 for email 2 for both");
             $table->longText('wysiwyg')->nullable()->comment('Will be put on user main dashboard');
             $table->longText('_key')->nullable();
             $table->timestamps();

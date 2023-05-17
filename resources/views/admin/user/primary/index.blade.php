@@ -1,9 +1,9 @@
 @extends('layouts.main-dashboard')
-@section('title')لیست حساب اصلی@stop
-@section('current-page-title')لیست حساب اصلی@stop
+@section('title')لیست کاربران@stop
+@section('current-page-title')لیست کاربران@stop
 @section('breadcrumbs')
-    <li class="breadcrumb-item">شرکت ها</li>
-    <li class="breadcrumb-item active">لیست شرکت ها</li>
+    <li class="breadcrumb-item">کاربران </li>
+    <li class="breadcrumb-item active">لیست کاربران</li>
 @stop
 @section('content')
     <!-- List Customer -->
@@ -11,8 +11,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">لیست حساب اصلی</h4>
-                    <p class="card-subtitle">در اینجا لیست حساب های اصلی خود را مشاهده کنید.</p>
+                    <h4 class="card-title">لیست کاربران</h4>
+                    <p class="card-subtitle">در اینجا لیست کاربران خود را مشاهده کنید.</p>
                     <div class="table-responsive px-1">
                         <table id="sort-table-1"
                                class="mt-4 display nowrap table table-sm table-striped table-bordered table-hover text-center v-middle"

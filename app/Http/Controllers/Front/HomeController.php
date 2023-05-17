@@ -5,13 +5,18 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\Category;
-use App\Models\Product;
+use App\Models\FrontCallTo;
+use App\Models\FrontFaq;
+use App\Models\FrontFeature;
+use App\Models\FrontHero;
+use App\Models\FrontOverlay;
+use App\Models\FrontSocail;
+use App\Models\FrontWay;
 use App\Models\Quiz;
 use App\Models\QuizHeader;
 use App\Models\Reply;
 use App\Models\Section;
 use App\Models\Setting;
-use App\Models\UserCompany;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -20,7 +25,15 @@ class HomeController extends Controller
     {
         $setting = Setting::first();
         $categories = Category::all();
-        return view('front.home', compact('setting', 'categories'));
+
+        $frontFaqs = FrontFaq::all();
+        $frontCallTo = FrontCallTo::first();
+        $frontFeatures = FrontFeature::all();
+        $frontHeros = FrontHero::first();
+        $frontOverlay = FrontOverlay::first();
+        $frontWays = FrontWay::all();
+
+        return view('front.home', compact('setting', 'categories', 'frontCallTo', 'frontFaqs', 'frontFeatures', 'frontHeros', 'frontOverlay',  'frontWays'));
     }
 
     public function forum()
@@ -35,10 +48,10 @@ class HomeController extends Controller
             $q->with('answers');
         }])->first();
         $section->increment('total_views');
-        $replies = Reply::where([['section_id',$section->id],['parent_id',0]])->with(['user','children' => function ($q) {
+        $replies = Reply::where([['section_id', $section->id], ['parent_id', 0]])->with(['user', 'children' => function ($q) {
             $q->with('user');
         }])->withCount(['likes', 'dislikes'])->get();
-        return view('front.section', compact('section','replies'));
+        return view('front.section', compact('section', 'replies'));
     }
 
     public function quiz(Request $request, Section $section)
@@ -67,7 +80,10 @@ class HomeController extends Controller
 
     public function show($slug)
     {
-        $page = Blog::where('slug', $slug)->firstOrFail();
+        $page = Blog::where('slug', $slug)->first();
+        if (!$page){
+            return redirect(route($slug));
+        }
         return view('front.page', compact('page'));
     }
 

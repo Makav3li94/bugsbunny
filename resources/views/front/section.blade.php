@@ -279,13 +279,13 @@
                                     </div>
                                     <div class="best-ans-content d-flex">
                                         <div class="action-button-container action-btns">
-                                        <form action="{{route('likeReply',$reply->id)}}" method="post">
+                                        <form action="{{route('likeReply',$replyChild->id)}}" method="post">
                                             @csrf
                                             <button type="submit" class="action_btn btn-ans ask-btn too-btn">
                                                 مثبت <span>{{$replyChild->likes_count}}</span>
                                             </button>
                                         </form>
-                                        <form action="{{route('dislikeReply',$reply->id)}}" method="post">
+                                        <form action="{{route('dislikeReply',$replyChild->id)}}" method="post">
                                             @csrf
                                             <button type="submit" class="action_btn btn-ans ask-btn too-btn">
                                                 منفی <span>{{$replyChild->dislikes_count}}</span>
