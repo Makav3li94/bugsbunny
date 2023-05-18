@@ -11,9 +11,12 @@
             </div>
             <div class="sign_right signup_right">
                 <div class="sign_inner signup_inner">
-
+                    <div class="text-center">
+                        <h3>ورود به ایزباگ</h3>
+                        <p>حساب کاربری ندارید ؟ <a href="{{route('register')}}">ثبت نام</a></p>
+                    </div>
                     <form class="row login_form" id="loginform" action="{{route('login')}}" method="post"
-                          style="{{session()->get('reset')=='error' || session()->get('url')==route('password.reset') ? 'display:none' : 'display:block'}}">
+                          style="{{session()->get('reset')=='error' || session()->get('url')==route('password.reset') ? 'display:none' : 'display:flex'}}">
                         @csrf
                         <div class="col-lg-12 form-group">
 
@@ -33,7 +36,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12 form-group">
-                            <input class="form-control" type="text" required
+                            <input class="form-control" type="text" required       style="direction: rtl"
                                    placeholder="{{$array[2].' '.$array[1].' '.$array[0]}} برابر با چه عددی است؟ "
                                    name="result">
                             @if(session()->get('result')=='incorrect')
@@ -60,7 +63,7 @@
                     </form>
 
                     <form class="form-horizontal" method="post" action="{{route('password.reset')}}" id="recoverform"
-                          style="{{session()->get('reset')=='error' || session()->get('url')==route('password.reset') ? 'display:block' : 'display:none'}}">
+                          style="{{session()->get('reset')=='error' || session()->get('url')==route('password.reset') ? 'display:flex' : 'display:none'}}">
                         @csrf
                         <div class="form-group ">
                             <div class="col-xs-12">

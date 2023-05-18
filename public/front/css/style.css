@@ -9702,6 +9702,8 @@ body {
     margin-bottom: 3%;
     border-radius: 0.5rem;
     background: #fff;
+    direction: rtl;
+    text-align: right;
 }
 .profile-img{
     text-align: center;

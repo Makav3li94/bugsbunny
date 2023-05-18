@@ -196,7 +196,7 @@ class AuthController extends Controller
                 'name' => 'required|string',
                 'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/',
                 'email' => 'required|email|string|unique:users,email,NULL,id,deleted_at,NULL',
-                'password' => 'nullable|string|min:6',
+                'password' => 'nullable|confirmed|min:6',
                 'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:512',
                 'familiarity' => 'nullable|numeric|integer|min:1|max:' . $familiaritiesCount,
                 'birthDate' => 'required',

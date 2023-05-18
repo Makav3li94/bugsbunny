@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{asset('front/css/style.css')}}">
 
 
-    <title>IsBut| register</title>
+    <title>ایزباگ - ورود / ثبت نام</title>
 </head>
 <body data-scroll-animation="true">
 <div id="preloader">
@@ -25,11 +25,11 @@
         <div class="round_spinner">
             <div class="spinner"></div>
             <div class="text">
-                <img src="{{asset('front/img/spinner_logo.png')}}" alt="">
-                <h4><span>ایز</span>باگ</h4>
+                <img src="{{asset('front/img/favicon.png')}}" width="30px" alt="">
+                <h4 class="mt-2"><span>ایز</span>باگ</h4>
             </div>
         </div>
-        <h2 class="head">درحال بارگذاری</h2>
+        <h2 class="head">در حال آماده هسازی</h2>
         <p></p>
     </div>
 </div>

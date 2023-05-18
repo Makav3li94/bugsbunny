@@ -22,9 +22,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->longText('description');
             $table->string('excerpt');
-            $table->text('prize_text');
+            $table->text('prize_text')->nullable();
             $table->date('expire_date');
             $table->integer('total_views')->default(0)->nullable();
+            $table->tinyInteger('status')->default(0)->comment(' 0 for not show and 1 for show');
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -123,6 +123,17 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-3 text-right control-label col-form-label">وضعیت چالش(لطفا پس از اتمام طراحی تمامی سوالات، وضعیت را تایید کنید): </label>
+                                    <div class="col-12">
+                                        <input type="checkbox" name="status" class="form-control" data-on="تایید  شده."
+                                               data-off="تایید نشده"
+                                               data-toggle="toggle" data-size="bg" data-onstyle="success"
+                                               data-style="ios"
+                                               @if($challenge->status=='1') checked @endif id="{{$challenge->id}}"/>
+
+                                    </div>
+                                </div>
                                 <div class="form-group m-b-0">
                                     <button type="submit"
                                             class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left">

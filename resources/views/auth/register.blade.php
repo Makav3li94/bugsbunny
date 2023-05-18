@@ -29,6 +29,7 @@
                         <div class="col-sm-12 form-group">
                             <div id="registerResultWrapper">
                                 <input class="form-control"
+                                       style="direction: rtl;text-align: center"
                                        type="text"
                                        required=""
                                        placeholder="{{$array[2].' '.$array[1].' '.$array[0]}} برابر با چه عددی است؟ "

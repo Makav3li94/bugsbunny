@@ -10,11 +10,7 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $challenge = Section::findOrFail($request->id);
@@ -23,12 +19,6 @@ class QuestionController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -66,13 +56,7 @@ class QuestionController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Question $question
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Question $question)
     {
         $request->validate([
@@ -101,12 +85,7 @@ class QuestionController extends Controller
         return redirect()->back()->with('update', 'success');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Question $question
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Question $question)
     {
         //

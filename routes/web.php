@@ -87,7 +87,6 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     //challenges  Manipulation
     Route::resource('challenge', 'SectionController', ['names' => 'admin.challenge']);
     Route::resource('question', 'QuestionController', ['names' => 'admin.question'])->except(['create','show']);
-    Route::resource('answer', 'AnswerController', ['names' => 'admin.answer'])->except(['create','edit','show']);
     Route::resource('score', 'TotalScoreController', ['names' => 'admin.score'])->except(['create','edit','show']);
     Route::post('score/{user}', 'TotalScoreController@store')->name('admin.score.store');
     //========================== AJAX ROUTES START =====================================================================
@@ -244,7 +243,8 @@ Route::group(['namespace' => 'User', 'middleware' => 'auth', 'prefix' => 'dashbo
     //Faqs Manipulation (Not Ajax)
     Route::post('faq/{ticket}', 'FaqController@store')->name('user.faq.store');
     Route::get('download/faq', 'FaqController@downloadFile')->name('user.faq.download');
-
+    Route::resource('challenge', 'SectionController', ['names' => 'user.challenge']);
+    Route::resource('question', 'QuestionController', ['names' => 'user.question'])->except(['create','show']);
 
 });
 

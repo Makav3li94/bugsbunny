@@ -6,6 +6,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Familiarity;
+use App\Models\Section;
 use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\Ticket;
@@ -24,7 +25,7 @@ class UserController extends Controller
     {
         $user = User::find(auth()->id());
         //Open Tickets Count
-        $tickets = number_format(Ticket::where([['user_id', auth()->user()->id], ['status', '1']])->get()->count());
+        $tickets = Ticket::where('user_id', auth()->user()->id)->orderBy('id', 'desc')->get();
         if (Setting::all()->count() > 0) {
             $setting = Setting::all()->first();
         } else {
@@ -35,7 +36,9 @@ class UserController extends Controller
         $sliders = Slider::all();
         $date = $this->convertToJalaliDate($user->birthDate, TRUE);
         $user['birthDate'] = $date;
-        return view('user.dashboard', compact('tickets', 'setting', 'sliders', 'cats', 'user'));
+        $sections = Section::where('status',1)->whereIn('category_id',json_decode($user->cats))->get();
+        $userSections = Section::where([['type', 0], ['user_id', auth()->id()]])->get();
+        return view('user.dashboard', compact('tickets', 'setting', 'sliders', 'cats', 'user','sections','userSections'));
     }
 
     protected function update(Request $request, User $user)

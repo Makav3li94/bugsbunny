@@ -42,7 +42,7 @@
                                         {{Verta::instance($challenge->expire_date)->format('Y/m/d')}}
                                     </td>
                                     <td>
-                                        @if($challenge)
+                                        @if($challenge->status == 1)
                                             <span class="badge badge-pill badge-success">تایید شده</span>
                                         @else
                                             <span class="badge badge-pill badge-danger">تایید نشده</span>

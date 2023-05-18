@@ -296,7 +296,7 @@ $(function () {
     // ==============================================================
     $('#to-recover').on("click", function () {
         $("#loginform").slideUp();
-        $("#recoverform").fadeIn();
+        $("#recoverform").fadeIn().css("display","flex")
     });
 
 
@@ -505,7 +505,7 @@ $(document).ready(function () {
                 } else if (response.code == 'sent') {
                     $('#verificationForm input[name=mobile]').val('شماره همراه : ' + response.mobile);
                     $("#registerForm").slideUp();
-                    $("#verificationForm").fadeIn();
+                    $("#verificationForm").fadeIn().css("display","flex");
                     var oneMinute = new Date().getTime() + 59000;
                     $('#countDown').countdown(oneMinute)
                         .on('update.countdown', function (event) {

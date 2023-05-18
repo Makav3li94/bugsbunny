@@ -10,8 +10,7 @@ use App\Traits\Numbers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Verta;
-use Str;
-
+use Illuminate\Support\Str;
 class SectionController extends Controller
 {
     use Numbers;
@@ -96,7 +95,7 @@ class SectionController extends Controller
             $published_at = Carbon::now()->toDateTimeString();
         }
 
-
+        if (isset($request->status)) $status = 1; else $status = 0;
         $challenge->update([
             'title' => $request->title,
             'slug' => !empty($request->slug) ? preg_replace('/\s+/', '-', $request->slug) : Str::slug($request->title, '-'),
@@ -105,6 +104,7 @@ class SectionController extends Controller
             'excerpt' => $request->excerpt,
             'prize_text' => $request->prize_text,
             'expire_date' => $published_at,
+            'status' => $status,
         ]);
 
         return redirect()->back()->with('update', 'success');

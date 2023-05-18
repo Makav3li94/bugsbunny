@@ -8,25 +8,25 @@
          alt="">
 
 
-
-
-    <div class="container custom_container">
-        <form action="#" class="banner_search_form banner_search_form_two">
-            <div class="input-group">
-                <input type="search" class="form-control" placeholder='دنبال چی میگردید ؟'>
-                <div class="input-group-append">
-                    <select class="custom-select" id="inlineFormCustomSelect">
-                        <option selected>همه دسته ها</option>
-                        @forelse($categories as $cat)
-                            <option value="{{$cat->id}}">{{$cat->title}}</option>
-                        @empty
-                        @endforelse
-                    </select>
+    @if(strpos(url()->current(),'/dashboard')==false)
+        <div class="container custom_container">
+            <form action="#" class="banner_search_form banner_search_form_two">
+                <div class="input-group">
+                    <input type="search" class="form-control" placeholder='دنبال چی میگردید ؟'>
+                    <div class="input-group-append">
+                        <select class="custom-select" id="inlineFormCustomSelect">
+                            <option selected>همه دسته ها</option>
+                            @forelse($categories as $cat)
+                                <option value="{{$cat->id}}">{{$cat->title}}</option>
+                            @empty
+                            @endforelse
+                        </select>
+                    </div>
+                    <button type="submit"><i class="icon_search"></i></button>
                 </div>
-                <button type="submit"><i class="icon_search"></i></button>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+    @endif
 </section>
 
 <section class="page_breadcrumb">

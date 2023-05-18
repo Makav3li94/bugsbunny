@@ -107,7 +107,13 @@
                                 <small class="invalid-text">{{$errors->first('password')}}</small>
                             @endif
                         </div>
-
+                        <div class="col-sm-12 form-group">
+                            <label>تایید رمز عبور</label>
+                            <input dir="ltr" type="password" class="form-control text-left" value="" name="password_confirmation">
+                            @if($errors->has('password_confirmation'))
+                                <small class="invalid-text">{{$errors->first('password_confirmation')}}</small>
+                            @endif
+                        </div>
                         <!-- End Date Migration -->
                         <div class="col-sm-12 form-group">
                             <div class="float-left">
