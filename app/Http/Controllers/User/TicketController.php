@@ -59,7 +59,7 @@ class TicketController extends Controller
             'question' => $request['description'],
         ]);
 //        $this->notifyAdmin($user->id, $user->name, $user->company->company_name, $user->mobile, 'ticket', $ticket->id, 0,'کاربر تیکت جدیدی ارسال کرده است.');
-        return redirect(route('user.ticket.edit',  $ticket->id));
+        return back();
     }
 
 
@@ -75,13 +75,14 @@ class TicketController extends Controller
                 ->orWhere('reply', '!=', '')
                 ->where('seen', '2')
                 ->update(['seen' => '3']);
-
-            return view('user.tickets.show', compact('ticket'));
+            $ticket = $ticket->with('faqs')->first();
+            $ticket['date'] = verta($ticket->created_at)->formatDifference();
+            return response()->json(['ticket' =>$ticket ]);
         } else {
             abort(404);
         }
     }
-
+//{{route('user.faq.download',['type'=>'user','id'=>$faq->id,'mac'=>Hash::make('(8&J.Ke#_MR%^2P91?/\G!xZ~97LaS'.$faq->id)])}}
     protected function status(Request $request, Ticket $ticket)
     {
         if ($ticket->user_id == auth()->user()->id) {

@@ -81,7 +81,7 @@
                                 <div class="media-body">
                                     <h5 class="mt-0 mb-2"><strong>کاربر {{$ticket->user->name}}</strong><span dir="ltr"
                                                                                                               class="float-left text-success">
-                                            {{Verta::instance($faq->created_at)->format('Y/n/j - H:i')}}</span>
+                                            {{$faq->created_at}}</span>
                                     </h5>
                                     <p class="mb-0 font-12 text-justify">{{$faq->question}}</p>
                                     @if($faq->user_file!=null)

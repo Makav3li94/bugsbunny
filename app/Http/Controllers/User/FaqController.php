@@ -32,7 +32,7 @@ class FaqController extends Controller
                 'user_file' => $file,
                 'question' => $request['question'],
             ]);
-            $this->notifyAdmin($user->id, $user->name, $user->company->company_name, $user->mobile, 'ticket', $ticket->id, 0,'کاربر به تیکت پاسخ داده است.');
+//            $this->notifyAdmin($user->id, $user->name, $user->company->company_name, $user->mobile, 'ticket', $ticket->id, 0,'کاربر به تیکت پاسخ داده است.');
             return redirect()->back()->with([
                 'message' => 'sent'
             ]);

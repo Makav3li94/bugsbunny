@@ -97,7 +97,12 @@
                                 </li>
                                 <li class="nav-item ">
                                     <a class="nav-link" id="ticket-tab" data-toggle="tab" href="#ticket" role="tab"
-                                       aria-controls="activity" aria-selected="false">تیکت ها</a>
+                                       aria-controls="ticket" aria-selected="false">تیکت ها</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" id="add-ticket-tab" data-toggle="tab" href="#add_ticket"
+                                       role="tab"
+                                       aria-controls="add_ticket" aria-selected="false">تیکت جدید</a>
                                 </li>
                             </ul>
                         </div>
@@ -472,7 +477,8 @@
                                         </span>
                                                     </td>
                                                     <td style="width: 120px;">
-                                                        <a href="{{route('user.ticket.edit',$ticket->id)}}"
+                                                        <a href="javascript:void(0)"
+                                                           onclick="getTicket({{$ticket->id}})"
                                                            class="btn btn-success btn-sm"><i
                                                                 class="d-inline-flex align-middle ti-eye ml-1"></i>مشاهده
                                                         </a>
@@ -495,12 +501,126 @@
                                             @empty
                                                 <div class="alert alert-warning">در حال حاضر، تیکتی موجود نیست.</div>
                                             @endforelse
-
+                                            <a href="" class="btn btn-success">تیکت جدید</a>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-
+                                <div class="tab-pane fade" id="add_ticket" role="tabpanel"
+                                     aria-labelledby="add-ticket-tab">
+                                    <div class="table-responsive">
+                                        <form class="form-horizontal clearfix" method="post"
+                                              action="{{route('user.ticket.store')}}" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 text-right control-label col-form-label">بخش
+                                                    مربوطه:<span
+                                                        class="text-danger mr-1">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <select class="select2 form-control custom-select"
+                                                            style="width: 100%;" required
+                                                            name="section">
+                                                        <option></option>
+                                                        <option
+                                                            value="پشتیبانی" {{collect(old('section'))->contains('پشتیبانی') ? 'selected' : ''}}>
+                                                            پشتیبانی
+                                                        </option>
+                                                        <option
+                                                            value="مدیریت" {{collect(old('section'))->contains('مدیریت') ? 'selected' : ''}}>
+                                                            مدیریت
+                                                        </option>
+                                                        <option
+                                                            value="مالی" {{collect(old('section'))->contains('مالی') ? 'selected' : ''}}>
+                                                            مالی
+                                                        </option>
+                                                    </select>
+                                                    @if($errors->has('section'))
+                                                        <small
+                                                            class="invalid-text">{{$errors->first('section')}}</small>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 text-right control-label col-form-label">درجه
+                                                    اهمیت:<span
+                                                        class="text-danger mr-1">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <select class="select2 form-control custom-select"
+                                                            style="width: 100%;" required
+                                                            name="priority">
+                                                        <option></option>
+                                                        <option
+                                                            value="عادی" {{collect(old('priority'))->contains('عادی') ? 'selected' : ''}}>
+                                                            عادی
+                                                        </option>
+                                                        <option
+                                                            value="مهم" {{collect(old('priority'))->contains('مهم') ? 'selected' : ''}}>
+                                                            مهم
+                                                        </option>
+                                                        <option
+                                                            value="خیلی مهم" {{collect(old('priority'))->contains('خیلی مهم') ? 'selected' : ''}}>
+                                                            خیلی مهم
+                                                        </option>
+                                                    </select>
+                                                    @if($errors->has('priority'))
+                                                        <small
+                                                            class="invalid-text">{{$errors->first('priority')}}</small>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 text-right control-label col-form-label">عنوان
+                                                    درخواست:<span
+                                                        class="text-danger mr-1">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" placeholder="" name="title"
+                                                           value="{{old('title')}}">
+                                                    @if($errors->has('title'))
+                                                        <small class="invalid-text">{{$errors->first('title')}}</small>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 text-right control-label col-form-label">شرح
+                                                    درخواست:<span
+                                                        class="text-danger mr-1">*</span></label>
+                                                <div class="col-sm-9">
+                                <textarea type="text" class="form-control" rows="5"
+                                          placeholder="فارسی تایپ کتید." name="description"
+                                          required>{{old('description')}}</textarea>
+                                                    @if($errors->has('description'))
+                                                        <small
+                                                            class="invalid-text">{{$errors->first('description')}}</small>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 text-right control-label col-form-label">پیوست
+                                                    فایل:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="file" class="form-control" name="file">
+                                                    <small class="text-info"> فقط فایل با فرمت zip و rar و pdf و doc و
+                                                        docx و jpg و png و حداکثر حجم
+                                                        5000
+                                                        کیلوبایت مجاز است.</small>
+                                                    @if($errors->has('file'))
+                                                        <p>
+                                                            <small
+                                                                class="invalid-text">{{$errors->first('file')}}</small>
+                                                        </p>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="form-group m-b-0">
+                                                <button type="submit"
+                                                        class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left">
+                                                    ارسال
+                                                    تیکت
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -509,6 +629,100 @@
             </div>
         </div>
     </section>
+    {{--    Tickets--}}
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+         aria-hidden="true" style="display: none;" id="collapseTicketEdit">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="sort-table-1"
+                                   class="mt-4 display nowrap table table-sm table-striped table-bordered table-hover text-center v-middle"
+                                   width="100%">
+                                <thead class="bg-success text-white">
+                                <tr>
+                                    <th class="text-center">تیکت</th>
+                                    <th class="text-center">تاریخ ثبت</th>
+                                    <th class="text-center">بخش</th>
+                                    <th class="text-center">اهمیت</th>
+                                    <th class="text-center">وضعیت پاسخ</th>
+                                    <th class="text-center">وضعیت تیکت</th>
+                                </tr>
+                                </thead>
+                                <tbody id="TicketBody">
+
+                                </tbody>
+                            </table>
+                            <div id="chats" style="display:none;">
+
+                            </div>
+                            <div id="showForm" style="display: none">
+                                <div class="form-group text-center">
+                                    <button type="button"
+                                            class="btn btn-outline-success btn-rounded waves-effect waves-light"
+                                            data-toggle="collapse" href="#collapseticket"><i
+                                            class="ti-target align-middle ml-1"></i>ارسال سوال
+                                    </button>
+                                </div>
+                                <form
+                                    class="form-horizontal clearfix collapse {{$errors->has('question') || $errors->has('file') ? 'in' : ''}}"
+                                    id="collapseticket" method="post"
+                                    action="" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 text-right control-label col-form-label">سوال جدید:<span
+                                                class="text-danger mr-1">*</span></label>
+                                        <div class="col-sm-9">
+                                <textarea name="question" type="text" class="form-control" rows="5"
+                                          placeholder="فارسی تایپ کنید."
+                                          required>{{old('question')}}</textarea>
+                                            @if($errors->has('question'))
+                                                <small class="invalid-text">{{$errors->first('question')}}</small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 text-right control-label col-form-label">پیوست فایل
+                                            جدید:</label>
+                                        <div class="col-sm-9">
+                                            <input name="file" type="file" class="form-control">
+                                            <small class="text-info"> فقط فایل با فرمت zip و rar و pdf و doc و docx و
+                                                jpg و png و حداکثر حجم
+                                                5000
+                                                کیلوبایت مجاز است.
+                                            </small>
+                                            @if($errors->has('file'))
+                                                <p>
+                                                    <small class="invalid-text">{{$errors->first('file')}}</small>
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-b-0">
+                                        <button type="submit"
+                                                class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left">
+                                            ارسال
+                                            سوال
+                                        </button>
+                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
+                                            بستن
+                                        </button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    {{--    editQuestions--}}
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
          aria-hidden="true" style="display: none;" id="collapseQuestionEdit">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -660,7 +874,7 @@
             </div>
         </div>
     </div>
-
+    {{--Questions--}}
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
          aria-hidden="true" style="display: none;" id="collapseQuestionIndex">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -1029,5 +1243,112 @@
                 }
             });
         }
+
+        function getTicket(id) {
+
+            $.ajax({
+                'url': '/dashboard/ticket/' + id + '/edit',
+                'type': 'get',
+                'dataType': 'json',
+                data: {
+                    id: id,
+                },
+                beforeSend: function () {
+                    $('.preloader').fadeIn();
+                },
+                complete: function () {
+                    $('.preloader').fadeOut();
+                },
+                success: function (response) {
+                    var html
+                    var chats
+                    var ticket = response.ticket;
+                    var answer
+                    var status
+                    $('#collapseTicketEdit').modal('show');
+                    if (ticket.answer == '0') {
+                        answer = '<span class="label label-info">پیام کاربر</span>'
+                    } else if (ticket.answer == '1') {
+                        answer = '<span class="label label-info">در حال رسیدگی</span>'
+                    } else if (ticket.answer == '2') {
+                        answer = '<span class="label label-info">پیام مدیر</span>'
+                    }
+                    if (ticket.status == '0') {
+                        status = '<span class="label label-info">بسته</span>'
+                    } else {
+                        status = '<span class="label label-warning">باز</span>'
+                    }
+
+                    html += '<tr>\n' +
+                        '  <td>' + ticket.title + '</td>\n' +
+                        '  <td>' + ticket.date + '</td>\n' +
+                        '  <td>' + ticket.section + '</td>\n' +
+                        '  <td>' + ticket.priority + '</td>\n' +
+                        '  <td>' + status + '</td>\n' +
+                        '  <td>' + answer + '</td>\n' +
+                        '   </tr>';
+                    $('#chats').html('');
+                    $.each(ticket.faqs, function (key, faq) {
+                        var text,name,user,link,pic
+                        if (faq.question != null) {
+                             text = faq.question
+                             name = ticket.user_id
+                             user = 'کاربر'
+                            pic = '{{asset('images/user/'.$user->avatar)}}'
+                            if(faq.user_file != null){
+                                 link = '<div class="alert alert-success alert-rounded font-12 mt-2 mb-0 p-1">'+
+                                 '<i class="fa fa-check-circle fa-lg align-middle text-success"></i>'+
+                                     '<a href="">دانلود فایل ضمیمه '+user+'</a></div>'
+                            }else {
+                                link = ''
+                            }
+                            chats = '<ul class="list-unstyled p-0"><li class="media mb-3 mt-2 p-3" style="border:1px dotted #000">\n' +
+                                '<img class="d-none d-sm-block ml-3" src="'+pic+'" width="60">\n'+
+                                '<div class="media-body">\n'+
+                                ' <h5 class="mt-0 mb-2 text-right"><strong>'+name+'</strong>\n'+
+                                ' <span dir="ltr" class="float-left text-success">'+faq.created_at+'</span>\n'+
+                                ' </h5>\n'+
+                                ' <p class="mb-0 font-12 text-justify">'+text+'</p>\n'+
+                                +link+
+                                '</div></li>\n';
+                        }
+                        if (faq.reply != null) {
+                             text = faq.reply
+                             name = 'مدیریت'
+                             user = 'مدیر'
+                            pic = 'http://127.0.0.1:8000/admin/assets/images/2.png'
+                            if(faq.admin_file != null){
+                                link = '<div class="alert alert-success alert-rounded font-12 mt-2 mb-0 p-1">'+
+                                    '<i class="fa fa-check-circle fa-lg align-middle text-success"></i>'+
+                                    '<a href="">دانلود فایل ضمیمه '+user+'</a></div>'
+                            }else {
+                                link = ''
+                            }
+                            chats += '<ul class="list-unstyled p-0"><li class="media mb-3 mt-2 p-3" style="border:1px dotted #000">\n' +
+                                '<img class="d-none d-sm-block ml-3" src="'+pic+'" width="60">\n'+
+                                '<div class="media-body">\n'+
+                                ' <h5 class="mt-0 mb-2 text-right"><strong>'+name+'</strong>\n'+
+                                ' <span dir="ltr" class="float-left text-success">'+faq.created_at+'</span>\n'+
+                                ' </h5>\n'+
+                                ' <p class="mb-0 font-12 text-justify">'+text+'</p>\n'+
+                                +link+
+                                '</div></li>\n';
+                        }
+
+                        $('#chats').append(chats);
+                        $('#collapseticket').attr('action', '/dashboard/faq/' + faq.id);
+
+                    });
+                    // $('#section_id_input').val(id)
+                    $('#TicketBody').html(html);
+                    $('#chats').css('display', 'block');
+                    if (ticket.status == '1') {
+                        $('#showForm').css('display', 'block');
+                    }
+                }
+
+            });
+        }
     </script>
 @endsection
+
