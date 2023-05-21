@@ -17,7 +17,11 @@
                         <div class="col-lg-9">
                             <div class="forum-post-top">
                                 <a class="author-avatar" href="#">
-                                    <img src="{{asset('front/img/forum/author-avatar.png')}}" alt="">
+                                    @if($section->type ==1)
+                                        <img src="{{asset('admin/assets/images/2.png')}}" width="50"  alt="cmm">
+                                    @else
+                                        <img src="{{asset('images/user/'.$section->user->avatar)}}" width="50"  alt="cmm">
+                                    @endif
                                 </a>
                                 <div class="forum-post-author">
                                     <a class="author-name"
@@ -42,17 +46,15 @@
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            <div class="action-button-container">
-                                <a href="#" class="action_btn btn-ans ask-btn">شرکت در چالش</a>
-                            </div>
+                            <div class="alert alert-info text-center">{{$section->status == 2 ? 'به اتمام رسیده' : 'چالش فعال است.'}}</div>
                         </div>
                     </div>
-
+                    <hr>
                     <!-- Forum post content -->
-                    <div class="q-title">
+                    <div class="q-title mb-3">
                         <span class="question-icon" title="Question">چالش:</span>
                         <h1>{{$section->title}}</h1>
-                        <a href="#" class="badge">{{$section->prize_text}}</a>
+                        <a href="#" class="badge">جایزه چالش: {{$section->prize_text}}</a>
                     </div>
                     <div class="forum-post-content">
                         <div class="content">
@@ -60,22 +62,22 @@
                             <form action="{{route('quiz',$section)}}" method="post" class="">
                                 @csrf
 
-                                @forelse($section->questions as $question)
+                                @forelse($section->questions as $key=> $question)
                                     <blockquote>
-                                        <h4 class="c_head">{{$question->question}}</h4>
-                                        <div class="author">{!! $question->explanation !!}</div>
+                                        <h4 class="c_head">سوال{{$key+1}}: {{$question->question}}</h4>
+                                        <div class="author">توضیحات سوال: {!! $question->explanation !!}</div>
                                         <div></div>
                                     </blockquote>
                                     <div class="row">
                                         @forelse($question->answers as $key=> $answer)
 
-                                            <div class="col-sm-6 form-group pb-5" style="border-bottom: 1px dotted red">
+                                            <div class="col-sm-6 form-group pb-5" style="{{$key < 2 ? 'border-bottom: 1px dotted #313123' :''}}">
                                                 <div id="registerInputWrapper">
                                                     <div class="form-check">
-                                                        <label class="form-check-label d-block" for="answer{{$key}}">
-                                                            {{$answer->answer}}
+                                                        <label class="form-check-label " for="answer{{$key}}">
+                                                          گزینه {{$key+1}}:   {{$answer->answer}}
                                                         </label>
-                                                        <input class="form-check-input d-block" type="radio"
+                                                        <input class="form-check-input" style="left: 20px" type="radio"
                                                                id="answer{{$key}}" name="answer[{{$question->id}}]"
                                                                value="{{$answer->id}}">
                                                     </div>
@@ -94,7 +96,7 @@
                                     </div>
                                 @else
                                     <div class="alert alert-warning text-center">
-                                        جهت شرکت در چالش باید ثبت نام کنید یا وارد شوید.
+                                        <a href="{{route('login')}}">   جهت شرکت در چالش باید ثبت نام کنید یا وارد شوید.</a>
                                     </div>
                                 @endif
                             </form>
@@ -104,7 +106,7 @@
                                 <img src="{{asset('front/img/favicon.png')}}" width="30px" alt="">
                             </div>
                         </div>
-                        <div class="action-button-container action-btns">
+                        <div class="action-button-container action-btns text-center">
                             <button type="button" class="action_btn btn-ans ask-btn reply-btn"
                                     data-toggle="collapse" href="#collapseReply">افزودن کامنت
                             </button>
@@ -116,8 +118,8 @@
                             <input type="hidden" name="section_id" value="{{$section->id}}">
                             <div class="row form-group">
                                 <div class="col-sm-12">
-                                    <textarea name="body" class="form-control" rows="5"
-                                              cols="4">{{old('description')}}</textarea>
+                                    <textarea name="body" class="form-control" rows="2"
+                                              cols="2">{{old('description')}}</textarea>
                                 </div>
                             </div>
                             <div class="form-group m-b-0">
@@ -208,6 +210,7 @@
                                                 data-toggle="collapse" href="#collapseReplyChild{{$reply->id}}">پاسخ به این کامنت
                                         </button>
 {{--                                        <a href="#" class="action_btn btn-ans ask-btn too-btn">مثبت</a>--}}
+                                        @if($reply->user_id != auth()->id())
                                         <form action="{{route('likeReply',$reply->id)}}" method="post">
                                             @csrf
                                             <button type="submit" class="action_btn btn-ans ask-btn too-btn">
@@ -220,30 +223,32 @@
                                                 منفی <span>{{$reply->dislikes_count}}</span>
                                             </button>
                                         </form>
+                                        @endif
 
-                                        <form class="form-horizontal clearfix collapse mt-5"
-                                              action="{{route('reply.store')}}"
-                                              method="post"
-                                              id="collapseReplyChild{{$reply->id}}">
-                                            @csrf
-                                            <input type="hidden" name="section_id" value="{{$section->id}}">
-                                            <input type="hidden" name="parent_id" value="{{$reply->id}}">
-                                            <div class="row form-group">
-                                                <div class="col-sm-12">
-                                    <textarea name="body" class="form-control" rows="5"
-                                              cols="4">{{old('body')}}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="form-group m-b-0">
-                                                <button type="submit" class="btn btn-success btn-rounded m-t-10">ارسال
-                                                </button>
-                                            </div>
-                                        </form>
                                     </div>
+                                    <form class="form-horizontal clearfix collapse mt-5"
+                                          action="{{route('reply.store')}}"
+                                          method="post"
+                                          id="collapseReplyChild{{$reply->id}}">
+                                        @csrf
+                                        <input type="hidden" name="section_id" value="{{$section->id}}">
+                                        <input type="hidden" name="parent_id" value="{{$reply->id}}">
+                                        <div class="row form-group">
+                                            <div class="col-sm-12">
+                                    <textarea name="body" class="form-control" rows="2"
+                                              cols="2">{{old('body')}}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-b-0">
+                                            <button type="submit" class="btn btn-success btn-rounded m-t-10">ارسال
+                                            </button>
+                                        </div>
+                                    </form>
+
                                 </div>
                             </div>
                             @forelse($reply->children as $replyChild)
-                                <div class="best-answer">
+                                <div class="best-answer ">
                                     <div class="row">
                                         <div class="col-lg-9">
                                             <div class="forum-post-top">
@@ -279,18 +284,20 @@
                                     </div>
                                     <div class="best-ans-content d-flex">
                                         <div class="action-button-container action-btns">
-                                        <form action="{{route('likeReply',$replyChild->id)}}" method="post">
-                                            @csrf
-                                            <button type="submit" class="action_btn btn-ans ask-btn too-btn">
-                                                مثبت <span>{{$replyChild->likes_count}}</span>
-                                            </button>
-                                        </form>
-                                        <form action="{{route('dislikeReply',$replyChild->id)}}" method="post">
-                                            @csrf
-                                            <button type="submit" class="action_btn btn-ans ask-btn too-btn">
-                                                منفی <span>{{$replyChild->dislikes_count}}</span>
-                                            </button>
-                                        </form>
+                                            @if($reply->user_id != auth()->id())
+                                                <form action="{{route('likeReply',$replyChild->id)}}" method="post">
+                                                    @csrf
+                                                    <button type="submit" class="action_btn btn-ans ask-btn too-btn">
+                                                        مثبت <span>{{$replyChild->likes_count}}</span>
+                                                    </button>
+                                                </form>
+                                                <form action="{{route('dislikeReply',$replyChild->id)}}" method="post">
+                                                    @csrf
+                                                    <button type="submit" class="action_btn btn-ans ask-btn too-btn">
+                                                        منفی <span>{{$replyChild->dislikes_count}}</span>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                         <p>
                                             {!! $replyChild->body !!}

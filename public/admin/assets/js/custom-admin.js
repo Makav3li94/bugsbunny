@@ -396,7 +396,8 @@ $(function () {
         "onlySelectOnDate": true,
         "calendarType": "persian",
         "observer": true,
-        "responsive": true
+        "responsive": true,
+        "minDate": new Date(),
     });
     $(".timepicker").pDatepicker({
         "format": "HH:mm",

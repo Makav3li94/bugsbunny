@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
 class User extends Authenticatable
 {
     use Notifiable, HasFactory, HasLikeable;
@@ -75,8 +74,6 @@ class User extends Authenticatable
         $positive = 0;
 
         foreach ($this->totalScore as  $value) {
-
-
             if ($value->type) {
                 $positive += $value->score;
             } else {
@@ -91,7 +88,14 @@ class User extends Authenticatable
             'total' => $total,
         ];
     }
-
+    public function posScore()
+    {
+        return $this->hasMany(TotalScore::class)->where('type', 1);
+    }
+    public function negScore()
+    {
+        return $this->hasMany(TotalScore::class)->where('type', 0);
+    }
     public function sendUserTicketNotification($user)
     {
         $this->notify(new UserTicketNotification($user));

@@ -6,10 +6,13 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Familiarity;
+use App\Models\Like;
+use App\Models\Reply;
 use App\Models\Section;
 use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\Ticket;
+use App\Models\TotalScore;
 use App\Models\User;
 use App\Traits\Helpers;
 use App\Traits\Numbers;
@@ -24,6 +27,7 @@ class UserController extends Controller
     protected function dashboard()
     {
         $user = User::find(auth()->id());
+
         //Open Tickets Count
         $tickets = Ticket::where('user_id', auth()->user()->id)->orderBy('id', 'desc')->get();
         if (Setting::all()->count() > 0) {
@@ -36,9 +40,17 @@ class UserController extends Controller
         $sliders = Slider::all();
         $date = $this->convertToJalaliDate($user->birthDate, TRUE);
         $user['birthDate'] = $date;
-        $sections = Section::where('status',1)->whereIn('category_id',json_decode($user->cats))->get();
+        $sections = Section::where('status', 1)->whereIn('category_id', json_decode($user->cats))->get();
         $userSections = Section::where([['type', 0], ['user_id', auth()->id()]])->get();
-        return view('user.dashboard', compact('tickets', 'setting', 'sliders', 'cats', 'user','sections','userSections'));
+//          Like::query()->whereMorphedTo('userable', $user)->get();
+
+        $likes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('likes_count');
+        $dislikes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('dislikes_count');
+        $plusScores = TotalScore::where([['user_id' , $user->id],['type',1]])->get()->sum('score');
+        $minusScores = TotalScore::where([['user_id' , $user->id],['type',0]])->get()->sum('score');
+//        $totalScore = ($likes - $dislikes) + ($plusScores - $minusScores);
+        $totalScore = $plusScores - $minusScores;
+        return view('user.dashboard', compact('tickets', 'setting', 'sliders', 'cats', 'user', 'sections', 'userSections','totalScore'));
     }
 
     protected function update(Request $request, User $user)

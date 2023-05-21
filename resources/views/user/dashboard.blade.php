@@ -44,7 +44,7 @@
                                 <h6>
                                     نام کاربری: {{$user->username}}
                                 </h6>
-                                <p class="proile-rating">امتیاز شما : <span>8/10</span></p>
+                                <p class="proile-rating">امتیاز شما : <span>{{$totalScore}}</span></p>
 
                             </div>
 

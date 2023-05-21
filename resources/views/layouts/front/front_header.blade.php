@@ -76,6 +76,7 @@
             </div>
         </section>
         @else
+            <div class="body_wrapper">
             <nav class="navbar navbar-expand-lg menu_one" id="sticky">
                 <div class="container">
                     <a class="navbar-brand sticky_logo" href="{{route('home')}}">

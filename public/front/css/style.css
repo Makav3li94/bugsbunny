@@ -7397,7 +7397,7 @@ ul.forum-titles .forum-freshness .freshness-box .freshness-btm .bbp-author-avata
 }
 
 .forum-page-content {
-  background: #f9fafb;
+  /*background: #f9fafb;*/
 }
 .forum-page-content .communities-boxes {
   margin: 0 -30px;
@@ -7753,8 +7753,8 @@ ul.forum-titles .forum-freshness .freshness-box .freshness-btm .bbp-author-avata
 /** === Best Answer === **/
 .best-answer {
   background: #f1fdf3;
-  padding: 30px 40px 30px 30px;
-  margin-top: 60px;
+  padding: 10px 40px 10px 30px;
+  margin-top: 20px;
   border-radius: 6px;
 }
 .best-answer .accepted-ans-mark {
@@ -7831,11 +7831,13 @@ ul.forum-titles .forum-freshness .freshness-box .freshness-btm .bbp-author-avata
 }
 .all-answers .forum-comment {
   margin-top: 30px;
+    padding: 10px;
+    border-bottom: 1px solid #e8ecee;
+    border-top: 1px solid #e8ecee;
 }
 .all-answers .forum-comment .comment-content {
   margin-left: 60px;
   margin-top: 10px;
-  border-bottom: 1px solid #e8ecee;
   padding-bottom: 28px;
 }
 .all-answers .forum-comment .comment-content p {
@@ -8111,29 +8113,17 @@ blockquote {
   background: #f3f8f9;
   border-left: 4px solid #10b3d6;
   font-size: 20px;
-  padding: 50px 40px;
+  padding: 10px 40px;
   position: relative;
   z-index: 0;
-  margin: 46px 0;
+  margin: 25px 0;
 }
 blockquote:before, blockquote:after {
   content: "";
   position: absolute;
   z-index: -1;
 }
-blockquote:before {
-  background: url("../img/blog-classic/quote_top.png") no-repeat scroll left top;
-  width: 132px;
-  height: 81px;
-  top: 0;
-}
-blockquote:after {
-  background: url("../img/blog-classic/quote_bottom.png") no-repeat scroll left bottom;
-  width: 77px;
-  height: 75px;
-  right: 40px;
-  bottom: 30px;
-}
+
 blockquote .c_head {
   color: #6b707f;
   font-weight: 400;

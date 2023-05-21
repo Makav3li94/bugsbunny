@@ -20,7 +20,7 @@
     .b_top_post_content{
         padding: 50px 30px 50px 50px;
         .post_tag{
-            padding-bottom: 15px;   
+            padding-bottom: 15px;
         }
         h3{
             font-size: 26px;
@@ -107,7 +107,7 @@
 /*=========== blog_top_post_area css ==========*/
 
 /*=========== Start blog_grid_area css ==========*/
-.doc_blog_grid_area{ 
+.doc_blog_grid_area{
     padding-bottom: 100px;
 }
 .blog_grid_inner{
@@ -261,10 +261,10 @@ blockquote{
     background: #f3f8f9;
     border-left: 4px solid $blue;
     font-size: 20px;
-    padding: 50px 40px;
+    padding: 10px 40px;
     position: relative;
     z-index: 0;
-    margin: 46px 0;
+    margin: 25px 0;
     &:before,&:after{
         content: "";
         position: absolute;
@@ -377,7 +377,7 @@ blockquote{
         }
     }
 }
-.comment_inner{   
+.comment_inner{
     padding-top: 80px;
 }
 .comment_box{
@@ -621,7 +621,7 @@ blockquote{
         padding-bottom: 0;
         .post_tag{
             padding-bottom: 4px;
-        } 
+        }
         .b_title{
             font-size: 18px;
             line-height: 24px;
@@ -705,7 +705,7 @@ blockquote{
     > ul.list-unstyled{
         margin-top: -10px;
     }
-} 
+}
 .about_widget{
     .img{
         border: 1px solid #e5edef;
@@ -790,7 +790,7 @@ blockquote{
 }
 
 .tag_widget{
-        
+
 }
 .w_tag_list{
     display: flex;

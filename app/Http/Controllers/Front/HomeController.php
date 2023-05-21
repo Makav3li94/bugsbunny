@@ -17,7 +17,11 @@ use App\Models\QuizHeader;
 use App\Models\Reply;
 use App\Models\Section;
 use App\Models\Setting;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use DB;
+use Illuminate\Support\Arr;
 
 class HomeController extends Controller
 {
@@ -33,13 +37,15 @@ class HomeController extends Controller
         $frontOverlay = FrontOverlay::first();
         $frontWays = FrontWay::all();
 
-        return view('front.home', compact('setting', 'categories', 'frontCallTo', 'frontFaqs', 'frontFeatures', 'frontHeros', 'frontOverlay',  'frontWays'));
+        return view('front.home', compact('setting', 'categories', 'frontCallTo', 'frontFaqs', 'frontFeatures', 'frontHeros', 'frontOverlay', 'frontWays'));
     }
 
     public function forum()
     {
+
         $mainSection = Section::where('type', 1)->with('category')->orderBy('id', 'desc')->get();
-        return view('front.forum', compact('mainSection'));
+        $userSection = Section::where('type', 0)->with('category')->orderBy('id', 'desc')->get();
+        return view('front.forum', compact('mainSection', 'userSection'));
     }
 
     public function section($slug)
@@ -49,9 +55,16 @@ class HomeController extends Controller
         }])->first();
         $section->increment('total_views');
         $replies = Reply::where([['section_id', $section->id], ['parent_id', 0]])->with(['user', 'children' => function ($q) {
-            $q->with('user');
+            $q->with('user')->withCount(['likes', 'dislikes']);
         }])->withCount(['likes', 'dislikes'])->get();
         return view('front.section', compact('section', 'replies'));
+    }
+
+    public function category($slug)
+    {
+        $category = Category::where('title', $slug)->first();
+        $section = Section::where('category_id', $category->id)->with('category')->orderBy('id', 'desc')->get();
+        return view('front.category', compact('section'));
     }
 
     public function quiz(Request $request, Section $section)
@@ -81,7 +94,7 @@ class HomeController extends Controller
     public function show($slug)
     {
         $page = Blog::where('slug', $slug)->first();
-        if (!$page){
+        if (!$page) {
             return redirect(route($slug));
         }
         return view('front.page', compact('page'));

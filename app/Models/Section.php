@@ -21,7 +21,10 @@ class Section extends Model implements Likeable
     public function replies(){
         return $this->hasMany(Reply::class);
     }
-
+    public function latestReply()
+    {
+        return $this->hasOne(Reply::class)->latest();
+    }
     public function questions()
     {
         return $this->hasMany(Question::class);

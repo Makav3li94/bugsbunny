@@ -251,6 +251,7 @@ Route::group(['namespace' => 'User', 'middleware' => 'auth', 'prefix' => 'dashbo
 Route::get('/', 'Front\HomeController@index')->name('home');
 Route::get('/forum', 'Front\HomeController@forum')->name('forum');
 Route::get('forum/{slug}', 'Front\HomeController@section')->name('section');
+Route::get('category/{slug}', 'Front\HomeController@category')->name('archive');
 Route::post('quiz/{section}', 'Front\HomeController@quiz')->name('quiz');
 Route::get('/markAsRead', function(){auth()->user()->unreadNotifications->markAsRead();return redirect()->back();});
 Route::resource('reply', 'User\ReplyController', ['names' => 'reply'])->middleware('auth');

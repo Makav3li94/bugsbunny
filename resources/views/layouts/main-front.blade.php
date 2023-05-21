@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{asset('front/assets/slick/slick.css')}}">
     <link rel="stylesheet" href="{{asset('front/assets/slick/slick-theme.css')}}">
     <!-- icon css-->
+    <link rel="stylesheet" href="{{asset('front/assets/font-awesome/css/all.css')}}">
     <link rel="stylesheet" href="{{asset('front/assets/elagent-icon/style.css')}}">
     <link rel="stylesheet" href="{{asset('front/assets/animation/animate.css')}}">
     <link rel="stylesheet" href="{{asset('front/assets/mcustomscrollbar/jquery.mCustomScrollbar.min.css')}}">
@@ -23,7 +24,7 @@
     <title>{{"".$title ?? "ایزباگ"}}</title>
 </head>
 
-<body data-scroll-animation="true">
+<body data-scroll-animation="true" class="doc">
 
 @include('layouts.front.front_header')
 
