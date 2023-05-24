@@ -6,6 +6,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use App\Models\Ticket;
+use App\Models\User;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
 use function App\helpers\fileUploader;
@@ -46,7 +47,7 @@ class TicketController extends Controller
         } else {
             $file = null;
         }
-        $user = auth()->user();
+        $user  = User::find(auth()->id());
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => $request['title'],
@@ -58,8 +59,8 @@ class TicketController extends Controller
             'user_file' => $file,
             'question' => $request['description'],
         ]);
-//        $this->notifyAdmin($user->id, $user->name, $user->company->company_name, $user->mobile, 'ticket', $ticket->id, 0,'کاربر تیکت جدیدی ارسال کرده است.');
-        return back();
+        $this->notifyAdmin($user->id, $user->name, $user->mobile, 'ticket', $ticket->id, 0,'کاربر تیکت جدیدی ارسال کرده است.');
+        return back()->with(['store'=>'success']);
     }
 
 

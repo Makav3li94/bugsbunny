@@ -46,7 +46,7 @@ class CheckSmsStatus extends Command
         $client = new SoapClient($fast_url);
         $smses = Sms::where('status', 0)->whereNotNull('bulk_id')->get();
         foreach ($smses as $sms) {
-            $message = $client->GetDelivery('visanew','mohajerat98',$sms->bulk_id);
+            $message = $client->GetDelivery('isbug','isbug',$sms->bulk_id);
             $message = explode(':',$message);
             $status = substr($message[1], 0, -2) ;
             if ( $status == "delivered" ){

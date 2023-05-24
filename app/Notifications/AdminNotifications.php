@@ -27,7 +27,6 @@ class AdminNotifications extends Notification
         return [
             'user_id' => $this->details['user_id'],
             'name' => $this->details['name'],
-            'company' => $this->details['company'],
             'mobile' => $this->details['mobile'],
             'type' => $this->details['type'],
             'type_id' => $this->details['type_id'],

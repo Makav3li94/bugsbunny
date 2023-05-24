@@ -425,6 +425,9 @@ ul.list-style li:last-child {
   .doc_border_btn.btn-round {
     font-size: 12px;
   }
+    .app-search .list-group{
+        top: 160px;
+    }
 }
 .doc_border_btn i {
   margin-left: 6px;

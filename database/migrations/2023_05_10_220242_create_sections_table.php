@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('slug');
             $table->unsignedBigInteger('category_id')->index();
             $table->tinyInteger('type')->comment('1 admin or  0 user');
+            $table->tinyInteger('kind')->nullable()->default(0)->comment('0 is challenge and 1 is thread');
+            $table->string('img_cover', 200)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->longText('description');
             $table->string('excerpt');

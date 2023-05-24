@@ -20,6 +20,7 @@ class CreateSettingsTable extends Migration
             $table->string('second_logo')->nullable();
             $table->integer('comment_score')->nullable()->default(1);
             $table->integer('reply_score')->nullable()->default(1);
+            $table->integer('question_score')->nullable()->default(1);
             $table->integer('section_score')->nullable()->default(1);
             $table->integer('admin_section_score')->nullable()->default(1);
             $table->integer('user_section_score')->nullable()->default(1);

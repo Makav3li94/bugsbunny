@@ -10,12 +10,11 @@ use Notification;
 
 trait Helpers
 {
-    private function notifyAdmin($user_id, $name, $company, $mobile, $type, $type_id, $status, $message = null)
+    private function notifyAdmin($user_id, $name,  $mobile, $type, $type_id, $status, $message = null)
     {
         $details = [
             'user_id' => $user_id,
             'name' => $name,
-            'company' => $company,
             'mobile' => $mobile,
             'type' => $type,
             'type_id' => $type_id,

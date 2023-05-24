@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Notifications\UserProductNotification;
 use App\Notifications\UserTicketNotification;
 use App\Notifications\UserVerifyNotification;
 use App\Traits\HasLikeable;
@@ -96,8 +95,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(TotalScore::class)->where('type', 0);
     }
-    public function sendUserTicketNotification($user)
+    public function sendUserTicketNotification($user,$ticket)
     {
-        $this->notify(new UserTicketNotification($user));
+        $this->notify(new UserTicketNotification($user,$ticket));
     }
 }

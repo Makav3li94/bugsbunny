@@ -29,9 +29,14 @@ class CategoryController extends Controller
             if ($validator->fails()) {
                 return response()->json(['catError' => $validator->errors()->toArray()]);
             }
+            $type = 0;
+            if (isset($request->type)){
+                $type = 1;
+            }
             $title = $request->input('title');
             $record = Category::create([
-                'title' => $title
+                'title' => $title,
+                'type'=>$type
             ]);
             $catCounts = Category::all()->count();
             $cat = [

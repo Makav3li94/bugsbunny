@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Verta;
 use Illuminate\Support\Str;
+
 class SectionController extends Controller
 {
     use Numbers;
@@ -18,26 +19,34 @@ class SectionController extends Controller
 
     public function index()
     {
-        $challenges = Section::where([['type', 1], ['user_id', 1]])->get();
+        $challenges = Section::with(['user', 'category'])->get();
         return view('admin.challenges.sections.index', compact('challenges'));
     }
 
 
     public function create()
     {
-        return view('admin.challenges.sections.create');
+        $type = 'challenge';
+        if (isset(request()->type)) {
+            $type = 'thread';
+        }
+        return view('admin.challenges.sections.create', compact('type'));
     }
 
     public function store(Request $request)
     {
+
         $request->validate([
             'title' => 'required|string',
             'category_id' => 'required|numeric',
             'slug' => 'unique:sections',
-            'description' => 'required|string',
-            'excerpt' => 'required|string',
-            'prize_text' => 'required|string',
+            'excerpt' => 'string|min:3|max:255',
+            'prize_text' => 'string',
         ]);
+        $kind = 0;
+        if (isset($request->kind)) {
+            $kind = 1;
+        }
         if (isset($request->expire_date)) {
 
             $published_at = $this->expireDate($request->expire_date);
@@ -51,9 +60,10 @@ class SectionController extends Controller
             'category_id' => $request->category_id,
             'type' => 1,
             'user_id' => 1,
+            'kind' => $kind,
             'description' => $request->description,
-            'excerpt' => $request->excerpt,
-            'prize_text' => $request->prize_text,
+            'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
+            'prize_text' => $request->prize_text ?? "",
             'expire_date' => $published_at,
         ]);
 
@@ -63,15 +73,20 @@ class SectionController extends Controller
 
     public function edit($id)
     {
+
         $challenge = Section::findOrFail($id);
+        $type = 'challenge';
+        if ($challenge->category->type == 1) {
+            $type = 'thread';
+        }
         $challenge['expire_date'] = $this->convertToJalaliDate($challenge->expire_date);
-        return view('admin.challenges.sections.edit', compact('challenge'));
+        return view('admin.challenges.sections.edit', compact('challenge', 'type'));
     }
 
     public function show($id)
     {
 
-         $challenge = Section::findOrFail($id)->with(['quizHeaders' => function ($q) {
+        $challenge = Section::findOrFail($id)->with(['quizHeaders' => function ($q) {
             $q->with('user');
         }])->first()->toArray();
         return view('admin.challenges.sections.participants', compact('challenge'));
@@ -84,8 +99,7 @@ class SectionController extends Controller
             'category_id' => 'required|numeric',
             'slug' => 'required|unique:sections,slug,' . $id,
             'description' => 'required|string',
-            'excerpt' => 'required|string',
-            'prize_text' => 'required|string',
+            'excerpt' => 'string|min:3|max:255',
         ]);
         $challenge = Section::findOrFail($id);
 
@@ -94,14 +108,26 @@ class SectionController extends Controller
         } else {
             $published_at = Carbon::now()->toDateTimeString();
         }
+        if ($challenge->type == 0) {
+            if (isset($request->status)) $status = 2; else $status = 3;
+            $user = User::find($challenge->user_id);
+            if ($status == 1) {
+                $details = ['type' => 'وضعیت چالش', 'status' => 'در حال بررسی'];
+            } elseif ($status == 2) {
+                $details = ['type' => 'وضعیت چالش', 'status' => 'تایید شده'];
+            } elseif ($status == 3) {
+                $details = ['type' => 'وضعیت چالش', 'status' => 'رد شده'];
+            }
 
-        if (isset($request->status)) $status = 1; else $status = 0;
+            $user->sendUserVerifyNotification($user, $details);
+        }
+
         $challenge->update([
             'title' => $request->title,
             'slug' => !empty($request->slug) ? preg_replace('/\s+/', '-', $request->slug) : Str::slug($request->title, '-'),
             'category_id' => $request->category_id,
             'description' => $request->description,
-            'excerpt' => $request->excerpt,
+            'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
             'prize_text' => $request->prize_text,
             'expire_date' => $published_at,
             'status' => $status,

@@ -13,6 +13,7 @@
                 <div class="col-lg-8">
                     <div class="communities-boxes">
                         @forelse($categories as $cat)
+                            @if($cat->type == 0)
                             <div class="docly-com-box">
                                 <div class="icon-container">
                                     <img src="{{asset('front/img/home_support/rc1.png')}}" alt="communinity-box">
@@ -26,6 +27,7 @@
 
 
                             </div>
+                            @endif
                         @empty
                         @endforelse
                     </div>
@@ -78,7 +80,7 @@
                                     </div>
                                     <div class="entry-content">
                                         <h3 class="post-title">
-                                            <a href="javascript:void(0)">{{$item['username']}}</a>
+                                            <a href="{{route('user',$item['username'])}}">{{$item['username']}}</a>
                                         </h3>
                                         <p>{{$item['name']}}</p>
                                     </div>
@@ -233,6 +235,63 @@
                     <!-- /.community-posts-wrapper -->
                     </div>
 
+
+                    <div class="post-header mt-5 forums-header">
+                        <div class="col-md-6 col-sm-6 support-info">
+                            <span>آخرین سوال ها </span>
+                        </div>
+                        <!-- /.support-info -->
+                        <div class="col-md-6 col-sm-6 support-category-menus">
+                            <ul class="forum-titles">
+                                <li class="forum-reply-count">دسته</li>
+                                <li class="forum-freshness">تاریخ اتمام</li>
+                            </ul>
+                        </div>
+                        <!-- /.support-category-menus -->
+                    </div>
+                    <!-- /.post-header -->
+                    <div class="community-posts-wrapper bb-radius">
+
+                    @forelse($threads as $item)
+
+                        <!-- Forum Item -->
+                            <div class="community-post style-two forum-item bug">
+                                <div class="col-md-6 post-content">
+                                    <div class="author-avatar forum-icon">
+                                        <img src="{{asset('front/img/home_support/rc1.png')}}" alt="community post">
+                                    </div>
+                                    <div class="entry-content">
+                                        <h3 class="post-title">
+                                            <a href="{{route('section',$item->slug)}}">{{$item->title}}</a>
+                                        </h3>
+                                        <p>{{$item->excerpt}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 post-meta-wrapper">
+                                    <ul class="forum-titles">
+                                        <li class="forum-topic-count">{{$item->category->title}}</li>
+                                        <li class="forum-freshness">
+                                            <div class="freshness-box">
+                                                <div class="freshness-top">
+                                                    <div class="freshness-link">
+                                                        <a href="#" title="Reply To: Main Forum Rules &amp; Policies">
+                                                            {{Verta::instance($item->expire_date)->format('Y-m-d')}}
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- /.forum-item  -->
+
+
+                    @empty
+                    @endforelse
+                    <!-- /.community-posts-wrapper -->
+                    </div>
                 </div>
                 <!-- /.col-lg-8 -->
 

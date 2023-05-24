@@ -18,7 +18,8 @@ class LikeController extends Controller
         TotalScore::create([
             'user_id'=>$reply->user_id,
             'score' => 1,
-            'type' => 1
+            'type' => 1,
+            'is_for'=>'like'
         ]);
 //        return response()->json(['message' => 'Success']);
         return back();
@@ -31,7 +32,8 @@ class LikeController extends Controller
         TotalScore::create([
             'user_id'=>$reply->user_id,
             'score' => 1,
-            'type' => 0
+            'type' => 0,
+            'is_for'=>'unlike'
         ]);
 //        return response()->json(['message' => 'Success']);
         return back();
@@ -44,7 +46,8 @@ class LikeController extends Controller
         TotalScore::create([
             'user_id'=>$reply->user_id,
             'score' => 1,
-            'type' => 0
+            'type' => 0,
+            'is_for'=>'dislike'
         ]);
 //        return response()->json(['message' => 'Success']);
         return back();

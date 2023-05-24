@@ -112,7 +112,11 @@ class PrimaryUserController extends Controller
             'birthDate' => 'required',
             'cats' => 'required',
         ]);
+
         if (isset($request->authStatus)) $status = 1; else $status = 0;
+        if ($user->authStatus != $status) {
+            $this->authStatus($status,$user);
+        }
         $birthDate = $this->convertToGoregianDate($request->input('birthDate'));
         $password = $request->input('password');
 
@@ -159,6 +163,7 @@ class PrimaryUserController extends Controller
                 'authStatus' => $status,
             ]);
         }
+
         return redirect(route('admin.user.primary.edit', $user->id))->with([
             'store' => 'success'
         ]);
@@ -180,19 +185,20 @@ class PrimaryUserController extends Controller
         ]);
     }
 
-    protected function authStatus(Request $request, User $user)
+    protected function authStatus($status,User $user)
     {
-        if ($request->ajax()) {
-            $previous = $user->authStatus;
-            switch ($previous) {
+            switch ($status) {
                 case '0':
-                    $user->update(['authStatus' => $previous]);
+                    $user->update(['authStatus' => 0]);
+                    $details = ['type' => 'وضعیت حساب کاربری', 'status' => 'در حال بررسی'];
+                     $user->sendUserVerifyNotification($user, $details);
                     break;
                 case '1':
-                    $user->update(['authStatus' => '1']);
+                    $user->update(['authStatus' => 1]);
+                    $details = ['type' => 'وضعیت حساب کاربری', 'status' => 'تایید شده'];
+                     $user->sendUserVerifyNotification($user, $details);
                     break;
             }
-        }
     }
 
 }

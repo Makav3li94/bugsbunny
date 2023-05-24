@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->integer('score');
             $table->tinyInteger('type')->comment('0 for minus and 1 for plus');
+            $table->string('is_for')->nullable();
+            $table->unsignedBigInteger('model_id')->nullable()->default(0);
             $table->timestamps();
         });
     }

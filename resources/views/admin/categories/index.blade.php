@@ -15,7 +15,8 @@
                     <h4 class="card-title">لیست دسته بندی ها</h4>
                     <p class="card-subtitle">در اینجا میتوانید انواع دسته بندی را ثبت کنید.</p>
                     <div class="table-responsive px-1">
-                        <table class="table table-sm table-striped table-bordered color-table success-table table-hover text-center white-space-nowrap v-middle">
+                        <table
+                            class="table table-sm table-striped table-bordered color-table success-table table-hover text-center white-space-nowrap v-middle">
                             <thead>
                             <tr>
                                 <th class="text-center" style="width: 55px;">ردیف</th>
@@ -25,17 +26,19 @@
                             </thead>
                             <tbody id="catBody">
                             @foreach($categories as $key=>$item)
-                                <tr>
-                                    <td style="width: 55px;">{{$key+1}}</td>
-                                    <td>{{$item->title}}</td>
-                                    <td style="width: 120px;">
-                                        <button class="btn btn-success btn-sm edit-cat" id="{{$item->id}}"><i
-                                                class="d-inline-flex align-middle ti-pencil ml-1"></i>ویرایش
-                                        </button>
-                                        <button class="btn btn-danger btn-sm remove-cat" id="{{$item->id}}"><i
-                                                class="d-inline-flex align-middle ti-close"></i></button>
-                                    </td>
-                                </tr>
+                                @if($item->type == 0 )
+                                    <tr>
+                                        <td style="width: 55px;">{{$key+1}}</td>
+                                        <td>{{$item->title}}</td>
+                                        <td style="width: 120px;">
+                                            <button class="btn btn-success btn-sm edit-cat" id="{{$item->id}}"><i
+                                                    class="d-inline-flex align-middle ti-pencil ml-1"></i>ویرایش
+                                            </button>
+                                            <button class="btn btn-danger btn-sm remove-cat" id="{{$item->id}}"><i
+                                                    class="d-inline-flex align-middle ti-close"></i></button>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>
@@ -67,7 +70,67 @@
         </div>
     </div>
     <!-- End Label Visa -->
-
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">لیست دسته بندی سوال ها</h4>
+                    <p class="card-subtitle">در اینجا میتوانید انواع دسته بندی سوال را ثبت کنید.</p>
+                    <div class="table-responsive px-1">
+                        <table
+                            class="table table-sm table-striped table-bordered color-table success-table table-hover text-center white-space-nowrap v-middle">
+                            <thead>
+                            <tr>
+                                <th class="text-center" style="width: 55px;">ردیف</th>
+                                <th class="text-center">نام لیبل</th>
+                                <th class="text-center" style="width: 120px;">عملیات</th>
+                            </tr>
+                            </thead>
+                            <tbody id="catBodyThread">
+                            @foreach($categories as $key=>$item)
+                                @if($item->type == 1 )
+                                    <tr>
+                                        <td style="width: 55px;">{{$key+1}}</td>
+                                        <td>{{$item->title}}</td>
+                                        <td style="width: 120px;">
+                                            <button class="btn btn-success btn-sm edit-cat" id="{{$item->id}}"><i
+                                                    class="d-inline-flex align-middle ti-pencil ml-1"></i>ویرایش
+                                            </button>
+                                            <button class="btn btn-danger btn-sm remove-cat" id="{{$item->id}}"><i
+                                                    class="d-inline-flex align-middle ti-close"></i></button>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group text-center mt-3">
+                        <button type="button" class="btn btn-success btn-rounded waves-effect waves-light"
+                                data-toggle="collapse" href="#collapseCatThread">افزودن دسته جدید
+                        </button>
+                    </div>
+                    <form class="form-horizontal clearfix collapse" id="collapseCatThread">
+                        <div class="row form-group">
+                            <label class="col-sm-3 text-right control-label col-form-label">عنوان : <span
+                                    class="text-danger mr-1">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="" name="title">
+                                <small class="invalid-text" id="toCreateCat"></small>
+                            </div>
+                        </div>
+                        <div class="form-group m-b-0">
+                            <button type="button"
+                                    class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left"
+                                    id="submitCatThread">ثبت
+                                دسته جدید
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- End Label Customer Management -->
     <!-- Visa Modal -->
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"

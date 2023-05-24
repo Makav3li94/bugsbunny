@@ -21,7 +21,6 @@
                                 <th class="text-center" style="width: 55px;">ردیف</th>
                                 <th class="text-center">نام</th>
                                 <th class="text-center">موبایل</th>
-                                <th class="text-center">شرکت</th>
                                 <th class="text-center">موضوع</th>
                                 <th class="text-center">زمان</th>
                                 <th class="text-center">وضعیت</th>
@@ -36,47 +35,36 @@
                                     <td style="width: 55px;">{{$key+1}}</td>
                                     <td>{{$notification->data['name']}}</td>
                                     <td>{{$notification->data['mobile']}}</td>
-                                    <td>{{$notification->data['company']}}</td>
                                     <td>
                                         @php $link = '' @endphp
                                         @switch($notification->data['type'])
                                             @case('register')
-                                            احراز هویت شرکت و شخص
+                                            ثبت نام جدید
                                             @php $link = route('admin.user.primary.edit',$notification->data['user_id']) @endphp
                                             @break
-                                            @case('fc')
-                                            مطالبه مالی
-                                            @php $link = route('admin.fc.edit',$notification->data['type_id'],'test') @endphp
+                                            @case('profileChange')
+                                            ویرایش پروفایل
+                                            @php $link = route('admin.user.primary.edit',$notification->data['user_id']) @endphp
                                             @break
-                                            @case('guarantee')
-                                            ضمانت نامه
-                                            @php $link = route('admin.guarantee.edit',$notification->data['type_id']) @endphp
+                                            @case('reply')
+                                            کامنت جدید
+                                            @php $link = route('admin.reply.index',$notification->data['type_id']) @endphp
                                             @break
                                             @case('credit')
-                                            بررسی حد احتباری
+                                            درخواست بررسی چالش یا سوال
                                             @php $link = route('admin.credit.edit',$notification->data['type_id']) @endphp
                                             @break
 
-                                            @case('qualityRequest')
+                                            @case('challenge')
                                              درخواست بررسی کیفیت
-                                            @php $link = route('admin.product.edit',$notification->data['type_id']) @endphp
+                                            @php $link = route('admin.challenge.edit',$notification->data['type_id']) @endphp
                                             @break
-                                            @case('cashRequest')
-                                            درخواست نقد کردن
-                                            @php $link = route('admin.cash_request.edit',$notification->data['type_id']) @endphp
-                                            @break
+
                                             @case('ticket')
                                             تیکت جدید
                                             @php $link = route('admin.ticket.show',$notification->data['type_id']) @endphp
                                             @break
-                                            @case('order')
-                                            درخواست تایید سفارش
-                                            @php $link = route('admin.order.edit',$notification->data['type_id']) @endphp
-                                            @break
-                                            @case('bank')
-                                            تایید حساب بانکی
-                                            @php $link = route('admin.bank.edit',$notification->data['type_id']) @endphp
-                                            @break
+
                                             @default
                                         @endswitch
                                     </td>

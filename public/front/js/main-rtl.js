@@ -1,6 +1,33 @@
 (function ($) {
   "use strict";
+    $('form.app-search input').keyup(function (e) {
+        var val = $("#s_val").val();
+        var cat = $("#s_cat").val();
+        if (val == '') {
+            $('form.app-search .list-group').empty();
+        } else {
+            $.ajax({
+                'url': '/search',
+                'type': 'get',
+                'dataType': 'json',
+                data: {val: val,cat:cat},
+                success: function (response) {
+                    $('form.app-search .list-group').empty();
+                    if (response.records == 'none') {
+                        var html = '<a href="#" class="list-group-item list-group-item-action">نتیجه ای یافت نشد.</a>';
+                        $('form.app-search .list-group').append(html);
+                    } else {
+                        var html = '';
+                        for (var i = 0; i < response.records.length; i++) {
+                            html += '<a href="' + response.records[i]['link'] + '" class="list-group-item list-group-item-action">' + response.records[i]['name'] + '</a>';
+                        }
+                        $('form.app-search .list-group').append(html);
+                    }
+                }
+            });
+        }
 
+    });
   //*=============menu sticky js =============*//
   var $window = $(window);
   var didScroll,

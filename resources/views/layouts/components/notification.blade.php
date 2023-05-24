@@ -22,31 +22,19 @@
                                         @case('ticket')
                                         <a href="{{route('admin.ticket.show',$notification->data['type_id'])}}"> تیکت جدید</a>
                                         @break
-                                        @case('cashRequest')
-                                        <a href="{{route('admin.cash_request.edit',$notification->data['type_id'])}}">درخواست نقد</a>
+                                        @case('profileChange')
+                                        <a href="{{route('admin.user.primary.edit',$notification->data['type_id'])}}">ویرایش پروفایل</a>
                                         @break
-                                        @case('credit')
-                                        <a href="{{route('admin.credit.edit',$notification->data['type_id'])}}"> درخواست حد اعتباری</a>
+                                        @case('reply')
+                                        <a href="{{route('admin.reply.index',$notification->data['type_id'])}}"> کامنت جدید</a>
 
                                         @break
-                                        @case('qualityRequest')
-                                        <a href="{{route('admin.product.edit',$notification->data['type_id'])}}"> درخواست بررسی کیفیت</a>
+                                        @case('challenge')
+                                        <a href="{{route('admin.challenge.edit',$notification->data['type_id'])}}"> درخواست بررسی چالش یا سوال</a>
 
                                         @break
                                         @case('register')
-                                        <a href="{{route('admin.user.primary.edit',$notification->data['user_id'])}}">احراز هویت</a>
-                                        @break
-                                        @case('fc')
-                                        <a href="{{route('admin.fc.edit',$notification->data['type_id'])}}">تایید مطالبه</a>
-                                        @break
-                                        @case('guarantee')
-                                        <a href="{{route('admin.guarantee.edit',$notification->data['type_id'])}}">تایید ضمانت نامه</a>
-                                        @break
-                                        @case('order')
-                                        <a href="{{route('admin.order.edit',$notification->data['type_id'])}}">  درخواست تایید سفارش</a>
-                                        @break
-                                        @case('bank')
-                                        <a href="{{route('admin.bank.edit',$notification->data['type_id'])}}">تایید کارت بانکی</a>
+                                        <a href="{{route('admin.user.primary.edit',$notification->data['user_id'])}}">ثبت نام جدید</a>
                                         @break
                                         @default
                                         نامشخص

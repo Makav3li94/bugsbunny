@@ -10,19 +10,24 @@
 
     @if(strpos(url()->current(),'/dashboard')==false)
         <div class="container custom_container">
-            <form action="#" class="banner_search_form banner_search_form_two">
+
+            <form action="#" class="app-search banner_search_form banner_search_form_two" autocomplete="off">
                 <div class="input-group">
-                    <input type="search" class="form-control" placeholder='دنبال چی میگردید ؟'>
+                    <input type="search" class="form-control" id="s_val" placeholder='دنبال چی میگردید ؟'>
                     <div class="input-group-append">
-                        <select class="custom-select" id="inlineFormCustomSelect">
-                            <option selected>همه دسته ها</option>
+                        <select class="custom-select" name="category" id="s_cat">
+                            <option value="all" selected>همه دسته ها</option>
                             @forelse($categories as $cat)
                                 <option value="{{$cat->id}}">{{$cat->title}}</option>
                             @empty
                             @endforelse
                         </select>
                     </div>
-                    <button type="submit"><i class="icon_search"></i></button>
+
+                    <button type="button"><i class="icon_search"></i></button>
+                </div>
+                <br>
+                <div class="list-group" style="position:absolute;top: 70px;text-align: right">
                 </div>
             </form>
         </div>

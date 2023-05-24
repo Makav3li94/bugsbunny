@@ -118,6 +118,13 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
+                                    <label>امتیاز ثبت سوال کاربر</label>
+                                    <input type="number" class="form-control" placeholder="" name="question_score"
+                                           value="{{$settings!=null ? $settings->question_score : old('question_score')}}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
                                     <label>امتیاز منفی عدم شرکت در چالش</label>
                                     <input type="number" class="form-control" placeholder="" name="skip_section_score"
                                            value="{{$settings!=null ? $settings->skip_section_score : old('skip_section_score')}}">

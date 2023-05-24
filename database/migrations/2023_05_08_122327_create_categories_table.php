@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('parent_id')->default(0);
             $table->string('icon')->nullable();
             $table->string('title');
+            $table->tinyInteger('type')->nullable()->default(0)->comment('0 for challenge and 1 for thread');
             $table->softDeletes();
         });
     }

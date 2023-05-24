@@ -13,7 +13,7 @@
             @forelse($HighAllTimeUsers as $item)
                 <li>
                     <img src="{{asset('images/user/'.$item['avatar'])}}" alt="{{$item['username']}}" width="30">
-                    <a href="javascript:void(0)">{{$item['username']}}</a>
+                    <a href="{{route('user',$item['username'])}}">{{$item['username']}}</a>
                     <span class="count">
                         @foreach($HighAllTimeUsersScores as $score)
                             @if($score->user_id == $item['id'])

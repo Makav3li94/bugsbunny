@@ -56,7 +56,7 @@ class TicketController extends Controller
             'reply' => $request['description'],
         ]);
         $user = User::find($request->user_id);
-//        $user->sendUserTicketNotification($user);
+        $user->sendUserTicketNotification($user,$ticket);
         return redirect(route('admin.ticket.index', $ticket->id));
     }
 

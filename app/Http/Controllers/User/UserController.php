@@ -114,8 +114,8 @@ class UserController extends Controller
                 'authStatus' => $status,
             ]);
         }
-
-        return redirect()->back();
+        $this->notifyAdmin($user->id, $user->name,  $user->mobile, 'profileChange', 0, 0, 'کاربر پروفایل خود را آپدیت کرد.');
+        return redirect()->back()->with(['update'=>'success']);
 
 
     }

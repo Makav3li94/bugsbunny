@@ -18,9 +18,10 @@
                             <div class="forum-post-top">
                                 <a class="author-avatar" href="#">
                                     @if($section->type ==1)
-                                        <img src="{{asset('admin/assets/images/2.png')}}" width="50"  alt="cmm">
+                                        <img src="{{asset('admin/assets/images/2.png')}}" width="50" alt="cmm">
                                     @else
-                                        <img src="{{asset('images/user/'.$section->user->avatar)}}" width="50"  alt="cmm">
+                                        <img src="{{asset('images/user/'.$section->user->avatar)}}" width="50"
+                                             alt="cmm">
                                     @endif
                                 </a>
                                 <div class="forum-post-author">
@@ -46,15 +47,23 @@
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            <div class="alert alert-info text-center">{{$section->status == 2 ? 'به اتمام رسیده' : 'چالش فعال است.'}}</div>
+                            @if($section->kind == 0)
+                                <div
+                                    class="alert alert-info text-center">{{$section->status == 2 ? 'به اتمام رسیده' : 'چالش فعال است.'}}</div>
+                            @else
+                                <div
+                                    class="alert alert-info text-center">{{$section->status == 2 ? 'سوال قفل شده است.' : 'سوال فعال است.'}}</div>
+                            @endif
                         </div>
                     </div>
                     <hr>
                     <!-- Forum post content -->
                     <div class="q-title mb-3">
-                        <span class="question-icon" title="Question">چالش:</span>
+                        <span class="question-icon" title="Question">{{$section->kind == 0 ? "چالش" : "سوال"}}:</span>
                         <h1>{{$section->title}}</h1>
-                        <a href="#" class="badge">جایزه چالش: {{$section->prize_text}}</a>
+                        @if($section->kind == 0)
+                            <a href="#" class="badge">جایزه چالش: {{$section->prize_text}}</a>
+                        @endif
                     </div>
                     <div class="forum-post-content">
                         <div class="content">
@@ -71,11 +80,12 @@
                                     <div class="row">
                                         @forelse($question->answers as $key=> $answer)
 
-                                            <div class="col-sm-6 form-group pb-5" style="{{$key < 2 ? 'border-bottom: 1px dotted #313123' :''}}">
+                                            <div class="col-sm-6 form-group pb-5"
+                                                 style="{{$key < 2 ? 'border-bottom: 1px dotted #313123' :''}}">
                                                 <div id="registerInputWrapper">
                                                     <div class="form-check">
                                                         <label class="form-check-label " for="answer{{$key}}">
-                                                          گزینه {{$key+1}}:   {{$answer->answer}}
+                                                            گزینه {{$key+1}}: {{$answer->answer}}
                                                         </label>
                                                         <input class="form-check-input" style="left: 20px" type="radio"
                                                                id="answer{{$key}}" name="answer[{{$question->id}}]"
@@ -90,14 +100,17 @@
                                     <hr>
 
                                 @endforelse
-                                @if(auth()->check())
-                                    <div class="col-lg-12 text-center">
-                                        <button type="submit" class="btn action_btn thm_btn">اتمام آزمون</button>
-                                    </div>
-                                @else
-                                    <div class="alert alert-warning text-center">
-                                        <a href="{{route('login')}}">   جهت شرکت در چالش باید ثبت نام کنید یا وارد شوید.</a>
-                                    </div>
+                                @if($section->kind == 0)
+                                    @if(auth()->check())
+                                        <div class="col-lg-12 text-center">
+                                            <button type="submit" class="btn action_btn thm_btn">اتمام آزمون</button>
+                                        </div>
+                                    @else
+                                        <div class="alert alert-warning text-center">
+                                            <a href="{{route('login')}}"> جهت شرکت در چالش باید ثبت نام کنید یا وارد
+                                                شوید.</a>
+                                        </div>
+                                    @endif
                                 @endif
                             </form>
                         </div>
@@ -207,22 +220,23 @@
                                     {!! $reply->body !!}
                                     <div class="action-button-container action-btns">
                                         <button type="button" class="action_btn btn-ans ask-btn reply-btn"
-                                                data-toggle="collapse" href="#collapseReplyChild{{$reply->id}}">پاسخ به این کامنت
+                                                data-toggle="collapse" href="#collapseReplyChild{{$reply->id}}">پاسخ به
+                                            این کامنت
                                         </button>
-{{--                                        <a href="#" class="action_btn btn-ans ask-btn too-btn">مثبت</a>--}}
+                                        {{--                                        <a href="#" class="action_btn btn-ans ask-btn too-btn">مثبت</a>--}}
                                         @if($reply->user_id != auth()->id())
-                                        <form action="{{route('likeReply',$reply->id)}}" method="post">
-                                            @csrf
-                                            <button type="submit" class="action_btn btn-ans ask-btn too-btn">
-                                                مثبت <span>{{$reply->likes_count}}</span>
-                                            </button>
-                                        </form>
-                                        <form action="{{route('dislikeReply',$reply->id)}}" method="post">
-                                            @csrf
-                                            <button type="submit" class="action_btn btn-ans ask-btn too-btn">
-                                                منفی <span>{{$reply->dislikes_count}}</span>
-                                            </button>
-                                        </form>
+                                            <form action="{{route('likeReply',$reply->id)}}" method="post">
+                                                @csrf
+                                                <button type="submit" class="action_btn btn-ans ask-btn too-btn">
+                                                    مثبت <span>{{$reply->likes_count}}</span>
+                                                </button>
+                                            </form>
+                                            <form action="{{route('dislikeReply',$reply->id)}}" method="post">
+                                                @csrf
+                                                <button type="submit" class="action_btn btn-ans ask-btn too-btn">
+                                                    منفی <span>{{$reply->dislikes_count}}</span>
+                                                </button>
+                                            </form>
                                         @endif
 
                                     </div>
@@ -253,11 +267,13 @@
                                         <div class="col-lg-9">
                                             <div class="forum-post-top">
                                                 <a class="author-avatar" href="#">
-                                                    <img src="{{asset('images/user/'.$replyChild->user->avatar)}}" width="50"
+                                                    <img src="{{asset('images/user/'.$replyChild->user->avatar)}}"
+                                                         width="50"
                                                          alt="{{$replyChild->user->username}}"/>
                                                 </a>
                                                 <div class="forum-post-author">
-                                                    <a class="author-name" href="#"> {{$replyChild->user->username}} </a>
+                                                    <a class="author-name"
+                                                       href="#"> {{$replyChild->user->username}} </a>
                                                     <div class="forum-author-meta">
                                                         <div class="author-badge">
                                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -278,7 +294,8 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <p class="accepted-ans-mark">
-                                                <i class="icon_check"></i> <span>در پاسخ به {{$reply->user->username}} </span>
+                                                <i class="icon_check"></i>
+                                                <span>در پاسخ به {{$reply->user->username}} </span>
                                             </p>
                                         </div>
                                     </div>
@@ -304,9 +321,9 @@
                                         </p>
                                     </div>
                                 </div>
-                                @empty
+                            @empty
 
-                                @endforelse
+                            @endforelse
                         @empty
 
                         @endforelse

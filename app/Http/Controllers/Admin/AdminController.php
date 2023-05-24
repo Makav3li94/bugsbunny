@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\Section;
 use App\Models\Ticket;
 use App\Models\User;
 use Carbon\Carbon;
@@ -48,21 +49,30 @@ class AdminController extends Controller
             $val = $request->input('val');
             $usersByName = User::where([['is_primary', '1'], ['name', 'like', "%$val%"]])->get();
             $usersByMobile = User::where([['is_primary', '1'], ['mobile', 'like', "%$val%"]])->get();
+
+            $sectionByTitle = Section::where('title', 'like', "%$val%")->get();
             $merged = $usersByName->merge($usersByMobile);
-            if (count($merged) == 0) {
+
+            if (count($merged) == 0 && count($sectionByTitle) == 0) {
                 return response()->json([
                     'records' => 'none'
                 ]);
             } else {
-                $users = [];
+                $result = [];
                 foreach ($merged as $key => $user) {
-                    $users[$key] = [
+                    $result[$key] = [
                         'name' => $user->name,
                         'link' => route('admin.user.primary.edit', $user->id),
                     ];
                 }
+                foreach ($sectionByTitle as $key => $section) {
+                    $result[$key] = [
+                        'name' => $section->title,
+                        'link' => route('admin.challenge.edit', $section->id),
+                    ];
+                }
                 return response()->json([
-                    'records' => $users
+                    'records' => $result
                 ]);
             }
         }

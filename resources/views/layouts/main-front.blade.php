@@ -29,7 +29,8 @@
 @include('layouts.front.front_header')
 
 @yield('content')
-    @include('layouts.front.front_footer')
+
+@include('layouts.front.front_footer')
 </div>
 
 <!-- Back to top button -->
@@ -37,6 +38,7 @@
 @include('layouts.front.front_footer_scripts')
 </body>
 </html>
+
 
 
 

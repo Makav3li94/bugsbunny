@@ -46,7 +46,7 @@ class UserVerifyNotification extends Notification
     {
         return [
             'mobile' => $this->user->mobile,
-            'pattern' => 'qf4gwq4wrrhanss',
+            'pattern' => '75511',
             'name' => $this->user->name,
             'status' => $this->details['status'],
             'type' => $this->details['type'],

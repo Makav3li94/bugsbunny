@@ -47,7 +47,7 @@ class FaqController extends Controller
             $faq->ticket()->update(['answer' => '2']);
         }
         $user = User::find($ticket->user_id);
-        $user->sendUserTicketNotification($user);
+        $user->sendUserTicketNotification($user,$ticket);
         $this->readMFNotification($user->id,'ticket',$ticket->id);
         return redirect()->back()->with([
             'message' => 'sent'

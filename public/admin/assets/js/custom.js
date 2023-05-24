@@ -129,6 +129,10 @@ $(document).ready(function () {
 });
 $(function () {
     "use strict";
+
+
+
+
     $(".toast-info").click(function () {
         $.toast({
             heading: 'اطلاعات',

@@ -86,6 +86,7 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     Route::resource('slider', 'SliderController', ['names' => 'admin.slider'])->except(['show']);
     //challenges  Manipulation
     Route::resource('challenge', 'SectionController', ['names' => 'admin.challenge']);
+    Route::resource('reply', 'ReplyController', ['names' => 'admin.reply'])->only(['index','update','destroy','edit']);
     Route::resource('question', 'QuestionController', ['names' => 'admin.question'])->except(['create','show']);
     Route::resource('score', 'TotalScoreController', ['names' => 'admin.score'])->except(['create','edit','show']);
     Route::post('score/{user}', 'TotalScoreController@store')->name('admin.score.store');
@@ -249,6 +250,7 @@ Route::group(['namespace' => 'User', 'middleware' => 'auth', 'prefix' => 'dashbo
 });
 
 Route::get('/', 'Front\HomeController@index')->name('home');
+Route::get('user/{username}', 'Front\HomeController@user')->name('user');
 Route::get('/forum', 'Front\HomeController@forum')->name('forum');
 Route::get('forum/{slug}', 'Front\HomeController@section')->name('section');
 Route::get('category/{slug}', 'Front\HomeController@category')->name('archive');
@@ -258,6 +260,6 @@ Route::resource('reply', 'User\ReplyController', ['names' => 'reply'])->middlewa
 Route::post('/like-reply/{reply}','Front\LikeController@like')->name('likeReply');
 Route::post('/dislike-reply/{reply}','Front\LikeController@dislike')->name('dislikeReply');
 //Search
-
+Route::get('search', 'Front\HomeController@search');
 // Front Pages !
 Route::get('page/{slug}', 'Front\HomeController@show')->name('page');

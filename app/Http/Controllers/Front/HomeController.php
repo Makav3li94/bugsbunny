@@ -17,6 +17,7 @@ use App\Models\QuizHeader;
 use App\Models\Reply;
 use App\Models\Section;
 use App\Models\Setting;
+use App\Models\TotalScore;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -40,12 +41,40 @@ class HomeController extends Controller
         return view('front.home', compact('setting', 'categories', 'frontCallTo', 'frontFaqs', 'frontFeatures', 'frontHeros', 'frontOverlay', 'frontWays'));
     }
 
+    public function user($username)
+    {
+        $user = User::where('username',$username)->first();
+
+        //Open Tickets Count
+        if (Setting::all()->count() > 0) {
+            $setting = Setting::all()->first();
+        } else {
+            $setting = null;
+        }
+        $cats = Category::all();
+        //Sliders
+        $sections = Section::where([['status', 1],['kind',0]])->whereIn('category_id', json_decode($user->cats))->get();
+        $userSections = Section::where([['type', 0], ['user_id', auth()->id()]])->get();
+//          Like::query()->whereMorphedTo('userable', $user)->get();
+
+        $likes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('likes_count');
+        $dislikes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('dislikes_count');
+        $plusScores = TotalScore::where([['user_id' , $user->id],['type',1]])->get()->sum('score');
+        $minusScores = TotalScore::where([['user_id' , $user->id],['type',0]])->get()->sum('score');
+//        $totalScore = ($likes - $dislikes) + ($plusScores - $minusScores);
+        $totalScore = $plusScores - $minusScores;
+        return view('user.profile', compact( 'setting',  'cats', 'user', 'sections', 'userSections','totalScore'));
+    }
+
     public function forum()
     {
 
-        $mainSection = Section::where('type', 1)->with('category')->orderBy('id', 'desc')->get();
-        $userSection = Section::where('type', 0)->with('category')->orderBy('id', 'desc')->get();
-        return view('front.forum', compact('mainSection', 'userSection'));
+        $mainSection = Section::where([['status', 1],['kind',0],['type', 1]])->with('category')->orderBy('id', 'desc')->get();
+        $userSection = Section::where([['status', 1],['kind',0],['type', 0]])->with('category')->orderBy('id', 'desc')->get();
+
+        $threads = Section::where([['status', 1],['kind',1]])->with('category')->orderBy('id', 'desc')->get();
+
+        return view('front.forum', compact('mainSection', 'userSection','threads'));
     }
 
     public function section($slug)
@@ -101,4 +130,32 @@ class HomeController extends Controller
     }
 
 
+    public function search(Request $request){
+        if ($request->ajax()) {
+            $val = $request->input('val');
+            $cat = $request->input('cat');
+        if ($cat == 'all'){
+            $sectionByTitle = Section::where([['status','!=',0],['title', 'like', "%$val%"]])->get();
+        }else{
+            $sectionByTitle = Section::where([['status','!=',0],['category_id',$cat ?? true],['title', 'like', "%$val%"]])->get();
+        }
+            if ( count($sectionByTitle) == 0) {
+                return response()->json([
+                    'records' => 'none'
+                ]);
+            } else {
+                $result = [];
+
+                foreach ($sectionByTitle as $key => $section) {
+                    $result[$key] = [
+                        'name' => $section->title,
+                        'link' => route('section', $section->slug),
+                    ];
+                }
+                return response()->json([
+                    'records' => $result
+                ]);
+            }
+        }
+    }
 }

@@ -19,7 +19,7 @@
 @section('content')
     <section class="doc_blog_grid_area sec_pad forum-page-content">
         <div class="container">
-            <div class="card">
+            <div class="card bb-radius">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
@@ -238,7 +238,7 @@
                                 <div class="tab-pane fade" id="chalenges" role="tabpanel"
                                      aria-labelledby="chalenges-tab">
                                     <div class="table-responsive">
-                                        <table class="table basic_table_info table-hover">
+                                        <table class="table table_shortcode">
                                             <thead>
                                             <tr>
                                                 <th>ردیف</th>
@@ -259,7 +259,7 @@
                                                     <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
                                                     <td>{{$section->status == 1  ? 'غیرفعال' :'فعال'}}</td>
                                                     <td>سایر</td>
-                                                    <td><a href="{{route('section',$section->slug)}}">مشاهده</a></td>
+                                                    <td><a class="btn btn-sm btn-warning" href="{{route('section',$section->slug)}}">مشاهده</a></td>
                                                 </tr>
                                             @empty
                                                 <div class="alert alert-warning">در حال حاضر، چالشی موجود نیست.</div>
@@ -273,9 +273,9 @@
                                                     <td>{{$section->status == 1  ? 'غیرفعال' :'فعال'}}</td>
                                                     <td>شما</td>
                                                     <td>
-                                                        <a href="javascript:void(0)"
+                                                        <a href="javascript:void(0)" class="btn btn-sm btn-success"
                                                            onclick="getQuestions({{$section->id}})">سوالات</a>
-                                                        <a href="{{route('section',$section->slug)}}">مشاهده</a></td>
+                                                        <a class="btn btn-sm btn-warning" href="{{route('section',$section->slug)}}">مشاهده</a></td>
                                                 </tr>
                                             @empty
                                                 <div class="alert alert-warning">در حال حاضر، چالشی موجود نیست.</div>
@@ -380,7 +380,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="scores" role="tabpanel" aria-labelledby="scores-tab">
                                     <div class="table-responsive">
-                                        <table class="table basic_table_info table-hover">
+                                        <table class="table table_shortcode">
                                             <thead>
                                             <tr>
                                                 <th>ردیف</th>
@@ -394,8 +394,8 @@
                                                 <tr>
                                                     <th>{{$key++}}</th>
                                                     <td>{{$score->score}}</td>
-                                                    <td>{{$score->type}}</td>
-                                                    <td>for</td>
+                                                    <td><span class="badge badge-primary">{{$score->type == 1 ? 'مثبت' : 'منفی'}}</span></td>
+                                                    <td>{{$score->is_for ?? "love !"}}</td>
                                                 </tr>
                                             @empty
                                                 <div class="alert alert-warning">در حال حاضر، امتیازی موجود نیست.</div>
@@ -407,7 +407,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
                                     <div class="table-responsive">
-                                        <table class="table basic_table_info table-hover">
+                                        <table class="table table_shortcode">
                                             <thead>
                                             <tr>
                                                 <th>ردیف</th>
@@ -433,18 +433,17 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="ticket" role="tabpanel" aria-labelledby="ticket-tab">
-                                    <div class="table-responsive">
-                                        <table class="table basic_table_info table-hover">
+                                    <div class="table-responsive ">
+                                        <table class="table table_shortcode mt-5">
                                             <thead>
-
                                             <tr>
                                                 <th>شماره</th>
                                                 <th>عنوان</th>
-                                                <th>تاریخ ایجاد</th>
-                                                <th>بخش مربوطه</th>
+                                                <th>ایجاد</th>
+                                                <th>بخش</th>
                                                 <th>اهمیت</th>
+                                                <th>مرحله</th>
                                                 <th>وضعیت</th>
-                                                <th>وضعیت تیکت</th>
                                                 <th>عملیات</th>
                                             </tr>
                                             </thead>
@@ -454,7 +453,6 @@
                                                     <td>{{$key+1}}</td>
                                                     <td>{{$ticket->title}}</td>
                                                     <td>{{Verta::instance($ticket->created_at)->format('Y/n/j')}}</td>
-                                                    <td>{{Verta::instance($ticket->updated_at)->format('Y/n/j')}}</td>
                                                     <td>{{$ticket->section}}</td>
                                                     <td>{{$ticket->priority}}</td>
                                                     <td>
@@ -476,15 +474,15 @@
                                            {{$ticket->status=='0' ? 'بسته' : 'باز'}}
                                         </span>
                                                     </td>
-                                                    <td style="width: 120px;">
+                                                    <td>
                                                         <a href="javascript:void(0)"
                                                            onclick="getTicket({{$ticket->id}})"
-                                                           class="btn btn-success btn-sm"><i
-                                                                class="d-inline-flex align-middle ti-eye ml-1"></i>مشاهده
+                                                           class="btn btn-success btn-sm "><i
+                                                                class="d-inline-flex align-middle ti-eye ml-1"></i>
                                                         </a>
                                                         @if($ticket->status=='1')
                                                             <a href="#"
-                                                               class="btn btn-danger btn-sm close-ticket"
+                                                               class="btn btn-danger btn-sm close-ticket "
                                                                data-toggle="tooltip"
                                                                title="بستن تیکت" id="{{$ticket->id}}">
                                                                 <i class="d-inline-flex align-middle ti-lock"></i>
@@ -510,11 +508,11 @@
                                      aria-labelledby="add-ticket-tab">
                                     <div class="table-responsive">
                                         <form class="form-horizontal clearfix" method="post"
-                                              action="{{route('user.ticket.store')}}" enctype="multipart/form-data">
+                                              action="{{route('user.ticket.store')}}" enctype="multipart/form-data" style="overflow: hidden">
                                             @csrf
                                             <div class="form-group row">
                                                 <label class="col-sm-3 text-right control-label col-form-label">بخش
-                                                    مربوطه:<span
+                                                    :<span
                                                         class="text-danger mr-1">*</span></label>
                                                 <div class="col-sm-9">
                                                     <select class="select2 form-control custom-select"
@@ -541,7 +539,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 text-right control-label col-form-label">درجه
+                                                <label class="col-sm-3 text-right control-label col-form-label">
                                                     اهمیت:<span
                                                         class="text-danger mr-1">*</span></label>
                                                 <div class="col-sm-9">
@@ -570,7 +568,7 @@
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 text-right control-label col-form-label">عنوان
-                                                    درخواست:<span
+                                                    :<span
                                                         class="text-danger mr-1">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" placeholder="" name="title"
@@ -582,7 +580,7 @@
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 text-right control-label col-form-label">شرح
-                                                    درخواست:<span
+                                                    :<span
                                                         class="text-danger mr-1">*</span></label>
                                                 <div class="col-sm-9">
                                 <textarea type="text" class="form-control" rows="5"

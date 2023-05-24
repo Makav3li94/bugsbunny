@@ -1042,7 +1042,60 @@ $(document).ready(function () {
             }
         });
     });
-
+    $(document).on('click', '#submitCatThread', function () {
+        var title = $('#collapseCatThread input[name=title]').val();
+        $.ajax({
+            'url': '/admin/dashboard/category',
+            'type': 'post',
+            'dataType': 'json',
+            data: {
+                title: title,
+                type: 1,
+            },
+            beforeSend: function () {
+                $('.preloader').fadeIn();
+            },
+            complete: function () {
+                $('.preloader').fadeOut();
+            },
+            success: function (response) {
+                $('#toCreateCatThread').text('');
+                if (!$.isEmptyObject(response.catError)) {
+                    $.toast({
+                        heading: 'خطا!',
+                        text: 'ورودی های خود را بررسی کنید',
+                        position: 'bottom-left',
+                        textAlign: 'right',
+                        loaderBg: '#ff6849',
+                        icon: 'error',
+                        hideAfter: 3500
+                    });
+                    if (!$.isEmptyObject(response.catError.title)) {
+                        $('#toCreateCat').text(response.catError.title[0]);
+                    }
+                } else if (response.catCreate == 'submitted') {
+                    $.toast({
+                        heading: 'موفقیت!',
+                        text: 'اطلاعات ثبت شد',
+                        position: 'bottom-left',
+                        textAlign: 'right',
+                        loaderBg: '#ff6849',
+                        icon: 'success',
+                        hideAfter: 3500
+                    });
+                    var html = '<tr>\n' +
+                        '  <td style="width: 55px;">' + response.cat[0] + '</td>\n' +
+                        '  <td>' + response.cat[1] + '</td>\n' +
+                        '  <td style="width: 120px;">\n' +
+                        '  <button class="btn btn-success btn-sm edit-cat" id="' + response.cat[2] + '"><i class="d-inline-flex align-middle ti-pencil ml-1"></i>ویرایش </button>\n' +
+                        '  <button class="btn btn-danger btn-sm remove-cat" id="' + response.cat[2] + '"><i class="d-inline-flex align-middle ti-close"></i></button>\n' +
+                        '  </td>\n' +
+                        '   </tr>';
+                    $('#catBodyThread').append(html);
+                }
+            }
+        });
+    });
     $(document).on('click', '.edit-cat', function () {
         var id = $(this).attr('id');
         $('#collapseCatEdit').modal('show');
@@ -1124,7 +1177,56 @@ $(document).ready(function () {
         });
     });
 
+    // Reply Manipulation
+    $(document).on('click', '.edit-reply', function () {
+        var id = $(this).attr('id');
+        $('#collapseReplyEdit').modal('show');
+        $.ajax({
+            'url': '/admin/dashboard/reply/' + id + '/edit',
+            'type': 'get',
+            'dataType': 'json',
 
+            success: function (response) {
+                if (!$.isEmptyObject(response.reply)) {
+                    $('#collapseReplyForm textarea[name=body]').val(response.reply.body);
+                    $('#submitCollapseReply').attr('data-id', response.reply.id);
+                }
+            }
+        });
+    });
+    $('#submitCollapseReply').on('click', function () {
+        var id = $('#submitCollapseReply').attr('data-id');
+        var body = $('#collapseReplyForm textarea[name=body]').val();
+        $.ajax({
+            'url': '/admin/dashboard/reply/' + id,
+            'type': 'patch',
+            'dataType': 'json',
+            data: {
+                body: body,
+            },
+            success: function (response) {
+                $('#toEditCollapseReply').text('');
+                if (!$.isEmptyObject(response.collapseReplyError)) {
+                    if (!$.isEmptyObject(response.collapseReplyError.body)) {
+                        $('#toEditCollapseReply').text(response.collapseCatError.body[0]);
+                    }
+                } else {
+                    $('#collapseReplyEdit').modal('hide');
+                    $.toast({
+                        heading: 'موفقیت!',
+                        text: 'اطلاعات به روزرسانی شد',
+                        position: 'bottom-left',
+                        textAlign: 'right',
+                        loaderBg: '#ff6849',
+                        icon: 'success',
+                        hideAfter: 3500
+                    });
+                    var tr = $('button.edit-reply[id="' + response.reply[1] + '"]').parents('tr');
+                    tr.find('td:eq(1)').text(response.reply[0]);
+                }
+            }
+        });
+    });
     // Score Manipulation
     $(document).on('click', '.edit-score', function () {
         var id = $(this).attr('id');

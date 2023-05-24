@@ -8,6 +8,7 @@ use App\Traits\Numbers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use File;
+use Illuminate\Support\Str;
 use Verta;
 
 class BlogController extends Controller
@@ -47,7 +48,7 @@ class BlogController extends Controller
             'slug' => 'required|unique:blogs',
             'description' => 'required',
             'img_cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'excerpt' => 'required|string|min:3|max:255',
+            'excerpt' => 'string|min:3|max:255',
         ]);
 
         if (isset($request->published_at)) {
@@ -81,7 +82,7 @@ class BlogController extends Controller
             'slug' => !empty($request->slug) ? preg_replace('/\s+/', '-', $request->slug) : Str::slug($request->title, '-'),
             'img_cover' => $img_cover,
             'description' => $request->description,
-            'excerpt' => $request->excerpt,
+            'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
             'published_at' => $published_at,
             'is_page' => 1,
         ]);
@@ -129,7 +130,7 @@ class BlogController extends Controller
             'slug' => 'required|unique:blogs,slug,' . $blog->id,
             'description' => 'required',
             'img_cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'excerpt' => 'required|string|min:3|max:255',
+            'excerpt' => 'string|min:3|max:255',
         ]);
 
         if ($request->hasFile('img_cover')) {
@@ -167,7 +168,7 @@ class BlogController extends Controller
             'slug' => !empty($request->slug) ? preg_replace('/\s+/', '-', $request->slug) : Str::slug($request->title, '-'),
             'img_cover' => $img_cover != null ? $img_cover : $blog->img_cover,
             'description' => $request->description,
-            'excerpt' => $request->excerpt,
+            'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
             'published_at' => $published_at,
         ]);
         if (!empty($request->tags))

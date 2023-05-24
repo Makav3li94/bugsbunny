@@ -4,6 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Section;
+use App\Models\Setting;
+use App\Models\TotalScore;
+use App\Models\User;
+use App\Traits\Helpers;
 use App\Traits\Numbers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -11,7 +15,7 @@ use Verta;
 use Illuminate\Support\Str;
 class SectionController extends Controller
 {
-    use Numbers;
+    use Numbers,Helpers;
 
 
 
@@ -22,7 +26,7 @@ class SectionController extends Controller
             'category_id' => 'required|numeric',
             'slug' => 'unique:sections',
             'description' => 'required|string',
-            'excerpt' => 'required|string',
+            'excerpt' => 'string|min:3|max:255',
         ]);
         if (isset($request->expire_date)) {
 
@@ -36,13 +40,22 @@ class SectionController extends Controller
             'slug' => !empty($request->slug) ? preg_replace('/\s+/', '-', $request->slug) : Str::slug($request->title, '-'),
             'category_id' => $request->category_id,
             'type' => 0,
+            'kind' => 0,
             'user_id' => auth()->id(),
             'description' => $request->description,
-            'excerpt' => $request->excerpt,
+            'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
             'expire_date' => $published_at,
         ]);
-
-        return back();
+        $setting = Setting::all()->first();
+        TotalScore::create([
+            'user_id'=>auth()->id(),
+            'score' => $setting->section_score,
+            'type' => 1,
+            'is_for'=>'challenge'
+        ]);
+        $user  = User::find(auth()->id());
+        $this->notifyAdmin($user->id, $user->name,  $user->mobile, 'challenge',$challenge->id, 0, 'کاربر چالش یا سوال جدیدی ایجاد کرد.');
+        return back()->with(['store'=>'success']);
     }
 
 
@@ -69,7 +82,7 @@ class SectionController extends Controller
             'category_id' => 'required|numeric',
             'slug' => 'required|unique:sections,slug,' . $id,
             'description' => 'required|string',
-            'excerpt' => 'required|string',
+            'excerpt' => 'string|min:3|max:255',
             'prize_text' => 'required|string',
         ]);
         $challenge = Section::findOrFail($id);
@@ -86,7 +99,7 @@ class SectionController extends Controller
             'slug' => !empty($request->slug) ? preg_replace('/\s+/', '-', $request->slug) : Str::slug($request->title, '-'),
             'category_id' => $request->category_id,
             'description' => $request->description,
-            'excerpt' => $request->excerpt,
+            'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
             'prize_text' => $request->prize_text,
             'expire_date' => $published_at,
             'status' => $status,

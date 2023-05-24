@@ -59,10 +59,13 @@ class AppServiceProvider extends ServiceProvider
                 GROUP BY y.user_id
                 ORDER BY total DESC limit 5")));
         $ids = Arr::pluck($HighAllTimeUsersScores, 'user_id');
-        $HighAllTimeUsers = User::whereIn('id', $ids)
+        $HighAllTimeUsers = [];
+        if (count($ids) > 0){
+
+            $HighAllTimeUsers = User::whereIn('id', $ids)
             ->orderByRaw("field(id,".implode(',',$ids).")")
             ->get()->toArray();
-
+        }
 
         $HighLastWeekUsersScores = (DB::select(DB::raw("SELECT y.*
                   FROM (SELECT
@@ -85,10 +88,12 @@ class AppServiceProvider extends ServiceProvider
                 GROUP BY y.user_id
                 ORDER BY total DESC limit 5")));
         $aids = Arr::pluck($HighLastWeekUsersScores, 'user_id');
-        $HighLastWeekUsersUsers = User::whereIn('id', $aids)
-            ->orderByRaw("field(id,".implode(',',$aids).")")
-            ->get()->toArray();
-
+        $HighLastWeekUsersUsers = [];
+        if (count($aids) > 0) {
+            $HighLastWeekUsersUsers = User::whereIn('id', $aids)
+                ->orderByRaw("field(id," . implode(',', $aids) . ")")
+                ->get()->toArray();
+        }
 
         view()->composer('*', function ($view) use ($HighLastWeekUsersScores,$HighLastWeekUsersUsers,$HighAllTimeUsersScores,$HighAllTimeUsers, $latestComment, $mostPopular, $categories, $setting, $frontMenuHeader, $frontMenusFooter1, $frontMenusFooter2, $frontMenusFooter3, $frontSocail, $mostViewed) {
 

@@ -19,25 +19,34 @@
                         </ul>
                     </li>
                 @endif
+                    <li><a class="waves-effect waves-dark" href="{{route('admin.todos.index')}}"
+                           aria-expanded="false"><i class="ti-folder"></i><span
+                                class="hide-menu">مدیریت کار ها </span></a></li>
 
                 @if(auth()->user()->can('challenge'))
                     <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
-                                class="ti-files"></i><span class="hide-menu">مدیریت چالش ها</span></a>
+                                class="ti-files"></i><span class="hide-menu">مدیریت چالش و سوال</span></a>
                         <ul aria-expanded="false" class="collapse">
                             <li><a href="{{route('admin.challenge.create')}}">چالش جدید</a></li>
-                            <li><a href="{{route('admin.challenge.index')}}">لیست چالش ها</a></li>
+                            <li><a href="{{route('admin.challenge.create',['type'=>'thread'])}}">سوال جدید</a></li>
+                            <li><a href="{{route('admin.challenge.index')}}">لیست چالش ها و سوالات</a></li>
                         </ul>
                     </li>
                 @endif
-                @if(auth()->user()->can('score'))
-                    <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
-                                class="ti-files"></i><span class="hide-menu">مدیریت امتیازات</span></a>
-                        <ul aria-expanded="false" class="collapse">
+
+                @if(auth()->user()->can('challenge'))
+                    <li><a class="waves-effect waves-dark" href="{{route('admin.reply.index')}}" aria-expanded="false"><i
+                                class="ti-receipt"></i><span class="hide-menu">مدیریت ریپلای</span></a></li>
+                @endif
+{{--                @if(auth()->user()->can('score'))--}}
+{{--                    <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i--}}
+{{--                                class="ti-files"></i><span class="hide-menu">مدیریت امتیازات</span></a>--}}
+{{--                        <ul aria-expanded="false" class="collapse">--}}
 {{--                            <li><a href="{{route('admin.challenge.create')}}">اختصاص امتیاز جدید</a></li>--}}
-                            <li><a href="{{route('admin.challenge.index')}}">لیست امتیازات</a></li>
-                        </ul>
-                    </li>
-                @endif
+{{--                            <li><a href="{{route('admin.challenge.index')}}">لیست امتیازات</a></li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                @endif--}}
                 @if(auth()->user()->can('blog'))
                     <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
                                 class="ti-notepad"></i><span class="hide-menu">مدیریت صفحات</span></a>

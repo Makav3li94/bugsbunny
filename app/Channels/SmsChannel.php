@@ -12,26 +12,20 @@ class SmsChannel
     public function send($notifiable, Notification $notification)
     {
         $message = $notification->toSms($notifiable);
-        $this->setKeys();
-        if ($message['pattern'] == '9vbxjcri3w650sa') {
-            $this->sendFastSmsMokhaberat([$message['mobile']], $message['pattern'],
+        if ($message['pattern'] == '73363') {
+            $this->sendFastSmsMokhaberat($message['mobile'], $message['pattern'],
                 [
-                    "name" => $message['name'],
+                    "TCode" => $message['TCode'],
                 ]);
 
-        } elseif ($message['pattern'] == 'srjfkrau8rwu27a') {
-            $this->sendFastSmsMokhaberat([$message['mobile']], $message['pattern'],
+        } elseif ($message['pattern'] == '75511') {
+            $this->sendFastSmsMokhaberat($message['mobile'], $message['pattern'],
                 [
-                    "name" => $message['name'],
-                    "type" => $message['type'],
-                ]);
-        } elseif ($message['pattern'] == 'qf4gwq4wrrhanss') {
-            $this->sendFastSmsMokhaberat([$message['mobile']], $message['pattern'],
-                [
-                    "name" => $message['name'],
-                    "type" => $message['type'],
+                    "Name" => $message['name'],
+                    "Type" => $message['type'],
                     "status" => $message['status'],
                 ]);
+
         }
     }
 }

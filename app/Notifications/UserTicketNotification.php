@@ -13,10 +13,12 @@ class UserTicketNotification extends Notification
     use Queueable;
 
     private $user;
+    private $ticket;
 
-    public function __construct($user)
+    public function __construct($user,$ticket)
     {
         $this->user = $user;
+        $this->ticket = $ticket;
     }
 
 
@@ -41,8 +43,8 @@ class UserTicketNotification extends Notification
     {
         return [
             'mobile' => $this->user->mobile,
-            'pattern' => '9vbxjcri3w650sa',
-            'name' => $this->user->name,
+            'pattern' => '73363',
+            'TCode' => $this->ticket->id,
         ];
     }
 }

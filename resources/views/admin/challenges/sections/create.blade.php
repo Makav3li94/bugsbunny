@@ -1,10 +1,11 @@
 @extends('layouts.main-dashboard')
-@section('title')افزودن چالش@stop
-@section('current-page-title')افزودن چالش جدید@stop
+@section('title')افزودن {{$type == 'challenge' ? "چالش" :"سوال"}}@stop
+@section('current-page-title')افزودن {{$type == 'challenge' ? "چالش" :"سوال"}} جدید@stop
 @section('breadcrumbs')
-    <li class="breadcrumb-item">افزودن چالش</li>
-    <li class="breadcrumb-item active">افزودن چالش جدید</li>
+    <li class="breadcrumb-item">افزودن {{$type == 'challenge' ? "چالش" :"سوال"}}</li>
+    <li class="breadcrumb-item active">افزودن {{$type == 'challenge' ? "چالش" :"سوال"}} جدید</li>
 @stop
+
 @section('styles')
     <style>
         ._jw-tpk-container {
@@ -17,16 +18,23 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">افزودن چالش </h4>
-                    <p class="card-subtitle">در اینجا میتوانید چالش جدید ثبت کنید.</p>
+                    <h4 class="card-title">افزودن {{$type == 'challenge' ? "چالش" :"سوال"}} </h4>
+                    <p class="card-subtitle">در اینجا میتوانید {{$type == 'challenge' ? "چالش" :"سوال"}} جدید ثبت
+                        کنید.</p>
                     <div class="row">
                         <div class="col-lg-2"></div>
                         <div class="col-lg-8">
-                            <form action="{{route('admin.challenge.store')}}" class="form-horizontal clearfix" method="post"
+                            <form action="{{route('admin.challenge.store')}}" class="form-horizontal clearfix"
+                                  method="post"
                                   enctype="multipart/form-data">
                                 @csrf
+                                @if($type == 'thread' )
+                                    <input type="hidden" name="kind" value="1">
+                                @endif
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">نام چالش : <span
+                                    <label
+                                        class="col-sm-3 text-right control-label col-form-label">نام {{$type == 'challenge' ? "چالش" :"سوال"}}
+                                        : <span
                                             class="text-danger mr-1">*</span></label>
                                     <div class="col-sm-9">
                                         <input type="text" name="title" value="{{{old('title')}}}" class="form-control"
@@ -40,7 +48,9 @@
                                 </div>
 
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">نامک چالش : <span
+                                    <label
+                                        class="col-sm-3 text-right control-label col-form-label">نامک {{$type == 'challenge' ? "چالش" :"سوال"}}
+                                        : <span
                                             class="text-danger mr-1">*</span></label>
                                     <div class="col-sm-9">
                                         <input type="text" name="slug" value="{{{old('slug')}}}" class="form-control"
@@ -54,14 +64,25 @@
                                 </div>
 
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">دسته چالش: </label>
-                                    <div class="col-3">
+                                    <label
+                                        class="col-sm-3 text-right control-label col-form-label">دسته {{$type == 'challenge' ? "چالش" :"سوال"}}
+                                        : </label>
+                                    <div class="col-{{$type == 'challenge' ? '3' : '9'}}">
                                         <select class="select2 form-control custom-select" style="width: 100%;"
                                                 name="category_id">
                                             <option></option>
                                             @forelse($categories as $cat)
-                                                <option value="{{$cat->id}}"
-                                                        @if(collect(old('category_id'))->contains($cat->id)) selected @endif>{{$cat->title}}</option>
+                                                @if($type == 'challenge' )
+                                                    @if($cat->type == 0)
+                                                        <option value="{{$cat->id}}"
+                                                                @if(collect(old('category_id'))->contains($cat->id)) selected @endif>{{$cat->title}}</option>
+                                                    @endif
+                                                @else
+                                                    @if($cat->type == 1)
+                                                        <option value="{{$cat->id}}"
+                                                                @if(collect(old('category_id'))->contains($cat->id)) selected @endif>{{$cat->title}}</option>
+                                                    @endif
+                                                @endif
                                             @empty
 
                                             @endforelse
@@ -71,23 +92,25 @@
                                             <small class="invalid-text">{{$errors->first('category_id')}}</small>
                                         @endif
                                     </div>
+                                    @if($type == 'challenge' )
+                                        <label class="col-sm-3 text-right control-label col-form-label">تاریخ
+                                            اتمام: </label>
+                                        <div class="col-3">
+                                            <input type="text" name="expire_date"
+                                                   class="form-control text-center datepicker-day"
+                                                   value="{{old('expire_date')}}" placeholder="">
+                                            @if($errors->has('expire_date'))
+                                                <div class="alert alert-danger">
+                                                    {{$errors->first('expire_date')}}
+                                                </div>
+                                            @endif
 
-                                    <label class="col-sm-3 text-right control-label col-form-label">تاریخ
-                                        اتمام: </label>
-                                    <div class="col-3">
-                                        <input type="text" name="expire_date"
-                                               class="form-control text-center datepicker-day"
-                                               value="{{old('expire_date')}}" placeholder="">
-                                        @if($errors->has('expire_date'))
-                                            <div class="alert alert-danger">
-                                                {{$errors->first('expire_date')}}
-                                            </div>
-                                        @endif
-
-                                    </div>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">توضیحات چالش
+                                    <label
+                                        class="col-sm-3 text-right control-label col-form-label">توضیحات {{$type == 'challenge' ? "چالش" :"سوال"}}
                                         : </label>
                                     <div class="col-12">
                                 <textarea name="description" id="editor1" rows="10"
@@ -112,23 +135,26 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">متن جایزه: </label>
-                                    <div class="col-12">
+                                @if($type == 'challenge' )
+                                    <div class="row form-group">
+                                        <label class="col-sm-3 text-right control-label col-form-label">متن
+                                            جایزه: </label>
+                                        <div class="col-12">
                                 <textarea name="prize_text" class="form-control" rows="1"
                                           cols="1">{{old('prize_text')}}</textarea>
-                                        @if($errors->has('prize_text'))
-                                            <div class="alert alert-danger">
-                                                {{$errors->first('prize_text')}}
-                                            </div>
-                                        @endif
+                                            @if($errors->has('prize_text'))
+                                                <div class="alert alert-danger">
+                                                    {{$errors->first('prize_text')}}
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                                 <div class="form-group m-b-0">
                                     <button type="submit"
                                             class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left">
                                         ثبت
-                                        چالش جدید
+                                        {{$type == 'challenge' ? "چالش" :"سوال"}} جدید
                                     </button>
                                 </div>
                             </form>

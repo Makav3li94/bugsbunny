@@ -1,9 +1,9 @@
 @extends('layouts.main-dashboard')
-@section('title')ویرایش چالش@stop
-@section('current-page-title')ویرایش چالش جدید@stop
+@section('title')ویرایش {{$type == 'challenge' ? "چالش" :"سوال"}}@stop
+@section('current-page-title')ویرایش {{$type == 'challenge' ? "چالش" :"سوال"}} جدید@stop
 @section('breadcrumbs')
-    <li class="breadcrumb-item">ویرایش چالش</li>
-    <li class="breadcrumb-item active">ویرایش چالش </li>
+    <li class="breadcrumb-item">ویرایش {{$type == 'challenge' ? "چالش" :"سوال"}}</li>
+    <li class="breadcrumb-item active">ویرایش {{$type == 'challenge' ? "چالش" :"سوال"}} </li>
 @stop
 @section('styles')
     <style>
@@ -17,8 +17,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">ویرایش چالش </h4>
-                    <p class="card-subtitle">در اینجا میتوانید چالش  را ویرایش کنید.</p>
+                    <h4 class="card-title">ویرایش {{$type == 'challenge' ? "چالش" :"سوال"}} </h4>
+                    <p class="card-subtitle">در اینجا میتوانید {{$type == 'challenge' ? "چالش" :"سوال"}}  را ویرایش کنید.</p>
                     <div class="row">
                         <div class="col-lg-2"></div>
                         <div class="col-lg-8">
@@ -27,7 +27,7 @@
                                 @csrf
                                 @method('PATCH')
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">نام چالش : <span
+                                    <label class="col-sm-3 text-right control-label col-form-label">نام {{$type == 'challenge' ? "چالش" :"سوال"}} : <span
                                             class="text-danger mr-1">*</span></label>
                                     <div class="col-sm-9">
                                         <input type="text" name="title" value="{{$challenge->title}}" class="form-control"
@@ -41,7 +41,7 @@
                                 </div>
 
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">نامک چالش : <span
+                                    <label class="col-sm-3 text-right control-label col-form-label">نامک {{$type == 'challenge' ? "چالش" :"سوال"}} : <span
                                             class="text-danger mr-1">*</span></label>
                                     <div class="col-sm-9">
                                         <input type="text" name="slug" value="{{$challenge->slug}}" class="form-control"
@@ -55,13 +55,23 @@
                                 </div>
 
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">دسته چالش: </label>
-                                    <div class="col-3">
+                                    <label class="col-sm-3 text-right control-label col-form-label">دسته {{$type == 'challenge' ? "چالش" :"سوال"}}: </label>
+                                    <div class="col-{{$type == 'challenge' ? '3' : '9'}}">
                                         <select class="select2 form-control custom-select" style="width: 100%;"
                                                 name="category_id">
                                             <option></option>
                                             @forelse($categories as $cat)
-                                                <option value="{{$cat->id}}" {{$challenge->category_id == $cat->id ? 'selected':''}}  >{{$cat->title}}</option>
+                                                @if($type == 'challenge' )
+                                                    @if($cat->type == 0)
+                                                        <option value="{{$cat->id}}" {{$challenge->category_id == $cat->id ? 'selected':''}}  >{{$cat->title}}</option>
+
+                                                    @endif
+                                                @else
+                                                    @if($cat->type == 1)
+                                                        <option value="{{$cat->id}}" {{$challenge->category_id == $cat->id ? 'selected':''}}  >{{$cat->title}}</option>
+
+                                                    @endif
+                                                @endif
                                             @empty
                                             @endforelse
 
@@ -70,7 +80,7 @@
                                             <small class="invalid-text">{{$errors->first('category_id')}}</small>
                                         @endif
                                     </div>
-
+                                    @if($type == 'challenge' )
                                     <label class="col-sm-3 text-right control-label col-form-label">تاریخ
                                         اتمام: </label>
                                     <div class="col-3">
@@ -84,9 +94,10 @@
                                         @endif
 
                                     </div>
+                                    @endif
                                 </div>
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">توضیحات چالش
+                                    <label class="col-sm-3 text-right control-label col-form-label">توضیحات {{$type == 'challenge' ? "چالش" :"سوال"}}
                                         : </label>
                                     <div class="col-12">
                                 <textarea name="description" id="editor1" rows="10"
@@ -111,6 +122,7 @@
                                         @endif
                                     </div>
                                 </div>
+                                @if($type == 'challenge' )
                                 <div class="row form-group">
                                     <label class="col-sm-3 text-right control-label col-form-label">متن جایزه: </label>
                                     <div class="col-12">
@@ -123,8 +135,18 @@
                                         @endif
                                     </div>
                                 </div>
+                                @endif
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">وضعیت چالش(لطفا پس از اتمام طراحی تمامی سوالات، وضعیت را تایید کنید): </label>
+                                    <label class="col-sm-3 text-right control-label col-form-label">
+                                        @if($type == 'challenge' )
+                                        وضعیت
+                                        {{$type == 'challenge' ? "چالش" :"سوال"}}
+                                        (لطفا پس از اتمام طراحی تمامی سوالات، وضعیت را تایید کنید):
+                                        @else
+                                            وضعیت
+                                            {{$type == 'challenge' ? "چالش" :"سوال"}}
+                                        @endif
+                                    </label>
                                     <div class="col-12">
                                         <input type="checkbox" name="status" class="form-control" data-on="تایید  شده."
                                                data-off="تایید نشده"
@@ -138,7 +160,7 @@
                                     <button type="submit"
                                             class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left">
                                         ویرایش
-                                        چالش
+                                        {{$type == 'challenge' ? "چالش" :"سوال"}}
                                     </button>
                                 </div>
                             </form>
