@@ -38,10 +38,13 @@
                                 <small class="invalid-text">{{$errors->first('username')}}</small>
                             @endif
                         </div>
+                        @if(isset(request()->email))
+                            <input type="hidden" name="email_reg" value="on">
+                        @endif
                         <div class="col-sm-12 form-group">
                             <label>ایمیل <span class="text-danger mr-1">*</span></label>
-                            <input dir="ltr" type="text" class="form-control" placeholder=""
-                                   value="{{old('email')}}" name="email" required>
+                            <input dir="ltr" type="text" class="form-control" placeholder="" {{isset(request()->email) ? 'readonly' : ''}}
+                                   value="{{request()->email ??old('email')}}" name="email" required>
                             @if($errors->has('email'))
                                 <small class="invalid-text">{{$errors->first('email')}}</small>
                             @endif

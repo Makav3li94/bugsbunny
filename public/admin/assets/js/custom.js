@@ -131,8 +131,6 @@ $(function () {
     "use strict";
 
 
-
-
     $(".toast-info").click(function () {
         $.toast({
             heading: 'اطلاعات',
@@ -300,7 +298,7 @@ $(function () {
     // ==============================================================
     $('#to-recover').on("click", function () {
         $("#loginform").slideUp();
-        $("#recoverform").fadeIn().css("display","flex")
+        $("#recoverform").fadeIn().css("display", "flex")
     });
 
 
@@ -439,6 +437,72 @@ $(document).ready(function () {
     //||
     //||
     //===================================================
+    $('#toRegisterWithEmail').on("click", function () {
+        var email = $('#registerForm input[name=email]').val();
+        var result = $('#registerForm input[name=result]').val();
+        var a = $('#registerForm input[name=a]').val();
+        var b = $('#registerForm input[name=b]').val();
+        var operator = $('#registerForm input[name=operator]').val();
+        $.ajax({
+            'url': 'toRegister',
+            'type': 'post',
+            'dataType': 'json',
+            data: {email: email, result: result, a: a, b: b, operator: operator},
+
+            success: function (response) {
+                $('#toRegisterError , #resultError').text('');
+                $('#verificationForm input[name=email]').val('');
+                $('#registerForm input[name=result]').val('').text('');
+                if (!$.isEmptyObject(response.registerError)) {
+                    $('input[name=a]').val(response.array[0]);
+                    $('input[name=b]').val(response.array[2]);
+                    $('input[name=operator]').val(response.array[1]);
+                    var a = response.array[0].toString();
+                    var b = response.array[2].toString();
+                    var operator = response.array[1].toString();
+                    var placeholder = b + ' ' + operator + ' ' + a + ' ' + 'برابر با چه عددی است؟';
+                    $('input[name=result]').attr('placeholder', placeholder);
+                    if (response.registerError == 'userAlreadyExists') {
+                        $('#toRegisterError').text('کاربری با این شماره از قبل ثبت نام شده است');
+                    } else if (!$.isEmptyObject(response.registerError.email)) {
+                        $('#toRegisterError').text(response.registerError.email[0]);
+                    } else if (!$.isEmptyObject(response.registerError.result)) {
+                        $('#resultError').text(response.registerError.result[0]);
+                    }
+                } else if (response.result == 'incorrect') {
+                    $('#resultError').text('حاصل عبارت فوق نادرست می باشد');
+                    $('input[name=a]').val(response.array[0]);
+                    $('input[name=b]').val(response.array[2]);
+                    $('input[name=operator]').val(response.array[1]);
+                    var a = response.array[0].toString();
+                    var b = response.array[2].toString();
+                    var operator = response.array[1].toString();
+                    var placeholder = b + ' ' + operator + ' ' + a + ' ' + 'برابر با چه عددی است؟';
+                    $('input[name=result]').attr('placeholder', placeholder);
+                } else if (response.sms == 'error') {
+                    $('input[name=a]').val(response.array[0]);
+                    $('input[name=b]').val(response.array[2]);
+                    $('input[name=operator]').val(response.array[1]);
+                    var a = response.array[0].toString();
+                    var b = response.array[2].toString();
+                    var operator = response.array[1].toString();
+                    var placeholder = b + ' ' + operator + ' ' + a + ' ' + 'برابر با چه عددی است؟';
+                    $('input[name=result]').attr('placeholder', placeholder);
+                    swal({
+                        title: "خطا!",
+                        text: "در فرآیند ارسال ایمیل مشکلی رخ داده است ، لطفا چند دقیقه دیگر مجددا تلاش کنید.",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#7cd1f9",
+                        confirmButtonText: "تایید",
+                        closeOnConfirm: true
+                    });
+                } else if (response.email == 'sent') {
+                    $('#registerForm').attr('action', '/essentials/create/' + response.id).submit();
+                }
+            }
+        });
+    });
     $('#toRegister').on("click", function () {
         var mobile = $('#registerForm input[name=mobile]').val();
         var result = $('#registerForm input[name=result]').val();
@@ -509,7 +573,7 @@ $(document).ready(function () {
                 } else if (response.code == 'sent') {
                     $('#verificationForm input[name=mobile]').val('شماره همراه : ' + response.mobile);
                     $("#registerForm").slideUp();
-                    $("#verificationForm").fadeIn().css("display","flex");
+                    $("#verificationForm").fadeIn().css("display", "flex");
                     var oneMinute = new Date().getTime() + 59000;
                     $('#countDown').countdown(oneMinute)
                         .on('update.countdown', function (event) {
@@ -1520,27 +1584,27 @@ $(document).ready(function () {
                     $('#collapseInquiryForm textarea[name=body]').val(response.productInquiry.body);
 
                     $('#collapseInquiryForm input[name=created_at]').val(response.productInquiry.date);
-                    if (response.is_self == 1){
+                    if (response.is_self == 1) {
                         if (response.status == 1) {
                             $('.defaultChecked2').prop('checked', true).attr("disabled", true);
-                        }else{
+                        } else {
                             $('.defaultChecked2').prop('checked', false).attr("disabled", true);
                         }
                         $('#submitCollapseInquiry').hide()
                         $('#collapseInquiryForm textarea[name=reply]').val(response.productInquiry.reply).attr("disabled", true);
                         $('#collapseInquiryForm input[name=price]').val(response.productInquiry.price).attr("disabled", true);
-                    }else{
+                    } else {
                         if (response.productInquiry.status == 1) {
                             $('.defaultChecked2').prop('checked', true);
 
-                        }else{
+                        } else {
                             $('.defaultChecked2').prop('checked', false);
                         }
                         $('#collapseInquiryForm textarea[name=reply]').val(response.productInquiry.reply);
                     }
 
                     $('#submitCollapseInquiry').attr('data-id', response.productInquiry.id);
-                    $('#collapseInquiryForm').attr('action','/dashboard/product-inquiry/' + response.productInquiry.id)
+                    $('#collapseInquiryForm').attr('action', '/dashboard/product-inquiry/' + response.productInquiry.id)
                 }
             }
         });

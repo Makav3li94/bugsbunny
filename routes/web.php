@@ -11,6 +11,7 @@
 |
 */
 
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -78,7 +79,7 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     Route::get('sms/delivery', 'SmsController@showDeliveries')->name('admin.sms.setting.index');
     //Tickets Manipulation
     Route::patch('ticket/status/{ticket}', 'TicketController@status')->name('admin.ticket.toggle');
-    Route::resource('ticket', 'TicketController', ['names' => 'admin.ticket'])->only(['index', 'show','create','store', 'destroy']);
+    Route::resource('ticket', 'TicketController', ['names' => 'admin.ticket'])->only(['index', 'show', 'create', 'store', 'destroy']);
     //Faqs Manipulation
     Route::resource('faq', 'FaqController', ['names' => 'admin.faq'])->only(['update']);
     Route::get('download/faq', 'FaqController@downloadFile')->name('faq.download');
@@ -86,9 +87,9 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     Route::resource('slider', 'SliderController', ['names' => 'admin.slider'])->except(['show']);
     //challenges  Manipulation
     Route::resource('challenge', 'SectionController', ['names' => 'admin.challenge']);
-    Route::resource('reply', 'ReplyController', ['names' => 'admin.reply'])->only(['index','update','destroy','edit']);
-    Route::resource('question', 'QuestionController', ['names' => 'admin.question'])->except(['create','show']);
-    Route::resource('score', 'TotalScoreController', ['names' => 'admin.score'])->except(['create','edit','show']);
+    Route::resource('reply', 'ReplyController', ['names' => 'admin.reply'])->only(['index', 'update', 'destroy', 'edit']);
+    Route::resource('question', 'QuestionController', ['names' => 'admin.question'])->except(['create', 'show']);
+    Route::resource('score', 'TotalScoreController', ['names' => 'admin.score'])->except(['create', 'edit', 'show']);
     Route::post('score/{user}', 'TotalScoreController@store')->name('admin.score.store');
     //========================== AJAX ROUTES START =====================================================================
     //Search Ajax
@@ -111,7 +112,7 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     Route::post('task/status/{task}', 'TaskController@status');
     //Toggles User Auth Status
     Route::post('user/status/{user}', 'PrimaryUserController@authStatus');
-        //Primary User Filter Manipulation
+    //Primary User Filter Manipulation
     Route::get('filter/PUser', 'PrimaryUserController@filter');
     //Todos Filter Manipulation
     Route::get('filter/todos', 'TodosController@filter');
@@ -167,7 +168,6 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     Route::get('/front/social/{frontSocail}', 'FrontController@editSocialInfo')->name('admin.front_social.ajax');
 
 
-
     Route::get('/front/faq', 'FrontController@editFaq')->name('admin.front_faq.edit');
     Route::post('/front/faq', 'FrontController@storeFaq')->name('admin.front_faq.store');
     Route::patch('/front/faq/{frontFaq}', 'FrontController@updateFaq')->name('admin.front_faq.update');
@@ -199,6 +199,13 @@ Route::post('password/reset', 'User\AuthController@reset')->name('password.reset
 //Resend Sms
 Route::post('resend', 'User\AuthController@resendSms');
 
+Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('/email/verify', 'User\VerificationController@show')->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', 'User\VerificationController@verify')->name('verification.verify')->middleware(['signed']);
+    Route::post('/email/resend', 'User\VerificationController@resend')->name('verification.resend');
+
+});
 //Home Page Is Register View Page
 Route::group(['namespace' => 'User'], function () {
     Route::get('/register', 'AuthController@showRegistrationForm')->name('register');
@@ -211,6 +218,7 @@ Route::group(['namespace' => 'User'], function () {
     Route::get('essentials/create/{user}', 'AuthController@showEssentailsForm')->name('essentials.create');
     Route::patch('essentials/{user}', 'AuthController@storeEssentials')->name('essentials.store');
     Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
+        Route::group(['middleware' => ['verified']], function () {
         Route::get('/', 'UserController@dashboard')->name('user.dashboard');
         Route::patch('/{user}', 'UserController@update')->name('user.update');
         //Primary Users Manipulation
@@ -220,45 +228,55 @@ Route::group(['namespace' => 'User'], function () {
 
 
     });
+    });
 
 
 });
 //==================================== User Ajax Routes ================================================================
 
 Route::group(['namespace' => 'User', 'middleware' => 'auth', 'prefix' => 'dashboard'], function () {
-    //File Manipulation
-    Route::get('download/{file}/{user}', 'FileController@FileDownloader')->name('user.file.download');
-    Route::post('file/{user}', 'FileController@store')->name('user.file.store');
-    Route::delete('file/{file}', 'FileController@destroy')->name('user.file.destroy');
-    //Primary User Filter Manipulation
-    Route::get('filter/PUser', 'PrimaryUserController@filter');
-    //Tickets Manipulation (Not Ajax)
-    Route::patch('ticket/status/{ticket}', 'TicketController@status')->name('user.ticket.toggle');
-    Route::resource('ticket', 'TicketController', ['names' => 'user.ticket'])->only([
-        'index',
-        'edit',
-        'destroy',
-        'create',
-        'store'
-    ]);
-    //Faqs Manipulation (Not Ajax)
-    Route::post('faq/{ticket}', 'FaqController@store')->name('user.faq.store');
-    Route::get('download/faq', 'FaqController@downloadFile')->name('user.faq.download');
-    Route::resource('challenge', 'SectionController', ['names' => 'user.challenge']);
-    Route::resource('question', 'QuestionController', ['names' => 'user.question'])->except(['create','show']);
+    Route::group(['middleware' => ['verified']], function () {
+        //File Manipulation
+        Route::get('download/{file}/{user}', 'FileController@FileDownloader')->name('user.file.download');
+        Route::post('file/{user}', 'FileController@store')->name('user.file.store');
+        Route::delete('file/{file}', 'FileController@destroy')->name('user.file.destroy');
+        //Primary User Filter Manipulation
+        Route::get('filter/PUser', 'PrimaryUserController@filter');
+        //Tickets Manipulation (Not Ajax)
+        Route::patch('ticket/status/{ticket}', 'TicketController@status')->name('user.ticket.toggle');
+        Route::resource('ticket', 'TicketController', ['names' => 'user.ticket'])->only([
+            'index',
+            'edit',
+            'destroy',
+            'create',
+            'store'
+        ]);
+        //Faqs Manipulation (Not Ajax)
+        Route::post('faq/{ticket}', 'FaqController@store')->name('user.faq.store');
+        Route::get('download/faq', 'FaqController@downloadFile')->name('user.faq.download');
+        Route::resource('challenge', 'SectionController', ['names' => 'user.challenge']);
+        Route::resource('question', 'QuestionController', ['names' => 'user.question'])->except(['create', 'show']);
 
+    });
 });
 
+Route::get('/test',function (){
+    $user = \App\Models\User::find(1);
+    event(new Registered($user));
+});
 Route::get('/', 'Front\HomeController@index')->name('home');
 Route::get('user/{username}', 'Front\HomeController@user')->name('user');
 Route::get('/forum', 'Front\HomeController@forum')->name('forum');
 Route::get('forum/{slug}', 'Front\HomeController@section')->name('section');
 Route::get('category/{slug}', 'Front\HomeController@category')->name('archive');
 Route::post('quiz/{section}', 'Front\HomeController@quiz')->name('quiz');
-Route::get('/markAsRead', function(){auth()->user()->unreadNotifications->markAsRead();return redirect()->back();});
+Route::get('/markAsRead', function () {
+    auth()->user()->unreadNotifications->markAsRead();
+    return redirect()->back();
+});
 Route::resource('reply', 'User\ReplyController', ['names' => 'reply'])->middleware('auth');
-Route::post('/like-reply/{reply}','Front\LikeController@like')->name('likeReply');
-Route::post('/dislike-reply/{reply}','Front\LikeController@dislike')->name('dislikeReply');
+Route::post('/like-reply/{reply}', 'Front\LikeController@like')->name('likeReply');
+Route::post('/dislike-reply/{reply}', 'Front\LikeController@dislike')->name('dislikeReply');
 //Search
 Route::get('search', 'Front\HomeController@search');
 // Front Pages !

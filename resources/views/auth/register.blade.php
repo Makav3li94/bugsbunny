@@ -19,9 +19,15 @@
                     <form class="row login_form" id="registerForm" action="#">
                         <div class="col-sm-12 form-group">
                             <div id="registerInputWrapper">
-                                <input dir="ltr" class="form-control" type="text" required=""
-                                       placeholder="تلفن همراه"
-                                       value="{{old('mobile')}}" name="mobile">
+                                @if($setting->reg_type == 0 || $setting->reg_type == 2)
+                                    <input dir="ltr" class="form-control" type="text" required=""
+                                           placeholder="تلفن همراه"
+                                           value="{{old('mobile')}}" name="mobile">
+                                @elseif($setting->reg_type == 1)
+                                    <input dir="ltr" class="form-control" type="text" required=""
+                                           placeholder="پست الکترونیک"
+                                           value="{{old('mobile')}}" name="email">
+                                @endif
                             </div>
                             <small class="invalid-text" id="toRegisterError"></small>
                         </div>
@@ -42,8 +48,13 @@
                         </div>
 
                         <div class="col-sm-12 text-center">
-                            <button id="toRegister" class="btn action_btn thm_btn" type="button">دریافت کد تایید
-                            </button>
+                            @if($setting->reg_type == 0 || $setting->reg_type == 2)
+                                <button id="toRegister" class="btn action_btn thm_btn" type="button">دریافت کد تایید
+                                </button>
+                            @elseif($setting->reg_type == 1)
+                                <button id="toRegisterWithEmail" class="btn action_btn thm_btn" type="button">ادامه
+                                </button>
+                            @endif
                         </div>
                     </form>
 

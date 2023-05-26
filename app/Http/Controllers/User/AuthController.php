@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Category;
-use App\Models\CompanyRoles;
 use App\Models\Familiarity;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
@@ -14,6 +13,7 @@ use App\Traits\Numbers;
 use App\Traits\Randomable;
 use App\Traits\SmsableMokhaberat;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    use SmsableMokhaberat, Randomable,Numbers;
+    use SmsableMokhaberat, Randomable, Numbers;
 
     //SMS Panel Credentials
     private $client;
@@ -49,11 +49,20 @@ class AuthController extends Controller
 
     protected function toRegister(Request $request)
     {
+        if (isset($request->email)) {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email|unique:users,email',
+                'result' => 'required|numeric|integer'
+            ]);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'mobile' => 'required|numeric|unique:users,mobile',
+                'result' => 'required|numeric|integer'
+            ]);
+        }
+
         $array = $this->createRandomNumbers();
-        $validator = Validator::make($request->all(), [
-            'mobile' => 'required|numeric|unique:users,mobile',
-            'result' => 'required|numeric|integer'
-        ]);
+
         if ($validator->fails()) {
             return response()->json(['registerError' => $validator->errors()->toArray(), 'array' => $array]);
         } else {
@@ -70,55 +79,55 @@ class AuthController extends Controller
                     break;
             }
             if ($result === $res) {
-                $mobile = $request->input('mobile');
-                $userCount = User::whereMobile($mobile)->get()->count();
-                $smsSetting = SmsSetting::first();
-                if ($userCount > 0) {
-                    $user = User::whereMobile($mobile)->first();
-                    if ($user->authStatus == '0') {
-                        //SMS
-                        //CORRECT
-                        //Page-Login
-                        $randomDigits = $this->randomDigits();
-                        $this->preRegister($randomDigits, $mobile);
-                        if (Setting::all()->count() > 0 && Setting::all()->first()->brand != null) {
-                            $name = Setting::all()->first()->brand;
-                        } else {
-                            $name = '';
-                        }
-                        $this->setKeys();
-                        $bulk = $this->sendVerification($randomDigits, $mobile);
-                        if (session()->get('sms') == 'error') {
-                            return response()->json(['sms' => 'error', 'array' => $array]);
-                        }
-                        return response()->json(['code' => 'sent', 'mobile' => $mobile]);
-                    } else {
-                        return response()->json(['registerError' => 'userAlreadyExists', 'array' => $array]);
-                        //error user already exists
-                    }
+                if (isset($request->email)) {
+                    $email = $request->input('email');
+                    $user = User::create(['email' => $email,]);
+                    event(new Registered($user));
+                    return response()->json(['email' => 'sent', 'id' => $user->id]);
                 } else {
-                    //sms
-                    if (Setting::all()->count() > 0 && Setting::all()->first()->brand != null) {
-                        $name = Setting::all()->first()->brand;
-                    } else {
-                        $name = '';
-                    }
-                    $randomDigits = $this->randomDigits();
+                    $mobile = $request->input('mobile');
+                    $userCount = User::whereMobile($mobile)->get()->count();
+                    $smsSetting = SmsSetting::first();
 
-                    $this->preRegister($randomDigits, $mobile);
-//                    $this->setKeys();
-                    $bulk = $this->sendVerification($randomDigits, $mobile);
-//                    $sms = Sms::create([
-//                        'sms_sender_id' => 1,
-//                        'description' => 'ثبت نام',
-//                        'bulk_id' => $bulk,
-//                        'status' => 0
-//                    ]);
-                    return response()->json(['code' => 'sent', 'bulk' => $bulk, 'mobile' => $mobile]);
+                    if ($userCount > 0) {
+
+                        $user = User::whereMobile($mobile)->first();
+
+                        if ($user->authStatus == '0') {
+
+                            $randomDigits = $this->randomDigits();
+                            $this->preRegister($randomDigits, $mobile);
+
+                            $this->sendVerification($randomDigits, $mobile);
+                            if (session()->get('sms') == 'error') {
+                                return response()->json(['sms' => 'error', 'array' => $array]);
+                            }
+                            return response()->json(['code' => 'sent', 'mobile' => $mobile]);
+                        } else {
+                            return response()->json(['registerError' => 'userAlreadyExists', 'array' => $array]);
+                            //error user already exists
+                        }
+                    } else {
+
+                        $randomDigits = $this->randomDigits();
+
+                        $this->preRegister($randomDigits, $mobile);
+                        $bulk = $this->sendVerification($randomDigits, $mobile);
+                        Sms::create([
+                            'sms_sender_id' => 1,
+                            'description' => 'ثبت نام',
+                            'bulk_id' => $bulk,
+                            'status' => 0
+                        ]);
+                        return response()->json(['code' => 'sent', 'bulk' => $bulk, 'mobile' => $mobile]);
+                    }
                 }
+
+
             } else {
                 return response()->json(['result' => 'incorrect', 'array' => $array]);
             }
+
 
         }
     }
@@ -185,7 +194,7 @@ class AuthController extends Controller
             $setting = null;
         }
         return view('auth.page-login',
-            compact('user', 'familiarities','categories', 'setting'));
+            compact('user', 'familiarities', 'categories', 'setting'));
     }
 
     protected function storeEssentials(Request $request, User $user)
@@ -195,19 +204,14 @@ class AuthController extends Controller
             $request->validate([
                 'name' => 'required|string',
                 'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/',
-                'email' => 'required|email|string|unique:users,email,NULL,id,deleted_at,NULL',
                 'password' => 'nullable|confirmed|min:6',
                 'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:512',
                 'familiarity' => 'nullable|numeric|integer|min:1|max:' . $familiaritiesCount,
                 'birthDate' => 'required',
                 'cats' => 'required',
             ]);
-            $password = $request['password'];
-            if ($password == null) {
-                $password = Hash::make($mobile);
-            } else {
-                $password = Hash::make($password);
-            }
+
+            $password = Hash::make($request['password']);
 
 
             if (request()->hasFile('avatar')) {
@@ -215,7 +219,12 @@ class AuthController extends Controller
                 request()->avatar->move(public_path('images/user/'), $avatar);
             } else
                 $avatar = null;
-
+            $setting = Setting::all()->first();
+            if ($setting->reg_type == 0){
+                $email_verify = now();
+            }else{
+                $email_verify = Null;
+            }
             $user->update([
                 'name' => $request['name'],
                 'username' => $request['username'],
@@ -225,6 +234,7 @@ class AuthController extends Controller
                 'birthDate' => $this->convertToGoregianDate($request->input('birthDate')),
                 'cats' => json_encode($request->cats),
                 'avatar' => $avatar,
+                'email_verified_at' => $email_verify,
                 'authStatus' => 0,
                 'is_primary' => "1"
             ]);

@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->longText('cats')->nullable();
             $table->string('avatar', 200)->nullable();
             $table->softDeletes();
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->engine = 'InnoDB';

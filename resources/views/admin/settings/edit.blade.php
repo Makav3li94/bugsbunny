@@ -135,9 +135,9 @@
                                 <div class="form-group">
                                     <label>نوع ثبت نام</label>
                                     <select name="reg_type" id="" class="form-control">
-                                        <option value="0">sms</option>
-                                        <option value="1">email</option>
-                                        <option value="2">هردو</option>
+                                        <option value="0" {{$setting->reg_type == 0 ? "selected":""}}>sms</option>
+                                        <option value="1" {{$setting->reg_type == 1 ? "selected":""}}>email</option>
+                                        <option value="2" {{$setting->reg_type == 2 ? "selected":""}}>هردو</option>
                                     </select>
                                 </div>
                             </div>
