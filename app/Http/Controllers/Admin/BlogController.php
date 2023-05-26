@@ -105,7 +105,7 @@ class BlogController extends Controller
         if (!empty($blog->published_at)) {
             $time = explode(' ', $blog->published_at);
             $time = $time[1];
-            $date = $this->convertToJalali($blog->published_at);
+            $date = $this->convertToJalaliDateAndTime($blog->published_at);
         } else {
             $time = '';
             $date = '';

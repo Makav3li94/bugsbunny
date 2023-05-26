@@ -73,13 +73,13 @@ class SectionController extends Controller
 
     public function edit($id)
     {
-
+        return       Section::with('quizHeaders')->has('quizHeaders')->where('status',2)->whereDate('expire_date', '<=',Carbon::today())->get();
         $challenge = Section::findOrFail($id);
         $type = 'challenge';
         if ($challenge->category->type == 1) {
             $type = 'thread';
         }
-        $challenge['expire_date'] = $this->convertToJalaliDate($challenge->expire_date);
+        $challenge['expire_date'] = $this->convertToJalaliDate($challenge->expire_date,true);
         return view('admin.challenges.sections.edit', compact('challenge', 'type'));
     }
 
@@ -108,8 +108,9 @@ class SectionController extends Controller
         } else {
             $published_at = Carbon::now()->toDateTimeString();
         }
+        if (isset($request->status)) $status = 2; else $status = 3;
+
         if ($challenge->type == 0) {
-            if (isset($request->status)) $status = 2; else $status = 3;
             $user = User::find($challenge->user_id);
             if ($status == 1) {
                 $details = ['type' => 'وضعیت چالش', 'status' => 'در حال بررسی'];

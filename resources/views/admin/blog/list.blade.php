@@ -40,7 +40,7 @@
                                     <td style="width: 120px;">
                                         <button class="btn btn-sm btn-success "
                                                 style="top:5px;right: 0px" onclick="copyText('link-{{$blog->id}}')"><i class="fa fa-copy"></i></button>
-                                        <a href="{{route('blog',$blog->slug)}}" target="_blank"
+                                        <a href="{{route('page',$blog->slug)}}" target="_blank"
                                            class="btn btn-sm btn-primary "
                                            style="top:5px;right: 100px"><i class="fa fa-eye"></i></a>
                                         <a href="{{route('admin.blog.edit',$blog->id)}}" class="btn btn-success btn-sm">

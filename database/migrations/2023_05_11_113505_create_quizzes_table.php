@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('quiz_header_id')->index();
             $table->longText('question_id');
             $table->longText('answer_id');
+            $table->tinyInteger('is_correct')->nullable()->default(0);
+            $table->tinyInteger('unit')->nullable()->default(1);
             $table->timestamps();
         });
     }

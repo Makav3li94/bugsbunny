@@ -152,7 +152,7 @@
                                                data-off="تایید نشده"
                                                data-toggle="toggle" data-size="bg" data-onstyle="success"
                                                data-style="ios"
-                                               @if($challenge->status=='1') checked @endif id="{{$challenge->id}}"/>
+                                               @if($challenge->status=='2' || $challenge->status=='4') checked @endif id="{{$challenge->id}}"/>
 
                                     </div>
                                 </div>
