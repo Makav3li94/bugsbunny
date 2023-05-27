@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Helpers\LogActivity;
 use App\Http\Controllers\Controller;
 use App\Models\Reply;
 use App\Models\Setting;
@@ -56,6 +57,7 @@ class ReplyController extends Controller
             'type' => 1,
             'is_for'=>'reply'
         ]);
+        LogActivity::addToLog('کامنت جدیدی ارسال کرد.','reply',$reply->id);
         return redirect()->back()->with(['store'=>'success']);
 
     }

@@ -7,7 +7,7 @@ use App\Models\Setting;
 use Carbon\Carbon;
 use Closure;
 use Morilog\Jalali\CalendarUtils;
-use function App\helpers\numberConverter;
+use function App\Helpers\numberConverter;
 
 class TimeRageChecker
 {

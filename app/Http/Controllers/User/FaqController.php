@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Traits\Helpers;
-use function App\helpers\fileUploader;
+use function App\Helpers\fileUploader;
 use App\Models\Faq;
 use App\Models\Ticket;
 use Illuminate\Http\Request;

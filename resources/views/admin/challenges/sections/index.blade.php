@@ -42,11 +42,27 @@
                                         {{Verta::instance($challenge->expire_date)->format('Y/m/d')}}
                                     </td>
                                     <td>
-                                        @if($challenge->status == 1)
-                                            <span class="badge badge-pill badge-success">تایید شده</span>
-                                        @else
-                                            <span class="badge badge-pill badge-danger">تایید نشده</span>
-                                        @endif
+                                        @switch($challenge->status)
+                                            @case(0)
+                                            <span
+                                                class="badge badge-pill badge-info">معلق</span>
+                                            @break
+                                            @case(1)
+
+                                            <span class="badge badge-pill badge-warning">         درحال بررسی</span>
+                                            @break
+                                            @case(2)
+                                            <span class="badge badge-pill badge-success">           تایید شده</span>
+
+                                            @break
+                                            @case(3)
+                                            <span class="badge badge-pill badge-secondary">           رد شده</span>
+                                            @break
+                                            @case(4)
+                                            <span class="badge badge-pill badge-primary">           پایان یافته</span>
+                                            @break
+                                            @default
+                                        @endswitch
                                     </td>
 
                                     <td style="width: 120px;">
@@ -115,11 +131,27 @@
                                     <td>{{$challenge->type == 1 ? 'Admin' : $challenge->user->username }}</td>
 
                                     <td>
-                                        @if($challenge->status == 1)
-                                            <span class="badge badge-pill badge-success">تایید شده</span>
-                                        @else
-                                            <span class="badge badge-pill badge-danger">تایید نشده</span>
-                                        @endif
+                                        @switch($challenge->status)
+                                            @case(0)
+                                            <span
+                                                class="badge badge-pill badge-info">معلق</span>
+                                            @break
+                                            @case(1)
+
+                                            <span class="badge badge-pill badge-warning">         درحال بررسی</span>
+                                            @break
+                                            @case(2)
+                                            <span class="badge badge-pill badge-success">           تایید شده</span>
+
+                                            @break
+                                            @case(3)
+                                            <span class="badge badge-pill badge-secondary">           رد شده</span>
+                                            @break
+                                            @case(4)
+                                            <span class="badge badge-pill badge-primary">           پایان یافته</span>
+                                            @break
+                                            @default
+                                        @endswitch
                                     </td>
 
                                     <td style="width: 120px;">

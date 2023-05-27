@@ -11,7 +11,7 @@ use App\Traits\SmsableMokhaberat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use function App\helpers\fileUploader;
+use function App\Helpers\fileUploader;
 
 
 class FaqController extends Controller

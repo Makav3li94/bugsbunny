@@ -143,23 +143,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-3 text-right control-label col-form-label">پیوست فایل
-                                    جدید:</label>
-                                <div class="col-sm-9">
-                                    <input name="file[{{$faq->id}}]" type="file" class="form-control">
-                                    <small class="text-info"> فقط فایل با فرمت zip و rar و pdf و doc و docx و jpg و
-                                        png و حداکثر حجم
-                                        5000
-                                        کیلوبایت مجاز است.
-                                    </small>
-                                    @if($errors->has('file.'.$faq->id))
-                                        <p>
-                                            <small class="invalid-text">{{$errors->first('file.'.$faq->id)}}</small>
-                                        </p>
-                                    @endif
-                                </div>
-                            </div>
+
                             <div class="form-group">
                                 <button type="submit"
                                         class="btn btn-success btn-rounded waves-effect waves-light m-t-10  float-left">

@@ -71,10 +71,10 @@ class HomeController extends Controller
     public function forum()
     {
 
-        $mainSection = Section::where([['status', 1], ['kind', 0], ['type', 1]])->with('category')->orderBy('id', 'desc')->get();
-        $userSection = Section::where([['status', 1], ['kind', 0], ['type', 0]])->with('category')->orderBy('id', 'desc')->get();
+        $mainSection = Section::where([['status', 2], ['kind', 0], ['type', 1]])->with('category')->orderBy('id', 'desc')->get();
+        $userSection = Section::where([['status', 2], ['kind', 0], ['type', 0]])->with('category')->orderBy('id', 'desc')->get();
 
-        $threads = Section::where([['status', 1], ['kind', 1]])->with('category')->orderBy('id', 'desc')->get();
+        $threads = Section::where([['status', 2], ['kind', 1]])->with('category')->orderBy('id', 'desc')->get();
 
         return view('front.forum', compact('mainSection', 'userSection', 'threads'));
     }

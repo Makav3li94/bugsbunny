@@ -48,11 +48,46 @@
                         </div>
                         <div class="col-lg-3">
                             @if($section->kind == 0)
-                                <div
-                                    class="alert alert-info text-center">{{$section->status == 2 ? 'به اتمام رسیده' : 'چالش فعال است.'}}</div>
+                                @switch($section->status)
+                                    @case(0)
+                                    <div class="alert alert-warning text-center">معلق</div>
+                                    @break
+                                    @case(1)
+                                    <div class="alert alert-warning text-center">درحال بررسی</div>
+                                    @break
+                                    @case(2)
+                                    <div class="alert alert-info text-center">چالش فعال است.</div>
+
+                                    @break
+                                    @case(3)
+                                    <div class="alert alert-danger text-center">چالش رد شده است.</div>
+                                    @break
+                                    @case(4)
+                                    <span class="badge badge-pill badge-primary">       چالش    پایان یافته</span>
+                                    @break
+                                    @default
+                                @endswitch
+
                             @else
-                                <div
-                                    class="alert alert-info text-center">{{$section->status == 2 ? 'سوال قفل شده است.' : 'سوال فعال است.'}}</div>
+                                @switch($section->status)
+                                    @case(0)
+                                    <div class="alert alert-warning text-center">معلق</div>
+                                    @break
+                                    @case(1)
+                                    <div class="alert alert-warning text-center">درحال بررسی</div>
+                                    @break
+                                    @case(2)
+                                    <div class="alert alert-info text-center">سوال فعال است.</div>
+
+                                    @break
+                                    @case(3)
+                                    <div class="alert alert-danger text-center">سوال رد شده است.</div>
+                                    @break
+                                    @case(4)
+                                    <span class="badge badge-pill badge-primary"> سوال پایان یافته</span>
+                                    @break
+                                    @default
+                                @endswitch
                             @endif
                         </div>
                     </div>

@@ -82,7 +82,7 @@
                                        aria-controls="home" aria-selected="true">ویرایش اطلاعات</a>
                                 </li>
                                 <li class="nav-item p-1 ">
-                                    <a class="nav-link {{session()->get('first')=='yes' ? " active" :"" }}  {{session()->get('crud')=='section_store' ? "active" :"" }}" id="chalenges-tab" data-toggle="tab" href="#chalenges"
+                                    <a class="nav-link {{session()->get('crud')=='section_store' ? "active" :"" }}" id="chalenges-tab" data-toggle="tab" href="#chalenges"
                                        role="tab"
                                        aria-controls="chalenges" aria-selected="false">چالش ها</a>
                                 </li>
@@ -128,6 +128,8 @@
                         </div>
                         <div class="col-md-10">
                             <div class="tab-content profile-tab" id="myTabContent">
+
+
                                 <div class="tab-pane fade {{session()->get('crud')=='user_update' ? " show active" :"" }}" id="profile" role="tabpanel"
                                      aria-labelledby="profile-tab">
                                     <form class="clearfix" action="{{route('user.update',$user->id)}}" method="POST"
@@ -260,7 +262,8 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="tab-pane fade {{session()->get('first')=='yes' ? " show active" :"" }} {{session()->get('crud')=='section_store' ? " show active" :"" }}" id="chalenges" role="tabpanel"
+
+                                <div class="tab-pane fade {{session()->get('crud')=='section_store' ? " show active" :"" }}" id="chalenges" role="tabpanel"
                                      aria-labelledby="chalenges-tab">
                                     <div class="card">
                                         <div class="card-body">
@@ -268,7 +271,7 @@
                                             <p class="card-subtitle">در اینجا چالش هایی که ادمین سامانه، یا سایر کاربران
                                                 ایجاد کرده اند را، بر اسا دسته های مورد علاقه خود مشاهده کنید.</p>
                                             <div class="table-responsive">
-                                                <table class="table table_shortcode">
+                                                <table class="sort-table table table_shortcode">
                                                     @if(count($sections) > 0 || count($userSections) > 0)
                                                         <thead>
                                                         <tr>
@@ -279,7 +282,7 @@
                                                             <th>وضعیت</th>
                                                             <th>متعلق</th>
                                                             <th>سوال</th>
-                                                            <th>عملیات</th>
+                                                            <th style="width: 200px">عملیات</th>
                                                         </tr>
                                                         </thead>
                                                     @endif
@@ -295,7 +298,7 @@
                                                             </td>
                                                             <td>سایر</td>
                                                             <td>{{$section->questions_count." عدد"}}</td>
-                                                            <td><a class="btn btn-sm btn-warning"
+                                                            <td style="width: 200px"><a class="btn btn-sm btn-warning"
                                                                    href="{{route('section',$section->slug)}}">مشاهده</a>
                                                             </td>
                                                         </tr>
@@ -313,7 +316,7 @@
                                                             <td>         @include('layouts.components.status')</td>
                                                             <td>{{$section->user->username == auth()->user()->username ? "شما"  : $section->user->username}}</td>
                                                             <td>{{$section->questions_count." عدد"}}</td>
-                                                            <td>
+                                                            <td style="width: 200px">
                                                                 @if($section->user->username == auth()->user()->username)
                                                                     <a href="javascript:void(0)"
                                                                        class="btn btn-sm btn-primary"
@@ -525,7 +528,7 @@
                                             <h4 class="card-title">سوال های شما</h4>
                                             <p class="card-subtitle">در اینجا سوال هایی که پرسیده اید را مشاهده می کنید.
                                             <div class="table-responsive">
-                                                <table class="table table_shortcode">
+                                                <table class="sort-table table table_shortcode">
                                                     @if(count($sections) > 0 || count($userSections) > 0)
                                                         <thead>
                                                         <tr>
@@ -572,7 +575,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="scores" role="tabpanel" aria-labelledby="scores-tab">
                                     <div class="table-responsive">
-                                        <table class="table table_shortcode">
+                                        <table class="sort-table table table_shortcode">
                                             <thead>
                                             <tr>
                                                 <th>ردیف</th>
@@ -601,22 +604,22 @@
                                 </div>
                                 <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
                                     <div class="table-responsive">
-                                        <table class="table table_shortcode">
+                                        <table class="sort-table table table_shortcode">
                                             <thead>
                                             <tr>
                                                 <th>ردیف</th>
+                                                <th>فعالیت</th>
                                                 <th>نوع</th>
                                                 <th>لینک</th>
-                                                <th>وضعیت</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @forelse($user->totalScore as $key=>$score)
+                                            @forelse($activities as $key=>$activity)
                                                 <tr>
                                                     <th>{{$key+1}}</th>
-                                                    <td>{{$score->score}}</td>
-                                                    <td>{{$score->type}}</td>
-                                                    <td>for</td>
+                                                    <td>{{$activity->subject}}</td>
+                                                    <td>{{$activity->model_type}}</td>
+                                                    <td><a href="{{route($activity->model_type,$activity->model_id)}}">مشاهده</a></td>
                                                 </tr>
                                             @empty
                                                 <div class="alert alert-warning">در حال حاضر، فعالیتی موجود نیست.</div>
@@ -628,7 +631,7 @@
                                 </div>
                                 <div class="tab-pane fade {{session()->get('crud')=='ticket_store' ? " show active" :"" }}" id="ticket" role="tabpanel" aria-labelledby="ticket-tab">
                                     <div class="table-responsive ">
-                                        <table class="table table_shortcode mt-5">
+                                        <table class="sort-table table table_shortcode mt-5">
                                             <thead>
                                             <tr>
                                                 <th>شماره</th>
@@ -787,23 +790,7 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 text-right control-label col-form-label">پیوست
-                                                    فایل:</label>
-                                                <div class="col-sm-9">
-                                                    <input type="file" class="form-control" name="file">
-                                                    <small class="text-info"> فقط فایل با فرمت zip و rar و pdf و doc و
-                                                        docx و jpg و png و حداکثر حجم
-                                                        5000
-                                                        کیلوبایت مجاز است.</small>
-                                                    @if($errors->has('file'))
-                                                        <p>
-                                                            <small
-                                                                class="invalid-text">{{$errors->first('file')}}</small>
-                                                        </p>
-                                                    @endif
-                                                </div>
-                                            </div>
+
                                             <div class="form-group m-b-0">
                                                 <button type="submit"
                                                         class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left">
@@ -828,6 +815,7 @@
     <script src="{{asset('front/user/persian-datepicker/persian-date.min.js')}}"></script>
     <script src="{{asset('front/user/persian-datepicker/persian-datepicker.min.js')}}"></script>
     <script src="{{asset('front/user/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{asset('admin/assets//node_modules/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('front/user/ckeditor/ckeditor.js')}}"></script>
     <script src="{{ asset('front/user/bootstrap4-toggle-master/js/bootstrap4-toggle.min.js')}}"></script>
     <script src="{{asset('admin/assets/node_modules/dropify/js/dropify.min.js')}}"></script>

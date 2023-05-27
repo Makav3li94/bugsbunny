@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Helpers\LogActivity;
 use App\Http\Controllers\Controller;
 use App\Models\Section;
 use App\Models\Setting;
@@ -67,6 +68,11 @@ class SectionController extends Controller
 
         $user = User::find(auth()->id());
         $this->notifyAdmin($user->id, $user->name, $user->mobile, 'challenge', $challenge->id, 0, 'کاربر چالش یا سوال جدیدی ایجاد کرد.');
+        if (isset($request->thread)) {
+            LogActivity::addToLog('سوال جدیدی ایجاد کرد.','thread',$challenge->id);
+        }else{
+            LogActivity::addToLog('چالش جدیدی ایجاد کرد.','section',$challenge->id);
+        }
         return back()->with(['store' => 'success','crud'=>'section_store']);
     }
 
@@ -118,6 +124,7 @@ class SectionController extends Controller
                 'description' => $description,
                 'excerpt' => $excerpt,
                 'expire_date' => $published_at,
+                'status' => 1
             ]);
 
             $section = [

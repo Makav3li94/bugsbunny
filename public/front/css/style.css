@@ -6336,7 +6336,7 @@ button.mfp-close {
   background: #06a8cb;
 }
 .table_shortcode thead th {
-  padding: 20px 25px;
+  padding: 20px 1px;
   border: 0;
 }
 .table_shortcode th, .table_shortcode td {
@@ -9776,3 +9776,177 @@ label{
     direction: rtl;
 }
 .toggle.btn{min-width:4.4rem!important;}
+
+
+/*******************
+Table-Data Table
+******************/
+.dataTables_wrapper {
+    padding-top: 10px;
+}
+
+.dt-buttons {
+    display: inline-block;
+    padding-top: 5px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 767px) {
+    .dt-buttons {
+        display: none;
+    }
+}
+
+.dt-buttons .dt-button {
+    padding: 5px 15px;
+    border-radius: 0.25rem;
+    background: #0936f0;
+    color: #fff;
+    margin-right: 3px;
+}
+
+.dt-buttons .dt-button:hover {
+    background: #343a40;
+}
+
+.dataTables_info,
+.dataTables_length {
+    display: inline-block;
+}
+
+.dataTables_length {
+    margin-top: 10px;
+}
+
+.dataTables_length select {
+    border: 0;
+    background-image: linear-gradient(#0936f0, #0936f0), linear-gradient(#ccced0, #ccced0);
+    background-size: 0 2px, 100% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom, center calc(100% - 1px);
+    background-color: transparent;
+    transition: background 0s ease-out;
+    padding-bottom: 5px;
+}
+
+.dataTables_length select:focus {
+    outline: none;
+    background-image: linear-gradient(#0936f0, #0936f0), linear-gradient(#ccced0, #ccced0);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}
+
+.dataTables_filter {
+    float: left !important;
+    margin-top: 10px;
+}
+
+@media (max-width: 767px) {
+    .dataTables_filter {
+        float: none !important;
+    }
+}
+
+.dataTables_filter input {
+    border: 0;
+    background-image: linear-gradient(#0936f0, #0936f0), linear-gradient(#ccced0, #ccced0);
+    background-size: 0 2px, 100% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom, center calc(100% - 1px);
+    background-color: transparent;
+    transition: background 0s ease-out;
+    float: none;
+    box-shadow: none;
+    border-radius: 0;
+    margin-right: 10px !important;
+}
+
+.dataTables_filter input:focus {
+    outline: none;
+    background-image: linear-gradient(#0936f0, #0936f0), linear-gradient(#ccced0, #ccced0);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    transition-duration: 0.3s;
+}
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+    background: transparent;
+}
+
+table.dataTable thead .sorting_asc:after {
+    content: "\f0de";
+    margin-right: 10px;
+    font-family: fontawesome;
+    cursor: pointer;
+}
+
+table.dataTable thead .sorting_desc:after {
+    content: "\f0dd";
+    margin-right: 10px;
+    font-family: fontawesome;
+    cursor: pointer;
+}
+
+table.dataTable thead .sorting:after {
+    content: "\f0dc";
+    margin-right: 10px;
+    font-family: fontawesome !important;
+    cursor: pointer;
+    color: rgba(50, 50, 50, 0.5);
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    float: left;
+    text-align: right;
+    padding-top: 0.25em;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    box-sizing: border-box;
+    display: inline-block;
+    min-width: 1.5em;
+    padding: 0.5em 1em;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    *cursor: hand;
+    color: #212529;
+    border: 1px solid #ddd;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: #fff !important;
+    border: 1px solid #0936f0;
+    background-color: #0936f0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+    cursor: default;
+    color: #212529;
+    border: 1px solid #ccced0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: white;
+    border: 1px solid #0936f0;
+    background-color: #0936f0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+    outline: none;
+    background-color: #212529;
+}
+
+.dataTables_wrapper .dataTables_paginate .ellipsis {
+    padding: 0 1em;
+}

@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use function App\helpers\fileUploader;
+use function App\Helpers\fileUploader;
 
 /**
  * @method fileUploader($file, string $string)

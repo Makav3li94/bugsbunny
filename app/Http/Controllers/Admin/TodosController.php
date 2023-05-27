@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\CustomerManagement;
 use App\Models\User;
-use function App\helpers\numberConverter;
+use function App\Helpers\numberConverter;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Hekmatinasser\Verta\Facades\Verta;

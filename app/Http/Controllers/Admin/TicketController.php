@@ -7,7 +7,7 @@ use App\Models\Faq;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
-use function App\helpers\fileUploader;
+use function App\Helpers\fileUploader;
 
 class TicketController extends Controller
 {

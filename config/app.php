@@ -226,6 +226,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Verta' => Hekmatinasser\Verta\Verta::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'LogActivity' => App\Helpers\LogActivity::class,
     ],
 
 ];

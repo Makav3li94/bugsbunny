@@ -80,7 +80,7 @@ class SectionController extends Controller
         if ($challenge->category->type == 1) {
             $type = 'thread';
         }
-        $challenge['expire_date'] = $this->convertToJalaliDate($challenge->expire_date,true);
+        $challenge['expire_date'] = $this->convertToJalaliDate($challenge->expire_date, true);
         return view('admin.challenges.sections.edit', compact('challenge', 'type'));
     }
 
@@ -113,19 +113,36 @@ class SectionController extends Controller
 
         if ($challenge->type == 0) {
             $user = User::find($challenge->user_id);
-            if ($status == 1) {
-                $details = ['type' => 'وضعیت چالش', 'status' => 'در حال بررسی'];
-            } elseif ($status == 2) {
-                $details = ['type' => 'وضعیت چالش', 'status' => 'تایید شده'];
-                $setting = Setting::all()->first();
-                TotalScore::create([
-                    'user_id'=>$user->id,
-                    'score' => $setting->section_score,
-                    'type' => 1,
-                    'is_for'=>'challenge'
-                ]);
-            } elseif ($status == 3) {
-                $details = ['type' => 'وضعیت چالش', 'status' => 'رد شده'];
+            if ($challenge->kind == 0) {
+                if ($status == 1) {
+                    $details = ['type' => 'وضعیت چالش', 'status' => 'در حال بررسی'];
+                } elseif ($status == 2) {
+                    $details = ['type' => 'وضعیت چالش', 'status' => 'تایید شده'];
+                    $setting = Setting::all()->first();
+                    TotalScore::create([
+                        'user_id' => $user->id,
+                        'score' => $setting->section_score,
+                        'type' => 1,
+                        'is_for' => 'challenge'
+                    ]);
+                } elseif ($status == 3) {
+                    $details = ['type' => 'وضعیت چالش', 'status' => 'رد شده'];
+                }
+            }elseif ($challenge->kind == 0) {
+                if ($status == 1) {
+                    $details = ['type' => 'وضعیت سوال', 'status' => 'در حال بررسی'];
+                } elseif ($status == 2) {
+                    $details = ['type' => 'وضعیت سوال', 'status' => 'تایید شده'];
+                    $setting = Setting::all()->first();
+                    TotalScore::create([
+                        'user_id' => $user->id,
+                        'score' => $setting->question_score,
+                        'type' => 1,
+                        'is_for' => 'thread'
+                    ]);
+                } elseif ($status == 3) {
+                    $details = ['type' => 'وضعیت سوال', 'status' => 'رد شده'];
+                }
             }
 
             $user->sendUserVerifyNotification($user, $details);

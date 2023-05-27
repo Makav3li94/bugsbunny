@@ -43,6 +43,23 @@
             content_css: '//www.tiny.cloud/css/codepen.min.css'
 
         });
+        $('.sort-table').DataTable({
+            dom: 'Bfrtip',
+            language: {
+                "search": "جستجو",
+                "lengthMenu": "نمایش _MENU_ رکورد در صفحه",
+                "zeroRecords": "موردی یافت نشد.",
+                "info": "نمایش صفحات _PAGE_ از _PAGES_",
+                "infoEmpty": "هیچ رکوردی موجود نیست",
+                "infoFiltered": "(فیتر شده از _MAX_ پرونده)",
+                "paginate": {
+                    "first": "اولین",
+                    "last": "آخرین",
+                    "next": "بعدی",
+                    "previous": "قبلی",
+                }
+            }
+        });
         $(".datepicker-year").pDatepicker({
             "format": "YYYY/MM/DD",
             "viewMode": "year",

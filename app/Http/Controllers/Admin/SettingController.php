@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 
-use function App\helpers\fileUploader;
+use function App\Helpers\fileUploader;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;

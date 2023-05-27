@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\LogActivity;
 use App\Models\Reply;
 use App\Models\TotalScore;
 use App\Models\User;
 use Illuminate\Http\Request;
 use function auth;
-use function response;
 
 class LikeController extends Controller
 {
@@ -16,11 +16,12 @@ class LikeController extends Controller
     {
         User::find(auth()->id())->like($reply);
         TotalScore::create([
-            'user_id'=>$reply->user_id,
+            'user_id' => $reply->user_id,
             'score' => 1,
             'type' => 1,
-            'is_for'=>'like'
+            'is_for' => 'like'
         ]);
+        LogActivity::addToLog('نوشته ای را لایک کرد', 'like', $reply->id);
 //        return response()->json(['message' => 'Success']);
         return back();
     }
@@ -30,10 +31,10 @@ class LikeController extends Controller
     {
         User::find(auth()->id())->unlike($reply);
         TotalScore::create([
-            'user_id'=>$reply->user_id,
+            'user_id' => $reply->user_id,
             'score' => 1,
             'type' => 0,
-            'is_for'=>'unlike'
+            'is_for' => 'unlike'
         ]);
 //        return response()->json(['message' => 'Success']);
         return back();
@@ -44,11 +45,12 @@ class LikeController extends Controller
     {
         User::find(auth()->id())->dislike($reply);
         TotalScore::create([
-            'user_id'=>$reply->user_id,
+            'user_id' => $reply->user_id,
             'score' => 1,
             'type' => 0,
-            'is_for'=>'dislike'
+            'is_for' => 'dislike'
         ]);
+        LogActivity::addToLog('نوشته ای را دیسلایک کرد', 'like', $reply->id);
 //        return response()->json(['message' => 'Success']);
         return back();
     }

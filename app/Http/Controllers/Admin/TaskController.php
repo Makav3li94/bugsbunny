@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin;
-use function App\helpers\numberConverter;
+use function App\Helpers\numberConverter;
 use App\Models\Task;
 use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Http\Request;
