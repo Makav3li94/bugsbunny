@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Quiz;
 use App\Models\Section;
+use App\Models\Setting;
+use App\Models\TotalScore;
 use App\Models\User;
 use App\Traits\Numbers;
 use Carbon\Carbon;
@@ -73,7 +75,6 @@ class SectionController extends Controller
 
     public function edit($id)
     {
-        return       Section::with('quizHeaders')->has('quizHeaders')->where('status',2)->whereDate('expire_date', '<=',Carbon::today())->get();
         $challenge = Section::findOrFail($id);
         $type = 'challenge';
         if ($challenge->category->type == 1) {
@@ -116,6 +117,13 @@ class SectionController extends Controller
                 $details = ['type' => 'وضعیت چالش', 'status' => 'در حال بررسی'];
             } elseif ($status == 2) {
                 $details = ['type' => 'وضعیت چالش', 'status' => 'تایید شده'];
+                $setting = Setting::all()->first();
+                TotalScore::create([
+                    'user_id'=>$user->id,
+                    'score' => $setting->section_score,
+                    'type' => 1,
+                    'is_for'=>'challenge'
+                ]);
             } elseif ($status == 3) {
                 $details = ['type' => 'وضعیت چالش', 'status' => 'رد شده'];
             }

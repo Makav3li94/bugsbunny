@@ -28,6 +28,8 @@ class UserController extends Controller
     {
         $user = User::find(auth()->id());
 
+
+
         //Open Tickets Count
         $tickets = Ticket::where('user_id', auth()->user()->id)->orderBy('id', 'desc')->get();
         if (Setting::all()->count() > 0) {
@@ -40,8 +42,9 @@ class UserController extends Controller
         $sliders = Slider::all();
         $date = $this->convertToJalaliDate($user->birthDate, TRUE);
         $user['birthDate'] = $date;
-        $sections = Section::where('status', 1)->whereIn('category_id', json_decode($user->cats))->get();
-        $userSections = Section::where([['type', 0], ['user_id', auth()->id()]])->get();
+        $sections = Section::withCount('questions')->where([['type',1],['status', 1]])->whereIn('category_id', json_decode($user->cats))->get();
+        $userSections = Section::withCount('questions')->where([['type', 0], ['user_id', auth()->id()]])->whereIn('category_id', json_decode($user->cats))->get();
+        $threads = Section::where([['kind', 1], ['user_id', auth()->id()]])->get();
 //          Like::query()->whereMorphedTo('userable', $user)->get();
 
         $likes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('likes_count');
@@ -50,7 +53,7 @@ class UserController extends Controller
         $minusScores = TotalScore::where([['user_id' , $user->id],['type',0]])->get()->sum('score');
 //        $totalScore = ($likes - $dislikes) + ($plusScores - $minusScores);
         $totalScore = $plusScores - $minusScores;
-        return view('user.dashboard', compact('tickets', 'setting', 'sliders', 'cats', 'user', 'sections', 'userSections','totalScore'));
+        return view('user.dashboard', compact('tickets', 'setting','threads', 'sliders', 'cats', 'user', 'sections', 'userSections','totalScore'));
     }
 
     protected function update(Request $request, User $user)
@@ -115,7 +118,7 @@ class UserController extends Controller
             ]);
         }
         $this->notifyAdmin($user->id, $user->name,  $user->mobile, 'profileChange', 0, 0, 'کاربر پروفایل خود را آپدیت کرد.');
-        return redirect()->back()->with(['update'=>'success']);
+        return redirect()->back()->with(['update'=>'success','crud'=>'user_update']);
 
 
     }

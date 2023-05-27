@@ -9,6 +9,7 @@
     <meta name="keywords" content="{{$setting->keywords??''}}"/>
     <link rel="shortcut icon" href="{{asset('front/img/favicon.png')}}" type="image/x-icon">
     <!-- Bootstrap CSS -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('front/assets/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/assets/slick/slick.css')}}">
     <link rel="stylesheet" href="{{asset('front/assets/slick/slick-theme.css')}}">

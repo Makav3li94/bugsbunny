@@ -1,13 +1,21 @@
-@if($status == 0)
-    <span class="badge badge-warning">در حال بررسی</span>
-@elseif($status == 1)
-    <span class="badge badge-primary">تایید شده</span>
-@elseif($status == 2)
-    <span class="badge badge-danger">رد شده</span>
-@elseif($status == 3)
-    <span class="badge badge-danger">منتظر تایید خریدار</span>
-@elseif($status == 4)
-    <span class="badge badge-danger">مصرف شده</span>
-@elseif($status == 5)
-    <span class="badge badge-danger">نقد شده</span>
-@endif
+@switch($section->status)
+    @case(0)
+    <span
+        class="badge badge-pill badge-info">معلق</span>
+    @break
+    @case(1)
+
+    <span class="badge badge-pill badge-warning">         درحال بررسی</span>
+    @break
+    @case(2)
+    <span class="badge badge-pill badge-success">           تایید شده</span>
+
+    @break
+    @case(3)
+    <span class="badge badge-pill badge-secondary">           رد شده</span>
+    @break
+    @case(4)
+    <span class="badge badge-pill badge-primary">           پایان یافته</span>
+    @break
+    @default
+@endswitch

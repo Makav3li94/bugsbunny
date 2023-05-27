@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Lang;
 
 class UserTicketNotification extends Notification
 {
@@ -24,7 +25,7 @@ class UserTicketNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['database', SmsChannel::class];
+        return ['database', 'mail' ,SmsChannel::class];
     }
 
     public function toDatabase($notifiable)
@@ -47,4 +48,13 @@ class UserTicketNotification extends Notification
             'TCode' => $this->ticket->id,
         ];
     }
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+            ->subject(Lang::get('New ticket'))
+            ->line(Lang::get('You have a new ticket.'))
+            ->action(Lang::get('مشاهده تیکت'), route('user.dashboard'))
+            ->line(Lang::get('If you do not have an account,ignore this email'));
+    }
+
 }

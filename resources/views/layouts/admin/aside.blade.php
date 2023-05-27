@@ -92,7 +92,6 @@
                         <ul aria-expanded="false" class="collapse">
                             <li><a href="{{route('admin.profile.edit',auth()->id())}}">پروفایل</a></li>
                             <li><a href="{{route('admin.settings.edit')}}">مشخصات سایت</a></li>
-                            <li><a href="{{route('admin.label.index')}}">لیبل ها</a></li>
                             <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
                                    aria-expanded="false"><span class="hide-menu">اسلایدرها</span></a>
                                 <ul aria-expanded="false" class="collapse">

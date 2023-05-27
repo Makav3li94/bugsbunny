@@ -7,6 +7,7 @@ use App\Models\Setting;
 use App\Traits\Randomable;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -32,15 +33,16 @@ class LoginController extends Controller
             $setting = null;
         }
         $array = $this->createRandomNumbers();
-        return view('auth.login', compact('array','setting'));
+        return view('auth.login', compact('array', 'setting'));
     }
 
     protected function validateLogin(Request $request)
     {
         $request->validate([
-            $this->username() => 'required|string',
+            $this->username() => 'required',
             'password' => 'required|string',
         ]);
+
 
     }
 
@@ -54,9 +56,27 @@ class LoginController extends Controller
             ?: redirect()->intended($this->redirectPath())->with(['login' => 'success']);
     }
 
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            'username' => [trans('auth.failed')],
+        ]);
+    }
+
     public function username()
     {
-        return 'mobile';
+        $login = request()->input('username');
+
+        if(is_numeric($login)){
+            $field = 'mobile';
+        } elseif (filter_var($login, FILTER_VALIDATE_EMAIL)) {
+            $field = 'email';
+        }
+
+        request()->merge([$field => $login]);
+
+        return $field;
+
     }
 
     public function logout(Request $request)

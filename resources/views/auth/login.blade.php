@@ -20,7 +20,7 @@
                         @csrf
                         <div class="col-lg-12 form-group">
 
-                            <input type="text" class="form-control" id="email" placeholder="شماره موبایل" name="mobile"
+                            <input type="text" class="form-control" id="email" placeholder="شماره موبایل یا ایمیل" name="username"
                                    value="{{old('mobile')}}">
                             @if($errors->has('mobile') && session()->get('reset')!='error')
                                 <small class="invalid-text">{{$errors->first('mobile')}}</small>
@@ -53,6 +53,12 @@
                                 <label class="custom-control-label" for="customCheck1">مرا به خاطر بسپار</label>
                             </div>
                         </div>
+                        <div class="col-lg-12 form-group">
+                                <div class="social">
+                                    <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i
+                                            class="fa fa-lock m-r-5"></i> فراموش کردن رمز عبور؟</a>
+                                </div>
+                        </div>
                         <div class="form-group text-center m-t-20">
                             <div class="col-xs-12">
                                 <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">
@@ -62,16 +68,15 @@
                         </div>
                     </form>
 
-                    <form class="form-horizontal" method="post" action="{{route('password.reset')}}" id="recoverform"
+                    <form class="row login_form" method="post" action="{{route('password.reset')}}" id="recoverform"
                           style="{{session()->get('reset')=='error' || session()->get('url')==route('password.reset') ? 'display:flex' : 'display:none'}}">
                         @csrf
-                        <div class="form-group ">
-                            <div class="col-xs-12">
+                        <div class="col-lg-12 form-group">
                                 <h3>بازیابی رمز عبور</h3>
                                 <p class="text-muted">شماره موبایل خود را وارد کنید تا رمز عبور جدید برای
                                     شما پیامک شود.</p>
                             </div>
-                        </div>
+
                         <div class="col-lg-12 form-group">
                             <input dir="ltr" class="form-control text-center" type="text" required="" name="mobile"
                                    placeholder="شماره موبایل" value="{{old('mobile')}}">
@@ -93,7 +98,7 @@
                             <input type="hidden" name="b" value="{{$array[2]}}">
                         </div>
                         <div class="col-lg-12 form-group">
-                            <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light"
+                            <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded"
                                     type="submit">رمز عبور جدید را برایم پیامک کن
                             </button>
                         </div>

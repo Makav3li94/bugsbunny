@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="profile-img">
-                                <img src="{{asset('images/user/'.$user->avatar)}}" width="100" alt=""/>
+                                <img src="@if(isset($user->avatar)) {{asset('images/user/'.$user->avatar) }}@else {{asset('front/img/typography/man_01.png')}} @endif" width="100" alt=""/>
                                 <div class="file btn btn-lg btn-primary">
                                     @forelse($cats as $cat)
                                         @if(in_array($cat->id,json_decode($user->cats))){{$cat->title}}  @endif
@@ -101,7 +101,7 @@
                                                     <td>{{$section->title}}</td>
                                                     <td>{{$section->category->title}}</td>
                                                     <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
-                                                    <td>{{$section->status == 1  ? 'غیرفعال' :'فعال'}}</td>
+                                                    <td>         @include('layouts.components.status')</td>
                                                     <td>سایر</td>
                                                     <td><a class="btn btn-sm btn-warning" href="{{route('section',$section->slug)}}">مشاهده</a></td>
                                                 </tr>
@@ -114,7 +114,7 @@
                                                     <td>{{$section->title}}</td>
                                                     <td>{{$section->category->title}}</td>
                                                     <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
-                                                    <td>{{$section->status == 1  ? 'غیرفعال' :'فعال'}}</td>
+                                                    <td>         @include('layouts.components.status')</td>
                                                     <td>شما</td>
                                                     <td>
                                                         <a href="javascript:void(0)" class="btn btn-sm btn-success"

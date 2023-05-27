@@ -40,6 +40,14 @@
                         </div>
                         @if(isset(request()->email))
                             <input type="hidden" name="email_reg" value="on">
+                            <div class="col-sm-12 form-group">
+                                <label>موبایل <span class="text-danger mr-1">*</span></label>
+                                <input dir="ltr" type="text" class="form-control" placeholder=""
+                                value="{{request()->mobile ??old('mobile')}}" name="mobile" required>
+                                @if($errors->has('mobile'))
+                                    <small class="invalid-text">{{$errors->first('mobile')}}</small>
+                                @endif
+                            </div>
                         @endif
                         <div class="col-sm-12 form-group">
                             <label>ایمیل <span class="text-danger mr-1">*</span></label>
@@ -66,7 +74,7 @@
                                     name="cats[]">
                                 <option></option>
                                 @forelse($categories as $cat)
-                                    <option value="{{$cat->id}}">{{$cat->title}}</option>
+                                    <option value="{{$cat->id}}" {{collect(old('cats'))->contains($cat->id) ? 'selected' : ''}}>{{$cat->title}}</option>
                                 @empty
 
                                 @endforelse
@@ -78,10 +86,10 @@
                         </div>
 
                         <div class="col-sm-12 form-group">
-                            <label>تصویر:</label>
+                            <label>تصویر پروفایل:</label>
                             <div>
-                                <input type="file" name="avatar" class="form-control"
-                                       placeholder="">
+                                <input type="file" name="avatar" class="form-control dropify"
+                                       placeholder=""   data-height="100">
                                 @if($errors->has('avatar'))
                                     <div class="alert alert-danger">
                                         {{$errors->first('avatar')}}
@@ -111,6 +119,8 @@
                             @endif
                         </div>
                         <div class="col-sm-12 form-group">
+                            <small class="invalid-text">(حداقل 8 رقم با حرف uppercase و شامل !@#$% باشد.)</small>
+
                             <label>تایید رمز عبور</label>
                             <input dir="ltr" type="password" class="form-control text-left" value="" name="password_confirmation">
                             @if($errors->has('password_confirmation'))

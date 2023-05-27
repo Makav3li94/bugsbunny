@@ -9,6 +9,7 @@ use App\Models\Ticket;
 use App\Models\User;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use function App\helpers\fileUploader;
 
 /**
@@ -34,14 +35,17 @@ class TicketController extends Controller
 
     public function store(Request $request)
     {
-        //  dd($request->all());
-        $this->validate(request(), [
+
+        $validator = Validator::make($request->all(), [
             'section' => 'required|in:پشتیبانی,مدیریت,مالی',
             'priority' => 'required|in:خیلی مهم,مهم,عادی',
             'title' => 'required',
             'description' => 'required',
             'file' => 'nullable|max:5000|mimes:png,jpg,jpeg,pdf,doc,docx,zip,rar',
         ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->with('for','ticket');
+        }
         if ($request->file('file')) {
             $file = fileUploader($request->file('file'), '/uploads/tickets/user/');
         } else {
@@ -60,7 +64,7 @@ class TicketController extends Controller
             'question' => $request['description'],
         ]);
         $this->notifyAdmin($user->id, $user->name, $user->mobile, 'ticket', $ticket->id, 0,'کاربر تیکت جدیدی ارسال کرده است.');
-        return back()->with(['store'=>'success']);
+        return back()->with(['store'=>'success','crud'=>'ticket_store']);
     }
 
 

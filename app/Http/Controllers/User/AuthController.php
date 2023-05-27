@@ -56,7 +56,7 @@ class AuthController extends Controller
             ]);
         } else {
             $validator = Validator::make($request->all(), [
-                'mobile' => 'required|numeric|unique:users,mobile',
+                'mobile' => 'required|regex:/(09)[0-9]{9}/|digits:11|numeric|unique:users,mobile',
                 'result' => 'required|numeric|integer'
             ]);
         }
@@ -82,7 +82,7 @@ class AuthController extends Controller
                 if (isset($request->email)) {
                     $email = $request->input('email');
                     $user = User::create(['email' => $email,]);
-                    event(new Registered($user));
+
                     return response()->json(['email' => 'sent', 'id' => $user->id]);
                 } else {
                     $mobile = $request->input('mobile');
@@ -116,7 +116,7 @@ class AuthController extends Controller
                         Sms::create([
                             'sms_sender_id' => 1,
                             'description' => 'ثبت نام',
-                            'bulk_id' => $bulk,
+                            'bulk_id' => $bulk['VerificationCodeId'],
                             'status' => 0
                         ]);
                         return response()->json(['code' => 'sent', 'bulk' => $bulk, 'mobile' => $mobile]);
@@ -201,16 +201,29 @@ class AuthController extends Controller
     {
         if ($user->is_primary == '1' && $user->authStatus == '0') {
             $familiaritiesCount = Familiarity::all()->count();
-            $request->validate([
-                'name' => 'required|string',
-                'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/',
-                'password' => 'nullable|confirmed|min:6',
-                'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:512',
-                'familiarity' => 'nullable|numeric|integer|min:1|max:' . $familiaritiesCount,
-                'birthDate' => 'required',
-                'cats' => 'required',
-            ]);
-
+            $setting = Setting::all()->first();
+            if ($setting->reg_type == 0) {
+                $request->validate([
+                    'name' => 'required|string',
+                    'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/|unique:users,username',
+                    'password' => 'required|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|min:8',
+                    'email' => 'required|email|unique:users,email',
+                    'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:512',
+                    'familiarity' => 'nullable|numeric|integer|min:1|max:' . $familiaritiesCount,
+                    'birthDate' => 'required',
+                    'cats' => 'required',
+                ]);
+            }else{
+                $request->validate([
+                    'name' => 'required|string',
+                    'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/|unique:users,username',
+                    'password' => 'required|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|min:8',
+                    'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:512',
+                    'familiarity' => 'nullable|numeric|integer|min:1|max:' . $familiaritiesCount,
+                    'birthDate' => 'required',
+                    'cats' => 'required',
+                ]);
+            }
             $password = Hash::make($request['password']);
 
 
@@ -220,15 +233,16 @@ class AuthController extends Controller
             } else
                 $avatar = null;
             $setting = Setting::all()->first();
-            if ($setting->reg_type == 0){
+            if ($setting->reg_type == 0) {
                 $email_verify = now();
-            }else{
+            } else {
                 $email_verify = Null;
             }
             $user->update([
                 'name' => $request['name'],
                 'username' => $request['username'],
                 'email' => $request['email'],
+                'mobile' => $request['mobile'] ?? $user->mobile,
                 'password' => $password,
                 'familiarity_id' => $request['familiarity'],
                 'birthDate' => $this->convertToGoregianDate($request->input('birthDate')),
@@ -239,6 +253,7 @@ class AuthController extends Controller
                 'is_primary' => "1"
             ]);
             Auth::login($user);
+            event(new Registered($user));
             return redirect(route('user.dashboard'))->with(['login' => 'success']);
         } else {
             abort(404);
@@ -264,16 +279,14 @@ class AuthController extends Controller
         }
         if ($user->mobile === $mobile) {
             $randomDigits = rand(100000, 999999);
-            $this->setKeys();
-            $result = $this->sendFastSmsMokhaberat([$mobile], $smsSetting->p_password,
-                ["pass" => "{$randomDigits}"]);
-
-            if ($result != null) {
-                $sms = Sms::create([
+            $bulk = $this->sendFastSmsMokhaberat($mobile, $smsSetting->p_password,
+                ["NewPass" => $randomDigits]);
+            if ($bulk != null) {
+                Sms::create([
                     'sms_sender_id' => 1,
                     'user_id' => 0,
                     'description' => 'فراموشی رمز عبور',
-                    'bulk_id' => $result,
+                    'bulk_id' => $bulk['VerificationCodeId'],
                     'status' => 0
                 ]);
             }

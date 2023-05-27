@@ -44,13 +44,13 @@ class QuestionController extends Controller
                 'is_checked' => isset($request->is_active_answer[$key]) ? '1' : '0',
                 'question_id' => $question->id,
             ]);
-
+        Section::find($request->section_id)->update(['status' => 1]);
         return redirect()->back()->with('create', 'success');
     }
 
     public function edit(Request $request, Question $question)
     {
-        $question = $question->with('answers')->get();
+        return $question = $question->load('answers:id,answer,is_checked,question_id')->toArray();
         if ($request->ajax()) {
             return response()->json(['question' => $question]);
         }
@@ -90,6 +90,8 @@ class QuestionController extends Controller
 
     public function destroy(Question $question)
     {
-        //
+        $question->answers()->delete();
+        $question->delete();
+        return response()->json(['question' => 'deleted']);
     }
 }

@@ -6,6 +6,7 @@ use App\Channels\SmsChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Lang;
 
 class UserVerifyNotification extends Notification
 {
@@ -27,7 +28,7 @@ class UserVerifyNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['database', SmsChannel::class];
+        return ['database', 'mail', SmsChannel::class];
     }
 
     public function toDatabase($notifiable)
@@ -51,6 +52,14 @@ class UserVerifyNotification extends Notification
             'status' => $this->details['status'],
             'type' => $this->details['type'],
         ];
+    }
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+            ->subject(Lang::get('notif',['type'=>$this->details['type']]))
+            ->line(Lang::get('notifStat',['type'=>$this->details['type'],'status'=>$this->details['status']]))
+            ->action(Lang::get('مشاهده'), route('user.dashboard'))
+            ->line(Lang::get('If you do not have an account,ignore this email'));
     }
 
 }

@@ -98,10 +98,7 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     Route::get('getMonthlyRecord', 'AdminController@chart');
 
 
-    //File Manipulation
-    Route::get('download/{file}/{user}', 'FileController@FileDownloader')->name('admin.file.download');
-    Route::post('file/{user}', 'FileController@store')->name('admin.file.store');
-    Route::delete('file/{file}', 'FileController@destroy')->name('admin.file.destroy');
+
 
     //Note Manipulation
     Route::post('note/{user}', 'NoteController@store')->name('admin.note.store');
@@ -119,9 +116,7 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     //Task Filter Manipulation
     Route::get('filter/task', 'TaskController@filter');
     //Label Manipulation
-    Route::get('/labels', 'LabelController@index')->name('admin.label.index');
 
-    Route::resource('user/company', 'UserCompanyController', ['names' => 'admin.user.company'])->except(['show']);
 
     //========================== AJAX ROUTES END =======================================================================
     //Settings Manipulation
@@ -237,9 +232,7 @@ Route::group(['namespace' => 'User'], function () {
 Route::group(['namespace' => 'User', 'middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::group(['middleware' => ['verified']], function () {
         //File Manipulation
-        Route::get('download/{file}/{user}', 'FileController@FileDownloader')->name('user.file.download');
-        Route::post('file/{user}', 'FileController@store')->name('user.file.store');
-        Route::delete('file/{file}', 'FileController@destroy')->name('user.file.destroy');
+
         //Primary User Filter Manipulation
         Route::get('filter/PUser', 'PrimaryUserController@filter');
         //Tickets Manipulation (Not Ajax)
@@ -260,10 +253,7 @@ Route::group(['namespace' => 'User', 'middleware' => 'auth', 'prefix' => 'dashbo
     });
 });
 
-Route::get('/test',function (){
-    $user = \App\Models\User::find(1);
-    event(new Registered($user));
-});
+
 Route::get('/', 'Front\HomeController@index')->name('home');
 Route::get('user/{username}', 'Front\HomeController@user')->name('user');
 Route::get('/forum', 'Front\HomeController@forum')->name('forum');

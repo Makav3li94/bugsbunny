@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{asset('front/css/responsive.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/rtl.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/style.css')}}">
-
+        <link rel="stylesheet" href="{{asset('admin/assets/node_modules/dropify/css/dropify.min.css')}}" type="text/css"/>
 
     <title>ایزباگ - ورود / ثبت نام</title>
 </head>
@@ -55,7 +55,6 @@
 <script src="{{asset('admin/assets/node_modules/toast-master/js/jquery.toast.js')}}"></script>
 <!-- Chart Js -->
 <script src="{{asset('admin/assets//node_modules/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('admin/assets/node_modules/datatables/export.min.js')}}"></script>
 <!-- tags Input -->
 <script src="{{asset('admin/assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')}}"></script>
 <!-- tags Switchery -->
@@ -63,6 +62,7 @@
 <!-- Sweet Alert -->
 <script src="{{asset('admin/assets/node_modules/sweetalert/sweetalert.min.js')}}"></script>
 <!-- Date Picker -->
+<script src="{{asset('admin/assets/node_modules/dropify/js/dropify.min.js')}}"></script>
 <script src="{{asset('admin/assets/node_modules/persian-datepicker/persian-date.min.js')}}"></script>
 <script src="{{asset('admin/assets/node_modules/persian-datepicker/persian-datepicker.min.js')}}"></script>
 <script src="{{ asset('admin/assets/node_modules/bootstrap4-toggle-master/js/bootstrap4-toggle.min.js')}}"></script>

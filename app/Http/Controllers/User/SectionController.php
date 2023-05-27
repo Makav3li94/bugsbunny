@@ -11,23 +11,39 @@ use App\Traits\Helpers;
 use App\Traits\Numbers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Verta;
 use Illuminate\Support\Str;
+
 class SectionController extends Controller
 {
-    use Numbers,Helpers;
-
+    use Numbers, Helpers;
 
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'title' => 'required|string',
             'category_id' => 'required|numeric',
             'slug' => 'unique:sections',
             'description' => 'required|string',
-            'excerpt' => 'string|min:3|max:255',
         ]);
+        $kind = 0;
+
+        if (isset($request->thread)) {
+            $kind = 1;
+            $status = 1;
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput()->with('for','thread');
+            }
+        }else{
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput()->with('for','section');
+            }
+            $status = 0;
+        }
+
+
         if (isset($request->expire_date)) {
 
             $published_at = $this->expireDate($request->expire_date);
@@ -40,30 +56,28 @@ class SectionController extends Controller
             'slug' => !empty($request->slug) ? preg_replace('/\s+/', '-', $request->slug) : Str::slug($request->title, '-'),
             'category_id' => $request->category_id,
             'type' => 0,
-            'kind' => 0,
+            'kind' => $kind,
             'user_id' => auth()->id(),
             'description' => $request->description,
             'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
             'expire_date' => $published_at,
+            'status' => $status,
         ]);
-        $setting = Setting::all()->first();
-        TotalScore::create([
-            'user_id'=>auth()->id(),
-            'score' => $setting->section_score,
-            'type' => 1,
-            'is_for'=>'challenge'
-        ]);
-        $user  = User::find(auth()->id());
-        $this->notifyAdmin($user->id, $user->name,  $user->mobile, 'challenge',$challenge->id, 0, 'کاربر چالش یا سوال جدیدی ایجاد کرد.');
-        return back()->with(['store'=>'success']);
+
+
+        $user = User::find(auth()->id());
+        $this->notifyAdmin($user->id, $user->name, $user->mobile, 'challenge', $challenge->id, 0, 'کاربر چالش یا سوال جدیدی ایجاد کرد.');
+        return back()->with(['store' => 'success','crud'=>'section_store']);
     }
 
 
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $challenge = Section::findOrFail($id);
-        $challenge['expire_date'] = $this->convertToJalaliDate($challenge->expire_date);
-        return view('admin.challenges.sections.edit', compact('challenge'));
+        $challenge['expire_date'] = $this->convertToJalaliDate($challenge->expire_date, true);
+        if ($request->ajax()) {
+            return response()->json(['section' => $challenge]);
+        }
     }
 
     public function show($id)
@@ -77,46 +91,59 @@ class SectionController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'title' => 'required|string',
-            'category_id' => 'required|numeric',
-            'slug' => 'required|unique:sections,slug,' . $id,
-            'description' => 'required|string',
-            'excerpt' => 'string|min:3|max:255',
-            'prize_text' => 'required|string',
-        ]);
-        $challenge = Section::findOrFail($id);
+        $section = Section::find($id);
+        if ($request->ajax()) {
+            $validator = Validator::make($request->all(), [
+                'title' => 'required|string',
+                'category_id' => 'required|numeric',
+                'description' => 'required|string',
+                'excerpt' => 'string|min:3|max:255',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['collapseSectionError' => $validator->errors()->toArray()]);
+            }
+            $title = $request->input('title');
+            $category_id = $request->input('category_id');
+            $description = $request->input('description');
+            $excerpt = $request->input('excerpt');
+            if (isset($request->expire_date)) {
+                $published_at = $this->expireDate($request->expire_date);
+            } else {
+                $published_at = Carbon::now()->toDateTimeString();
+            }
 
-        if (isset($request->expire_date)) {
-            $published_at = $this->expireDate($request->expire_date);
-        } else {
-            $published_at = Carbon::now()->toDateTimeString();
+            $section->update([
+                'title' => $title,
+                'category_id' => $category_id,
+                'description' => $description,
+                'excerpt' => $excerpt,
+                'expire_date' => $published_at,
+            ]);
+
+            $section = [
+                0 => $section->title,
+                1 => $section->id,
+                2 => $section->category_id,
+                3 => $section->expireDate,
+                4 => $section->excerpt,
+                5 => $section->description,
+            ];
+            return response()->json(['collapseSectionEdit' => 'success', 'section' => $section]);
         }
 
-        if (isset($request->status)) $status = 1; else $status = 0;
-        $challenge->update([
-            'title' => $request->title,
-            'slug' => !empty($request->slug) ? preg_replace('/\s+/', '-', $request->slug) : Str::slug($request->title, '-'),
-            'category_id' => $request->category_id,
-            'description' => $request->description,
-            'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
-            'prize_text' => $request->prize_text,
-            'expire_date' => $published_at,
-            'status' => $status,
-        ]);
-
-        return redirect()->back()->with('update', 'success');
     }
 
 
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         $challenge = Section::findOrFail($id);
         $challenge->delete();
         return redirect()->back()->with('delete', 'success');
     }
 
-    protected function expireDate($expire_date): string
+    protected
+    function expireDate($expire_date): string
     {
         $published_at = $this->convertNumbers($expire_date);
         $published_at = explode('/', $published_at);

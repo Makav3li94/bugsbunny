@@ -366,20 +366,6 @@
 
   popupGallery();
 
-  /*--------------- video js--------*/
-  function video() {
-    if ($("#inline-popups").length) {
-      $("#inline-popups").magnificPopup({
-        delegate: "a",
-        removalDelay: 500, //delay removal by X to allow out-animation
-        mainClass: "mfp-no-margins mfp-with-zoom",
-        preloader: false,
-        midClick: true,
-      });
-    }
-  }
-
-  video();
 
   /*=========== Font size switcher/controller ===========*/
   if ($("#post").length > 0) {
