@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Helpers\LogActivity;
 use App\Http\Controllers\Controller;
-use App\Models\LogActivity;
 use App\Models\Reply;
 use App\Models\TotalScore;
 use App\Models\User;
@@ -51,7 +51,6 @@ class LikeController extends Controller
             'is_for' => 'dislike'
         ]);
         LogActivity::addToLog('نوشته ای را دیسلایک کرد', 'like', $reply->id);
-//        return response()->json(['message' => 'Success']);
         return back();
     }
 

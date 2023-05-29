@@ -30,7 +30,6 @@ class UserController extends Controller
         $user = User::find(auth()->id());
 
 
-
         //Open Tickets Count
         $tickets = Ticket::where('user_id', auth()->user()->id)->orderBy('id', 'desc')->get();
         if (Setting::all()->count() > 0) {
@@ -43,20 +42,19 @@ class UserController extends Controller
         $sliders = Slider::all();
         $date = $this->convertToJalaliDate($user->birthDate, TRUE);
         $user['birthDate'] = $date;
-        $sections = Section::withCount('questions')->where([['type',1],['status', 1]])->whereIn('category_id', json_decode($user->cats))->get();
-        $userSections = Section::withCount('questions')->where([['type', 0], ['user_id', auth()->id()]])->get();
+        $sections = Section::withCount('questions')->where([['type', 1], ['status', 1]])->whereIn('category_id', json_decode($user->cats))->get();
+        $userSections = Section::withCount('questions')->where('type', 0)->whereIn('category_id', json_decode($user->cats))->get();
         $threads = Section::where([['kind', 1], ['user_id', auth()->id()]])->get();
-        $activities = LogActivity::where('user_id',auth()->id())->get();
+        $activities = LogActivity::where('user_id', auth()->id())->get();
 //          Like::query()->whereMorphedTo('userable', $user)->get();
 
 //        $likes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('likes_count');
 //        $dislikes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('dislikes_count');
-        $plusScores = TotalScore::where([['user_id' , $user->id],['type',1]])->get()->sum('score');
-        $minusScores = TotalScore::where([['user_id' , $user->id],['type',0]])->get()->sum('score');
+        $plusScores = TotalScore::where([['user_id', $user->id], ['type', 1]])->get()->sum('score');
+        $minusScores = TotalScore::where([['user_id', $user->id], ['type', 0]])->get()->sum('score');
 //        $totalScore = ($likes - $dislikes) + ($plusScores - $minusScores);
         $totalScore = $plusScores - $minusScores;
-        request()->session()->now('crud', 'first');
-        return view('user.dashboard', compact('tickets','activities','setting','threads', 'sliders', 'cats', 'user', 'sections', 'userSections','totalScore'));
+        return view('user.dashboard', compact('tickets', 'activities', 'setting', 'threads', 'sliders', 'cats', 'user', 'sections', 'userSections', 'totalScore'));
     }
 
     protected function update(Request $request, User $user)
@@ -73,21 +71,11 @@ class UserController extends Controller
             'birthDate' => 'required',
             'cats' => 'required',
         ]);
-        if (isset($request->authStatus)) $status = 1; else $status = 0;
+
         $birthDate = $this->convertToGoregianDate($request->input('birthDate'));
         $password = $request->input('password');
 
-        if ($request->hasFile('avatar')) {
-            if ($user->avatar != null) {
-                $userAvatar = public_path("images/user/{$user->avatar}"); // get previous image from folder
-                if (File::exists($userAvatar)) { // unlink or remove previous image from folder
-                    unlink($userAvatar);
-                }
-            }
-            $avatar = time() . '.' . request()->avatar->getClientOriginalExtension();
-            request()->avatar->move(public_path('images/user/'), $avatar);
-        } else
-            $avatar = $user->avatar;
+        list($status, $avatar) = $this->fileAndStatus($user, $request);
 
 
         if ($password == null) {
@@ -120,10 +108,36 @@ class UserController extends Controller
                 'authStatus' => $status,
             ]);
         }
-        $this->notifyAdmin($user->id, $user->name,  $user->mobile, 'profileChange', 0, 0, 'کاربر پروفایل خود را آپدیت کرد.');
-        return redirect()->back()->with(['update'=>'success','crud'=>'user_update']);
+        if ($status == 0) $this->notifyAdmin($user->id, $user->name, $user->mobile, 'profileChange', $user->id, 0, 'کاربر پروفایل خود را آپدیت کرد.');
+        return back()->with('update', 'success')->with('crud', 'user_update');
 
 
+    }
+
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return array
+     */
+    protected function fileAndStatus(User $user, Request $request): array
+    {
+        $status = $user->status;
+        if ($user->username != $request->username || $user->name != $request->name) {
+            $status = 0;
+        }
+        if ($request->hasFile('avatar')) {
+            if ($user->avatar != null) {
+                $userAvatar = public_path("images/user/{$user->avatar}"); // get previous image from folder
+                if (File::exists($userAvatar)) { // unlink or remove previous image from folder
+                    unlink($userAvatar);
+                }
+            }
+            $avatar = time() . '.' . request()->avatar->getClientOriginalExtension();
+            request()->avatar->move(public_path('images/user/'), $avatar);
+            $status = 0;
+        } else
+            $avatar = $user->avatar;
+        return array($status, $avatar);
     }
 
 }

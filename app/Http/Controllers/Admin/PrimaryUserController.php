@@ -79,7 +79,7 @@ class PrimaryUserController extends Controller
             'cats' => json_encode($request->cats),
             'avatar' => $avatar,
         ]);
-
+        $this->readMFNotification($user->id,'profileChange',$user->id);
         return redirect(route('admin.user.primary.edit', $user->id))->with([
             'store' => 'success'
         ]);

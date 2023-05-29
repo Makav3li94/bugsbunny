@@ -37,7 +37,7 @@
                                     <td style="width: 160px;">
                                         <button type="button" class="btn btn-{{$item->status == 1 ? "danger" : "success"}} btn-sm "
                                                 onclick="$('#stat-{{$item->id}}').submit()"
-                                                id="{{$item->id}}">{{$item->status == 1 ? "معلق" : "تایید"}}
+                                                id="{{$item->id}}">{{$item->status == 1 ? "تایید شود" : "معلق"}}
                                         </button>
                                         <form method="post" hidden
                                               action="{{route('admin.reply.update',$item->id)}}"
@@ -77,7 +77,9 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form class="form-horizontal clearfix" id="collapseReplyForm">
+                    <form class="form-horizontal clearfix" id="collapseReplyForm" method="post">
+                        @csrf
+                        @method('PATCH')
                         <div class="row form-group">
                             <label class="col-sm-3 text-right control-label col-form-label">متن ریپلای: <span
                                     class="text-danger mr-1">*</span></label>

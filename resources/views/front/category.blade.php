@@ -56,36 +56,36 @@
                     <div class="post-header">
                         <div class="support-info">
                             <ul class="support-total-info">
-                                <li class="open-ticket"><i class="icon_info_alt"></i>عدد چالش باز</li>
-                                <li class="close-ticket"><i class="icon_check"></i><a href="#">عدد چالش بسته شده</a>
+{{--                                <li class="open-ticket"><i class="icon_info_alt"></i>عدد چالش باز</li>--}}
+{{--                                <li class="close-ticket"><i class="icon_check"></i><a href="#">عدد چالش بسته شده</a>--}}
                                 </li>
                             </ul>
                         </div>
                         <!-- /.support-info -->
 
-                        <div class="support-category-menus">
-                            <ul class="category-menu">
-                                <li>
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                            مرتب سازی بر اساس
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <h3 class="title">Sort by</h3>
-                                            <div class="short-by">
-                                                <a class="dropdown-item active-short" href="#0">جدیدترین</a>
-                                                <a class="dropdown-item" href="#0">قدیمی ترین</a>
-                                                <a class="dropdown-item" href="#0">پر کامنت ترین</a>
-                                                <a class="dropdown-item" href="#0">پر بازدید ترین</a>
-                                                <a class="dropdown-item" href="#0">آخرین کامنت جدید</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+{{--                        <div class="support-category-menus">--}}
+{{--                            <ul class="category-menu">--}}
+{{--                                <li>--}}
+{{--                                    <div class="dropdown">--}}
+{{--                                        <button class="btn btn-secondary dropdown-toggle" type="button"--}}
+{{--                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"--}}
+{{--                                                aria-expanded="false">--}}
+{{--                                            مرتب سازی بر اساس--}}
+{{--                                        </button>--}}
+{{--                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">--}}
+{{--                                            <h3 class="title">Sort by</h3>--}}
+{{--                                            <div class="short-by">--}}
+{{--                                                <a class="dropdown-item active-short" href="#0">جدیدترین</a>--}}
+{{--                                                <a class="dropdown-item" href="#0">قدیمی ترین</a>--}}
+{{--                                                <a class="dropdown-item" href="#0">پر کامنت ترین</a>--}}
+{{--                                                <a class="dropdown-item" href="#0">پر بازدید ترین</a>--}}
+{{--                                                <a class="dropdown-item" href="#0">آخرین کامنت جدید</a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
                         <!-- /.support-category-menus -->
                     </div>
                     <!-- /.post-header -->
@@ -118,8 +118,8 @@
                                 </div>
                                 <div class="post-meta-wrapper">
                                     <ul class="post-meta-info">
-                                        <li><a href="#"><i class="icon_chat_alt"></i>20</a></li>
-                                        <li><a href="#"><i class="icon_star"></i>5</a></li>
+                                        <li><a href="#"><i class="icon_chat_alt"></i>{{$item->replies->count()}}</a></li>
+                                        <li><a href="#"><i class="icon_pencil"></i>{{$item->quizHeaders->count()}}</a></li>
                                     </ul>
                                 </div>
                             </div>

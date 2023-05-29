@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>'ایزباگ',
+        'title'=>'انجمن ایزباگ',
         'sl'=> false,
         'sub'=>'',
         'subLink'=>'',
-        'page'=>'ایزباگ'
+        'page'=>'انجمن ایزباگ'
         ]
     )
 @section('content')
@@ -22,7 +22,7 @@
                                 <div class="docly-com-box-content">
                                     <h3 class="title"><a href="{{route('archive',$cat->title)}}">{{$cat->title}}</a>
                                     </h3>
-                                    <p class="total-post">{{$cat->sections->count()}}</p>
+                                    <p class="total-post">{{$cat->activeSections->count()}}</p>
                                 </div>
 
 
@@ -47,7 +47,7 @@
                         <!-- /.action-content -->
 
                         <div class="action-button-container">
-                            <a href="#" class="action_btn btn-ans">چالش خودتو بساز</a>
+                            <a href="{{auth()->check() ? route('user.dashboard') : route('register')}}" class="action_btn btn-ans">چالش خودتو بساز</a>
                         </div>
                         <!-- /.action-button-container -->
                     </div>
@@ -76,7 +76,7 @@
                             <div class="community-post style-two forum-item bug">
                                 <div class="col-md-6 post-content">
                                     <div class="author-avatar forum-icon">
-                                        <img src="{{asset('images/user/'.$item['avatar'])}}" alt="{{$item['username']}}" width="30">
+                                        <img src="@if($item['avatar']!="" || $item['avatar'] !=null ) {{asset('images/user/'.$item['avatar']) }}@else {{asset('front/img/home_one/1.png')}} @endif" alt="{{$item['username']}}" width="30">
                                     </div>
                                     <div class="entry-content">
                                         <h3 class="post-title">

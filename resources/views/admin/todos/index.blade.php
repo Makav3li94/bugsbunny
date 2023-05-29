@@ -56,7 +56,7 @@
                                             @break
 
                                             @case('challenge')
-                                             درخواست بررسی کیفیت
+                                             درخواست تایید چالش
                                             @php $link = route('admin.challenge.edit',$notification->data['type_id']) @endphp
                                             @break
 

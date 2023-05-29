@@ -9,6 +9,7 @@ use App\Models\Setting;
 use App\Models\Sms;
 use App\Models\PreRegister;
 use App\Models\SmsSetting;
+use App\Traits\Helpers;
 use App\Traits\Numbers;
 use App\Traits\Randomable;
 use App\Traits\SmsableMokhaberat;
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    use SmsableMokhaberat, Randomable, Numbers;
+    use SmsableMokhaberat, Randomable, Numbers,Helpers;
 
     //SMS Panel Credentials
     private $client;
@@ -254,6 +255,7 @@ class AuthController extends Controller
             ]);
             Auth::login($user);
             event(new Registered($user));
+            $this->notifyAdmin($user->id, $user->name,  $user->mobile, 'profileChange', $user->id, 0, 'کاربر ثبت نام کرد.');
             return redirect(route('user.dashboard'))->with(['login' => 'success']);
         } else {
             abort(404);

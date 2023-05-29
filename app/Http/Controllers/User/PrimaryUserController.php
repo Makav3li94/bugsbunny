@@ -99,19 +99,6 @@ class PrimaryUserController extends Controller
         ]);
     }
 
-    public function files()
-    {
-        $user_category_id = auth()->user()->company->user_category_id;
 
-        $files = auth()->user()->files()->with('fileTitle')->get();
-        $ids = $files->pluck('fileTitle.id')->filter();
-        if ($user_category_id == 0) {
-            $fileTitles = FileTitle::whereIn('file_cat', [0, 2], ' AND ')->whereNotIn('id', $ids)->get();
-        } elseif ($user_category_id == 1) {
-            $fileTitles = FileTitle::where('file_cat', 1)->whereNotIn('id', $ids)->get();
-        }
-
-        return view('user.files.index', compact('files', 'fileTitles', 'user_category_id'));
-    }
 
 }

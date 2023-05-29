@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Reply;
+use App\Traits\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ReplyController extends Controller
 {
+    use Helpers;
 
     public function index()
     {
@@ -16,7 +18,8 @@ class ReplyController extends Controller
         return view('admin.replies.index', compact('replies'));
     }
 
-    public function edit(Reply $reply,Request $request){
+    public function edit(Reply $reply, Request $request)
+    {
         if ($request->ajax()) {
             return response()->json(['reply' => $reply]);
         }
@@ -26,26 +29,29 @@ class ReplyController extends Controller
     {
         if (isset($request->update_type)) {
             $prev = $reply->status;
-            $reply->update(['status' => $prev == 1 ? 0 : 1 ]);
+            $reply->update(['status' => $prev == 1 ? 0 : 1]);
+            $this->readMFNotification($reply->user_id, 'reply', $reply->id);
+            return redirect()->back()->with(['update' => 'success']);
         }
-        if ($request->ajax()) {
-            $validator = Validator::make($request->all(), [
-                'body' => "required"
-            ]);
-            if ($validator->fails()) {
-                return response()->json(['collapseReplyError' => $validator->errors()->toArray()]);
-            }
-            $body = $request->input('body');
-            $reply->update([
-                'body' => $body,
-            ]);
-            $reply = [
-                0 => $reply->body,
-                1 => $reply->id
-            ];
-            return response()->json(['collapseReplyEdit' => 'success', 'reply' => $reply]);
+
+        $validator = Validator::make($request->all(), [
+            'body' => "required"
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['collapseReplyError' => $validator->errors()->toArray()]);
         }
-        return redirect()->back()->with(['update' => 'success']);
+        $body = $request->input('body');
+        $this->readMFNotification($reply->user_id, 'reply', $reply->id);
+
+        $reply->update([
+            'body' => $body,
+        ]);
+
+        $reply = [
+            0 => $reply->body,
+            1 => $reply->id
+        ];
+        return response()->json(['collapseReplyEdit' => 'success', 'reply' => $reply]);
     }
 
     public function destroy(Reply $reply)

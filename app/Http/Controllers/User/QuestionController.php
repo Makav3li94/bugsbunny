@@ -21,7 +21,7 @@ class QuestionController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'question' => 'required|string',
             'explanation' => 'required|string',
             'answer.*' => 'required|string',
@@ -29,7 +29,9 @@ class QuestionController extends Controller
             'is_active_answer.*' => 'required|string',
             'is_active_answer' => "required|array|min:1",
         ]);
-
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput()->with('for','question');
+        }
         $question = Question::create([
             'question' => $request->question,
             'explanation' => $request->explanation,
@@ -45,7 +47,7 @@ class QuestionController extends Controller
                 'question_id' => $question->id,
             ]);
         Section::find($request->section_id)->update(['status' => 1]);
-        return redirect()->back()->with('create', 'success');
+        return redirect()->back()->with('create', 'success')->with('crud','section_store');
     }
 
     public function edit(Request $request, Question $question)

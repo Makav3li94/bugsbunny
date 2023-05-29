@@ -135,16 +135,16 @@
                         </ul>
                     </li>
                 @endif
-                @if(auth()->user()->can('email'))
-                    <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
-                                class="icon-compass"></i><span class="hide-menu">ایمیل</span></a>
-                        <ul aria-expanded="false" class="collapse">
-                            <li><a href="{{route('admin.sms.index')}}">لیست ایمیل های ارسال شده</a></li>
+{{--                @if(auth()->user()->can('email'))--}}
+{{--                    <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i--}}
+{{--                                class="icon-compass"></i><span class="hide-menu">ایمیل</span></a>--}}
+{{--                        <ul aria-expanded="false" class="collapse">--}}
+{{--                            <li><a href="{{route('admin.sms.index')}}">لیست ایمیل های ارسال شده</a></li>--}}
 
-                            <li><a href="{{route('admin.sms.setting.show')}}">تنظیمات ایمیل</a></li>
-                        </ul>
-                    </li>
-                @endif
+{{--                            <li><a href="{{route('admin.sms.setting.show')}}">تنظیمات ایمیل</a></li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                @endif--}}
 
             </ul>
         </nav>

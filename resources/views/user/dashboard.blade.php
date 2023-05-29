@@ -18,7 +18,7 @@
     </style>
 @endsection
 @section('content')
-
+    {{--    @dd(session()->all());--}}
     <section class="doc_blog_grid_area sec_pad forum-page-content">
         <div class="container">
             <div class="card bb-radius">
@@ -27,7 +27,7 @@
                         <div class="col-md-2">
                             <div class="profile-img">
                                 <img
-                                    src="@if($user->avatar1!="" || $user->avatar !=null ) {{asset('images/user/'.$user->avatar) }}@else {{asset('front/img/home_one/1.png')}} @endif"
+                                    src="@if($user->avatar!="" || $user->avatar !=null ) {{asset('images/user/'.$user->avatar) }}@else {{asset('front/img/home_one/1.png')}} @endif"
                                     width="100" alt=""/>
                                 <div class="file btn btn-lg btn-primary">
                                     @forelse($cats as $cat)
@@ -77,12 +77,14 @@
                             </div>
                             <ul class="nav nav-tabs d-flex flex-column" style="border: none" id="myTab" role="tablist">
                                 <li class="nav-item p-1 ">
-                                    <a class="nav-link {{session()->get('crud')=='user_update' ? "active" :"" }}" id="profile-tab" data-toggle="tab" href="#profile"
+                                    <a class="nav-link {{session()->get('crud')=='user_update' ? "active" :"" }}"
+                                       id="profile-tab" data-toggle="tab" href="#profile"
                                        role="tab"
                                        aria-controls="home" aria-selected="true">ویرایش اطلاعات</a>
                                 </li>
                                 <li class="nav-item p-1 ">
-                                    <a class="nav-link {{session()->get('crud')=='section_store' ? "active" :"" }}" id="chalenges-tab" data-toggle="tab" href="#chalenges"
+                                    <a class="nav-link {{session()->get('crud')=='section_store' ? "active" :"" }}"
+                                       id="chalenges-tab" data-toggle="tab" href="#chalenges"
                                        role="tab"
                                        aria-controls="chalenges" aria-selected="false">چالش ها</a>
                                 </li>
@@ -115,7 +117,8 @@
                                        aria-controls="activity" aria-selected="false">فعالیت ها</a>
                                 </li>
                                 <li class="nav-item p-1 ">
-                                    <a class="nav-link {{session()->get('crud')=='ticket_store' ? "active" :"" }}" id="ticket-tab" data-toggle="tab" href="#ticket" role="tab"
+                                    <a class="nav-link {{session()->get('crud')=='ticket_store' ? "active" :"" }}"
+                                       id="ticket-tab" data-toggle="tab" href="#ticket" role="tab"
                                        aria-controls="ticket" aria-selected="false">تیکت ها</a>
                                 </li>
                                 <li class="nav-item p-1 ">
@@ -130,141 +133,157 @@
                             <div class="tab-content profile-tab" id="myTabContent">
 
 
-                                <div class="tab-pane fade {{session()->get('crud')=='user_update' ? " show active" :"" }}" id="profile" role="tabpanel"
-                                     aria-labelledby="profile-tab">
-                                    <form class="clearfix" action="{{route('user.update',$user->id)}}" method="POST"
-                                          enctype="multipart/form-data">
-                                        @csrf
-                                        @method('PATCH')
-                                        <div class="row">
+                                <div
+                                    class="tab-pane fade {{session()->get('crud')=='user_update' ? " show active" :"" }}"
+                                    id="profile" role="tabpanel"
+                                    aria-labelledby="profile-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">اطلاعات کاربری شما</h4>
+                                            <p class="card-subtitle"> در اینجا میتونید اطلاعات خودتونو اپدیت کنید.</p>
+                                            <form class="clearfix" action="{{route('user.update',$user->id)}}"
+                                                  method="POST"
+                                                  enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PATCH')
+                                                <div class="row">
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>نام<span class="text-danger mr-1">*</span></label>
-                                                    <input type="text" class="form-control" placeholder=""
-                                                           value="{{$user->name}}" name="name">
-                                                    @if($errors->has('name'))
-                                                        <small class="invalid-text"
-                                                               style="float:right">{{$errors->first('name')}}</small>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>نام کاربری<span class="text-danger mr-1">*</span></label>
-                                                    <input type="text" class="form-control" placeholder=""
-                                                           value="{{$user->username}}" name="username" required>
-                                                    @if($errors->has('username'))
-                                                        <small
-                                                            class="invalid-text">{{$errors->first('username')}}</small>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>ایمیل <span class="text-danger mr-1">*</span></label>
-                                                    <input dir="ltr" type="text" class="form-control" placeholder=""
-                                                           value="{{$user->email}}" name="email">
-                                                    @if($errors->has('email'))
-                                                        <small class="invalid-text"
-                                                               style="float:right">{{$errors->first('email')}}</small>
-                                                    @endif
-                                                </div>
-                                            </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>نام<span class="text-danger mr-1">*</span></label>
+                                                            <input type="text" class="form-control" placeholder=""
+                                                                   value="{{$user->name}}" name="name">
+                                                            @if($errors->has('name'))
+                                                                <small class="invalid-text"
+                                                                       style="float:right">{{$errors->first('name')}}</small>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>نام کاربری<span
+                                                                    class="text-danger mr-1">*</span></label>
+                                                            <input type="text" class="form-control" placeholder=""
+                                                                   value="{{$user->username}}" name="username" required>
+                                                            @if($errors->has('username'))
+                                                                <small
+                                                                    class="invalid-text">{{$errors->first('username')}}</small>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>ایمیل <span class="text-danger mr-1">*</span></label>
+                                                            <input dir="ltr" type="text" class="form-control"
+                                                                   placeholder=""
+                                                                   value="{{$user->email}}" name="email">
+                                                            @if($errors->has('email'))
+                                                                <small class="invalid-text"
+                                                                       style="float:right">{{$errors->first('email')}}</small>
+                                                            @endif
+                                                        </div>
+                                                    </div>
 
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>موبایل <span class="text-danger mr-1">*</span></label>
-                                                    <input dir="ltr" type="text" class="form-control" placeholder=""
-                                                           value="{{$user->mobile}}" name="mobile">
-                                                    @if($errors->has('mobile'))
-                                                        <small class="invalid-text"
-                                                               style="float:right">{{$errors->first('mobile')}}</small>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>تاریخ تولد</label>
-                                                    <input type="text" class="form-control datepicker-year"
-                                                           placeholder=""
-                                                           value="{{$user->birthDate}}" name="birthDate">
-                                                    @if($errors->has('birthDate'))
-                                                        <small
-                                                            class="invalid-text">{{$errors->first('birthDate')}}</small>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>دسته مورد علاقه</label>
-                                                    <select class="select2 form-control custom-select"
-                                                            style="width: 100%;"
-                                                            multiple="multiple"
-                                                            name="cats[]">
-                                                        <option></option>
-                                                        @forelse($cats as $cat)
-                                                            <option value="{{$cat->id}}"
-                                                                    @if(in_array($cat->id,json_decode($user->cats))) selected @endif>{{$cat->title}}</option>
-                                                        @empty
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>موبایل <span
+                                                                    class="text-danger mr-1">*</span></label>
+                                                            <input dir="ltr" type="text" class="form-control"
+                                                                   placeholder=""
+                                                                   value="{{$user->mobile}}" name="mobile">
+                                                            @if($errors->has('mobile'))
+                                                                <small class="invalid-text"
+                                                                       style="float:right">{{$errors->first('mobile')}}</small>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>تاریخ تولد</label>
+                                                            <input type="text" class="form-control datepicker-year"
+                                                                   placeholder=""
+                                                                   value="{{$user->birthDate}}" name="birthDate">
+                                                            @if($errors->has('birthDate'))
+                                                                <small
+                                                                    class="invalid-text">{{$errors->first('birthDate')}}</small>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>دسته مورد علاقه</label>
+                                                            <select class="select2 form-control custom-select"
+                                                                    style="width: 100%;"
+                                                                    multiple="multiple"
+                                                                    name="cats[]">
+                                                                <option></option>
+                                                                @forelse($cats as $cat)
+                                                                    <option value="{{$cat->id}}"
+                                                                            @if(in_array($cat->id,json_decode($user->cats))) selected @endif>{{$cat->title}}</option>
+                                                                @empty
 
-                                                        @endforelse
+                                                                @endforelse
 
-                                                    </select>
-                                                    @if($errors->has('role'))
-                                                        <small class="invalid-text"
-                                                               style="float:right">{{$errors->first('role')}}</small>
-                                                    @endif
+                                                            </select>
+                                                            @if($errors->has('role'))
+                                                                <small class="invalid-text"
+                                                                       style="float:right">{{$errors->first('role')}}</small>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>تصویر پروفایل:</label>
+                                                            <div>
+                                                                <input type="file" name="avatar"
+                                                                       class="form-control dropify"
+                                                                       data-default-file="@if($user->avatar !="" || $user->avatar !=null ) {{asset('images/user/'.$user->avatar) }} @endif"
+                                                                       data-height="100" placeholder="">
+                                                                @if($errors->has('avatar'))
+                                                                    <small class="invalid-text">
+                                                                        {{$errors->first('avatar')}}
+                                                                    </small>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>رمز عبور جدید </label>
+                                                            <input type="password" class="form-control" placeholder=""
+                                                                   value="" name="password">
+                                                            @if($errors->has('password'))
+                                                                <small
+                                                                    class="invalid-text">{{$errors->first('password')}}</small>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+
                                                 </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>تصویر پروفایل:</label>
-                                                    <div>
-                                                        <input type="file" name="avatar" class="form-control dropify"
-                                                               data-default-file="@if($user->avatar1!="" || $user->avatar !=null ) {{asset('images/user/'.$user->avatar) }} @endif"
-                                                               data-height="100" placeholder="">
-                                                        @if($errors->has('avatar'))
-                                                            <small class="invalid-text">
-                                                                {{$errors->first('avatar')}}
-                                                            </small>
-                                                        @endif
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group m-b-0">
+                                                            <div class="float-left">
+                                                                <button type="submit"
+                                                                        class="btn btn-success btn-rounded waves-effect waves-light"
+                                                                        id="">ثبت ویرایش
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>رمز عبور جدید </label>
-                                                    <input type="password" class="form-control" placeholder=""
-                                                           value="" name="password">
-                                                    @if($errors->has('password'))
-                                                        <small
-                                                            class="invalid-text">{{$errors->first('password')}}</small>
-                                                    @endif
-                                                </div>
-                                            </div>
-
-
+                                            </form>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group m-b-0">
-                                                    <div class="float-left">
-                                                        <button type="submit"
-                                                                class="btn btn-success btn-rounded waves-effect waves-light"
-                                                                id="">ثبت ویرایش
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div>
 
-                                <div class="tab-pane fade {{session()->get('crud')=='section_store' ? " show active" :"" }}" id="chalenges" role="tabpanel"
-                                     aria-labelledby="chalenges-tab">
+                                <div
+                                    class="tab-pane fade {{session()->get('crud')=='section_store' ? " show active" :"" }}"
+                                    id="chalenges" role="tabpanel"
+                                    aria-labelledby="chalenges-tab">
                                     <div class="card">
                                         <div class="card-body">
                                             <h4 class="card-title">چالش های شما</h4>
@@ -289,8 +308,8 @@
                                                     <tbody>
                                                     @forelse($sections as $key=>$section)
                                                         <tr>
-                                                            <th>{{$key++}}</th>
-                                                            <td>{{$section->title}}</td>
+                                                            <th>{{$key+1}}</th>
+                                                            <td>{{\Illuminate\Support\Str::limit($section->title,30)}}</td>
                                                             <td>{{$section->category->title}}</td>
                                                             <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
                                                             <td>
@@ -299,7 +318,7 @@
                                                             <td>سایر</td>
                                                             <td>{{$section->questions_count." عدد"}}</td>
                                                             <td style="width: 200px"><a class="btn btn-sm btn-warning"
-                                                                   href="{{route('section',$section->slug)}}">مشاهده</a>
+                                                                                        href="{{route('section',$section->slug)}}">مشاهده</a>
                                                             </td>
                                                         </tr>
                                                     @empty
@@ -309,8 +328,8 @@
                                                     @endforelse
                                                     @forelse($userSections as $key=>$section)
                                                         <tr>
-                                                            <th>{{$key++}}</th>
-                                                            <td>{{$section->title}}</td>
+                                                            <th>{{$key+1}}</th>
+                                                            <td>{{\Illuminate\Support\Str::limit($section->title,30)}}</td>
                                                             <td>{{$section->category->title}}</td>
                                                             <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
                                                             <td>         @include('layouts.components.status')</td>
@@ -343,186 +362,212 @@
                                 <div class="tab-pane fade {{session()->get('for')=='section' ? "show active" :"" }}"
                                      id="add_chalenges" role="tabpanel"
                                      aria-labelledby="add_chalenges-tab">
-                                    <form action="{{route('user.challenge.store')}}" class="form-horizontal clearfix"
-                                          method="post"
-                                          enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="row form-group">
-                                            <label class="col-sm-3 text-right control-label col-form-label">نام چالش :
-                                                <span
-                                                    class="text-danger mr-1">*</span></label>
-                                            <div class="col-sm-9">
-                                                <input type="text" name="title" value="{{{old('title')}}}"
-                                                       class="form-control"
-                                                       placeholder="">
-                                                @if($errors->has('title') && session()->get('for')=='section')
-                                                    <small class="invalid-text">
-                                                        {{$errors->first('title')}}
-                                                    </small>
-                                                @endif
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row form-group">
-                                            <label class="col-sm-3 text-right control-label col-form-label">دسته
-                                                چالش: </label>
-                                            <div class="col-3">
-                                                <select class="select2 form-control custom-select" style="width: 100%;"
-                                                        name="category_id">
-                                                    <option></option>
-                                                    @forelse($categories as $cat)
-
-                                                        @if($cat->type == 0)
-                                                            <option value="{{$cat->id}}"
-                                                                    @if(collect(old('category_id'))->contains($cat->id)) selected @endif>{{$cat->title}}</option>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">افزودن چالش</h4>
+                                            <p class="card-subtitle"> در اینجا میتونید چالش جدیدی اضافه کنید، فقط به
+                                                خاطر داشته باشید چالش ها برای اینکه تایید بشین، باید براشون سوال طراحی
+                                                بشه !</p>
+                                            <form action="{{route('user.challenge.store')}}"
+                                                  class="form-horizontal clearfix"
+                                                  method="post"
+                                                  enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="row form-group">
+                                                    <label class="col-sm-3 text-right control-label col-form-label">نام
+                                                        چالش :
+                                                        <span
+                                                            class="text-danger mr-1">*</span></label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name="title" value="{{{old('title')}}}"
+                                                               class="form-control"
+                                                               placeholder="">
+                                                        @if($errors->has('title') && session()->get('for')=='section')
+                                                            <small class="invalid-text">
+                                                                {{$errors->first('title')}}
+                                                            </small>
                                                         @endif
-                                                    @empty
-                                                    @endforelse
+                                                    </div>
+                                                </div>
 
-                                                </select>
-                                                @if($errors->has('category_id' && session()->get('for')=='section'))
-                                                    <small
-                                                        class="invalid-text">{{$errors->first('category_id')}}</small>
-                                                @endif
-                                            </div>
 
-                                            <label class="col-sm-3 text-right control-label col-form-label">تاریخ
-                                                اتمام: </label>
-                                            <div class="col-3">
-                                                <input type="text" name="expire_date"
-                                                       class="form-control text-center datepicker-day"
-                                                       value="{{old('expire_date')}}" placeholder="">
-                                                @if($errors->has('expire_date'))
-                                                    <small class="invalid-text">
-                                                        {{$errors->first('expire_date')}}
-                                                    </small>
-                                                @endif
+                                                <div class="row form-group">
+                                                    <label class="col-sm-3 text-right control-label col-form-label">دسته
+                                                        چالش: </label>
+                                                    <div class="col-3">
+                                                        <select class="select2 form-control custom-select"
+                                                                style="width: 100%;"
+                                                                name="category_id">
+                                                            <option></option>
+                                                            @forelse($categories as $cat)
 
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-sm-3 text-right control-label col-form-label">توضیحات چالش
-                                                : </label>
-                                            <div class="col-12">
-                                                <textarea class="tinymce-editor" name="description"></textarea>
-                                                @if($errors->has('description') && session()->get('for')=='section')
-                                                    <small class="invalid-text">
-                                                        {{$errors->first('description')}}
-                                                    </small>
-                                                @endif
-                                            </div>
-                                        </div>
+                                                                @if($cat->type == 0)
+                                                                    <option value="{{$cat->id}}"
+                                                                            @if(collect(old('category_id'))->contains($cat->id)) selected @endif>{{$cat->title}}</option>
+                                                                @endif
+                                                            @empty
+                                                            @endforelse
 
-                                        <div class="row form-group">
-                                            <label
-                                                class="col-sm-3 text-right control-label col-form-label">چکیده: </label>
-                                            <div class="col-12">
+                                                        </select>
+                                                        @if($errors->has('category_id' && session()->get('for')=='section'))
+                                                            <small
+                                                                class="invalid-text">{{$errors->first('category_id')}}</small>
+                                                        @endif
+                                                    </div>
+
+                                                    <label class="col-sm-3 text-right control-label col-form-label">تاریخ
+                                                        اتمام: </label>
+                                                    <div class="col-3">
+                                                        <input type="text" name="expire_date"
+                                                               class="form-control text-center datepicker-day"
+                                                               value="{{old('expire_date')}}" placeholder="">
+                                                        @if($errors->has('expire_date'))
+                                                            <small class="invalid-text">
+                                                                {{$errors->first('expire_date')}}
+                                                            </small>
+                                                        @endif
+
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-sm-3 text-right control-label col-form-label">توضیحات
+                                                        چالش
+                                                        : </label>
+                                                    <div class="col-9">
+                                                        <textarea class="tinymce-editor" name="description">{!! old("description") !!}</textarea>
+                                                        @if($errors->has('description') && session()->get('for')=='section')
+                                                            <small class="invalid-text">
+                                                                {{$errors->first('description')}}
+                                                            </small>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="row form-group">
+                                                    <label
+                                                        class="col-sm-3 text-right control-label col-form-label">چکیده: </label>
+                                                    <div class="col-9">
                                 <textarea name="excerpt" class="form-control" rows="1"
                                           cols="1">{{old('excerpt')}}</textarea>
-                                                @if($errors->has('excerpt') && session()->get('for')=='section')
-                                                    <small class="invalid-text">
-                                                        {{$errors->first('excerpt')}}
-                                                    </small>
-                                                @endif
-                                            </div>
+                                                        @if($errors->has('excerpt') && session()->get('for')=='section')
+                                                            <small class="invalid-text">
+                                                                {{$errors->first('excerpt')}}
+                                                            </small>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="form-group m-b-0">
+                                                    <button type="submit"
+                                                            class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left">
+                                                        ثبت
+                                                        چالش جدید
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <div class="form-group m-b-0">
-                                            <button type="submit"
-                                                    class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left">
-                                                ثبت
-                                                چالش جدید
-                                            </button>
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade {{session()->get('for')=='thread' ? "show active" :"" }}"
                                      id="add_threads" role="tabpanel"
                                      aria-labelledby="add_threads-tab">
-                                    <form action="{{route('user.challenge.store')}}" class="form-horizontal clearfix"
-                                          method="post"
-                                          enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="row form-group">
-                                            <label class="col-sm-3 text-right control-label col-form-label">عنوان سوال :
-                                                <span
-                                                    class="text-danger mr-1">*</span></label>
-                                            <div class="col-sm-9">
-                                                <input type="text" name="title" value="{{{old('title')}}}"
-                                                       class="form-control"
-                                                       placeholder="">
-                                                @if($errors->has('title') && session()->get('for')=='thread')
-                                                    <small class="invalid-text">
-                                                        {{$errors->first('title')}}
-                                                    </small>
-                                                @endif
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row form-group">
-                                            <label class="col-sm-3 text-right control-label col-form-label">دسته
-                                                سوال: </label>
-                                            <div class="col-9">
-                                                <select class="select2 form-control custom-select" style="width: 100%;"
-                                                        name="category_id">
-                                                    <option></option>
-
-                                                    @forelse($categories as $cat)
-
-                                                        @if($cat->type == 1)
-                                                            <option value="{{$cat->id}}"
-                                                                    @if(collect(old('category_id'))->contains($cat->id)) selected @endif>{{$cat->title}}</option>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">افزودن سوال</h4>
+                                            <p class="card-subtitle">
+                                                سوال یه چیز سادس، مثل تاپیک های بقیه انجمن ها
+                                            </p>
+                                            <form action="{{route('user.challenge.store')}}"
+                                                  class="form-horizontal clearfix"
+                                                  method="post"
+                                                  enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="row form-group">
+                                                    <label class="col-sm-3 text-right control-label col-form-label">عنوان
+                                                        سوال :
+                                                        <span
+                                                            class="text-danger mr-1">*</span></label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name="title" value="{{{old('title')}}}"
+                                                               class="form-control"
+                                                               placeholder="">
+                                                        @if($errors->has('title') && session()->get('for')=='thread')
+                                                            <small class="invalid-text">
+                                                                {{$errors->first('title')}}
+                                                            </small>
                                                         @endif
-                                                    @empty
-                                                    @endforelse
-                                                </select>
-                                                @if($errors->has('category_id' && session()->get('for')=='thread'))
-                                                    <small
-                                                        class="invalid-text">{{$errors->first('category_id')}}</small>
-                                                @endif
-                                            </div>
+                                                    </div>
+                                                </div>
 
 
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-sm-3 text-right control-label col-form-label">توضیحات سوال
-                                                : </label>
-                                            <div class="col-12">
-                                                <textarea class="tinymce-editor" name="description"></textarea>
-                                                @if($errors->has('description') && session()->get('for')=='thread')
-                                                    <small class="invalid-text">
-                                                        {{$errors->first('description')}}
-                                                    </small>
-                                                @endif
-                                            </div>
-                                        </div>
+                                                <div class="row form-group">
+                                                    <label class="col-sm-3 text-right control-label col-form-label">دسته
+                                                        سوال: </label>
+                                                    <div class="col-9">
+                                                        <select class="select2 form-control custom-select"
+                                                                style="width: 100%;"
+                                                                name="category_id">
+                                                            <option></option>
 
-                                        <div class="row form-group">
-                                            <label
-                                                class="col-sm-3 text-right control-label col-form-label">چکیده: </label>
-                                            <div class="col-12">
+                                                            @forelse($categories as $cat)
+
+                                                                @if($cat->type == 1)
+                                                                    <option value="{{$cat->id}}"
+                                                                            @if(collect(old('category_id'))->contains($cat->id)) selected @endif>{{$cat->title}}</option>
+                                                                @endif
+                                                            @empty
+                                                            @endforelse
+                                                        </select>
+                                                        @if($errors->has('category_id' && session()->get('for')=='thread'))
+                                                            <small
+                                                                class="invalid-text">{{$errors->first('category_id')}}</small>
+                                                        @endif
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-sm-3 text-right control-label col-form-label">توضیحات
+                                                        سوال
+                                                        : </label>
+                                                    <div class="col-9">
+                                                        <textarea class="tinymce-editor" name="description">{!! old("description") !!}</textarea>
+                                                        @if($errors->has('description') && session()->get('for')=='thread')
+                                                            <small class="invalid-text">
+                                                                {{$errors->first('description')}}
+                                                            </small>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="row form-group">
+                                                    <label
+                                                        class="col-sm-3 text-right control-label col-form-label">چکیده: </label>
+                                                    <div class="col-9">
                                 <textarea name="excerpt" class="form-control" rows="1"
                                           cols="1">{{old('excerpt')}}</textarea>
-                                                @if($errors->has('excerpt') && session()->get('for')=='thread')
-                                                    <small class="invalid-text">
-                                                        {{$errors->first('excerpt')}}
-                                                    </small>
-                                                @endif
-                                            </div>
+                                                        @if($errors->has('excerpt') && session()->get('for')=='thread')
+                                                            <small class="invalid-text">
+                                                                {{$errors->first('excerpt')}}
+                                                            </small>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="thread" value="on">
+                                                <div class="form-group m-b-0">
+                                                    <button type="submit"
+                                                            class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left">
+                                                        ثبت
+                                                        سوال جدید
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <input type="hidden" name="thread" value="on">
-                                        <div class="form-group m-b-0">
-                                            <button type="submit"
-                                                    class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left">
-                                                ثبت
-                                                سوال جدید
-                                            </button>
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div>
-                                <div class="tab-pane fade {{session()->get('crud')=='thread_store' ? " show active" :"" }}" id="threads" role="tabpanel"
-                                     aria-labelledby="threads-tab">
+                                <div
+                                    class="tab-pane fade {{session()->get('crud')=='thread_store' ? " show active" :"" }}"
+                                    id="threads" role="tabpanel"
+                                    aria-labelledby="threads-tab">
                                     <div class="card">
                                         <div class="card-body">
                                             <h4 class="card-title">سوال های شما</h4>
@@ -574,134 +619,189 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="scores" role="tabpanel" aria-labelledby="scores-tab">
-                                    <div class="table-responsive">
-                                        <table class="sort-table table table_shortcode">
-                                            <thead>
-                                            <tr>
-                                                <th>ردیف</th>
-                                                <th>امتیاز</th>
-                                                <th>نوع</th>
-                                                <th>برای</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @forelse($user->totalScore as $key=>$score)
-                                                <tr>
-                                                    <th>{{$key+1}}</th>
-                                                    <td>{{$score->score}}</td>
-                                                    <td><span
-                                                            class="badge badge-primary">{{$score->type == 1 ? 'مثبت' : 'منفی'}}</span>
-                                                    </td>
-                                                    <td>{{$score->is_for ?? "love !"}}</td>
-                                                </tr>
-                                            @empty
-                                                <div class="alert alert-warning">در حال حاضر، امتیازی موجود نیست.</div>
-                                            @endforelse
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">تاریخچه امتیازات</h4>
+                                            <p class="card-subtitle">
+                                                اینجا، امتیازهایی که گرفتید رو میبینید.
+                                            </p>
+                                            <div class="table-responsive">
+                                                <table class="sort-table table table_shortcode">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>ردیف</th>
+                                                        <th>امتیاز</th>
+                                                        <th>نوع</th>
+                                                        <th>برای</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @forelse($user->totalScore as $key=>$score)
+                                                        <tr>
+                                                            <th>{{$key+1}}</th>
+                                                            <td>{{$score->score}}</td>
+                                                            <td><span
+                                                                    class="badge badge-primary">{{$score->type == 1 ? 'مثبت' : 'منفی'}}</span>
+                                                            </td>
+                                                            <td>{{$score->is_for ?? "love !"}}</td>
+                                                        </tr>
+                                                    @empty
+                                                        <div class="alert alert-warning">در حال حاضر، امتیازی موجود
+                                                            نیست.
+                                                        </div>
+                                                    @endforelse
 
-                                            </tbody>
-                                        </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
-                                    <div class="table-responsive">
-                                        <table class="sort-table table table_shortcode">
-                                            <thead>
-                                            <tr>
-                                                <th>ردیف</th>
-                                                <th>فعالیت</th>
-                                                <th>نوع</th>
-                                                <th>لینک</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @forelse($activities as $key=>$activity)
-                                                <tr>
-                                                    <th>{{$key+1}}</th>
-                                                    <td>{{$activity->subject}}</td>
-                                                    <td>{{$activity->model_type}}</td>
-                                                    <td><a href="{{route($activity->model_type,$activity->model_id)}}">مشاهده</a></td>
-                                                </tr>
-                                            @empty
-                                                <div class="alert alert-warning">در حال حاضر، فعالیتی موجود نیست.</div>
-                                            @endforelse
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">تاریخچه فعالیت ها</h4>
+                                            <p class="card-subtitle">
+                                                هر غلتی تا الان کردید اینجا میبینید.
+                                            </p>
+                                            <div class="table-responsive">
+                                                <table class="sort-table table table_shortcode">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>ردیف</th>
+                                                        <th>فعالیت</th>
+                                                        <th>نوع</th>
+{{--                                                        <th>لینک</th>--}}
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @forelse($activities as $key=>$activity)
+                                                        <tr>
+                                                            <th>{{$key+1}}</th>
+                                                            <td>{{$activity->subject}}</td>
+                                                            <td>
+                                                                @switch($activity->model_type)
+                                                                    @case("like")
+                                                                    <div class="alert alert-warning text-center">لایک/دیسلاک</div>
+                                                                    @break
+                                                                    @case("reply")
+                                                                    <div class="alert alert-warning text-center">کامنت</div>
+                                                                    @break
+                                                                    @case("section")
+                                                                    <div class="alert alert-info text-center">ساخت چالش</div>
+                                                                    @break
 
-                                            </tbody>
-                                        </table>
+                                                                    @default
+
+                                                                @endswitch
+                                                            </td>
+{{--                                                            <td>--}}
+{{--                                                                <a href="{{route($activity->model_type,$activity->model_id)}}">مشاهده</a>--}}
+{{--                                                            </td>--}}
+                                                        </tr>
+                                                    @empty
+                                                        <div class="alert alert-warning">در حال حاضر، فعالیتی موجود
+                                                            نیست.
+                                                        </div>
+                                                    @endforelse
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade {{session()->get('crud')=='ticket_store' ? " show active" :"" }}" id="ticket" role="tabpanel" aria-labelledby="ticket-tab">
-                                    <div class="table-responsive ">
-                                        <table class="sort-table table table_shortcode mt-5">
-                                            <thead>
-                                            <tr>
-                                                <th>شماره</th>
-                                                <th>عنوان</th>
-                                                <th>ایجاد</th>
-                                                <th>بخش</th>
-                                                <th>اهمیت</th>
-                                                <th>مرحله</th>
-                                                <th>وضعیت</th>
-                                                <th>عملیات</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @forelse($tickets as $key=>$ticket)
-                                                <tr>
-                                                    <td>{{$key+1}}</td>
-                                                    <td>{{$ticket->title}}</td>
-                                                    <td>{{Verta::instance($ticket->created_at)->format('Y/n/j')}}</td>
-                                                    <td>{{$ticket->section}}</td>
-                                                    <td>{{$ticket->priority}}</td>
-                                                    <td>
-                                                        @if($ticket->answer=='0')
-                                                            <span class="label label-info">پیام کاربر</span>
-                                                        @elseif($ticket->answer=='1')
-                                                            <span class="label label-info">در حال رسیدگی</span>
-                                                        @elseif($ticket->answer=='2')
-                                                            <span class="label label-info">پیام مدیر</span>
-                                                        @endif
-                                                        @if($ticket->faqs()->where('seen','2')->get()->count()>0)
-                                                            <span
-                                                                class="label label-danger">{{ $ticket->faqs()->where('seen','2')->get()->count()}}</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
+                                <div
+                                    class="tab-pane fade {{session()->get('crud')=='ticket_store' ? " show active" :"" }}"
+                                    id="ticket" role="tabpanel" aria-labelledby="ticket-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">تاریخچه تیکت ها</h4>
+                                            <p class="card-subtitle">
+                                                تاریخچه تیکت هاتون با پشتیبانی ایزباگ
+                                            </p>
+                                            <div class="table-responsive ">
+                                                <table class="sort-table table table_shortcode mt-5">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>شماره</th>
+                                                        <th>عنوان</th>
+                                                        <th>ایجاد</th>
+                                                        <th>بخش</th>
+                                                        <th>اهمیت</th>
+                                                        <th>مرحله</th>
+                                                        <th>وضعیت</th>
+                                                        <th>عملیات</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @forelse($tickets as $key=>$ticket)
+                                                        <tr>
+                                                            <td>{{$key+1}}</td>
+                                                            <td>{{$ticket->title}}</td>
+                                                            <td>{{Verta::instance($ticket->created_at)->format('Y/n/j')}}</td>
+                                                            <td>{{$ticket->section}}</td>
+                                                            <td>{{$ticket->priority}}</td>
+                                                            <td>
+                                                                @if($ticket->answer=='0')
+                                                                    <span class="label label-info">پیام کاربر</span>
+                                                                @elseif($ticket->answer=='1')
+                                                                    <span class="label label-info">در حال رسیدگی</span>
+                                                                @elseif($ticket->answer=='2')
+                                                                    <span class="label label-info">پیام مدیر</span>
+                                                                @endif
+                                                                @if($ticket->faqs()->where('seen','2')->get()->count()>0)
+                                                                    <span
+                                                                        class="label label-danger">{{ $ticket->faqs()->where('seen','2')->get()->count()}}</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
                                         <span
                                             class="label label-table label-{{$ticket->status=='0' ? 'danger' : 'success'}}">
                                            {{$ticket->status=='0' ? 'بسته' : 'باز'}}
                                         </span>
-                                                    </td>
-                                                    <td>
-                                                        <a href="javascript:void(0)"
-                                                           onclick="getTicket({{$ticket->id}})"
-                                                           class="btn btn-success btn-sm "><i
-                                                                class="d-inline-flex align-middle ti-eye ml-1"></i>
-                                                        </a>
-                                                        @if($ticket->status=='1')
-                                                            <a href="#"
-                                                               class="btn btn-danger btn-sm close-ticket "
-                                                               data-toggle="tooltip"
-                                                               title="بستن تیکت" id="{{$ticket->id}}">
-                                                                <i class="d-inline-flex align-middle ti-lock"></i>
-                                                            </a>
-                                                            <form method="post"
-                                                                  action="{{route('user.ticket.toggle',$ticket->id)}}"
-                                                                  id="form-{{$ticket->id}}" class="d-none">
-                                                                @csrf
-                                                                @method('PATCH')
-                                                            </form>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            @empty
-                                                <div class="alert alert-warning">در حال حاضر، تیکتی موجود نیست.</div>
-                                            @endforelse
-                                        </table>
+                                                            </td>
+                                                            <td>
+                                                                <a href="javascript:void(0)"
+                                                                   onclick="getTicket({{$ticket->id}})"
+                                                                   class="btn btn-success btn-sm "><i
+                                                                        class="d-inline-flex align-middle ti-eye ml-1"></i>
+                                                                </a>
+                                                                @if($ticket->status=='1')
+                                                                    <a href="#"
+                                                                       class="btn btn-danger btn-sm close-ticket "
+                                                                       data-toggle="tooltip"
+                                                                       title="بستن تیکت" id="{{$ticket->id}}">
+                                                                        <i class="d-inline-flex align-middle ti-lock"></i>
+                                                                    </a>
+                                                                    <form method="post"
+                                                                          action="{{route('user.ticket.toggle',$ticket->id)}}"
+                                                                          id="form-{{$ticket->id}}" class="d-none">
+                                                                        @csrf
+                                                                        @method('PATCH')
+                                                                    </form>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @empty
+                                                        <div class="alert alert-warning">در حال حاضر، تیکتی موجود
+                                                            نیست.
+                                                        </div>
+                                                    @endforelse
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade {{session()->get('for')=='ticket' ? "show active" :"" }}"
                                      id="add_ticket" role="tabpanel"
                                      aria-labelledby="add-ticket-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">تیکت جدید</h4>
+                                            <p class="card-subtitle">
+                                              مسئله ای هست ؟ سوالی دارید؟ با پشتیبانی مطرح کنید.
+                                            </p>
                                     <div class="table-responsive">
                                         <form class="form-horizontal clearfix" method="post"
                                               action="{{route('user.ticket.store')}}" enctype="multipart/form-data"
@@ -804,6 +904,36 @@
 
                             </div>
                         </div>
+
+
+                                <div class="tab-pane fade" id="defualt" role="tabpanel" aria-labelledby="defualt-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">پنل کاربری شما</h4>
+                                            <p class="card-subtitle">
+                                                چه چیزای قشنگی
+                                            </p>
+                                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                                <div class="carousel-inner" role="listbox">
+                                                    @foreach($sliders as $key=>$slider)
+                                                        <div class="carousel-item {{$key==0 ? 'active' : ''}}">
+                                                            @if($slider->href!=null)
+                                                                <a href="{{$slider->href}}" target="_blank">
+                                                                    @endif
+                                                                    <img class="img-responsive"
+                                                                         src="{{$slider->image_link}}"
+                                                                         alt=""/>
+                                                                    @if($slider->href!=null)
+                                                                </a>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                     </div>
                 </div>
             </div>

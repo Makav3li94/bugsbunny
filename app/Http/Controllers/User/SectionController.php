@@ -5,17 +5,14 @@ namespace App\Http\Controllers\User;
 use App\Helpers\LogActivity;
 use App\Http\Controllers\Controller;
 use App\Models\Section;
-use App\Models\Setting;
-use App\Models\TotalScore;
 use App\Models\User;
 use App\Traits\Helpers;
 use App\Traits\Numbers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Verta;
 use Illuminate\Support\Str;
-
+use Hekmatinasser\Verta\Verta;
 class SectionController extends Controller
 {
     use Numbers, Helpers;
@@ -88,7 +85,6 @@ class SectionController extends Controller
 
     public function show($id)
     {
-
         $challenge = Section::findOrFail($id)->with(['quizHeaders' => function ($q) {
             $q->with('user');
         }])->first()->toArray();

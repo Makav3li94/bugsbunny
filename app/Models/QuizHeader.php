@@ -25,4 +25,6 @@ class QuizHeader extends Model
     {
         return $this->belongsTo(Section::class);
     }
+
+
 }

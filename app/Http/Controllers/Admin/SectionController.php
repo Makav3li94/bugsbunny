@@ -8,6 +8,7 @@ use App\Models\Section;
 use App\Models\Setting;
 use App\Models\TotalScore;
 use App\Models\User;
+use App\Traits\Helpers;
 use App\Traits\Numbers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ use Illuminate\Support\Str;
 
 class SectionController extends Controller
 {
-    use Numbers;
+    use Numbers,Helpers;
 
 
     public function index()
@@ -158,7 +159,7 @@ class SectionController extends Controller
             'expire_date' => $published_at,
             'status' => $status,
         ]);
-
+        $this->readMFNotification($challenge->user_id,'challenge',$challenge->id);
         return redirect()->back()->with('update', 'success');
     }
 

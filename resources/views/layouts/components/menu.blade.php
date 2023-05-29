@@ -18,61 +18,19 @@
             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                 <li class="dropdown-menu-header">
                     <h3 class="dropdown-header m-0 text-center"><span class="grey darken-2">اعلانات         <span
-                                class="notification-tag badge badge-danger  m-0">{{auth()->user()->unreadNotifications->count()." جدید"}}</span></span></h3>
+                                class="notification-tag badge badge-danger  m-0">{{auth()->user()->unreadNotifications->count()." جدید"}}</span></span>
+                    </h3>
 
 
                 <li class="scrollable-container media-list w-100 ps">
                     @forelse(auth()->user()->unreadNotifications()->take(6)->get() as $notification)
                         <a href="javascript:void(0)">
                             <div class="media">
-                                <div class="media-body text-right">
+                                <div class="media-body text-right p-3">
                                     <h4 class="media-heading" style="font-size: 13px">
-                                        @if(strpos(url()->current(),'/admin/dashboard')==true)
-                                            @switch($notification->data['type'])
-                                                @case('ticket')
-                                                <a href="{{route('admin.ticket.show',$notification->data['type_id'])}}">
-                                                    تیکت جدید</a>
-                                                @break
-                                                @case('cashRequest')
-                                                <a href="{{route('admin.cash_request.edit',$notification->data['type_id'])}}">درخواست
-                                                    نقد</a>
-                                                @break
-                                                @case('credit')
-                                                <a href="{{route('admin.credit.edit',$notification->data['type_id'])}}">
-                                                    درخواست حد اعتباری</a>
 
-                                                @break
-                                                @case('qualityRequest')
-                                                <a href="{{route('admin.product.edit',$notification->data['type_id'])}}">
-                                                    درخواست بررسی کیفیت</a>
+                                        {{$notification->data['type']}}
 
-                                                @break
-                                                @case('register')
-                                                <a href="{{route('admin.user.primary.edit',$notification->data['user_id'])}}">احراز
-                                                    هویت</a>
-                                                @break
-                                                @case('fc')
-                                                <a href="{{route('admin.fc.edit',$notification->data['type_id'])}}">تایید
-                                                    مطالبه</a>
-                                                @break
-                                                @case('guarantee')
-                                                <a href="{{route('admin.guarantee.edit',$notification->data['type_id'])}}">تایید
-                                                    ضمانت نامه</a>
-                                                @break
-                                                @case('order')
-                                                <a href="{{route('admin.order.edit',$notification->data['type_id'])}}">
-                                                    درخواست تایید سفارش</a>
-                                                @break
-                                                @case('bank')
-                                                <a href="{{route('admin.bank.edit',$notification->data['type_id'])}}">تایید
-                                                    کارت بانکی</a>
-                                                @break
-                                                @default
-                                                نامشخص
-                                            @endswitch
-                                        @else
-                                            {{$notification->data['type']}}
-                                        @endif
                                     </h4>
                                     <p class="notification-text font-small-3 text-muted mb-0"
                                        style="font-size: 10px;">

@@ -95,19 +95,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @forelse($sections as $key=>$section)
-                                                <tr>
-                                                    <th>{{$key++}}</th>
-                                                    <td>{{$section->title}}</td>
-                                                    <td>{{$section->category->title}}</td>
-                                                    <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
-                                                    <td>         @include('layouts.components.status')</td>
-                                                    <td>سایر</td>
-                                                    <td><a class="btn btn-sm btn-warning" href="{{route('section',$section->slug)}}">مشاهده</a></td>
-                                                </tr>
-                                            @empty
-                                                <div class="alert alert-warning">در حال حاضر، چالشی موجود نیست.</div>
-                                            @endforelse
+
                                             @forelse($userSections as $key=>$section)
                                                 <tr>
                                                     <th>{{$key++}}</th>
@@ -115,10 +103,8 @@
                                                     <td>{{$section->category->title}}</td>
                                                     <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
                                                     <td>         @include('layouts.components.status')</td>
-                                                    <td>شما</td>
+                                                    <td>{{$section->user->username}}</td>
                                                     <td>
-                                                        <a href="javascript:void(0)" class="btn btn-sm btn-success"
-                                                           onclick="getQuestions({{$section->id}})">سوالات</a>
                                                         <a class="btn btn-sm btn-warning" href="{{route('section',$section->slug)}}">مشاهده</a></td>
                                                 </tr>
                                             @empty
@@ -161,22 +147,27 @@
                                             <thead>
                                             <tr>
                                                 <th>ردیف</th>
+                                                <th>فعالیت</th>
                                                 <th>نوع</th>
-                                                <th>لینک</th>
-                                                <th>وضعیت</th>
+                                                {{--                                                        <th>لینک</th>--}}
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @forelse($user->totalScore as $key=>$score)
+                                            @forelse($activities as $key=>$activity)
                                                 <tr>
-                                                    <th>{{$key++}}</th>
-                                                    <td>{{$score->score}}</td>
-                                                    <td>{{$score->type}}</td>
-                                                    <td>for</td>
+                                                    <th>{{$key+1}}</th>
+                                                    <td>{{$activity->subject}}</td>
+                                                    <td>{{$activity->model_type}}</td>
+                                                    {{--                                                            <td>--}}
+                                                    {{--                                                                <a href="{{route($activity->model_type,$activity->model_id)}}">مشاهده</a>--}}
+                                                    {{--                                                            </td>--}}
                                                 </tr>
                                             @empty
-                                                <div class="alert alert-warning">در حال حاضر، فعالیتی موجود نیست.</div>
+                                                <div class="alert alert-warning">در حال حاضر، فعالیتی موجود
+                                                    نیست.
+                                                </div>
                                             @endforelse
+
 
                                             </tbody>
                                         </table>

@@ -13,6 +13,8 @@ use App\Models\FrontHero;
 use App\Models\FrontOverlay;
 use App\Models\FrontSocail;
 use App\Models\FrontWay;
+use App\Models\Like;
+use App\Models\LogActivity;
 use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\QuizHeader;
@@ -25,6 +27,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -55,22 +58,18 @@ class HomeController extends Controller
         }
         $cats = Category::all();
         //Sliders
-        $sections = Section::where([['status', 1], ['kind', 0]])->whereIn('category_id', json_decode($user->cats))->get();
-        $userSections = Section::where([['type', 0], ['user_id', auth()->id()]])->get();
-//          Like::query()->whereMorphedTo('userable', $user)->get();
-
-        $likes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('likes_count');
-        $dislikes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('dislikes_count');
+        $userSections = Section::where([['type', 0],['status', 2], ['user_id', auth()->id()]])->orWhere('status', 4)->get();
+//        $likeDis=  Like::query()->whereMorphedTo('userable', $user)->get();
+        $activities = LogActivity::where('user_id', auth()->id())->get();
         $plusScores = TotalScore::where([['user_id', $user->id], ['type', 1]])->get()->sum('score');
         $minusScores = TotalScore::where([['user_id', $user->id], ['type', 0]])->get()->sum('score');
 //        $totalScore = ($likes - $dislikes) + ($plusScores - $minusScores);
         $totalScore = $plusScores - $minusScores;
-        return view('user.profile', compact('setting', 'cats', 'user', 'sections', 'userSections', 'totalScore'));
+        return view('user.profile', compact('setting', 'cats', 'user',  'userSections', 'activities','totalScore'));
     }
 
     public function forum()
     {
-
         $mainSection = Section::where([['status', 2], ['kind', 0], ['type', 1]])->with('category')->orderBy('id', 'desc')->get();
         $userSection = Section::where([['status', 2], ['kind', 0], ['type', 0]])->with('category')->orderBy('id', 'desc')->get();
 
@@ -85,10 +84,15 @@ class HomeController extends Controller
             $q->with('answers');
         }])->first();
         $section->increment('total_views');
-        $replies = Reply::where([['section_id', $section->id], ['parent_id', 0]])->with(['user', 'children' => function ($q) {
+        $best_user = '';
+        $replies = Reply::where([['section_id', $section->id], ['parent_id', 0],['status', 1]])->with(['user', 'children' => function ($q) {
             $q->with('user')->withCount(['likes', 'dislikes']);
         }])->withCount(['likes', 'dislikes'])->get();
-        return view('front.section', compact('section', 'replies'));
+        if ($section->status == 4){
+//          return  $best_user = QuizHeader::latest()->where('section_id',$section->id)->value('score');
+            $best_user = QuizHeader::where('section_id',$section->id)->orderBy('score', 'desc')->first();
+        }
+        return view('front.section', compact('section', 'replies','best_user'));
     }
 
     public function category($slug)

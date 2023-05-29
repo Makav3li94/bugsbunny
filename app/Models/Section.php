@@ -38,4 +38,8 @@ class Section extends Model implements Likeable
     {
         return $this->hasMany(QuizHeader::class);
     }
+
+    public function hasDone($user_id){
+        return $this->quizHeaders->where('user_id', $user_id)->count() > 0;
+    }
 }

@@ -102,7 +102,7 @@
                                 <label class="col-sm-3 text-right control-label col-form-label">توضیحات سوال
                                     : </label>
                                 <div class="col-12">
-                                    <textarea class="tinymce-editor" id="info" name="explanation"></textarea>
+                                    <textarea class="tinymce-editor" id="info" name="explanation">{!! old("explanation") !!}</textarea>
                                     @if($errors->has('explanation'))
                                     <small class="invalid-text" style="float:right">{{$errors->first('explanation')}}</small>
                                     @endif
@@ -227,8 +227,8 @@
     </div>
 </div>
 {{--Questions--}}
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-     aria-hidden="true" style="display: none;" id="collapseQuestionIndex">
+<div class="modal fade bs-example-modal-lg {{session()->get('for')=='question'? 'show' : ''}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     {{session()->get('for')=='aria-modal="true"'? 'show' : 'aria-hidden="true"'}}  style="display: {{session()->get('for')=='question'? 'block' : 'none'}}" id="collapseQuestionIndex">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="alert alert-info text-center">توجه کنید که چالش باید شامل حداقل یک سوال باشد، در غیر این
@@ -258,7 +258,7 @@
                     </button>
                 </div>
 
-                <form class="form-horizontal clearfix collapse"
+                <form class="form-horizontal clearfix collapse {{session()->get('for')=='question'? 'show' : ''}}"
                       id="collapseQuestion" action="{{route('user.question.store')}}"
                       method="post">
                     @csrf
@@ -285,7 +285,7 @@
                                     سوال
                                     : </label>
                                 <div class="col-12">
-                                    <textarea class="tinymce-editor" name="explanation"></textarea>
+                                    <textarea class="tinymce-editor" name="explanation">{!! old("explanation") !!}</textarea>
                                     @if($errors->has('explanation'))
                                     <small
                                         class="invalid-text">{{$errors->first('explanation')}}</small>
@@ -414,6 +414,9 @@
                                 @endif
                             </div>
                             <div class="form-group m-b-0">
+                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+
+
                                 <button type="submit"
                                         class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left"
                                         id="submitQuestion">ثبت
@@ -478,7 +481,7 @@
                         <label class="col-sm-3 text-right control-label col-form-label">توضیحات چالش
                             : </label>
                         <div class="col-12">
-                            <textarea class="tinymce-editor" id="section_info" name="description"></textarea>
+                            <textarea class="tinymce-editor" id="section_info" name="description">{!! old("description") !!}</textarea>
                             <small class="invalid-text" style="float:right" id="toEditCollapseSectionDescription"></small>
                         </div>
                     </div>
