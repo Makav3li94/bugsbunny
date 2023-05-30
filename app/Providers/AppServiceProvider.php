@@ -39,8 +39,8 @@ class AppServiceProvider extends ServiceProvider
         $frontMenusFooter2 = FrontMenu::where('type', 2)->get();
         $frontMenusFooter3 = FrontMenu::where('type', 3)->get();
         $frontSocail = FrontSocail::all();
-        $mostViewed = Section::orderBy('total_views', 'desc')->take(5)->get();
-        $mostPopular = Section::withCount('replies')->orderBy('replies_count', 'desc')->take(5)->get();
+        $mostViewed = Section::where('status',2)->orWhere('status',4)->orderBy('total_views', 'desc')->take(5)->get();
+        $mostPopular = Section::where('status',2)->orWhere('status',4)->withCount('replies')->orderBy('replies_count', 'desc')->take(5)->get();
         $latestComment = Section::with('replies')->has('replies')->get()->sortByDesc('latestReply.created_at');
         $HighAllTimeUsersScores = (DB::select(DB::raw("SELECT y.*
                   FROM (SELECT

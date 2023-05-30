@@ -20,7 +20,7 @@
                         <div class="col-sm-12 form-group">
                             <div id="registerInputWrapper">
                                 @if($setting->reg_type == 0 || $setting->reg_type == 2)
-                                    <input dir="ltr" class="form-control" type="text" required=""
+                                    <input dir="ltr" class="form-control text-center" type="text" required=""
                                            placeholder="تلفن همراه"
                                            value="{{old('mobile')}}" name="mobile">
                                 @elseif($setting->reg_type == 1)
@@ -34,7 +34,7 @@
 
                         <div class="col-sm-12 form-group">
                             <div id="registerResultWrapper">
-                                <input class="form-control"
+                                <input class="form-control text-center"
                                        style="direction: rtl;text-align: center"
                                        type="text"
                                        required=""

@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>'انجمن ایزباگ',
+        'title'=>'محفل آزمون گرها ایزباگ',
         'sl'=> false,
         'sub'=>'',
         'subLink'=>'',
-        'page'=>'انجمن ایزباگ'
+        'page'=>'محفل آزمون گرها ایزباگ'
         ]
     )
 @section('content')
@@ -40,7 +40,7 @@
                             <div class="content">
                                 <h2 class="ans-title">چالشتو پیدا نکردی؟</h2>
                                 <p>
-                                    از بقیه اعضا انجمن کمک بگیر !
+                                    از بقیه اعضا محفل آزمون گرها کمک بگیر !
                                 </p>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                                         <h3 class="post-title">
                                             <a href="{{route('section',$item->slug)}}">{{$item->title}}</a>
                                         </h3>
-                                        <p>{{$item->excerpt}}</p>
+                                        <p>{!! $item->excerpt !!}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 post-meta-wrapper">
@@ -206,7 +206,7 @@
                                         <h3 class="post-title">
                                             <a href="{{route('section',$item->slug)}}">{{$item->title}}</a>
                                         </h3>
-                                        <p>{{$item->excerpt}}</p>
+                                        <p>{!! $item->excerpt !!}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 post-meta-wrapper">
@@ -264,7 +264,7 @@
                                         <h3 class="post-title">
                                             <a href="{{route('section',$item->slug)}}">{{$item->title}}</a>
                                         </h3>
-                                        <p>{{$item->excerpt}}</p>
+                                        <p>{!! $item->excerpt !!}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 post-meta-wrapper">

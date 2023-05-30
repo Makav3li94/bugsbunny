@@ -12,4 +12,9 @@ class LogActivity extends Model
     protected $fillable = [
         'subject', 'url', 'method', 'ip', 'agent', 'user_id','model_id','model_type'
     ];
+
+    public function sectionLink($id){
+        $section = Section::find($id);
+        return route('section',$section->slug);
+    }
 }

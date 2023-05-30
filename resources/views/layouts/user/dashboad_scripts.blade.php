@@ -1,13 +1,15 @@
 <script>
+
     // ==============================================================
     // Date Picker
     // ==============================================================
     $(document).ready(function () {
         var selectedTab = $('.nav-tabs li a.active');
 
-        if(selectedTab.length === 0){
+
+        if (selectedTab.length === 0) {
             $('#message').html('Please select tab');
-            $('#defualt').addClass('show active')
+            $('#default').addClass('show active')
         }
         $.ajaxSetup({
             headers: {
@@ -108,7 +110,8 @@
         });
         $('.sort-table').DataTable({
             dom: 'Bfrtip',
-            order: [[ 0, "desc" ], [ 1, "desc" ]],
+            order: [[0, "desc"], [1, "desc"]],
+            pageLength: 5,
             language: {
                 "search": "جستجو",
                 "lengthMenu": "نمایش _MENU_ رکورد در صفحه",
@@ -124,7 +127,20 @@
                 }
             }
         });
+
+
     });
+    $(".activy").change(function () {
+        if ($(this).is(":checked")) {
+            $('[id^="is_active_answer"]').not(this).each(function () {
+                $(this).bootstrapToggle('off');
+            });
+        }
+    });
+
+    function activaTab(tab) {
+        $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+    }
 
     function getQuestions(section_id) {
 
@@ -133,6 +149,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        $('#questionIndexBody').html('');
         var id = section_id
         $.ajax({
             'url': "{{route('user.question.index')}}",
@@ -268,7 +285,7 @@
                     var text, name, user, link, pic
                     if (faq.question != null) {
                         text = faq.question
-                        name = ticket.user_id
+                        name = ticket.user_name
                         user = 'کاربر'
                         pic = '{{asset('images/user/'.$user->avatar)}}'
                         if (faq.user_file != null) {
@@ -282,10 +299,9 @@
                             '<img class="d-none d-sm-block ml-3" src="' + pic + '" width="60">\n' +
                             '<div class="media-body">\n' +
                             ' <h5 class="mt-0 mb-2 text-right"><strong>' + name + '</strong>\n' +
-                            ' <span dir="ltr" class="float-left text-success">' + faq.created_at + '</span>\n' +
+                            ' <span dir="ltr" class="float-left text-success" style="font-size: 10px">' + faq.created_at + '</span>\n' +
                             ' </h5>\n' +
                             ' <p class="mb-0 font-12 text-justify">' + text + '</p>\n' +
-                            +link +
                             '</div></li>\n';
                     }
                     if (faq.reply != null) {
@@ -304,15 +320,14 @@
                             '<img class="d-none d-sm-block ml-3" src="' + pic + '" width="60">\n' +
                             '<div class="media-body">\n' +
                             ' <h5 class="mt-0 mb-2 text-right"><strong>' + name + '</strong>\n' +
-                            ' <span dir="ltr" class="float-left text-success">' + faq.created_at + '</span>\n' +
+                            ' <span dir="ltr" class="float-left text-success" style="font-size: 10px">' + faq.created_at + '</span>\n' +
                             ' </h5>\n' +
                             ' <p class="mb-0 font-12 text-justify">' + text + '</p>\n' +
-                            +link +
                             '</div></li>\n';
                     }
 
                     $('#chats').append(chats);
-                    $('#collapseticket').attr('action', '/dashboard/faq/' + faq.id);
+                    $('#collapseticket').attr('action', '/dashboard/faq/' + ticket.id);
 
                 });
                 // $('#section_id_input').val(id)
@@ -326,6 +341,13 @@
         });
     }
 
+    $('.close-ticket').on('click', function () {
+        var id = $(this).attr('id');
+        event.preventDefault();
+
+        $('#form-' + id).submit()
+    });
+
     function editSection(id) {
         $('#collapseSectionEdit').modal('show');
         $.ajax({
@@ -338,7 +360,8 @@
                     $('#collapseSectionForm input[name=title]').val(response.section.title);
                     $('#collapseSectionForm input[name=expire_date]').val(response.section.expire_date);
                     $('#collapseSectionForm textarea[name=excerpt]').val(response.section.excerpt);
-                    $('#collapseSectionForm select[name=category_id]').val(response.section.category_id).prop('selected', true).trigger('change.select2');;
+                    $('#collapseSectionForm select[name=category_id]').val(response.section.category_id).prop('selected', true).trigger('change.select2');
+                    ;
                     tinymce.get('section_info').setContent(response.section.description);
 
                     $('#submitCollapseSection').attr('data-id', response.section.id);
@@ -346,12 +369,13 @@
             }
         });
     }
+
     $('#submitCollapseSection').on('click', function () {
         var id = $('#submitCollapseSection').attr('data-id');
         var title = $('#collapseSectionForm input[name=title]').val();
         tinymce.triggerSave()
 
-        var description =    $('#section_info').val();
+        var description = $('#section_info').val();
         var excerpt = $('#collapseSectionForm textarea[name=excerpt]').val();
         var expire_date = $('#collapseSectionForm input[name=expire_date]').val();
         var category_id = $('#collapseSectionForm select[name=category_id]').val();
@@ -396,14 +420,20 @@
                         icon: 'success',
                         hideAfter: 3500
                     });
-                    var tr = $('button.edit-section[id="' + response.section[1] + '"]').parents('tr');
-                    tr.find('td:eq(1)').text(response.section[0]);
-                    tr.find('td:eq(2)').text(response.section[2]);
-                    tr.find('td:eq(3)').text(response.section[3]);
+                    if (response.section[4] == 0) {
+                        var tr = $('#section-' + response.section[1]).parents('tr');
+                    } else {
+                        var tr = $('#thread-' + response.section[1]).parents('tr');
+                    }
+
+                    tr.find('td:eq(0)').text(response.section[0]);
+                    tr.find('td:eq(1)').text(response.section[2]);
+                    tr.find('td:eq(2)').text(response.section[3]);
                 }
             }
         });
     });
+
     function deleteQuestion(id) {
         $.ajaxSetup({
             headers: {
@@ -449,4 +479,33 @@
             }
         });
     }
+
+    @if(session()->get('for')=='section' )
+    activaTab('add_chalenges');
+    @endif
+    @if(session()->get('for')=='thread' )
+    activaTab('add_threads');
+    @endif
+    @if(session()->get('for')=='ticket' )
+    activaTab('add_ticket');
+    @endif
+    @if(session()->get('crud')=='ticket_store' )
+    activaTab('ticket');
+    @endif
+
+    @if(session()->get('crud')=='thread_store' )
+    activaTab('threads');
+    @endif
+    @if(session()->get('crud')=='section_store' || session()->get('quest')=='true')
+    @if(session()->get('section_id') !== null)
+    activaTab('chalenges');
+    getQuestions({{session()->get('section_id')}})
+    @endif
+    @endif
+    @if(session()->get('for')=='question')
+    $(function () {
+        $('#collapseQuestionIndex').modal('show');
+    });
+    $('#section_id_input').val({{session()->get('section_id')}})
+    @endif
 </script>

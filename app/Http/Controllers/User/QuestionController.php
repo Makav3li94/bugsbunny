@@ -30,7 +30,7 @@ class QuestionController extends Controller
             'is_active_answer' => "required|array|min:1",
         ]);
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput()->with('for','question');
+            return back()->withErrors($validator)->withInput()->with('for','question')->with('section_id',$request->section_id);
         }
         $question = Question::create([
             'question' => $request->question,
@@ -47,12 +47,13 @@ class QuestionController extends Controller
                 'question_id' => $question->id,
             ]);
         Section::find($request->section_id)->update(['status' => 1]);
-        return redirect()->back()->with('create', 'success')->with('crud','section_store');
+
+        return redirect()->back()->with('store', 'success')->with('crud','section_store')->with('quest','true')->with('section_id',$request->section_id);
     }
 
     public function edit(Request $request, Question $question)
     {
-        return $question = $question->load('answers:id,answer,is_checked,question_id')->toArray();
+       return  $question = $question->load('answers:id,answer,is_checked,question_id')->toArray();
         if ($request->ajax()) {
             return response()->json(['question' => $question]);
         }

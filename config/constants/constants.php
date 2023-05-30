@@ -1,7 +1,7 @@
 <?php
 return [
     'sms' => [
-        'mokhaberat' => [
+        'sms' => [
             'title' => 'مخابرات',
             'fast_url' => "http://ippanel.com/class/sms/wsdlservice/server.php?wsdl",
             'send_url' => '37.130.202.188/services.jspd',

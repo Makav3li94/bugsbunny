@@ -129,7 +129,7 @@ class SectionController extends Controller
                 } elseif ($status == 3) {
                     $details = ['type' => 'وضعیت چالش', 'status' => 'رد شده'];
                 }
-            }elseif ($challenge->kind == 0) {
+            }elseif ($challenge->kind == 1) {
                 if ($status == 1) {
                     $details = ['type' => 'وضعیت سوال', 'status' => 'در حال بررسی'];
                 } elseif ($status == 2) {

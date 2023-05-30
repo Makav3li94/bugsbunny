@@ -275,5 +275,8 @@ return array(
         'shenas' => 'شناسنامه',
         'id_card' => 'کارت ملی',
         'money' => 'مبلغ',
+        'is_active' => 'وضعیت',
+        'explanation' => 'توضیحات',
+        'is_active_answer' => 'پاسخ صحیح',
     ),
 );

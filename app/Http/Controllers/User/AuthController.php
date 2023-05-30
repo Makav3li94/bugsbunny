@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    use SmsableMokhaberat, Randomable, Numbers,Helpers;
+    use SmsableMokhaberat, Randomable, Numbers, Helpers;
 
     //SMS Panel Credentials
     private $client;
@@ -113,7 +113,8 @@ class AuthController extends Controller
                         $randomDigits = $this->randomDigits();
 
                         $this->preRegister($randomDigits, $mobile);
-                        $bulk = $this->sendVerification($randomDigits, $mobile);
+                        $bulk = $this->sendFastSmsMokhaberat($mobile, $smsSetting->p_confirm_code,
+                            ["VerificationCode" => $randomDigits]);
                         Sms::create([
                             'sms_sender_id' => 1,
                             'description' => 'ثبت نام',
@@ -214,7 +215,7 @@ class AuthController extends Controller
                     'birthDate' => 'required',
                     'cats' => 'required',
                 ]);
-            }else{
+            } else {
                 $request->validate([
                     'name' => 'required|string',
                     'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/|unique:users,username',
@@ -255,7 +256,7 @@ class AuthController extends Controller
             ]);
             Auth::login($user);
             event(new Registered($user));
-            $this->notifyAdmin($user->id, $user->name,  $user->mobile, 'profileChange', $user->id, 0, 'کاربر ثبت نام کرد.');
+            $this->notifyAdmin($user->id, $user->name, $user->mobile, 'profileChange', $user->id, 0, 'کاربر ثبت نام کرد.');
             return redirect(route('user.dashboard'))->with(['login' => 'success']);
         } else {
             abort(404);

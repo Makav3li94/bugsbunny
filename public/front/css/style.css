@@ -64,6 +64,7 @@ html {
 a {
   text-decoration: none;
   transition: all 0.3s ease-in-out;
+    color: #1eb1d0;
 }
 a:hover, a:focus {
   text-decoration: none;
@@ -3436,7 +3437,6 @@ ul.list-style li:last-child {
   display: block;
   font-size: 26px;
   font-weight: 700;
-  letter-spacing: 5.2px;
   text-transform: uppercase;
   text-align: center;
   font-family: "IRANSans", sans-serif;
@@ -5403,23 +5403,6 @@ body:not(.onepage-doc) .body_fixed #font-switcher {
   border-color: #f7f9fa;
 }
 
-.badge {
-  font-size: 12px;
-  background: #8152e0;
-  padding: 2px 5px 0;
-  color: #fff;
-  border-radius: 3px;
-  margin-right: 5px;
-  display: inline-block;
-  line-height: 1.45;
-  border-bottom: 1px solid #6030c0;
-  vertical-align: middle;
-  font-weight: 500;
-  height: 22px;
-}
-.badge:hover {
-  color: #fff;
-}
 .badge.color-yellow {
   background: #fad05a;
   color: #1d2746;
@@ -9702,7 +9685,7 @@ body {
     text-align: center;
 }
 .profile-img img{
-    width: 70%;
+    width: 50%;
     height: auto;
 }
 .profile-img .file {
@@ -9758,7 +9741,7 @@ body {
     border-bottom:2px solid #0062cc;
 }
 .profile-work{
-    padding: 14%;
+    padding: 14% 0px;
     margin-top: -15%;
 }
 .profile-work p{
@@ -9949,4 +9932,17 @@ table.dataTable thead .sorting:after {
 
 .dataTables_wrapper .dataTables_paginate .ellipsis {
     padding: 0 1em;
+}
+.invalid-text{
+    color: red;
+    font-size: 9px;
+}
+.dataTables_info{
+    display: none !important;
+}
+.funfact-boxes .funfact-box .counter {
+    font-size: 34px;
+    font-weight: 500;
+    color: #10b3d6;
+    margin-bottom: 10px;
 }

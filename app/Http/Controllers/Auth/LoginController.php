@@ -71,6 +71,8 @@ class LoginController extends Controller
             $field = 'mobile';
         } elseif (filter_var($login, FILTER_VALIDATE_EMAIL)) {
             $field = 'email';
+        }else{
+            $field = 'username';
         }
 
         request()->merge([$field => $login]);

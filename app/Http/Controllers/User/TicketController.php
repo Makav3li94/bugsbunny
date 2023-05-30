@@ -70,18 +70,23 @@ class TicketController extends Controller
 
     public function edit(Ticket $ticket)
     {
+
         //seen=0 => karbar soal karde modir hanuz nadide
         //seen=1 => karbar soal karde modir dide vali javab nadade
         //seen=2 => karbar soal karde modir dide va javab dade vali karbar hanuz nadide
         //seen=3 => karbar soal karde modir dide va javab dade va karbar ham dide
+        $username = $ticket->user->username;
         if ($ticket->user_id == auth()->user()->id) {
             $ticket->faqs()
                 ->where('reply', '!=', null)
                 ->orWhere('reply', '!=', '')
                 ->where('seen', '2')
                 ->update(['seen' => '3']);
-            $ticket = $ticket->with('faqs')->first();
-            $ticket['date'] = verta($ticket->created_at)->formatDifference();
+//            $ticket = $ticket->load('faqs:id,ticket_id,question,created_at,updated_at')->toArray();
+            $ticket = $ticket->load('faqs')->toArray();
+            $ticket['date'] = verta($ticket['created_at'])->formatDifference();
+            $ticket['user_name'] = $username;
+//            return $ticket;
             return response()->json(['ticket' =>$ticket ]);
         } else {
             abort(404);
@@ -111,7 +116,7 @@ class TicketController extends Controller
                     }
                     break;
             }
-            return back()->with(['update' => 'success']);
+            return back()->with(['update' => 'success','crud'=>'ticket_store']);
         } else {
             abort(403);
         }

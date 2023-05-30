@@ -41,9 +41,9 @@
                         @if(isset(request()->email))
                             <input type="hidden" name="email_reg" value="on">
                             <div class="col-sm-12 form-group">
-                                <label>موبایل <span class="text-danger mr-1">*</span></label>
+                                <label>موبایل </label>
                                 <input dir="ltr" type="text" class="form-control" placeholder=""
-                                value="{{request()->mobile ??old('mobile')}}" name="mobile" required>
+                                value="{{request()->mobile ??old('mobile')}}" name="mobile" >
                                 @if($errors->has('mobile'))
                                     <small class="invalid-text">{{$errors->first('mobile')}}</small>
                                 @endif
@@ -61,16 +61,16 @@
 
                         <div class="col-sm-12 form-group">
                             <label>تاریخ تولد <span class="text-danger mr-1">*</span></label>
-                            <input type="text" class="form-control datepicker-year" placeholder=""
+                            <input type="text" class="form-control datepicker-year" placeholder="" required
                                    value="{{old('birthDate')}}" name="birthDate">
                             @if($errors->has('birthDate'))
                                 <small class="invalid-text">{{$errors->first('birthDate')}}</small>
                             @endif
                         </div>
                         <div class="col-sm-12 form-group">
-                            <label>دسته مورد علاقه</label>
+                            <label>دسته مورد علاقه<span class="text-danger mr-1">*</span></label>
                             <select class="select2 form-control custom-select" style="width: 100%;"
-                                    multiple="multiple"
+                                    multiple="multiple" required
                                     name="cats[]">
                                 <option></option>
                                 @forelse($categories as $cat)
@@ -112,17 +112,18 @@
                             @endif
                         </div>
                         <div class="col-sm-12 form-group">
+                            <small class="invalid-text">(حداقل 8 رقم با حرف uppercase و شامل !@#$% باشد.)</small>
                             <label>رمز عبور</label>
-                            <input dir="ltr" type="password" class="form-control text-left" value="" name="password">
+                            <input dir="ltr" type="password" class="form-control text-left" value="" name="password" required>
                             @if($errors->has('password'))
                                 <small class="invalid-text">{{$errors->first('password')}}</small>
                             @endif
                         </div>
                         <div class="col-sm-12 form-group">
-                            <small class="invalid-text">(حداقل 8 رقم با حرف uppercase و شامل !@#$% باشد.)</small>
+
 
                             <label>تایید رمز عبور</label>
-                            <input dir="ltr" type="password" class="form-control text-left" value="" name="password_confirmation">
+                            <input dir="ltr" type="password" class="form-control text-left" value="" name="password_confirmation" required>
                             @if($errors->has('password_confirmation'))
                                 <small class="invalid-text">{{$errors->first('password_confirmation')}}</small>
                             @endif

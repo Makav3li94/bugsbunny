@@ -27,6 +27,7 @@ class SectionController extends Controller
             'description' => 'required|string',
         ]);
         $kind = 0;
+        $status = 0;
 
         if (isset($request->thread)) {
             $kind = 1;
@@ -38,7 +39,6 @@ class SectionController extends Controller
             if ($validator->fails()) {
                 return back()->withErrors($validator)->withInput()->with('for','section');
             }
-            $status = 0;
         }
 
 
@@ -57,7 +57,7 @@ class SectionController extends Controller
             'kind' => $kind,
             'user_id' => auth()->id(),
             'description' => $request->description,
-            'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
+            'excerpt' => $request->excerpt ?? Str::limit($request->description, 50),
             'expire_date' => $published_at,
             'status' => $status,
         ]);
@@ -70,7 +70,7 @@ class SectionController extends Controller
         }else{
             LogActivity::addToLog('چالش جدیدی ایجاد کرد.','section',$challenge->id);
         }
-        return back()->with(['store' => 'success','crud'=>'section_store']);
+        return back()->with(['store' => 'success','crud'=> $kind == 0 ?'section_store' : 'thread_store' ,'section_id'=>$challenge->id]);
     }
 
 
@@ -122,14 +122,12 @@ class SectionController extends Controller
                 'expire_date' => $published_at,
                 'status' => 1
             ]);
-
             $section = [
                 0 => $section->title,
                 1 => $section->id,
-                2 => $section->category_id,
-                3 => $section->expireDate,
-                4 => $section->excerpt,
-                5 => $section->description,
+                2 => $section->category->title,
+                3 => $this->convertNumbers($request->expire_date),
+                4 => $section->kind,
             ];
             return response()->json(['collapseSectionEdit' => 'success', 'section' => $section]);
         }
@@ -137,16 +135,14 @@ class SectionController extends Controller
     }
 
 
-    public
-    function destroy($id)
+    public function destroy($id)
     {
         $challenge = Section::findOrFail($id);
         $challenge->delete();
         return redirect()->back()->with('delete', 'success');
     }
 
-    protected
-    function expireDate($expire_date): string
+    protected function expireDate($expire_date): string
     {
         $published_at = $this->convertNumbers($expire_date);
         $published_at = explode('/', $published_at);

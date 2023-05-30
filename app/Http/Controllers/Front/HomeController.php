@@ -85,7 +85,7 @@ class HomeController extends Controller
         }])->first();
         $section->increment('total_views');
         $best_user = '';
-        $replies = Reply::where([['section_id', $section->id], ['parent_id', 0],['status', 1]])->with(['user', 'children' => function ($q) {
+        $replies = Reply::where([['section_id', $section->id], ['parent_id', 0]])->with(['user', 'children' => function ($q) {
             $q->with('user')->withCount(['likes', 'dislikes']);
         }])->withCount(['likes', 'dislikes'])->get();
         if ($section->status == 4){
@@ -147,9 +147,9 @@ class HomeController extends Controller
             $val = $request->input('val');
             $cat = $request->input('cat');
             if ($cat == 'all') {
-                $sectionByTitle = Section::where([['status', '!=', 0], ['title', 'like', "%$val%"]])->get();
+                $sectionByTitle = Section::where([['status', '=', 2], ['title', 'like', "%$val%"]])->get();
             } else {
-                $sectionByTitle = Section::where([['status', '!=', 0], ['category_id', $cat ?? true], ['title', 'like', "%$val%"]])->get();
+                $sectionByTitle = Section::where([['status', '=', 2], ['category_id', $cat ?? true], ['title', 'like', "%$val%"]])->get();
             }
             if (count($sectionByTitle) == 0) {
                 return response()->json([

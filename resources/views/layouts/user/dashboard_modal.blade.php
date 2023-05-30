@@ -1,6 +1,6 @@
 {{--    Tickets--}}
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-     aria-hidden="true" style="display: none;" id="collapseTicketEdit">
+     aria-hidden="true"  id="collapseTicketEdit">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
 
@@ -76,8 +76,8 @@
 </div>
 
 {{--    editQuestions--}}
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-     aria-hidden="true" style="display: none;" id="collapseQuestionEdit">
+<div class="modal fade bs-example-modal-lg " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+         id="collapseQuestionEdit" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <form class="form-horizontal clearfix" action="" id="collapseQuestionForm" method="post">
@@ -109,10 +109,10 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label class="col-sm-3 text-right control-label col-form-label">واحد : <span
+                                <label class="col-sm-3 text-right control-label col-form-label">امتیاز : <span
                                         class="text-danger mr-1">*</span></label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" value="{{old('unit')}}" placeholder=""
+                                    <input type="number" min="1" class="form-control" value="{{old('unit')}}" placeholder=""
                                            name="unit">
                                     @if($errors->has('unit'))
                                     <small class="invalid-text" style="float:right">{{$errors->first('unit')}}</small>
@@ -142,7 +142,7 @@
 
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="checkbox" name="is_active_answer[{{0}}]" class="form-control"
+                                    <input type="checkbox" name="is_active_answer[{{0}}]" class="form-control activy"
                                            data-on="درست"
                                            data-off="غلط" style="width: 100%"
                                            data-toggle="toggle" data-size="bg" id="is_active_answer0"
@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="checkbox" name="is_active_answer[{{1}}]" id="is_active_answer1"
-                                           class="form-control"
+                                           class="form-control activy"
                                            data-on="درست"
                                            data-off="غلط" style="width: 100%"
                                            data-toggle="toggle" data-size="bg" data-onstyle="success"
@@ -180,7 +180,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="checkbox" name="is_active_answer[{{2}}]" id="is_active_answer2"
-                                           class="form-control"
+                                           class="form-control activy"
                                            data-on="درست"
                                            data-off="غلط" style="width: 100%"
                                            data-toggle="toggle" data-size="bg" data-onstyle="success"
@@ -197,7 +197,7 @@
 
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="checkbox" name="is_active_answer[{{3}}]" class="form-control"
+                                    <input type="checkbox" name="is_active_answer[{{3}}]" class="form-control activy"
                                            id="is_active_answer3"
                                            data-on="درست"
                                            data-off="غلط" style="width: 100%"
@@ -216,10 +216,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
                     <button type="submit" class="btn btn-success waves-effect waves-light" id="submitCollapseCat"
                             data-id="">ثبت ویرایش
                     </button>
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+
                 </div>
             </form>
 
@@ -227,8 +228,9 @@
     </div>
 </div>
 {{--Questions--}}
-<div class="modal fade bs-example-modal-lg {{session()->get('for')=='question'? 'show' : ''}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-     {{session()->get('for')=='aria-modal="true"'? 'show' : 'aria-hidden="true"'}}  style="display: {{session()->get('for')=='question'? 'block' : 'none'}}" id="collapseQuestionIndex">
+
+<div class="modal fade bs-example-modal-lg " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true"  id="collapseQuestionIndex">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="alert alert-info text-center">توجه کنید که چالش باید شامل حداقل یک سوال باشد، در غیر این
@@ -271,7 +273,7 @@
                                     : <span
                                         class="text-danger mr-1">*</span></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control"
+                                    <input type="text" class="form-control" required
                                            value="{{old('question')}}"
                                            placeholder="" name="question">
                                     @if($errors->has('question'))
@@ -288,17 +290,17 @@
                                     <textarea class="tinymce-editor" name="explanation">{!! old("explanation") !!}</textarea>
                                     @if($errors->has('explanation'))
                                     <small
-                                        class="invalid-text">{{$errors->first('explanation')}}</small>
+                                        class="invalid-text" style="float:right">{{$errors->first('explanation')}}</small>
                                     @endif
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label class="col-sm-3 text-right control-label col-form-label">نمره
+                                <label class="col-sm-3 text-right control-label col-form-label">امتیاز
                                     : <span
                                         class="text-danger mr-1">*</span></label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" value="{{old('unit')}}"
-                                           placeholder=""
+                                    <input type="number" min="0" class="form-control" value="{{old('unit')}}"
+                                           placeholder="" required
                                            name="unit">
                                     @if($errors->has('unit'))
                                     <small
@@ -336,7 +338,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="checkbox" name="is_active_answer[{{0}}]"
-                                           class="form-control"
+                                           class="form-control activy"   id="is_active_answer-1"
                                            data-on="درست"
                                            data-off="غلط" style="width: 100%"
                                            data-toggle="toggle" data-size="bg"
@@ -357,7 +359,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="checkbox" name="is_active_answer[{{1}}]"
-                                           class="form-control"
+                                           class="form-control activy" id="is_active_answer-2"
                                            data-on="درست"
                                            data-off="غلط" style="width: 100%"
                                            data-toggle="toggle" data-size="bg"
@@ -377,7 +379,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="checkbox" name="is_active_answer[{{2}}]"
-                                           class="form-control"
+                                           class="form-control activy" id="is_active_answer-3"
                                            data-on="درست"
                                            data-off="غلط" style="width: 100%"
                                            data-toggle="toggle" data-size="bg"
@@ -397,7 +399,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="checkbox" name="is_active_answer[{{3}}]"
-                                           class="form-control"
+                                           class="form-control activy" id="is_active_answer-4"
                                            data-on="درست"
                                            data-off="غلط" style="width: 100%"
                                            data-toggle="toggle" data-size="bg"
@@ -410,18 +412,19 @@
                                 @endif
                                 @if($errors->has('is_active_answer'))
                                 <small
-                                    class="invalid-text">{{$errors->first('is_active_answer')}}</small>
+                                    class="invalid-text" style="float:right"> {{$errors->first('is_active_answer')}}</small>
                                 @endif
                             </div>
                             <div class="form-group m-b-0">
-                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
-
-
                                 <button type="submit"
                                         class="btn btn-success btn-rounded waves-effect waves-light m-t-10 float-left"
                                         id="submitQuestion">ثبت
                                     سوال جدید
                                 </button>
+                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+
+
+
                             </div>
                         </div>
                     </div>
@@ -433,7 +436,7 @@
 </div>
 {{--section--}}
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-     aria-hidden="true" style="display: none;" id="collapseSectionEdit">
+     aria-hidden="true" id="collapseSectionEdit">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-body">
@@ -492,7 +495,7 @@
                         <div class="col-12">
                                 <textarea name="excerpt" class="form-control" rows="1"
                                           cols="1">{{old('excerpt')}}</textarea>
-                            <small class="invalid-text" style="float:right" style="float:right" id="toEditCollapseSectionExcerpt"></small>
+                            <small class="invalid-text" style="float:right"  id="toEditCollapseSectionExcerpt"></small>
                         </div>
                     </div>
                 </form>

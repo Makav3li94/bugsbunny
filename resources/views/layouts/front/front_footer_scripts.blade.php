@@ -6,6 +6,8 @@
 <script src="{{asset('front/assets/slick/slick.min.js')}}"></script>
 <script src="{{asset('front/js/parallaxie.js')}}"></script>
 <script src="{{asset('admin/assets/node_modules/toast-master/js/jquery.toast.js')}}"></script>
+<script src="{{asset('front/assets/counterup/jquery.counterup.min.js')}}"></script>
+<script src="{{asset('front/assets/counterup/jquery.waypoints.min.js')}}"></script>
 <script src="{{asset('front/js/TweenMax.min.js')}}"></script>
 <script src="{{asset('front/js/jquery.wavify.js')}}"></script>
 <script src="{{asset('front/assets/wow/wow.min.js')}}"></script>

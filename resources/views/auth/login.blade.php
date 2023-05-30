@@ -20,7 +20,7 @@
                         @csrf
                         <div class="col-lg-12 form-group">
 
-                            <input type="text" class="form-control" id="email" placeholder="شماره موبایل یا ایمیل" name="username"
+                            <input type="text" class="form-control text-center" id="email" placeholder="شماره موبایل یا ایمیل" name="username"
                                    value="{{old('mobile')}}">
                             @if($errors->has('mobile') && session()->get('reset')!='error')
                                 <small class="invalid-text">{{$errors->first('mobile')}}</small>
@@ -29,14 +29,14 @@
                         <div class="col-lg-12 form-group">
                             <div class="confirm_password">
                                 <input id="confirm-password" type="password"
-                                       class="form-control" placeholder="رمز عبور" name="password">
+                                       class="form-control text-center" placeholder="رمز عبور" name="password">
                                 @if($errors->has('password'))
                                     <small class="invalid-text">{{$errors->first('password')}}</small>
                                 @endif
                             </div>
                         </div>
                         <div class="col-lg-12 form-group">
-                            <input class="form-control" type="text" required       style="direction: rtl"
+                            <input class="form-control text-center" type="text" required       style="direction: rtl"
                                    placeholder="{{$array[2].' '.$array[1].' '.$array[0]}} برابر با چه عددی است؟ "
                                    name="result">
                             @if(session()->get('result')=='incorrect')

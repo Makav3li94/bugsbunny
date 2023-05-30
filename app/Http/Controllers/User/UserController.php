@@ -54,7 +54,11 @@ class UserController extends Controller
         $minusScores = TotalScore::where([['user_id', $user->id], ['type', 0]])->get()->sum('score');
 //        $totalScore = ($likes - $dislikes) + ($plusScores - $minusScores);
         $totalScore = $plusScores - $minusScores;
-        return view('user.dashboard', compact('tickets', 'activities', 'setting', 'threads', 'sliders', 'cats', 'user', 'sections', 'userSections', 'totalScore'));
+        $section_count = Section::where('user_id',auth()->id())->count();
+        $thread_count = Section::where([['kind', 1], ['user_id', auth()->id()]])->count();
+        $reply_count = Reply::where('user_id',auth()->id())->count();
+        $likes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('likes_count');
+        return view('user.dashboard', compact('section_count','thread_count','reply_count','likes','tickets', 'activities', 'setting', 'threads', 'sliders', 'cats', 'user', 'sections', 'userSections', 'totalScore'));
     }
 
     protected function update(Request $request, User $user)

@@ -18,7 +18,7 @@ class QuizHandler extends Command
      *
      * @var string
      */
-    protected $signature = 'handel:quiz';
+    protected $signature = 'handle:quiz';
 
     /**
      * The console command description.

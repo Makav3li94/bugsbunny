@@ -37,7 +37,7 @@
                                     <td style="width: 160px;">
                                         <button type="button" class="btn btn-{{$item->status == 1 ? "danger" : "success"}} btn-sm "
                                                 onclick="$('#stat-{{$item->id}}').submit()"
-                                                id="{{$item->id}}">{{$item->status == 1 ? "تایید شود" : "معلق"}}
+                                                id="{{$item->id}}">{{$item->status == 1 ? "معلق" : "تایید"}}
                                         </button>
                                         <form method="post" hidden
                                               action="{{route('admin.reply.update',$item->id)}}"

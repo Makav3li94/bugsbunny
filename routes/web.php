@@ -24,7 +24,7 @@ Route::post('admin/password/reset',
     'Admin\AuthController@reset')->name('admin.password.reset')->middleware('checkRandom');
 // Admin Logout Route
 Route::post('admin/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
-Route::group(['prefix' => 'admin', 'namespace' => 'Auth'], function () {
+Route::group(['prefix' => 'bugbuggy', 'namespace' => 'Auth'], function () {
 //Authentication Routes
     Route::get('/login', 'AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'AdminLoginController@login')->name('admin.login.submit')->middleware('checkRandom');

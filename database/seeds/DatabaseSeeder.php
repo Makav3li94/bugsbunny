@@ -116,8 +116,8 @@ class DatabaseSeeder extends Seeder
 
         FrontSocail::create(['title' => 'twitter', 'icon' => 'twitter.png', 'link' => 'test']);
 
-        SmsSender::create(['title' => 'sms', 'number' => 123, 'type' => 'IPanel']);
-        SmsSetting::create(['title' => 'IPanel', 'username' => 'none', 'password' => 'none', 'p_confirm_code' => '73357', 'p_ticket' => '73362', 'p_password' => '73361','p_notif' => '75511','sms_sender'=>1]);
+        SmsSender::create(['title' => 'sms', 'number' => 123, 'type' => 'sms']);
+        SmsSetting::create(['title' => 'sms', 'username' => 'none', 'password' => 'none', 'p_confirm_code' => '73357', 'p_ticket' => '73362', 'p_password' => '73361','p_notif' => '75511','sms_sender'=>1]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
     }
 }
