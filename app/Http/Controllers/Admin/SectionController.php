@@ -30,7 +30,7 @@ class SectionController extends Controller
     public function create()
     {
         $type = 'challenge';
-        if (isset(request()->type)) {
+        if (isset(request()->type) && request()->type == 'thread') {
             $type = 'thread';
         }
         return view('admin.challenges.sections.create', compact('type'));
@@ -47,8 +47,10 @@ class SectionController extends Controller
             'prize_text' => 'string',
         ]);
         $kind = 0;
+        $type = 'challenge';
         if (isset($request->kind)) {
             $kind = 1;
+            $type = 'thread';
         }
         if (isset($request->expire_date)) {
 
@@ -59,7 +61,6 @@ class SectionController extends Controller
 
         $challenge = Section::create([
             'title' => $request->title,
-            'slug' => !empty($request->slug) ? preg_replace('/\s+/', '-', $request->slug) : Str::slug($request->title, '-'),
             'category_id' => $request->category_id,
             'type' => 1,
             'user_id' => 1,
@@ -68,9 +69,9 @@ class SectionController extends Controller
             'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
             'prize_text' => $request->prize_text ?? "",
             'expire_date' => $published_at,
-        ]);
-
-        return view('admin.challenges.sections.edit', compact('challenge'));
+        ])->getSlugOptions('title');
+        $challenges = Section::with(['user', 'category'])->get();
+        return view('admin.challenges.sections.index', compact('challenges'));
     }
 
 

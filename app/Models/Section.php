@@ -6,10 +6,12 @@ use App\Interfaces\Likeable;
 use App\Traits\HasLikes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Pishran\LaravelPersianSlug\HasPersianSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Section extends Model implements Likeable
 {
-    use HasFactory,HasLikes;
+    use HasFactory,HasLikes,HasPersianSlug;
 
     protected $guarded = [];
 
@@ -41,5 +43,11 @@ class Section extends Model implements Likeable
 
     public function hasDone($user_id){
         return $this->quizHeaders->where('user_id', $user_id)->count() > 0;
+    }
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
     }
 }

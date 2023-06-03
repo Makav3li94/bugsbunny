@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
         Blog::create(['title' => 'درباره ما', 'excerpt' => 'صفحه درباره ما', 'slug' => 'about-us', 'description' => 'متن درباره ما', 'is_page' => 1, 'published_at' => Carbon::now()->toDateTimeString(),]);
         Blog::create(['title' => 'تماس با ما', 'excerpt' => '', 'slug' => 'contact-us', 'description' => 'متن تماس با ما', 'is_page' => 1, 'published_at' => Carbon::now()->toDateTimeString(),]);
         Blog::create(['title' => 'چراایزباگ', 'excerpt' => '', 'slug' => 'why-isbug', 'description' => 'متن چرا ایزباگ', 'is_page' => 1, 'published_at' => Carbon::now()->toDateTimeString(),]);
-        Blog::create(['title' => 'قوانین انجمن', 'excerpt' => '', 'slug' => 'rules', 'description' => 'متن قوانین انجمن', 'is_page' => 1, 'published_at' => Carbon::now()->toDateTimeString(),]);
+        Blog::create(['title' => 'قوانین چالش کده', 'excerpt' => '', 'slug' => 'rules', 'description' => 'متن قوانین چالش کده', 'is_page' => 1, 'published_at' => Carbon::now()->toDateTimeString(),]);
         Blog::create(['title' => 'سوالات متداول', 'excerpt' => '', 'slug' => 'faqs', 'description' => 'متن سوالات متداول', 'is_page' => 1, 'published_at' => Carbon::now()->toDateTimeString(),]);
         Blog::create(['title' => 'مرام نامه', 'excerpt' => '', 'slug' => 'morals', 'description' => 'متن مرام نامه', 'is_page' => 1, 'published_at' => Carbon::now()->toDateTimeString(),]);
 
@@ -92,11 +92,11 @@ class DatabaseSeeder extends Seeder
 
         //Front
         FrontMenu::create(['title' => 'خانه', 'link' => 'home', 'type' => 0]);
-        FrontMenu::create(['title' => 'انجمن', 'link' => 'forum', 'type' => 0]);
+        FrontMenu::create(['title' => 'چالش کده', 'link' => 'chalesh_kade', 'type' => 0]);
 
-        FrontMenu::create(['title' => 'انجمن', 'link' => 'forum', 'type' => 1]);
-        FrontMenu::create(['title' => 'انجمن', 'link' => 'forum', 'type' => 2]);
-        FrontMenu::create(['title' => 'انجمن', 'link' => 'forum', 'type' => 3]);
+        FrontMenu::create(['title' => 'چالش کده', 'link' => 'chalesh_kade', 'type' => 1]);
+        FrontMenu::create(['title' => 'چالش کده', 'link' => 'chalesh_kade', 'type' => 2]);
+        FrontMenu::create(['title' => 'چالش کده', 'link' => 'chalesh_kade', 'type' => 3]);
 
         FrontHero::create(['title' => 'دنبال باگ خاصی می گردید ؟', 'sub' => ' مشکل خودتون رو جست و جو کنید. ', 'bg' => '', 'search_placeholder' => 'چی میخوای؟']);
 

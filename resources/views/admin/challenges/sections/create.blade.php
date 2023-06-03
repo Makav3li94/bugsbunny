@@ -47,21 +47,6 @@
                                     </div>
                                 </div>
 
-                                <div class="row form-group">
-                                    <label
-                                        class="col-sm-3 text-right control-label col-form-label">نامک {{$type == 'challenge' ? "چالش" :"سوال"}}
-                                        : <span
-                                            class="text-danger mr-1">*</span></label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="slug" value="{{{old('slug')}}}" class="form-control"
-                                               placeholder="">
-                                        @if($errors->has('slug'))
-                                            <div class="alert alert-danger">
-                                                {{$errors->first('slug')}}
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
 
                                 <div class="row form-group">
                                     <label

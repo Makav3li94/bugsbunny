@@ -258,8 +258,8 @@ Route::group(['namespace' => 'User', 'middleware' => 'auth', 'prefix' => 'dashbo
 
 Route::get('/', 'Front\HomeController@index')->name('home');
 Route::get('user/{username}', 'Front\HomeController@user')->name('user');
-Route::get('/forum', 'Front\HomeController@forum')->name('forum');
-Route::get('forum/{slug}', 'Front\HomeController@section')->name('section');
+Route::get('/chaleshKade', 'Front\HomeController@chaleshKade')->name('chalesh_kade');
+Route::get('chaleshKade/{slug}', 'Front\HomeController@section')->name('section');
 Route::get('category/{slug}', 'Front\HomeController@category')->name('archive');
 Route::post('quiz/{section}', 'Front\HomeController@quiz')->name('quiz');
 Route::get('/markAsRead', function () {

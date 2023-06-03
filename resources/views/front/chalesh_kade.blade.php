@@ -1,13 +1,13 @@
 @extends('layouts.main-front',[
         'title'=>'محفل آزمون گرها ایزباگ',
         'sl'=> false,
-        'sub'=>'',
+        'sub'=>'چالش کده شامل تمامی چالش های ایزباگه',
         'subLink'=>'',
         'page'=>'محفل آزمون گرها ایزباگ'
         ]
     )
 @section('content')
-    <section class=" doc_blog_grid_area sec_pad forum-page-content">
+    <section class=" doc_blog_grid_area sec_pad chaleshkade-page-content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
@@ -54,15 +54,15 @@
                     <!-- /.answer-action -->
 
                     {{--                    Best users in last week--}}
-                    <div class="post-header forums-header">
+                    <div class="post-header chaleshkade-header">
                         <div class="col-md-6 col-sm-6 support-info">
                             <span>بهترین های هفته گذشته </span>
                         </div>
                         <!-- /.support-info -->
                         <div class="col-md-6 col-sm-6 support-category-menus">
-                            <ul class="forum-titles">
-                                <li class="forum-reply-count">امتیاز</li>
-                                <li class="forum-freshness">تاریخ ثبت نام</li>
+                            <ul class="chaleshkade-titles">
+                                <li class="chaleshkade-reply-count">امتیاز</li>
+                                <li class="chaleshkade-freshness">تاریخ ثبت نام</li>
                             </ul>
                         </div>
                         <!-- /.support-category-menus -->
@@ -73,9 +73,9 @@
                         @forelse($HighLastWeekUsersUsers as $item)
 
 
-                            <div class="community-post style-two forum-item bug">
+                            <div class="community-post style-two chaleshkade-item bug">
                                 <div class="col-md-6 post-content">
-                                    <div class="author-avatar forum-icon">
+                                    <div class="author-avatar chaleshkade-icon">
                                         <img src="@if($item['avatar']!="" || $item['avatar'] !=null ) {{asset('images/user/'.$item['avatar']) }}@else {{asset('front/img/home_one/1.png')}} @endif" alt="{{$item['username']}}" width="30">
                                     </div>
                                     <div class="entry-content">
@@ -86,8 +86,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 post-meta-wrapper">
-                                    <ul class="forum-titles">
-                                        <li class="forum-topic-count">
+                                    <ul class="chaleshkade-titles">
+                                        <li class="chaleshkade-topic-count">
                                             @foreach($HighLastWeekUsersScores as $score)
                                                 @if($score->user_id == $item['id'])
                                                     {{$score->total." امتیاز"}}
@@ -95,11 +95,11 @@
 
                                             @endforeach
                                         </li>
-                                        <li class="forum-freshness">
+                                        <li class="chaleshkade-freshness">
                                             <div class="freshness-box">
                                                 <div class="freshness-top">
                                                     <div class="freshness-link">
-                                                        <a href="#" title="Reply To: Main Forum Rules &amp; Policies">
+                                                        <a href="#" title="Reply To: Main chaleshkade Rules &amp; Policies">
                                                             {{Verta::instance($item['created_at'])->format('Y-m-d')}}
                                                         </a>
                                                     </div>
@@ -113,24 +113,24 @@
                         @empty
 
                         @endforelse
-                        <!-- Forum Item -->
+                        <!-- chaleshkade Item -->
 
-                        <!-- /.forum-item  -->
+                        <!-- /.chaleshkade-item  -->
 
 
                     </div>
                     {{--                  END  Best users in last week--}}
 
                     {{--                    important chalanges in last week--}}
-                    <div class="post-header mt-5 forums-header">
+                    <div class="post-header mt-5 chaleshkade-header">
                         <div class="col-md-6 col-sm-6 support-info">
                             <span>چالش های اصلی </span>
                         </div>
                         <!-- /.support-info -->
                         <div class="col-md-6 col-sm-6 support-category-menus">
-                            <ul class="forum-titles">
-                                <li class="forum-reply-count">دسته</li>
-                                <li class="forum-freshness">تاریخ اتمام</li>
+                            <ul class="chaleshkade-titles">
+                                <li class="chaleshkade-reply-count">دسته</li>
+                                <li class="chaleshkade-freshness">تاریخ اتمام</li>
                             </ul>
                         </div>
                         <!-- /.support-category-menus -->
@@ -140,10 +140,10 @@
 
                     @forelse($mainSection as $item)
 
-                        <!-- Forum Item -->
-                            <div class="community-post style-two forum-item bug">
+                        <!-- chaleshkade Item -->
+                            <div class="community-post style-two chaleshkade-item bug">
                                 <div class="col-md-6 post-content">
-                                    <div class="author-avatar forum-icon">
+                                    <div class="author-avatar chaleshkade-icon">
                                         <img src="{{asset('front/img/home_support/rc1.png')}}" alt="community post">
                                     </div>
                                     <div class="entry-content">
@@ -154,13 +154,13 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 post-meta-wrapper">
-                                    <ul class="forum-titles">
-                                        <li class="forum-topic-count">{{$item->category->title}}</li>
-                                        <li class="forum-freshness">
+                                    <ul class="chaleshkade-titles">
+                                        <li class="chaleshkade-topic-count">{{$item->category->title}}</li>
+                                        <li class="chaleshkade-freshness">
                                             <div class="freshness-box">
                                                 <div class="freshness-top">
                                                     <div class="freshness-link">
-                                                        <a href="#" title="Reply To: Main Forum Rules &amp; Policies">
+                                                        <a href="#" title="Reply To: Main chaleshkade Rules &amp; Policies">
                                                             {{Verta::instance($item->expire_date)->format('Y-m-d')}}
                                                         </a>
                                                     </div>
@@ -171,22 +171,22 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!-- /.forum-item  -->
+                            <!-- /.chaleshkade-item  -->
 
 
                         @empty
                         @endforelse
                     </div>
 
-                    <div class="post-header mt-5 forums-header">
+                    <div class="post-header mt-5 chaleshkade-header">
                         <div class="col-md-6 col-sm-6 support-info">
                             <span>آخرین چالش ها </span>
                         </div>
                         <!-- /.support-info -->
                         <div class="col-md-6 col-sm-6 support-category-menus">
-                            <ul class="forum-titles">
-                                <li class="forum-reply-count">دسته</li>
-                                <li class="forum-freshness">تاریخ اتمام</li>
+                            <ul class="chaleshkade-titles">
+                                <li class="chaleshkade-reply-count">دسته</li>
+                                <li class="chaleshkade-freshness">تاریخ اتمام</li>
                             </ul>
                         </div>
                         <!-- /.support-category-menus -->
@@ -196,10 +196,10 @@
 
                     @forelse($userSection as $item)
 
-                        <!-- Forum Item -->
-                            <div class="community-post style-two forum-item bug">
+                        <!-- chaleshkade Item -->
+                            <div class="community-post style-two chaleshkade-item bug">
                                 <div class="col-md-6 post-content">
-                                    <div class="author-avatar forum-icon">
+                                    <div class="author-avatar chaleshkade-icon">
                                         <img src="{{asset('front/img/home_support/rc1.png')}}" alt="community post">
                                     </div>
                                     <div class="entry-content">
@@ -210,13 +210,13 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 post-meta-wrapper">
-                                    <ul class="forum-titles">
-                                        <li class="forum-topic-count">{{$item->category->title}}</li>
-                                        <li class="forum-freshness">
+                                    <ul class="chaleshkade-titles">
+                                        <li class="chaleshkade-topic-count">{{$item->category->title}}</li>
+                                        <li class="chaleshkade-freshness">
                                             <div class="freshness-box">
                                                 <div class="freshness-top">
                                                     <div class="freshness-link">
-                                                        <a href="#" title="Reply To: Main Forum Rules &amp; Policies">
+                                                        <a href="#" title="Reply To: Main chaleshkade Rules &amp; Policies">
                                                             {{Verta::instance($item->expire_date)->format('Y-m-d')}}
                                                         </a>
                                                     </div>
@@ -227,7 +227,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!-- /.forum-item  -->
+                            <!-- /.chaleshkade-item  -->
 
 
                     @empty
@@ -236,15 +236,15 @@
                     </div>
 
 
-                    <div class="post-header mt-5 forums-header">
+                    <div class="post-header mt-5 chaleshkade-header">
                         <div class="col-md-6 col-sm-6 support-info">
                             <span>آخرین سوال ها </span>
                         </div>
                         <!-- /.support-info -->
                         <div class="col-md-6 col-sm-6 support-category-menus">
-                            <ul class="forum-titles">
-                                <li class="forum-reply-count">دسته</li>
-                                <li class="forum-freshness">تاریخ اتمام</li>
+                            <ul class="chaleshkade-titles">
+                                <li class="chaleshkade-reply-count">دسته</li>
+                                <li class="chaleshkade-freshness">تاریخ اتمام</li>
                             </ul>
                         </div>
                         <!-- /.support-category-menus -->
@@ -254,10 +254,10 @@
 
                     @forelse($threads as $item)
 
-                        <!-- Forum Item -->
-                            <div class="community-post style-two forum-item bug">
+                        <!-- chaleshkade Item -->
+                            <div class="community-post style-two chaleshkade-item bug">
                                 <div class="col-md-6 post-content">
-                                    <div class="author-avatar forum-icon">
+                                    <div class="author-avatar chaleshkade-icon">
                                         <img src="{{asset('front/img/home_support/rc1.png')}}" alt="community post">
                                     </div>
                                     <div class="entry-content">
@@ -268,13 +268,13 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 post-meta-wrapper">
-                                    <ul class="forum-titles">
-                                        <li class="forum-topic-count">{{$item->category->title}}</li>
-                                        <li class="forum-freshness">
+                                    <ul class="chaleshkade-titles">
+                                        <li class="chaleshkade-topic-count">{{$item->category->title}}</li>
+                                        <li class="chaleshkade-freshness">
                                             <div class="freshness-box">
                                                 <div class="freshness-top">
                                                     <div class="freshness-link">
-                                                        <a href="#" title="Reply To: Main Forum Rules &amp; Policies">
+                                                        <a href="#" title="Reply To: Main chaleshkade Rules &amp; Policies">
                                                             {{Verta::instance($item->expire_date)->format('Y-m-d')}}
                                                         </a>
                                                     </div>
@@ -285,7 +285,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!-- /.forum-item  -->
+                            <!-- /.chaleshkade-item  -->
 
 
                     @empty

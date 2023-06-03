@@ -46,13 +46,12 @@
                             </div>
                             <small class="invalid-text" id="resultError"></small>
                         </div>
-
-                        <div class="col-sm-12 text-center">
+                        <div class="col-sm-12 form-group text-center">
                             @if($setting->reg_type == 0 || $setting->reg_type == 2)
-                                <button id="toRegister" class="btn action_btn thm_btn" type="button">دریافت کد تایید
+                                <button id="toRegister" class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="button">دریافت کد تایید
                                 </button>
                             @elseif($setting->reg_type == 1)
-                                <button id="toRegisterWithEmail" class="btn action_btn thm_btn" type="button">ادامه
+                                <button id="toRegisterWithEmail" class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="button">ادامه
                                 </button>
                             @endif
                         </div>
@@ -77,6 +76,7 @@
                                     type="button">تایید
                             </button>
                         </div>
+
                         <div class="col-sm-12 form-group text-center m-b-0">
 
                             <p>کد را دریافت نکرده ام؟ <a href="#" style="cursor: no-drop !important;opacity: 0.5;"

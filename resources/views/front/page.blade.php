@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>'ایزباگ',
+        'title'=>'ایزباگ | '.$page->title,
         'sl'=> false,
-        'sub'=>'',
+        'sub'=>\Illuminate\Support\Str::limit($page->description,100),
         'subLink'=>'',
-        'page'=>'ایزباگ'
+        'page'=>'ایزباگ | '.$page->title,
         ]
     )
 @section('content')

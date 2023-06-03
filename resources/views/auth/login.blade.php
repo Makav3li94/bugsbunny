@@ -59,12 +59,10 @@
                                             class="fa fa-lock m-r-5"></i> فراموش کردن رمز عبور؟</a>
                                 </div>
                         </div>
-                        <div class="form-group text-center m-t-20">
-                            <div class="col-xs-12">
+                        <div class="col-lg-12 form-group text-center m-t-20">
                                 <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">
                                     ورود
                                 </button>
-                            </div>
                         </div>
                     </form>
 
@@ -73,8 +71,7 @@
                         @csrf
                         <div class="col-lg-12 form-group">
                                 <h3>بازیابی رمز عبور</h3>
-                                <p class="text-muted">شماره موبایل خود را وارد کنید تا رمز عبور جدید برای
-                                    شما پیامک شود.</p>
+                                <p class="text-muted">شماره موبایل یا ایمیل خود را وارد کنید.</p>
                             </div>
 
                         <div class="col-lg-12 form-group">
@@ -102,13 +99,13 @@
                                     type="submit">رمز عبور جدید را برایم ارسال کن
                             </button>
                         </div>
-
-                        <div class="form-group text-center m-t-20">
-                            <div class="col-xs-12">
+                        <div class="col-lg-12 form-group">
+                            <div class="social">
                                 <a href="javascript:void(0)" id="to-login" class="text-dark pull-right"><i
                                         class="fa fa-sign-in m-r-5"></i> ورود به سیستم</a>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>

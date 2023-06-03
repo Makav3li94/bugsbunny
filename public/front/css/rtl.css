@@ -474,7 +474,7 @@ div.code-toolbar > .toolbar {
 
 .post_author .round_img,
 .breadcrumb_content .single_post_author img,
-.forum-post-top .author-avatar img,
+.chaleshkade-post-top .author-avatar img,
 .question-icon {
   margin-right: 0;
   margin-left: 15px;
@@ -488,8 +488,8 @@ div.code-toolbar > .toolbar {
 .breadcrumb_content,
 .blog_area,
 .categories_guide_item,
-.forum-single-content,
-.forum-page-content,
+.chaleshkade-single-content,
+.chaleshkade-page-content,
 .support-info,
 .sign_inner,
 .menu > .nav-item.submenu .dropdown-menu,
@@ -541,21 +541,21 @@ div.code-toolbar > .toolbar {
   right: 70px;
 }
 
-.forum-post-top
-.forum-post-author
-.forum-author-meta
+.chaleshkade-post-top
+.chaleshkade-post-author
+.chaleshkade-author-meta
 .author-badge:first-child {
   margin-right: 0px;
   margin-left: 20px;
 }
 
 .q-title .badge,
-.forum-post-content .forum-post-btm .taxonomy i {
+.chaleshkade-post-content .chaleshkade-post-btm .taxonomy i {
   margin-left: 0;
   margin-right: 10px;
 }
 
-.forum-post-content .forum-post-btm .taxonomy img,
+.chaleshkade-post-content .chaleshkade-post-btm .taxonomy img,
 .action-button-container .reply-btn,
 .usefull-links li i,
 .community-post.style-two .meta li img {
@@ -595,7 +595,7 @@ img {
   margin-left: 10px;
 }
 
-ul.forum-titles .forum-freshness .freshness-box .freshness-btm {
+ul.chaleshkade-titles .chaleshkade-freshness .freshness-box .freshness-btm {
   flex-direction: row-reverse;
 }
 

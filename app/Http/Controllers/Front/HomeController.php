@@ -11,9 +11,7 @@ use App\Models\FrontFaq;
 use App\Models\FrontFeature;
 use App\Models\FrontHero;
 use App\Models\FrontOverlay;
-use App\Models\FrontSocail;
 use App\Models\FrontWay;
-use App\Models\Like;
 use App\Models\LogActivity;
 use App\Models\Question;
 use App\Models\Quiz;
@@ -24,11 +22,9 @@ use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\TotalScore;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -75,14 +71,14 @@ class HomeController extends Controller
         return view('user.profile', compact('threads','sliders','section_count','thread_count','reply_count','likes','setting', 'cats', 'user',  'userSections', 'activities','totalScore'));
     }
 
-    public function forum()
+    public function chaleshKade()
     {
         $mainSection = Section::where([['status', 2], ['kind', 0], ['type', 1]])->with('category')->orderBy('id', 'desc')->get();
         $userSection = Section::where([['status', 2], ['kind', 0], ['type', 0]])->with('category')->orderBy('id', 'desc')->get();
 
         $threads = Section::where([['status', 2], ['kind', 1]])->with('category')->orderBy('id', 'desc')->get();
-        list($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers) = $this->stats();
-        return view('front.forum', compact('mostViewed','HighLastWeekUsersUsers','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular','mainSection', 'userSection', 'threads'));
+        list($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers,$HighLastWeekUsersScores) = $this->stats();
+        return view('front.chalesh_kade', compact('mostViewed','HighLastWeekUsersUsers','HighLastWeekUsersScores','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular','mainSection', 'userSection', 'threads'));
     }
 
     public function section($slug)
@@ -107,8 +103,8 @@ class HomeController extends Controller
     {
         $category = Category::where('title', $slug)->first();
         $section = Section::where('category_id', $category->id)->with('category')->orderBy('id', 'desc')->get();
-        list($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers) = $this->stats();
-        return view('front.category', compact('mostViewed','HighLastWeekUsersUsers','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular','section'));
+        list($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers,$HighLastWeekUsersScores) = $this->stats();
+        return view('front.category', compact('mostViewed','HighLastWeekUsersScores','HighLastWeekUsersUsers','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular','section'));
     }
 
     public function quiz(Request $request, Section $section)
@@ -240,7 +236,7 @@ class HomeController extends Controller
                 ->orderByRaw("field(id," . implode(',', $aids) . ")")
                 ->get()->toArray();
         }
-        return array($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers);
+        return array($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers,$HighLastWeekUsersScores);
     }
 
 }

@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>'ایزباگ',
+        'title'=>'گروه ایزباگ - تضمین کیفیت و امنیت نرم افزار',
         'sl'=> false,
         'sub'=>'',
         'subLink'=>'',
-        'page'=>'ایزباگ'
+        'page'=>'گروه ایزباگ - تضمین کیفیت و امنیت نرم افزار'
         ]
     )
 @section('content')

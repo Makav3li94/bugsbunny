@@ -1,4 +1,4 @@
-<div class="forum_sidebar">
+<div class="chaleshKade_sidebar">
     <div class="doc_rightsidebar scroll">
         <div class="doc_switch">
             <label for="something" class="tab-btn tab-btns"><i class="icon_lightbulb_alt"></i></label>

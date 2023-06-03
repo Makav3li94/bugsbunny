@@ -45,7 +45,6 @@ class BlogController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'slug' => 'required|unique:blogs',
             'description' => 'required',
             'img_cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'excerpt' => 'string|min:3|max:255',
@@ -79,13 +78,12 @@ class BlogController extends Controller
             $img_cover = null;
         $blog = Blog::create([
             'title' => $request->title,
-            'slug' => !empty($request->slug) ? preg_replace('/\s+/', '-', $request->slug) : Str::slug($request->title, '-'),
             'img_cover' => $img_cover,
             'description' => $request->description,
             'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
             'published_at' => $published_at,
             'is_page' => 1,
-        ]);
+        ])->getSlugOptions('title');
         if (!empty($request->tags) && $blog) {
             $blog->attachTags( explode( ',', $request->tags ) );
 

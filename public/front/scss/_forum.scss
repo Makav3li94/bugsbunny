@@ -1,4 +1,4 @@
-/** === Forum heading bar === **/
+/** === chaleshkade heading bar === **/
 .post-header {
   display: flex;
   justify-content: space-between;
@@ -8,7 +8,7 @@
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 
-  &.forums-header {
+  &.chaleshkade-header {
     padding: 17px 15px;
     display: flex;
     text-align: left;
@@ -344,7 +344,7 @@
   }
 }
 
-ul.forum-titles {
+ul.chaleshkade-titles {
   list-style: none;
   display: flex;
   padding: 0;
@@ -356,11 +356,11 @@ ul.forum-titles {
     font-size: 14px;
   }
 
-  .forum-topic-count, .forum-reply-count {
+  .chaleshkade-topic-count, .chaleshkade-reply-count {
     flex-basis: 25%;
   }
 
-  .forum-freshness {
+  .chaleshkade-freshness {
     flex-basis: 50%;
 
     .freshness-box{
@@ -397,7 +397,7 @@ ul.forum-titles {
   }
 }
 
-.forum-page-content {
+.chaleshkade-page-content {
   background: #f9fafb;
   .communities-boxes {
     margin: 0 -30px;

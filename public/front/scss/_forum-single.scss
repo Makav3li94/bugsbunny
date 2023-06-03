@@ -1,4 +1,4 @@
-.forum-post-top{
+.chaleshkade-post-top{
   display: flex;
   .author-avatar{
     img{
@@ -6,7 +6,7 @@
       margin-right: 15px;
     }
   }
-  .forum-post-author{
+  .chaleshkade-post-author{
     .author-name{
       font-size: 16px;
       font-weight: 500;
@@ -15,7 +15,7 @@
         color: $blue;
       }
     }
-    .forum-author-meta{
+    .chaleshkade-author-meta{
       display: flex;
       span, a{
         color: #838793;
@@ -96,12 +96,12 @@
   }
 }
 
-.forum-post-content{
+.chaleshkade-post-content{
   padding-left: 62px;
   .content{
     line-height: 26px;
   }
-  .forum-post-btm{
+  .chaleshkade-post-btm{
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #e8ecee;
@@ -210,7 +210,7 @@
     }
   }
 
-  .forum-comment{
+  .chaleshkade-comment{
     margin-top: 30px;
     .comment-content{
       margin-left: 60px;
@@ -237,8 +237,8 @@
   }
 }
 
-/** === Forum Sidebar === **/
-.forum_sidebar{
+/** === chaleshkade Sidebar === **/
+.chaleshKade_sidebar{
   padding-left: 28px;
   font-size: 14px;
   padding-right: 5px;

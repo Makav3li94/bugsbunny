@@ -14,7 +14,7 @@
                 <div class="sign_inner signup_inner">
                     <div class="text-center">
                         <h4>حساب کاربری</h4>
-                        <p>پروفایل را برای نفر اصلی تکمیل نمایید.</p>
+                        <p>اطلاعات پروفایل را تکمیل نمایید</p>
                     </div>
                     <form class="row login_form" method="post" id="primaryEssentialForm"
                           action="{{route('essentials.store',$user->id)}}" enctype="multipart/form-data">
@@ -129,13 +129,11 @@
                             @endif
                         </div>
                         <!-- End Date Migration -->
-                        <div class="col-sm-12 form-group">
-                            <div class="float-left">
+                        <div class="col-sm-12 form-group text-center">
                                 <button type="submit"
-                                        class="btn btn-success btn-rounded waves-effect waves-light">ثبت و
+                                        class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light">ثبت و
                                     ذخیره
                                 </button>
-                            </div>
                         </div>
 
 

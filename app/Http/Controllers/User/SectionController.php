@@ -51,7 +51,6 @@ class SectionController extends Controller
 
         $challenge = Section::create([
             'title' => $request->title,
-            'slug' => !empty($request->slug) ? preg_replace('/\s+/', '-', $request->slug) : Str::slug($request->title, '-'),
             'category_id' => $request->category_id,
             'type' => 0,
             'kind' => $kind,
@@ -60,7 +59,7 @@ class SectionController extends Controller
             'excerpt' => $request->excerpt ?? Str::limit($request->description, 50),
             'expire_date' => $published_at,
             'status' => $status,
-        ]);
+        ])->getSlugOptions('title');
 
 
         $user = User::find(auth()->id());

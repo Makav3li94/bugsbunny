@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="{{$setting->description??''}}"/>
+    <meta name="description" content="{{$sub  ?? $setting->description??''}}"/>
     <meta name="keywords" content="{{$setting->keywords??''}}"/>
     <link rel="shortcut icon" href="{{asset('front/img/favicon.png')}}" type="image/x-icon">
     <!-- Bootstrap CSS -->

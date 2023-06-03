@@ -18,7 +18,7 @@
 @endsection
 @section('content')
     {{--    @dd(session()->all());--}}
-    <section class="doc_blog_grid_area sec_pad forum-page-content">
+    <section class="doc_blog_grid_area sec_pad chaleshkade-page-content">
         <div class="container">
             <div class="card bb-radius">
                 <div class="card-body">

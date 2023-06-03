@@ -25,7 +25,7 @@
     }
     .doc_documentation_full_area .doc_right_mobile_menu{
         flex: 0 0 18.666667%;
-        max-width: 18.666667%;   
+        max-width: 18.666667%;
     }
     .doc_documentation_full_area.body_fixed .doc_left_sidebarlist {
         width: 338px;
@@ -450,7 +450,7 @@
     .full-width-doc .doc_rightsidebar .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
         width: 200px;
     }
-    .forum_sidebar{
+    .chaleshKade_sidebar{
         padding-left: 0;
         margin-top: 80px;
     }
@@ -853,18 +853,18 @@
 
 @media (max-height:768px){
     .signup_area_height{
-        min-height: 760px;   
+        min-height: 760px;
     }
 }
 
 @media(max-width:767px){
-    .post-meta-wrapper ul.forum-titles {
+    .post-meta-wrapper ul.chaleshkade-titles {
         display: none;
     }
-    .support-info, ul.forum-titles li {
+    .support-info, ul.chaleshkade-titles li {
         text-align: left;
     }
-    .forums-header .support-category-menus {
+    .chaleshkade-header .support-category-menus {
         display: none;
     }
     .call-to-action .action-content-wrapper .action-title-wrap img {
@@ -993,7 +993,7 @@
 }
 
 @media (max-width:670px){
-    .community-post.forum-item {
+    .community-post.chaleshkade-item {
         padding: 20px 15px 10px;
     }
     .community-post .post-content {
@@ -1154,16 +1154,16 @@
 }
 
 @media (max-width:576px){
-    .forum-post-top .author-avatar img{
+    .chaleshkade-post-top .author-avatar img{
         max-width: 40px;
     }
     .action-button-container{
         display: none;
     }
     .question-icon{
-        font-size: 40px;
+        font-size: 25px;
     }
-    .forum-post-content {
+    .chaleshkade-post-content {
         padding-left: 52px;
     }
     .accepted-ans-mark span{

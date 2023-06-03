@@ -1,13 +1,13 @@
 @extends('layouts.main-front',[
-        'title'=>'ایزباگ',
+        'title'=>'ایزباگ | دسته بندی های چالش',
         'sl'=> false,
-        'sub'=>'',
+        'sub'=>'صفحه دسته بندی های چالش',
         'subLink'=>'',
-        'page'=>'ایزباگ'
+        'page'=>'ایزباگ | دسته بندی های چالش'
         ]
     )
 @section('content')
-    <section class="doc_blog_grid_area sec_pad forum-page-content">
+    <section class="doc_blog_grid_area sec_pad chaleshkade-page-content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">

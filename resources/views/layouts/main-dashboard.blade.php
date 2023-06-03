@@ -26,7 +26,7 @@
 <div class="preloader">
     <div class="loader">
         <div class="loader__figure"></div>
-        <p class="loader__label text-center">isBug</p>
+        <h4 class="mt-2"><span>ایز</span>باگ</h4>
     </div>
 </div>
 <!-- Main wrapper -->
@@ -154,7 +154,7 @@
 <script src="{{asset('admin/assets/node_modules/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js')}}"></script>
 <!-- Select 2 -->
 <script src="{{asset('admin/assets/node_modules/select2/dist/js/select2.full.min.js')}}"></script>
-<!-- Wave Effects -->bootstrap forum
+<!-- Wave Effects -->bootstrap chalesh kade
 <script src="{{asset('admin/assets/node_modules/waves/waves.js')}}"></script>
 <!-- Toast Massage -->
 <script src="{{asset('admin/assets/node_modules/toast-master/js/jquery.toast.js')}}"></script>
