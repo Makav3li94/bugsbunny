@@ -10,10 +10,12 @@ use Illuminate\Http\Request;
 use File;
 use Illuminate\Support\Str;
 use Verta;
+use function App\Helpers\str_slug_persian;
 
 class BlogController extends Controller
 {
     use Numbers;
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +23,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::where('is_page',1)->orderBy('id', 'desc')->get();
+        $blogs = Blog::where('is_page', 1)->orderBy('id', 'desc')->get();
         return view('admin.blog.list', compact('blogs'));
     }
 
@@ -79,13 +81,14 @@ class BlogController extends Controller
         $blog = Blog::create([
             'title' => $request->title,
             'img_cover' => $img_cover,
+            'slug' => str_slug_persian($request->title),
             'description' => $request->description,
             'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
             'published_at' => $published_at,
             'is_page' => 1,
-        ])->getSlugOptions('title');
+        ]);
         if (!empty($request->tags) && $blog) {
-            $blog->attachTags( explode( ',', $request->tags ) );
+            $blog->attachTags(explode(',', $request->tags));
 
         }
         return redirect(route('admin.blog.index'))->with(['store' => 'success']);
@@ -108,7 +111,6 @@ class BlogController extends Controller
             $time = '';
             $date = '';
         }
-
 
 
         return view('admin.blog.edit', compact('blog', 'date', 'time'));
@@ -170,7 +172,7 @@ class BlogController extends Controller
             'published_at' => $published_at,
         ]);
         if (!empty($request->tags))
-        $blog->syncTags( explode( ',', $request->tags ) );
+            $blog->syncTags(explode(',', $request->tags));
         return redirect(route('admin.blog.index'))->with(['store' => 'success']);
     }
 
@@ -184,11 +186,10 @@ class BlogController extends Controller
     {
         $tags = $blog->tags()->get();
         if (!empty($tags))
-        $blog->detachTags($tags);
+            $blog->detachTags($tags);
         $blog->delete();
-        return redirect()->back()->with('delete','success');
+        return redirect()->back()->with('delete', 'success');
     }
-
 
 
 }

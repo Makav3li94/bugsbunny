@@ -87,7 +87,7 @@ class QuestionController extends Controller
             ]);
             $counter++;
         }
-        return redirect()->back()->with('update', 'success');
+        return redirect()->back()->with('update', 'success')->with('for','question')->with('section_id',$question->section_id);
     }
 
 

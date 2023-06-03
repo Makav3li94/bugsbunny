@@ -53,7 +53,8 @@ class QuizHandler extends Command
                     'user_id' => $quizHeader->user_id,
                     'score' => -$score,
                     'type' => $score >= 0 ? 1:0,
-                    'is_for' => 'partiSection'
+                    'is_for' => 'partiSection',
+                    'model_id'=>$quizHeader->section_id
                 ]);
             }
 
@@ -67,7 +68,8 @@ class QuizHandler extends Command
                     'user_id' => $bad_user,
                     'score' => $setting->skip_section_score,
                     'type' => 0,
-                    'is_for' => 'skipSection'
+                    'is_for' => 'skipSection',
+                    'model_id'=>$challenge->section_id
                 ]);
             }
             $challenge->update(['status' => 4]);

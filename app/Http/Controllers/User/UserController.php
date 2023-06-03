@@ -42,11 +42,11 @@ class UserController extends Controller
         $sliders = Slider::all();
         $date = $this->convertToJalaliDate($user->birthDate, TRUE);
         $user['birthDate'] = $date;
-        $sections = Section::withCount('questions')->where([['type', 1], ['status', 2]])->orWhere('status',4)->whereIn('category_id', json_decode($user->cats))->get();
-        $userSections = Section::withCount('questions')->where([['type', 0], ['user_id', auth()->id()]])->whereIn('category_id', json_decode($user->cats))->get();
+        $sections = Section::withCount('questions')->where([['type', 1], ['status', 2]])->orWhere('status',4)->whereIn('category_id', json_decode($user->cats))->orderBy('id','desc')->get();
+        $userSections = Section::withCount('questions')->where([['type', 0],['status', 2] ])->orWhere('user_id', auth()->id())->whereIn('category_id', json_decode($user->cats))->orderBy('id','desc')->get();
         $threads = Section::where([['kind', 1], ['user_id', auth()->id()]])->get();
         $activities = LogActivity::where('user_id', auth()->id())->get();
-//          Like::query()->whereMorphedTo('userable', $user)->get();
+//          Like::query()->whereMorphedTo('userable', $user)->where('likeable_id',2)->get();
 
 //        $likes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('likes_count');
 //        $dislikes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('dislikes_count');
@@ -54,7 +54,7 @@ class UserController extends Controller
         $minusScores = TotalScore::where([['user_id', $user->id], ['type', 0]])->get()->sum('score');
 //        $totalScore = ($likes - $dislikes) + ($plusScores - $minusScores);
         $totalScore = $plusScores - $minusScores;
-        $section_count = Section::where('user_id',auth()->id())->count();
+        $section_count = Section::where([['kind', 0], ['user_id', auth()->id()]])->count();
         $thread_count = Section::where([['kind', 1], ['user_id', auth()->id()]])->count();
         $reply_count = Reply::where('user_id',auth()->id())->count();
         $likes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('likes_count');

@@ -57,7 +57,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>موبایل <span class="text-danger mr-1">*</span></label>
+                                    <label>موبایل </label>
                                     <input dir="ltr" type="text" class="form-control" placeholder=""
                                            value="{{$user->mobile}}" name="mobile">
                                     @if($errors->has('mobile'))

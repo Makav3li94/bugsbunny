@@ -8,7 +8,7 @@
     </ul>
     @if(auth()->check())
         <a class="nav_btn" href="{{route('user.dashboard')}}">پنل کاربری</a>
-        <li class="dropdown  nav-item">
+        <li class="dropdown  nav-item list-style-none" style="list-style: none">
             <a class="nav-link nav-link-label" href="#" data-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-bell" style="color: #115db2"></i>
                 <span class="badge badge-pill badge-info badge-up badge-glow notification-badge">

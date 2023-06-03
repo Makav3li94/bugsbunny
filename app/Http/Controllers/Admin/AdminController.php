@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use App\Models\Section;
 use App\Models\Ticket;
 use App\Models\User;
@@ -116,6 +117,11 @@ class AdminController extends Controller
         $labels = array_keys($array);
         $data = array_values($array);
         return response()->json(['labels' => $labels, 'data' => $data]);
+    }
+
+    public function contacts(){
+        $contacts = Contact::all();
+        return view('admin.contacts.index',compact('contacts'));
     }
 
     protected function index()

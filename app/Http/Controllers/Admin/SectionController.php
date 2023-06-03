@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Quiz;
 use App\Models\Section;
 use App\Models\Setting;
 use App\Models\TotalScore;
@@ -14,10 +13,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Verta;
 use Illuminate\Support\Str;
+use function App\Helpers\str_slug_persian;
 
 class SectionController extends Controller
 {
-    use Numbers,Helpers;
+    use Numbers, Helpers;
 
 
     public function index()
@@ -64,12 +64,13 @@ class SectionController extends Controller
             'category_id' => $request->category_id,
             'type' => 1,
             'user_id' => 1,
+            'slug' => str_slug_persian($request->title),
             'kind' => $kind,
             'description' => $request->description,
             'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
             'prize_text' => $request->prize_text ?? "",
             'expire_date' => $published_at,
-        ])->getSlugOptions('title');
+        ]);
         $challenges = Section::with(['user', 'category'])->get();
         return view('admin.challenges.sections.index', compact('challenges'));
     }
@@ -121,27 +122,35 @@ class SectionController extends Controller
                 } elseif ($status == 2) {
                     $details = ['type' => 'وضعیت چالش', 'status' => 'تایید شده'];
                     $setting = Setting::all()->first();
-                    TotalScore::create([
-                        'user_id' => $user->id,
-                        'score' => $setting->section_score,
-                        'type' => 1,
-                        'is_for' => 'challenge'
-                    ]);
+                    $count = TotalScore::where([['is_for' , 'challenge'], ['model_id' , $challenge->id]])->get()->count();
+                    if ($count == 0) {
+                        TotalScore::create([
+                            'user_id' => $user->id,
+                            'score' => $setting->section_score,
+                            'type' => 1,
+                            'is_for' => 'challenge',
+                            'model_id' => $challenge->id
+                        ]);
+                    }
                 } elseif ($status == 3) {
                     $details = ['type' => 'وضعیت چالش', 'status' => 'رد شده'];
                 }
-            }elseif ($challenge->kind == 1) {
+            } elseif ($challenge->kind == 1) {
                 if ($status == 1) {
                     $details = ['type' => 'وضعیت سوال', 'status' => 'در حال بررسی'];
                 } elseif ($status == 2) {
                     $details = ['type' => 'وضعیت سوال', 'status' => 'تایید شده'];
                     $setting = Setting::all()->first();
-                    TotalScore::create([
-                        'user_id' => $user->id,
-                        'score' => $setting->question_score,
-                        'type' => 1,
-                        'is_for' => 'thread'
-                    ]);
+                    $count = TotalScore::where([['is_for' , 'thread'], ['model_id' , $challenge->id]])->get()->count();
+                    if ($count == 0) {
+                        TotalScore::create([
+                            'user_id' => $user->id,
+                            'score' => $setting->question_score,
+                            'type' => 1,
+                            'is_for' => 'thread',
+                            'model_id' => $challenge->id
+                        ]);
+                    }
                 } elseif ($status == 3) {
                     $details = ['type' => 'وضعیت سوال', 'status' => 'رد شده'];
                 }
@@ -160,7 +169,7 @@ class SectionController extends Controller
             'expire_date' => $published_at,
             'status' => $status,
         ]);
-        $this->readMFNotification($challenge->user_id,'challenge',$challenge->id);
+        $this->readMFNotification($challenge->user_id, 'challenge', $challenge->id);
         return redirect()->back()->with('update', 'success');
     }
 

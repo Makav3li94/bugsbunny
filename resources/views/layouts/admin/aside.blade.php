@@ -64,8 +64,13 @@
                                 class=" ti-support"></i><span class="hide-menu">پشتیبانی</span></a>
                         <ul aria-expanded="false" class="collapse">
                             <li><a href="{{route('admin.ticket.index')}}">لیست تیکت ها</a></li>
+                            <li><a href="{{route('admin.ticket.create')}}">گفت و گو با کاربر</a></li>
                         </ul>
                     </li>
+                @endif
+                @if(auth()->user()->can('support'))
+                    <li><a class="waves-effect waves-dark" href="{{route('admin.contact.index')}}" aria-expanded="false"><i
+                                class="ti-receipt"></i><span class="hide-menu">مدیریت تماس با ما</span></a></li>
                 @endif
                 @if(auth()->user()->can('category'))
 

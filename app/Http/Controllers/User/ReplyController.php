@@ -48,15 +48,9 @@ class ReplyController extends Controller
             'body' => $request->body,
             'status' => 0
         ]);
-        $setting = Setting::all()->first();
         $user  = User::find(auth()->id());
         $this->notifyAdmin($user->id, $user->name, $user->mobile, 'reply', $reply->id, 0,'کاربر کامنت جدیدی ارسال کرده است.');
-        TotalScore::create([
-            'user_id'=>auth()->id(),
-            'score' => $setting->reply_score,
-            'type' => 1,
-            'is_for'=>'reply'
-        ]);
+
         LogActivity::addToLog('کامنت جدیدی ارسال کرد.','reply',$reply->id);
         return redirect()->back()->with(['store'=>'success']);
 

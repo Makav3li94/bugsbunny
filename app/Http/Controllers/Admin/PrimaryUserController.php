@@ -80,6 +80,7 @@ class PrimaryUserController extends Controller
             'avatar' => $avatar,
         ]);
         $this->readMFNotification($user->id,'profileChange',$user->id);
+        $this->readMFNotification($user->id,'register',$user->id);
         return redirect(route('admin.user.primary.edit', $user->id))->with([
             'store' => 'success'
         ]);
@@ -104,7 +105,6 @@ class PrimaryUserController extends Controller
         $request->validate([
             'name' => 'required|string',
             'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/',
-            'mobile' => "required|numeric",
             'email' => "nullable|email|string",
             'password' => 'nullable|string|min:6',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:512',
@@ -116,6 +116,7 @@ class PrimaryUserController extends Controller
         if (isset($request->authStatus)) $status = 1; else $status = 0;
         if ($user->authStatus != $status) {
             $this->authStatus($status,$user);
+            $this->readMFNotification($user->id,'profileChange',$user->id);
         }
         $birthDate = $this->convertToGoregianDate($request->input('birthDate'));
         $password = $request->input('password');
@@ -137,7 +138,7 @@ class PrimaryUserController extends Controller
             //Updates User Without Password
             $user->update([
                 'name' => $request['name'],
-                'mobile' => $request['mobile'],
+                'mobile' => $request['mobile']?? Null,
                 'email' => $request['email'],
                 'familiarity_id' => $request['familiarity'],
                 'birthDate' => $birthDate,
@@ -163,7 +164,6 @@ class PrimaryUserController extends Controller
                 'authStatus' => $status,
             ]);
         }
-
         return redirect(route('admin.user.primary.edit', $user->id))->with([
             'store' => 'success'
         ]);

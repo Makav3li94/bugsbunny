@@ -5,13 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
-use Pishran\LaravelPersianSlug\HasPersianSlug;
-use Spatie\Sluggable\SlugOptions;
 
 
 class Blog extends Model implements Feedable
 {
-    use HasPersianSlug;
 
     protected $guarded = [];
 
@@ -29,10 +26,5 @@ class Blog extends Model implements Feedable
     {
         return Blog::all();
     }
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
-    }
+
 }

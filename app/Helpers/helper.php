@@ -16,7 +16,25 @@ function numberConverter($string)
     $englishNumbersOnly = str_replace($arabic, $num, $convertedPersianNums);
     return $englishNumbersOnly;
 }
+function str_slug_persian($title, $separator = '-')
+{
+    $title = trim($title);
+    $title = mb_strtolower($title, 'UTF-8');
 
+    $title = str_replace('‌', $separator, $title);
+
+    $title = preg_replace(
+        '/[^a-z0-9_\s\-اآؤئبپتثجچحخدذرزژسشصضطظعغفقكکگلمنوةيإأۀءهی۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩]/u',
+        '',
+        $title
+    );
+
+    $title = preg_replace('/[\s\-_]+/', ' ', $title);
+    $title = preg_replace('/[\s_]/', $separator, $title);
+    $title = trim($title, $separator);
+
+    return $title;
+}
 function englishToPersianNumber($string)
 {
     //arrays of persian and latin numbers

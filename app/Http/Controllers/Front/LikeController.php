@@ -12,14 +12,15 @@ use function auth;
 
 class LikeController extends Controller
 {
-    public function like(Request $request, Reply $reply)
+    public function like( Reply $reply)
     {
         User::find(auth()->id())->like($reply);
         TotalScore::create([
             'user_id' => $reply->user_id,
             'score' => 1,
             'type' => 1,
-            'is_for' => 'like'
+            'is_for' => 'like',
+            'model_id'=>$reply->section_id
         ]);
         LogActivity::addToLog('نوشته ای را لایک کرد', 'like', $reply->id);
 //        return response()->json(['message' => 'Success']);
@@ -27,28 +28,23 @@ class LikeController extends Controller
     }
 
 
-    public function unlike(Request $request, Reply $reply)
+    public function unlike(Reply $reply)
     {
         User::find(auth()->id())->unlike($reply);
-        TotalScore::create([
-            'user_id' => $reply->user_id,
-            'score' => 1,
-            'type' => 0,
-            'is_for' => 'unlike'
-        ]);
-//        return response()->json(['message' => 'Success']);
+
         return back();
     }
 
 
-    public function dislike(Request $request, Reply $reply)
+    public function dislike( Reply $reply)
     {
         User::find(auth()->id())->dislike($reply);
         TotalScore::create([
             'user_id' => $reply->user_id,
             'score' => 1,
             'type' => 0,
-            'is_for' => 'dislike'
+            'is_for' => 'dislike',
+             'model_id'=>$reply->section_id
         ]);
         LogActivity::addToLog('نوشته ای را دیسلایک کرد', 'like', $reply->id);
         return back();

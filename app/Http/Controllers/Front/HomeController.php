@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Contact;
 use App\Models\FrontCallTo;
 use App\Models\FrontFaq;
 use App\Models\FrontFeature;
@@ -22,12 +23,14 @@ use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\TotalScore;
 use App\Models\User;
+use App\Traits\Randomable;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Arr;
 
 class HomeController extends Controller
 {
+    use Randomable;
     public function index()
     {
         $setting = Setting::first();
@@ -71,6 +74,25 @@ class HomeController extends Controller
         return view('user.profile', compact('threads','sliders','section_count','thread_count','reply_count','likes','setting', 'cats', 'user',  'userSections', 'activities','totalScore'));
     }
 
+    public function contactUs(){
+        $array = $this->createRandomNumbers();
+        return view('front.contact_us',compact('array'));
+    }
+    public function contactUsStore(Request $request){
+        $request->validate([
+            'name'=>'required|string',
+            'email'=>'required|email',
+            'tel'=>'required|numeric',
+            'message'=>'required|string|max:255',
+        ]);
+        Contact::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'tel'=>$request->tel,
+            'message'=>$request->message,
+        ]);
+        return redirect()->back()->with('contact','sent');
+    }
     public function chaleshKade()
     {
         $mainSection = Section::where([['status', 2], ['kind', 0], ['type', 1]])->with('category')->orderBy('id', 'desc')->get();

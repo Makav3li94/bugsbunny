@@ -84,7 +84,7 @@
                                     <div class="fanfact-icon">
                                         <img src="{{asset('front/img/home_support/fun-fact-5.png')}}" alt="funfact">
                                     </div>
-                                    <div class="counter">{{$totalScore}}</div>
+                                    <div class="counter">{{$totalScore + $likes}}</div>
                                     <h3 class="title">امتیاز کلی</h3>
                                 </div>
                             </div>
@@ -338,9 +338,10 @@
                                                         </thead>
                                                     @endif
                                                     <tbody>
+                                                    @php $counter = 1; @endphp
                                                     @forelse($sections as $key=>$section)
                                                         <tr>
-                                                            <th>{{$key+1}}</th>
+                                                            <th>{{$counter}}</th>
                                                             <td>{{\Illuminate\Support\Str::limit($section->title,30)}}</td>
                                                             <td>{{$section->category->title}}</td>
                                                             <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
@@ -354,6 +355,7 @@
                                                                                         href="{{route('section',$section->slug)}}">مشاهده</a>
                                                             </td>
                                                         </tr>
+                                                        @php $counter ++; @endphp
                                                     @empty
                                                         <div class="alert alert-info">در حال حاضر، چالش اصلی موجود
                                                             نیست.
@@ -362,7 +364,7 @@
                                                     <hr>
                                                     @forelse($userSections as $key=>$section)
                                                         <tr>
-                                                            <th>{{$key+1}}</th>
+                                                            <th>{{$counter}}</th>
                                                             <td>{{\Illuminate\Support\Str::limit($section->title,30)}}</td>
                                                             <td>{{$section->category->title}}</td>
                                                             <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
@@ -383,6 +385,7 @@
                                                                    href="{{route('section',$section->slug)}}">مشاهده</a>
                                                             </td>
                                                         </tr>
+                                                        @php $counter ++; @endphp
                                                     @empty
                                                         <div class="alert alert-warning">در حال حاضر، چالش کاربر موجود
                                                             نیست.
@@ -605,7 +608,7 @@
                                             <p class="card-subtitle">در اینجا سوال هایی که پرسیده اید را مشاهده می کنید.
                                             <div class="table-responsive">
                                                 <table class="sort-table table table_shortcode">
-                                                    @if(count($sections) > 0 || count($userSections) > 0)
+                                                    @if(count($threads) > 0 )
                                                         <thead>
                                                         <tr>
                                                             <th>ردیف</th>

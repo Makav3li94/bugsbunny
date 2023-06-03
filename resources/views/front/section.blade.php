@@ -20,8 +20,10 @@
                                     @if($section->type ==1)
                                         <img src="{{asset('admin/assets/images/2.png')}}" width="50" alt="cmm">
                                     @else
-                                        <img src="@if($section->user->avatar!="" || $section->user->avatar !=null ) {{asset('images/user/'.$section->user->avatar) }}@else {{asset('front/img/home_one/1.png')}} @endif" width="50"
-                                             alt="cmm">
+                                        <img
+                                            src="@if($section->user->avatar!="" || $section->user->avatar !=null ) {{asset('images/user/'.$section->user->avatar) }}@else {{asset('front/img/home_one/1.png')}} @endif"
+                                            width="50"
+                                            alt="cmm">
                                     @endif
                                 </a>
                                 <div class="chaleshkade-post-author">
@@ -158,11 +160,13 @@
                                                     @if($section->hasDone(auth()->id()))
                                                         <div class="alert alert-success">با تشکر از شرکت شما در آزمون
                                                         </div>
-                                                    @else
-                                                        <button type="submit" class="btn action_btn thm_btn">شرکت در
-                                                            آزمون
-                                                        </button>
 
+                                                    @else
+                                                        @if($section->questions->count() > 0)
+                                                            <button type="submit" class="btn action_btn thm_btn">شرکت در
+                                                                آزمون
+                                                            </button>
+                                                        @endif
                                                     @endif
 
                                                 @endif
@@ -293,17 +297,28 @@
                                                 </button>
                                                 {{--                                        <a href="#" class="action_btn btn-ans ask-btn too-btn">مثبت</a>--}}
                                                 @if($reply->user_id != auth()->id())
-                                                    <form action="{{route('likeReply',$reply->id)}}" method="post">
-                                                        @csrf
-                                                        <button type="submit"
-                                                                class="action_btn btn-ans ask-btn too-btn">
-                                                            مثبت <span>{{$reply->likes_count}}</span>
-                                                        </button>
-                                                    </form>
+                                                    @if( \App\Models\Like::query()->whereMorphedTo('userable', auth()->user())->where('likeable_id',$reply->id)->get()->count() > 0)
+                                                        <form action="{{route('unlikeReply',$reply->id)}}" method="post">
+                                                            @csrf
+                                                            <button type="submit"
+                                                                    class="btn btn-sm btn-warning  ml-2">
+                                                                مثبت <span>{{$reply->likes_count}}</span>
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <form action="{{route('likeReply',$reply->id)}}" method="post">
+                                                            @csrf
+                                                            <button type="submit"
+                                                                    class="btn btn-sm btn-success ml-2">
+                                                                مثبت <span>{{$reply->likes_count}}</span>
+                                                            </button>
+                                                        </form>
+                                                    @endif
+
                                                     <form action="{{route('dislikeReply',$reply->id)}}" method="post">
                                                         @csrf
                                                         <button type="submit"
-                                                                class="action_btn btn-ans ask-btn too-btn">
+                                                                class="btn btn-sm btn-danger  ">
                                                             منفی <span>{{$reply->dislikes_count}}</span>
                                                         </button>
                                                     </form>
@@ -339,9 +354,10 @@
                                                 <div class="chaleshkade-post-top">
                                                     <a class="author-avatar"
                                                        href="{{route('user',$replyChild->user->username)}}">
-                                                        <img src="@if($replyChild->user->avatar!="" || $reply->user->avatar !=null ) {{asset('images/user/'.$replyChild->user->avatar) }}@else {{asset('front/img/home_one/1.png')}} @endif"
-                                                             width="50"
-                                                             alt="{{$replyChild->user->username}}"/>
+                                                        <img
+                                                            src="@if($replyChild->user->avatar!="" || $reply->user->avatar !=null ) {{asset('images/user/'.$replyChild->user->avatar) }}@else {{asset('front/img/home_one/1.png')}} @endif"
+                                                            width="50"
+                                                            alt="{{$replyChild->user->username}}"/>
                                                     </a>
                                                     <div class="chaleshkade-post-author">
                                                         <a class="author-name"

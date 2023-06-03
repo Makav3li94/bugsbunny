@@ -29,6 +29,7 @@ trait HasLikeable
     {
         $likeable->likes()
             ->whereMorphedTo('userable', $this)
+            ->first()
             ->delete();
     }
 

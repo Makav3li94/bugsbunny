@@ -114,7 +114,7 @@
                                     <label class="col-sm-3 text-right control-label col-form-label">چکیده: </label>
                                     <div class="col-12">
                                 <textarea name="excerpt" class="form-control" rows="1"
-                                          cols="1">{{$challenge->excerpt}}</textarea>
+                                          cols="1">{!! $challenge->excerpt !!}</textarea>
                                         @if($errors->has('excerpt'))
                                             <div class="alert alert-danger">
                                                 {{$errors->first('excerpt')}}
@@ -137,17 +137,17 @@
                                 </div>
                                 @endif
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">
+                                    <div class="col-12">
+                                        <p>
                                         @if($type == 'challenge' )
-                                        وضعیت
-                                        {{$type == 'challenge' ? "چالش" :"سوال"}}
-                                        (لطفا پس از اتمام طراحی تمامی سوالات، وضعیت را تایید کنید):
+                                            وضعیت
+                                            {{$type == 'challenge' ? "چالش" :"سوال"}}
+                                            (لطفا پس از اتمام طراحی تمامی سوالات، وضعیت را تایید کنید):
                                         @else
                                             وضعیت
                                             {{$type == 'challenge' ? "چالش" :"سوال"}}
                                         @endif
-                                    </label>
-                                    <div class="col-12">
+                                        </p>
                                         <input type="checkbox" name="status" class="form-control" data-on="تایید  شده."
                                                data-off="تایید نشده"
                                                data-toggle="toggle" data-size="bg" data-onstyle="success"
@@ -262,7 +262,7 @@
                                         : </label>
                                     <div class="col-12">
                                 <textarea name="explanation" id="editor2" rows="2"
-                                          cols="2">{{old('explanation')}}</textarea>
+                                          cols="2">{!! old('explanation') !!}</textarea>
                                         @if($errors->has('explanation'))
                                             <small class="invalid-text">{{$errors->first('explanation')}}</small>
                                         @endif

@@ -259,7 +259,7 @@ class AuthController extends Controller
             ]);
             Auth::login($user);
             event(new Registered($user));
-            $this->notifyAdmin($user->id, $user->name, $user->mobile, 'profileChange', $user->id, 0, 'کاربر ثبت نام کرد.');
+            $this->notifyAdmin($user->id, $user->name, $user->mobile, 'register', $user->id, 0, 'کاربر ثبت نام کرد.');
             return redirect(route('user.dashboard'))->with(['login' => 'success']);
         } else {
             abort(404);

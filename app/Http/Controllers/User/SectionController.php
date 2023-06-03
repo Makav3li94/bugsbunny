@@ -6,6 +6,7 @@ use App\Helpers\LogActivity;
 use App\Http\Controllers\Controller;
 use App\Models\Section;
 use App\Models\User;
+use function App\Helpers\str_slug_persian;
 use App\Traits\Helpers;
 use App\Traits\Numbers;
 use Carbon\Carbon;
@@ -52,6 +53,7 @@ class SectionController extends Controller
         $challenge = Section::create([
             'title' => $request->title,
             'category_id' => $request->category_id,
+            'slug'=>str_slug_persian($request->title),
             'type' => 0,
             'kind' => $kind,
             'user_id' => auth()->id(),
@@ -59,7 +61,7 @@ class SectionController extends Controller
             'excerpt' => $request->excerpt ?? Str::limit($request->description, 50),
             'expire_date' => $published_at,
             'status' => $status,
-        ])->getSlugOptions('title');
+        ]);
 
 
         $user = User::find(auth()->id());

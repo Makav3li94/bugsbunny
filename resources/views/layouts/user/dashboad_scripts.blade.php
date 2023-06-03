@@ -110,7 +110,6 @@
         });
         $('.sort-table').DataTable({
             dom: 'Bfrtip',
-            order: [[0, "desc"], [1, "desc"]],
             pageLength: 5,
             language: {
                 "search": "جستجو",
@@ -308,7 +307,7 @@
                         text = faq.reply
                         name = 'مدیریت'
                         user = 'مدیر'
-                        pic = 'http://127.0.0.1:8000/admin/assets/images/2.png'
+                        pic = "{{asset('admin/assets/images/2.png')}}"
                         if (faq.admin_file != null) {
                             link = '<div class="alert alert-success alert-rounded font-12 mt-2 mb-0 p-1">' +
                                 '<i class="fa fa-check-circle fa-lg align-middle text-success"></i>' +
@@ -503,9 +502,8 @@
     @endif
     @endif
     @if(session()->get('for')=='question')
-    $(function () {
-        $('#collapseQuestionIndex').modal('show');
-    });
     $('#section_id_input').val({{session()->get('section_id')}})
+
+    getQuestions({{session()->get('section_id')}})
     @endif
 </script>

@@ -11433,7 +11433,9 @@ table.dataTable thead .sorting:after {
 .dataTables_info {
     display: none !important;
 }
-
+.funfact-box{
+    z-index: 0;
+}
 .funfact-boxes .funfact-box .counter {
     font-size: 34px;
     font-weight: 500;
@@ -11450,4 +11452,11 @@ table.dataTable thead .sorting:after {
 }
 .bst-p{
     display: contents; background: #ffd556;padding: 10px;color: #000;
+}
+pre{
+    text-align: left;
+    background-color: rgb(45, 42, 46);
+    color: rgb(252, 252, 250);
+    font-family: "JetBrains Mono", monospace;
+    direction: ltr;
 }

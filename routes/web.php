@@ -126,6 +126,8 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     Route::get('/settings/front', 'SettingController@editFront')->name('admin.settings_front.edit');
     Route::post('/settings/front', 'SettingController@updateFront')->name('admin.settings_front.update');
 
+
+    Route::get('/contacts', 'AdminController@contacts')->name('admin.contact.index');
     //========================== Front ROUTES  =======================================================================
     Route::get('/front/menus', 'FrontController@editMenu')->name('admin.front_menu.edit');
     Route::post('/front/menus', 'FrontController@storeMenu')->name('admin.front_menu.store');
@@ -259,6 +261,8 @@ Route::group(['namespace' => 'User', 'middleware' => 'auth', 'prefix' => 'dashbo
 Route::get('/', 'Front\HomeController@index')->name('home');
 Route::get('user/{username}', 'Front\HomeController@user')->name('user');
 Route::get('/chaleshKade', 'Front\HomeController@chaleshKade')->name('chalesh_kade');
+Route::get('/contact-us', 'Front\HomeController@contactUs')->name('contact_us');
+Route::post('/contact-store', 'Front\HomeController@contactUsStore')->name('contact_us_store')->middleware('checkRandom');;
 Route::get('chaleshKade/{slug}', 'Front\HomeController@section')->name('section');
 Route::get('category/{slug}', 'Front\HomeController@category')->name('archive');
 Route::post('quiz/{section}', 'Front\HomeController@quiz')->name('quiz');
@@ -268,6 +272,7 @@ Route::get('/markAsRead', function () {
 });
 Route::resource('reply', 'User\ReplyController', ['names' => 'reply'])->middleware('auth');
 Route::post('/like-reply/{reply}', 'Front\LikeController@like')->name('likeReply');
+Route::post('/unlike-reply/{reply}', 'Front\LikeController@unlike')->name('unlikeReply');
 Route::post('/dislike-reply/{reply}', 'Front\LikeController@dislike')->name('dislikeReply');
 //Search
 Route::get('search', 'Front\HomeController@search');

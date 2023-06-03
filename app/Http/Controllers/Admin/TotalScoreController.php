@@ -52,7 +52,8 @@ class TotalScoreController extends Controller
                 'user_id'=>$user->id,
                 'score' => $score,
                 'type' => $type,
-                'is_for'=>'love'
+                'is_for'=>'love',
+                'model_id'=>0
             ]);
             return response()->json(['scoreCreate' => 'submitted']);
 

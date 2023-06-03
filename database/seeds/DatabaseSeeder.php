@@ -1,16 +1,9 @@
 <?php
 
 use App\Models\Admin;
-use App\Models\BankCategory;
 use App\Models\Blog;
-use App\Models\CashRequestCategory;
 use App\Models\Category;
-use App\Models\Chain;
-use App\Models\CompanyCategories;
-use App\Models\CreditCategory;
 use App\Models\Familiarity;
-use App\Models\File;
-use App\Models\FinancialClaimsCategory;
 use App\Models\FrontCallTo;
 use App\Models\FrontFaq;
 use App\Models\FrontFeature;
@@ -19,19 +12,10 @@ use App\Models\FrontMenu;
 use App\Models\FrontOverlay;
 use App\Models\FrontSocail;
 use App\Models\FrontWay;
-use App\Models\GuaranteeCategory;
-use App\Models\Kind;
-use App\Models\PaymentCategory;
-use App\Models\Product;
-use App\Models\ProductAttr;
 use App\Models\Setting;
-use App\Models\FileTitle;
-use App\Models\CompanyRoles;
 use App\Models\SmsSender;
 use App\Models\SmsSetting;
-use App\Models\Type;
 use App\Models\User;
-use App\Models\UserCompany;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -88,11 +72,13 @@ class DatabaseSeeder extends Seeder
         Category::create(['title' => 'PHP']);
         Category::create(['title' => 'GoLang']);
         Category::create(['title' => 'Python']);
+        Category::create(['title' => 'thread','type'=>1]);
 
 
         //Front
         FrontMenu::create(['title' => 'خانه', 'link' => 'home', 'type' => 0]);
         FrontMenu::create(['title' => 'چالش کده', 'link' => 'chalesh_kade', 'type' => 0]);
+        FrontMenu::create(['title' => 'تماس با ما', 'link' => 'contact-us', 'type' => 0]);
 
         FrontMenu::create(['title' => 'چالش کده', 'link' => 'chalesh_kade', 'type' => 1]);
         FrontMenu::create(['title' => 'چالش کده', 'link' => 'chalesh_kade', 'type' => 2]);
