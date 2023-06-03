@@ -42,8 +42,8 @@ class UserController extends Controller
         $sliders = Slider::all();
         $date = $this->convertToJalaliDate($user->birthDate, TRUE);
         $user['birthDate'] = $date;
-        $sections = Section::withCount('questions')->where([['type', 1], ['status', 1]])->whereIn('category_id', json_decode($user->cats))->get();
-        $userSections = Section::withCount('questions')->where('type', 0)->whereIn('category_id', json_decode($user->cats))->get();
+        $sections = Section::withCount('questions')->where([['type', 1], ['status', 2]])->orWhere('status',4)->whereIn('category_id', json_decode($user->cats))->get();
+        $userSections = Section::withCount('questions')->where([['type', 0], ['user_id', auth()->id()]])->whereIn('category_id', json_decode($user->cats))->get();
         $threads = Section::where([['kind', 1], ['user_id', auth()->id()]])->get();
         $activities = LogActivity::where('user_id', auth()->id())->get();
 //          Like::query()->whereMorphedTo('userable', $user)->get();

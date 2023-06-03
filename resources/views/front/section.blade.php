@@ -149,7 +149,7 @@
 
                                         @if(auth()->check())
                                             <div class="col-lg-12 text-center">
-                                                @if($section->user_id == auth()->id())
+                                                @if($section->type != 1 && $section->user_id == auth()->id())
                                                     <div class="alert alert-info">شما نمیتوانید در چالش خود شرکت کنید
                                                         !
                                                     </div>

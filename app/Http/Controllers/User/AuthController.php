@@ -18,7 +18,10 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
+use DB;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -267,65 +270,128 @@ class AuthController extends Controller
     protected function reset(Request $request)
     {
         $array = $this->createRandomNumbers();
-        $validator = Validator::make($request->all(), [
-            'mobile' => 'required|string|numeric|exists:users,mobile',
-            'result' => 'required|numeric|integer'
-        ]);
-        $mobile = $request['mobile'];
-        $user = User::where([['mobile', $mobile], ['is_primary', '1']])->get()->first();
-        $smsSetting = SmsSetting::first();
+        $username = $request['username'];
+
+        if (is_numeric($username)) {
+            $field = 'mobile';
+            $validator = Validator::make($request->all(), [
+                'username' => 'required|exists:users,mobile',
+                'result' => 'required|numeric|integer'
+            ]);
+        } elseif (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            $field = 'email';
+            $validator = Validator::make($request->all(), [
+                'username' => 'required|exists:users,email',
+                'result' => 'required|numeric|integer'
+            ]);
+        } else {
+            $field = 'username';
+        }
+
+
         if ($validator->fails()) {
             return back()
                 ->withErrors($validator->errors())
                 ->withInput()
                 ->with(['reset' => 'error', 'array' => $array]);
         }
-        if ($user->mobile === $mobile) {
-            $randomDigits = rand(100000, 999999);
-            $bulk = $this->sendFastSmsMokhaberat($mobile, $smsSetting->p_password,
-                ["NewPass" => $randomDigits]);
-            if ($bulk != null) {
-                Sms::create([
-                    'sms_sender_id' => 1,
-                    'user_id' => 0,
-                    'description' => 'فراموشی رمز عبور',
-                    'bulk_id' => $bulk['VerificationCodeId'],
-                    'status' => 0
-                ]);
-            }
-            $newPassword = Hash::make($randomDigits);
-            $user->update(['password' => $newPassword]);
-            return redirect(route('login'))->with(['resetPass' => 'sent']);
-        } else {
-            return back()->withInput()->with(['date' => 'incorrect', 'reset' => 'error']);
-        }
-    }
-
-    protected function resendSms(Request $request)
-    {
-        if ($request->ajax()) {
-            $mobile = $request->input('mobile');
-            $type = $request->input('type');
+        if ($field == 'mobile') {
+            $user = User::where([['mobile', $username], ['is_primary', '1']])->orWhere('email', $username)->get()->first();
             $smsSetting = SmsSetting::first();
-            switch ($type) {
-                case 'register':
-                    if (PreRegister::where('mobile', $mobile)->get()->count() > 0) {
-                        $code = PreRegister::where('mobile', $mobile)->first()->code;
-                        if (Setting::all()->count() > 0 && Setting::all()->first()->brand != null) {
-                            $name = Setting::all()->first()->brand;
-                        } else {
-                            $name = '';
-                        }
-                        $bulk = $this->sendFastSmsMokhaberat($mobile, $smsSetting->p_confirm_code,
-                            ["VerificationCode" => $code]);
-                        return response()->json(['code' => 'resent', 'bulk' => $bulk, 'mobile' => $mobile]);
-                    } else {
-                        return response()->json(['resend' => 'failed']);
-                    }
-                    break;
+            if ($user->mobile === $username) {
+                $randomDigits = rand(100000, 999999);
+                $bulk = $this->sendFastSmsMokhaberat($username, $smsSetting->p_password,
+                    ["NewPass" => $randomDigits]);
+                if ($bulk != null) {
+                    Sms::create([
+                        'sms_sender_id' => 1,
+                        'description' => 'ثبت نام',
+                        'bulk_id' => $bulk['VerificationCodeId'],
+                        'status' => 0
+                    ]);
+                }
+                $newPassword = Hash::make($randomDigits);
+                $user->update(['password' => $newPassword]);
+                return redirect(route('login'))->with(['resetPass' => 'sent']);
+            } else {
+                return back()->withInput()->with(['date' => 'incorrect', 'reset' => 'error']);
             }
-
+        } else {
+            $status = Password::sendResetLink(
+                ['email' => $username]
+            );
+            return $status === Password::RESET_LINK_SENT
+                ? back()->with(['resetPass' => 'sent'])
+                : back()->withErrors(['email' => __($status)]);
         }
+
     }
+
+    public function resetForm(Request $request)
+    {
+        $token = $request->token;
+        $email = $request->email;
+        return view('auth.passwords.reset', compact('token', 'email'));
+    }
+
+    protected function resetPassword(Request $request)
+    {
+        //Validate input
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|confirmed',
+            'token' => 'required']);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+                Auth::login($user);
+
+                //Delete the token
+                DB::table('password_resets')->where('email', $user->email)
+                    ->delete();
+                return redirect()->route('user.dashboard');
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+            ? redirect()->route('login')->with(['resetPass' => 'sent'])
+            : back()->withErrors(['email' => [__($status)]]);
+
+
+}
+
+protected
+function resendSms(Request $request)
+{
+    if ($request->ajax()) {
+        $mobile = $request->input('mobile');
+        $type = $request->input('type');
+        $smsSetting = SmsSetting::first();
+        switch ($type) {
+            case 'register':
+                if (PreRegister::where('mobile', $mobile)->get()->count() > 0) {
+                    $code = PreRegister::where('mobile', $mobile)->first()->code;
+                    if (Setting::all()->count() > 0 && Setting::all()->first()->brand != null) {
+                        $name = Setting::all()->first()->brand;
+                    } else {
+                        $name = '';
+                    }
+                    $bulk = $this->sendFastSmsMokhaberat($mobile, $smsSetting->p_confirm_code,
+                        ["VerificationCode" => $code]);
+                    return response()->json(['code' => 'resent', 'bulk' => $bulk, 'mobile' => $mobile]);
+                } else {
+                    return response()->json(['resend' => 'failed']);
+                }
+                break;
+        }
+
+    }
+}
 
 }

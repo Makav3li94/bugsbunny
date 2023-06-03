@@ -17,7 +17,8 @@ return [
     */
 
     'driver' => env('MAIL_DRIVER', 'smtp'),
-
+    'auth_mode'  => null,
+    'verify_peer'       => false,
     /*
     |--------------------------------------------------------------------------
     | SMTP Host Address

@@ -174,7 +174,6 @@ class PrimaryUserController extends Controller
     protected function destroy(User $user)
     {
 
-        $user->files()->delete();
         $user->notes()->delete();
 
 

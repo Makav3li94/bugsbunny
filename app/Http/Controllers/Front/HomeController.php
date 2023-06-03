@@ -21,6 +21,7 @@ use App\Models\QuizHeader;
 use App\Models\Reply;
 use App\Models\Section;
 use App\Models\Setting;
+use App\Models\Slider;
 use App\Models\TotalScore;
 use App\Models\User;
 use Carbon\Carbon;
@@ -57,15 +58,21 @@ class HomeController extends Controller
             $setting = null;
         }
         $cats = Category::all();
+        $sliders = Slider::all();
         //Sliders
-        $userSections = Section::where([['type', 0],['status', 2], ['user_id', auth()->id()]])->orWhere('status', 4)->get();
+        $userSections = Section::where([['type', 0],['status', 2], ['user_id', $user->id]])->orWhere('status', 4)->get();
 //        $likeDis=  Like::query()->whereMorphedTo('userable', $user)->get();
-        $activities = LogActivity::where('user_id', auth()->id())->get();
+        $activities = LogActivity::where('user_id', $user->id)->get();
         $plusScores = TotalScore::where([['user_id', $user->id], ['type', 1]])->get()->sum('score');
         $minusScores = TotalScore::where([['user_id', $user->id], ['type', 0]])->get()->sum('score');
+        $threads = Section::where([['kind', 1], ['user_id', $user->id]])->get();
 //        $totalScore = ($likes - $dislikes) + ($plusScores - $minusScores);
         $totalScore = $plusScores - $minusScores;
-        return view('user.profile', compact('setting', 'cats', 'user',  'userSections', 'activities','totalScore'));
+        $section_count = Section::where('user_id',$user->id)->count();
+        $thread_count = Section::where([['kind', 1], ['user_id', $user->id]])->count();
+        $reply_count = Reply::where('user_id',$user->id)->count();
+        $likes = Reply::where('user_id', $user->id)->withCount(['likes', 'dislikes'])->get()->sum('likes_count');
+        return view('user.profile', compact('threads','sliders','section_count','thread_count','reply_count','likes','setting', 'cats', 'user',  'userSections', 'activities','totalScore'));
     }
 
     public function forum()
@@ -74,8 +81,8 @@ class HomeController extends Controller
         $userSection = Section::where([['status', 2], ['kind', 0], ['type', 0]])->with('category')->orderBy('id', 'desc')->get();
 
         $threads = Section::where([['status', 2], ['kind', 1]])->with('category')->orderBy('id', 'desc')->get();
-
-        return view('front.forum', compact('mainSection', 'userSection', 'threads'));
+        list($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers) = $this->stats();
+        return view('front.forum', compact('mostViewed','HighLastWeekUsersUsers','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular','mainSection', 'userSection', 'threads'));
     }
 
     public function section($slug)
@@ -92,6 +99,7 @@ class HomeController extends Controller
 //          return  $best_user = QuizHeader::latest()->where('section_id',$section->id)->value('score');
             $best_user = QuizHeader::where('section_id',$section->id)->orderBy('score', 'desc')->first();
         }
+
         return view('front.section', compact('section', 'replies','best_user'));
     }
 
@@ -99,7 +107,8 @@ class HomeController extends Controller
     {
         $category = Category::where('title', $slug)->first();
         $section = Section::where('category_id', $category->id)->with('category')->orderBy('id', 'desc')->get();
-        return view('front.category', compact('section'));
+        list($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers) = $this->stats();
+        return view('front.category', compact('mostViewed','HighLastWeekUsersUsers','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular','section'));
     }
 
     public function quiz(Request $request, Section $section)
@@ -170,4 +179,68 @@ class HomeController extends Controller
             }
         }
     }
+
+    /**
+     * @return array
+     */
+    protected function stats(): array
+    {
+        $mostViewed = Section::where('status', 2)->orWhere('status', 4)->orderBy('total_views', 'desc')->take(5)->get();
+        $mostPopular = Section::where('status', 2)->orWhere('status', 4)->withCount('replies')->orderBy('replies_count', 'desc')->take(5)->get();
+        $latestComment = Section::with('replies')->has('replies')->get()->sortByDesc('latestReply.created_at');
+        $HighAllTimeUsersScores = (DB::select(DB::raw("SELECT y.*
+                  FROM (SELECT
+                        t.id,
+                        t.user_id,
+                        (SELECT SUM(x.score)
+                         FROM total_scores  x
+                         WHERE   x.user_id = t.user_id and x.type = 1)
+                        -
+                        COALESCE((SELECT SUM(x.score)
+                                  FROM total_scores  x
+                                  WHERE  x.user_id = t.user_id and x.type = 0),0)
+                        AS total
+                        FROM total_scores  t
+                     ORDER BY t.id) y
+                GROUP BY y.user_id
+                ORDER BY total DESC limit 5")));
+        $ids = Arr::pluck($HighAllTimeUsersScores, 'user_id');
+        $HighAllTimeUsers = [];
+        if (count($ids) > 0) {
+
+            $HighAllTimeUsers = User::whereIn('id', $ids)
+                ->orderByRaw("field(id," . implode(',', $ids) . ")")
+                ->get()->toArray();
+        }
+
+        $HighLastWeekUsersScores = (DB::select(DB::raw("SELECT y.*
+                  FROM (SELECT
+                        t.id,
+                        t.user_id,
+                        (SELECT SUM(x.score)
+                         FROM total_scores  x
+                         WHERE   x.user_id = t.user_id and x.type = 1
+                            AND x.created_at between date_sub(now(),INTERVAL 1 WEEK) and now()
+                            )
+                        -
+                        COALESCE((SELECT SUM(x.score)
+                                  FROM total_scores  x
+                                  WHERE  x.user_id = t.user_id and x.type = 0
+                                   AND x.created_at between date_sub(now(),INTERVAL 1 WEEK) and now()
+                                  ),0)
+                        AS total
+                        FROM total_scores  t
+                     ORDER BY t.id) y
+                GROUP BY y.user_id
+                ORDER BY total DESC limit 5")));
+        $aids = Arr::pluck($HighLastWeekUsersScores, 'user_id');
+        $HighLastWeekUsersUsers = [];
+        if (count($aids) > 0) {
+            $HighLastWeekUsersUsers = User::whereIn('id', $aids)
+                ->orderByRaw("field(id," . implode(',', $aids) . ")")
+                ->get()->toArray();
+        }
+        return array($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers);
+    }
+
 }

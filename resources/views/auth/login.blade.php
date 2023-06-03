@@ -16,14 +16,14 @@
                         <p>حساب کاربری ندارید ؟ <a href="{{route('register')}}">ثبت نام</a></p>
                     </div>
                     <form class="row login_form" id="loginform" action="{{route('login')}}" method="post"
-                          style="{{session()->get('reset')=='error' || session()->get('url')==route('password.reset') ? 'display:none' : 'display:flex'}}">
+                          style="{{session()->get('reset')=='error' || session()->get('url')==route('mpassword.reset') ? 'display:none' : 'display:flex'}}">
                         @csrf
                         <div class="col-lg-12 form-group">
 
                             <input type="text" class="form-control text-center" id="email" placeholder="شماره موبایل یا ایمیل" name="username"
-                                   value="{{old('mobile')}}">
-                            @if($errors->has('mobile') && session()->get('reset')!='error')
-                                <small class="invalid-text">{{$errors->first('mobile')}}</small>
+                                   value="{{old('username')}}">
+                            @if($errors->has('username') && session()->get('reset')!='error')
+                                <small class="invalid-text">{{$errors->first('username')}}</small>
                             @endif
                         </div>
                         <div class="col-lg-12 form-group">
@@ -68,8 +68,8 @@
                         </div>
                     </form>
 
-                    <form class="row login_form" method="post" action="{{route('password.reset')}}" id="recoverform"
-                          style="{{session()->get('reset')=='error' || session()->get('url')==route('password.reset') ? 'display:flex' : 'display:none'}}">
+                    <form class="row login_form" method="post" action="{{route('mpassword.reset')}}" id="recoverform"
+                          style="{{session()->get('reset')=='error' || session()->get('url')==route('mpassword.reset') ? 'display:flex' : 'display:none'}}">
                         @csrf
                         <div class="col-lg-12 form-group">
                                 <h3>بازیابی رمز عبور</h3>
@@ -78,16 +78,16 @@
                             </div>
 
                         <div class="col-lg-12 form-group">
-                            <input dir="ltr" class="form-control text-center" type="text" required="" name="mobile"
-                                   placeholder="شماره موبایل" value="{{old('mobile')}}">
-                            @if($errors->has('mobile'))
-                                <small class="invalid-text">{{$errors->first('mobile')}}</small>
+                            <input dir="ltr" class="form-control text-center" type="text" required="" name="username"
+                                   placeholder="شماره یا ایمیل" value="{{old('username')}}">
+                            @if($errors->has('username'))
+                                <small class="invalid-text">کاربری یا این اطلاعات یافت نشد</small>
                             @elseif(session()->get('user')=='unavailable')
-                                <small class="invalid-text">کاربری یا این شماره یافت نشد</small>
+                                <small class="invalid-text">کاربری یا این اطلاعات یافت نشد</small>
                             @endif
                         </div>
                         <div class="col-lg-12 form-group">
-                            <input class="form-control text-center" type="text" required
+                            <input class="form-control text-center" type="text" required  style="direction: rtl"
                                    placeholder="{{$array[2].' '.$array[1].' '.$array[0]}} برابر با چه عددی است؟ "
                                    name="result">
                             @if(session()->get('result')=='incorrect')
@@ -99,7 +99,7 @@
                         </div>
                         <div class="col-lg-12 form-group">
                             <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded"
-                                    type="submit">رمز عبور جدید را برایم پیامک کن
+                                    type="submit">رمز عبور جدید را برایم ارسال کن
                             </button>
                         </div>
 

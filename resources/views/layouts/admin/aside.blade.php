@@ -27,7 +27,7 @@
                     <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
                                 class="ti-files"></i><span class="hide-menu">مدیریت چالش و سوال</span></a>
                         <ul aria-expanded="false" class="collapse">
-                            <li><a href="{{route('admin.challenge.create')}}">چالش جدید</a></li>
+                            <li><a href="{{route('admin.challenge.create',['type'=>'challenge'])}}">چالش جدید</a></li>
                             <li><a href="{{route('admin.challenge.create',['type'=>'thread'])}}">سوال جدید</a></li>
                             <li><a href="{{route('admin.challenge.index')}}">لیست چالش ها و سوالات</a></li>
                         </ul>

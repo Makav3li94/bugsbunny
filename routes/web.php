@@ -189,7 +189,9 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 // User Registration Routes...
 Route::post('register', 'Auth\RegisterController@register')->name('post.register');
 // User Password Reset Routes...
-Route::post('password/reset', 'User\AuthController@reset')->name('password.reset')->middleware('checkRandom');
+Route::post('password/reset', 'User\AuthController@reset')->name('mpassword.reset')->middleware('checkRandom');
+Route::get('pass/resetForm', 'User\AuthController@resetForm')->name('password.reset');
+Route::post('pass/update', 'User\AuthController@resetPassword')->name('password.update');
 
 //Resend Sms
 Route::post('resend', 'User\AuthController@resendSms');
