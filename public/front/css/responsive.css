@@ -1362,6 +1362,9 @@
         flex: 0 0 100%;
         max-width: 100%;
     }
+    .ansy:nth-child(3){
+        border-bottom: 1px dotted #313123
+    }
 }
 
 @media (max-height:550px){

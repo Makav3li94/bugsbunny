@@ -1,10 +1,10 @@
 @extends('layouts.main-dashboard')
-@section('title')جزئیات حساب اصلی@stop
-@section('current-page-title')جزئیات حساب اصلی@stop
+@section('title')جزئیات کاربر@stop
+@section('current-page-title')جزئیات کاربر@stop
 @section('breadcrumbs')
-    <li class="breadcrumb-item">حساب اصلی</li>
-    <li class="breadcrumb-item">لیست حساب اصلی</li>
-    <li class="breadcrumb-item active">جزئیات حساب اصلی</li>
+    <li class="breadcrumb-item">کاربر</li>
+    <li class="breadcrumb-item">لیست کاربر</li>
+    <li class="breadcrumb-item active">جزئیات کاربر</li>
 @stop
 @section('content')
     {{--    @if($errors->all())--}}

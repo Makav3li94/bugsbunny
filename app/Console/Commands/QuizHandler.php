@@ -51,15 +51,15 @@ class QuizHandler extends Command
                 $quizHeader->update(['score' => $score]);
                 TotalScore::create([
                     'user_id' => $quizHeader->user_id,
-                    'score' => -$score,
-                    'type' => $score >= 0 ? 1:0,
+                    'score' => $score,
+                    'type' => $score < 0 ? 0:1,
                     'is_for' => 'partiSection',
                     'model_id'=>$quizHeader->section_id
                 ]);
             }
 
             $quizHeaders = QuizHeader::where('section_id', $challenge->id)->get()->pluck('user_id')->toArray();
-            $users = User::where('id', '!=', 1)->whereJsonContains('cats', strval($challenge->user_id))->get()->pluck('id')->toArray();
+            $users = User::whereJsonContains('cats', strval($challenge->category_id))->get()->pluck('id')->toArray();
             $unique = array_unique(array_merge($quizHeaders, $users));
             $master_arr = array_diff($unique, $quizHeaders);
             $setting = Setting::all()->first();

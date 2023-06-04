@@ -50,7 +50,7 @@ class QuestionController extends Controller
 
     public function edit(Request $request, Question $question)
     {
-        $question = $question->with('answers')->get();
+        return  $question = $question->load('answers:id,answer,is_checked,question_id')->toArray();
         if ($request->ajax()) {
             return response()->json(['question' => $question]);
         }

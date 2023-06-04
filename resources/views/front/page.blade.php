@@ -1,16 +1,16 @@
 @extends('layouts.main-front',[
-        'title'=>'ایزباگ | '.$page->title,
+        'title'=>$page->title.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
         'sub'=>\Illuminate\Support\Str::limit($page->description,100),
         'subLink'=>'',
-        'page'=>'ایزباگ | '.$page->title,
+        'page'=>$page->title.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
     )
 @section('content')
     <section class="breadcrumb_area_two">
-        <div class="container">
-            <div class="breadcrumb_content">
-                <h2 class="text-center">{{$page->title}}</h2>
+        <div class="container text-center">
+            <div class="">
+                <h1 class="text-center">{{$page->title}}</h1>
             </div>
         </div>
     </section>
@@ -21,13 +21,14 @@
                 <div class="col-lg-12">
                     <div class="blog_single_info">
                         <div class="blog_single_item">
-                            <a href="#" class="blog_single_img">
+                            <a href="#" class="blog_single_img text-center">
                                 <img src="{{
                                 $page->img_cover ?
                                 url('/images/upload/blog/'.$page->img_cover)
                                 :
                                 ' https://via.placeholder.com/100x100'
                                 }}" class="img-fluid rounded-md shadow" alt="">
+                            </a>
                             {!! $page->description !!}
 
                         </div>

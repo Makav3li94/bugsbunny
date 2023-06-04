@@ -40,9 +40,7 @@
                                         <input type="text" name="title" value="{{{old('title')}}}" class="form-control"
                                                placeholder="">
                                         @if($errors->has('title'))
-                                            <div class="alert alert-danger">
-                                                {{$errors->first('title')}}
-                                            </div>
+                                            <small class="invalid-text">{{$errors->first('title')}}</small>
                                         @endif
                                     </div>
                                 </div>
@@ -85,9 +83,7 @@
                                                    class="form-control text-center datepicker-day"
                                                    value="{{old('expire_date')}}" placeholder="">
                                             @if($errors->has('expire_date'))
-                                                <div class="alert alert-danger">
-                                                    {{$errors->first('expire_date')}}
-                                                </div>
+                                                <small class="invalid-text">{{$errors->first('expire_date')}}</small>
                                             @endif
 
                                         </div>
@@ -98,12 +94,10 @@
                                         class="col-sm-3 text-right control-label col-form-label">توضیحات {{$type == 'challenge' ? "چالش" :"سوال"}}
                                         : </label>
                                     <div class="col-12">
-                                <textarea name="description" id="editor1" rows="10"
-                                          cols="80">{{old('description')}}</textarea>
+                                <textarea name="description" id="editor1" rows="10" placeholder=""
+                                          cols="80">{!! old('description') !!}</textarea>
                                         @if($errors->has('description'))
-                                            <div class="alert alert-danger">
-                                                {{$errors->first('description')}}
-                                            </div>
+                                            <small class="invalid-text">{{$errors->first('description')}}</small>
                                         @endif
                                     </div>
                                 </div>
@@ -112,11 +106,9 @@
                                     <label class="col-sm-3 text-right control-label col-form-label">چکیده: </label>
                                     <div class="col-12">
                                 <textarea name="excerpt" class="form-control" rows="1"
-                                          cols="1">{{old('excerpt')}}</textarea>
+                                          cols="1">{!! old('excerpt')!!}</textarea>
                                         @if($errors->has('excerpt'))
-                                            <div class="alert alert-danger">
-                                                {{$errors->first('excerpt')}}
-                                            </div>
+                                            <small class="invalid-text">{{$errors->first('excerpt')}}</small>
                                         @endif
                                     </div>
                                 </div>
@@ -128,9 +120,7 @@
                                 <textarea name="prize_text" class="form-control" rows="1"
                                           cols="1">{{old('prize_text')}}</textarea>
                                             @if($errors->has('prize_text'))
-                                                <div class="alert alert-danger">
-                                                    {{$errors->first('prize_text')}}
-                                                </div>
+                                                <small class="invalid-text">{{$errors->first('prize_text')}}</small>
                                             @endif
                                         </div>
                                     </div>
@@ -153,15 +143,17 @@
 @section('script')
     <script src="{{ asset('admin/assets/node_modules/ckeditor/ckeditor.js')}}"></script>
     <script>
-        CKEDITOR.replace('editor1', {
+        $(document).ready(function () {
+            CKEDITOR.replace('editor1', {
 
-            contentsLangDirection: 'rtl',
-            // language: 'fa',
-            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
-            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
+                contentsLangDirection: 'rtl',
+                // language: 'fa',
+                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
+                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
 
+            });
         });
 
     </script>

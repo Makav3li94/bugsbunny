@@ -108,24 +108,7 @@
         $('.dropify').dropify({
             messages: {}
         });
-        $('.sort-table').DataTable({
-            dom: 'Bfrtip',
-            pageLength: 5,
-            language: {
-                "search": "جستجو",
-                "lengthMenu": "نمایش _MENU_ رکورد در صفحه",
-                "zeroRecords": "موردی یافت نشد.",
-                "info": "نمایش صفحات _PAGE_ از _PAGES_",
-                "infoEmpty": "هیچ رکوردی موجود نیست",
-                "infoFiltered": "(فیتر شده از _MAX_ پرونده)",
-                "paginate": {
-                    "first": "اولین",
-                    "last": "آخرین",
-                    "next": "بعدی",
-                    "previous": "قبلی",
-                }
-            }
-        });
+
 
 
     });
@@ -506,4 +489,23 @@
 
     getQuestions({{session()->get('section_id')}})
     @endif
+    $('.sort-table').DataTable({
+        dom: 'Bfrtip',
+        pageLength: 5,
+        order: [[ 0, "desc" ], [ 1, "desc" ]],
+        language: {
+            "search": "جستجو",
+            "lengthMenu": "نمایش _MENU_ رکورد در صفحه",
+            "zeroRecords": "موردی یافت نشد.",
+            "info": "نمایش صفحات _PAGE_ از _PAGES_",
+            "infoEmpty": "هیچ رکوردی موجود نیست",
+            "infoFiltered": "(فیتر شده از _MAX_ پرونده)",
+            "paginate": {
+                "first": "اولین",
+                "last": "آخرین",
+                "next": "بعدی",
+                "previous": "قبلی",
+            }
+        }
+    });
 </script>

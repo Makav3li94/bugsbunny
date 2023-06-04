@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>'ایزباگ | '.$section->title,
+        'title'=>$section->title.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
        'sub'=>\Illuminate\Support\Str::limit($section->description,100),
         'subLink'=>'',
-        'page'=>'ایزباگ | '.$section->title
+        'page'=>$section->title.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
     )
 
@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-lg-9">
                             <div class="chaleshkade-post-top">
-                                <a class="author-avatar" href="#">
+                                <a class="author-avatar" href="{{$section->type == 1 ? 'javascript:void(0)' : route('user',$section->user->username)}}">
                                     @if($section->type ==1)
                                         <img src="{{asset('admin/assets/images/2.png')}}" width="50" alt="cmm">
                                     @else
@@ -28,8 +28,8 @@
                                 </a>
                                 <div class="chaleshkade-post-author">
                                     <a class="author-name"
-                                       href="#"> {{$section->type == 1 ? 'Admin' : $section->user->name}} </a>
-                                    <div class="chaleshkade-author-meta">
+                                       href="{{$section->type == 1 ? 'javascript:void(0)' : route('user',$section->user->username)}}"> {{$section->type == 1 ? 'Admin' : $section->user->name}} </a>
+                                    <div class="chaleshkade-author-meta mt-2">
                                         <div class="author-badge">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                  xmlns:xlink="http://www.w3.org/1999/xlink" width="16px"
@@ -65,7 +65,7 @@
                                     <div class="alert alert-danger text-center">چالش رد شده است.</div>
                                     @break
                                     @case(4)
-                                    <span class="badge badge-pill badge-primary">       چالش    پایان یافته</span>
+                                    <span class="badge badge-pill badge-danger">       چالش    پایان یافته</span>
                                     @break
                                     @default
                                 @endswitch
@@ -86,7 +86,7 @@
                                     <div class="alert alert-danger text-center">سوال رد شده است.</div>
                                     @break
                                     @case(4)
-                                    <span class="badge badge-pill badge-primary"> سوال پایان یافته</span>
+                                    <span class="badge badge-pill badge-danger"> سوال پایان یافته</span>
                                     @break
                                     @default
                                 @endswitch
@@ -114,10 +114,10 @@
                                         <div class="author">توضیحات سوال: {!! $question->explanation !!}</div>
                                         <div></div>
                                     </blockquote>
-                                    <div class="row">
+                                    <div class="row ">
                                         @forelse($question->answers as $key=> $answer)
 
-                                            <div class="col-sm-6 form-group pb-5"
+                                            <div class="col-sm-6 form-group pb-5 ansy"
                                                  style="{{$key < 2 ? 'border-bottom: 1px dotted #313123' :''}}">
                                                 <div id="registerInputWrapper">
                                                     <div class="form-check">
@@ -125,7 +125,9 @@
                                                                @if($section->status == 4 && $answer->is_checked == 1 )
                                                                checked="checked"
                                                                @endif
+
                                                                {{$section->status == 4  ? "hidden" : ""}}
+                                                               {{$section->hasDone(auth()->id())  ? "hidden" : ""}}
                                                                id="answer{{$key}}" name="answer[{{$question->id}}]"
                                                                value="{{$answer->id}}">
                                                         <label class="form-check-label mr-4" for="answer{{$key}}">
@@ -183,7 +185,7 @@
                             @if($best_user != '' || $best_user != null)
                                 <div class="best-answer">
                                     <div class="row">
-                                        <div class="col-sm-2 text-center mb-2">
+                                        <div class="col-sm-1 text-center mb-1">
                                             <div class="chaleshkade-post-top">
 
                                                 <div class="chaleshkade-post-author text-center">
@@ -194,17 +196,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-7 mb-2">
+                                        <div class="col-sm-10 mb-12" style="background: #eaff62;padding: 10px;">
                                             <span class="question-icon" title="The Best Answer">برنده چالش: </span>
                                             <p class="bst-p">
-                                                برنده این چالش {{$best_user->user->name}} است با
+                                                برنده این چالش <a href="{{route('user',$best_user->user->username)}}">{{$best_user->user->name}}</a> است با
                                                 کسب {{$best_user->score}}
                                                 امتیاز !
-                                            </p>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <p class="accepted-ans-mark">
-                                                <i class="icon_check"></i> <span>برنده چالش</span>
                                             </p>
                                         </div>
                                     </div>
@@ -250,7 +247,7 @@
                     <!-- Best answer -->
 
                     <!-- All answer -->
-                    <div class="all-answers">
+                    <div class="all-answers" id="replies">
                         <h3 class="title">تمام کامنت ها</h3>
 
                         @forelse($replies as $reply)
@@ -297,7 +294,7 @@
                                                 </button>
                                                 {{--                                        <a href="#" class="action_btn btn-ans ask-btn too-btn">مثبت</a>--}}
                                                 @if($reply->user_id != auth()->id())
-                                                    @if( \App\Models\Like::query()->whereMorphedTo('userable', auth()->user())->where('likeable_id',$reply->id)->get()->count() > 0)
+                                                    @if( \App\Models\Like::query()->whereMorphedTo('userable', auth()->user())->where([['likeable_id',$reply->id],['is_liked', true]])->get()->count() > 0)
                                                         <form action="{{route('unlikeReply',$reply->id)}}" method="post">
                                                             @csrf
                                                             <button type="submit"

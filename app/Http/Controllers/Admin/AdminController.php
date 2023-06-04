@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\QuizHeader;
+use App\Models\Reply;
 use App\Models\Section;
 use App\Models\Ticket;
 use App\Models\User;
@@ -27,21 +29,19 @@ class AdminController extends Controller
     public function dashboard()
     {
 
-        $lastPrimary = User::where([['is_primary', '1'], ['authStatus', '1']])->orderBy('id', 'desc')->get();
-        switch (count($lastPrimary)) {
-            case 0:
-                $lastPrimary = '-';
-                break;
-            default:
-                $lastPrimary = $lastPrimary->first()->name;
-                break;
-        }
         //Open Tickets Count
         $openTickets = Ticket::where('status', '1')->get()->count();
         //Total Primary Users
         $primaryUsers = User::where('is_primary', '1')->orderBy('id', 'desc')->get()->count();
-        return view('admin.dashboard',
-            compact(  'lastPrimary', 'openTickets','primaryUsers'));
+
+        $adminChallengeCount = Section::where([['type',1],['kind',0]])->get()->count();
+        $userChallengeCount = Section::where([['type',0],['kind',0]])->get()->count();
+
+        $adminThreadCount = Section::where([['type',1],['kind',1]])->get()->count();
+        $userThreadCount = Section::where([['type',0],['kind',1]])->get()->count();
+        $quizHeaderCount = QuizHeader::get()->count();
+        $commentCount = Reply::get()->count();
+        return view('admin.dashboard', compact(  'adminChallengeCount','commentCount','quizHeaderCount','userChallengeCount','adminThreadCount','userChallengeCount','userThreadCount', 'openTickets','primaryUsers'));
     }
 
     protected function search(Request $request)

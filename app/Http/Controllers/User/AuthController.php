@@ -341,7 +341,9 @@ class AuthController extends Controller
             'email' => 'required|email|exists:users,email',
             'password' => 'required|confirmed',
             'token' => 'required']);
-
+        if ($validator->fails()) {
+            return back()->withErrors($validator->errors())->withInput();
+        }
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
@@ -364,34 +366,34 @@ class AuthController extends Controller
             : back()->withErrors(['email' => [__($status)]]);
 
 
-}
-
-protected
-function resendSms(Request $request)
-{
-    if ($request->ajax()) {
-        $mobile = $request->input('mobile');
-        $type = $request->input('type');
-        $smsSetting = SmsSetting::first();
-        switch ($type) {
-            case 'register':
-                if (PreRegister::where('mobile', $mobile)->get()->count() > 0) {
-                    $code = PreRegister::where('mobile', $mobile)->first()->code;
-                    if (Setting::all()->count() > 0 && Setting::all()->first()->brand != null) {
-                        $name = Setting::all()->first()->brand;
-                    } else {
-                        $name = '';
-                    }
-                    $bulk = $this->sendFastSmsMokhaberat($mobile, $smsSetting->p_confirm_code,
-                        ["VerificationCode" => $code]);
-                    return response()->json(['code' => 'resent', 'bulk' => $bulk, 'mobile' => $mobile]);
-                } else {
-                    return response()->json(['resend' => 'failed']);
-                }
-                break;
-        }
-
     }
-}
+
+    protected
+    function resendSms(Request $request)
+    {
+        if ($request->ajax()) {
+            $mobile = $request->input('mobile');
+            $type = $request->input('type');
+            $smsSetting = SmsSetting::first();
+            switch ($type) {
+                case 'register':
+                    if (PreRegister::where('mobile', $mobile)->get()->count() > 0) {
+                        $code = PreRegister::where('mobile', $mobile)->first()->code;
+                        if (Setting::all()->count() > 0 && Setting::all()->first()->brand != null) {
+                            $name = Setting::all()->first()->brand;
+                        } else {
+                            $name = '';
+                        }
+                        $bulk = $this->sendFastSmsMokhaberat($mobile, $smsSetting->p_confirm_code,
+                            ["VerificationCode" => $code]);
+                        return response()->json(['code' => 'resent', 'bulk' => $bulk, 'mobile' => $mobile]);
+                    } else {
+                        return response()->json(['resend' => 'failed']);
+                    }
+                    break;
+            }
+
+        }
+    }
 
 }

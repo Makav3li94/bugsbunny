@@ -1,11 +1,11 @@
 <div class="chaleshKade_sidebar">
-    <div class="doc_rightsidebar scroll">
-        <div class="doc_switch">
-            <label for="something" class="tab-btn tab-btns"><i class="icon_lightbulb_alt"></i></label>
-            <input type="checkbox" name="something" id="something" class="tab_switcher">
-            <label for="something" class="tab-btn"><i class="far fa-moon"></i></label>
-        </div>
-    </div>
+{{--    <div class="doc_rightsidebar scroll">--}}
+{{--        <div class="doc_switch">--}}
+{{--            <label for="something" class="tab-btn tab-btns"><i class="icon_lightbulb_alt"></i></label>--}}
+{{--            <input type="checkbox" name="something" id="something" class="tab_switcher">--}}
+{{--            <label for="something" class="tab-btn"><i class="far fa-moon"></i></label>--}}
+{{--        </div>--}}
+{{--    </div>--}}
     <div class="widget ticket_widget">
         <h4 class="c_head">بهترین های کلی</h4>
 

@@ -12,7 +12,7 @@ use App\Models\FrontOverlay;
 use App\Models\FrontSocail;
 use App\Models\FrontWay;
 use Illuminate\Http\Request;
-use File;
+use Illuminate\Support\Facades\File;
 
 class FrontController extends Controller
 {
@@ -131,7 +131,7 @@ class FrontController extends Controller
         $frontFeature->update([
             'title' => $request->title,
             'sub' => $request->sub,
-            'icon' => $icon != null ? $icon : $featureImage->icon,
+            'icon' => $icon != null ? $icon : $frontFeature->icon,
         ]);
         return back()->with(['update' => 'success']);
     }
@@ -210,7 +210,7 @@ class FrontController extends Controller
             $frontWay->update([
                 'title' => $request->title,
                 'sub' => $request->sub,
-                'icon' => $icon != null ? $icon : $wayImage->icon,
+                'icon' => $icon != null ? $icon : $frontWay->icon,
             ]);
             return back()->with(['update' => 'success']);
         }
@@ -247,7 +247,7 @@ class FrontController extends Controller
 
         $frontOverlay->update([
             'body' => $request->body,
-            'bg' => $bg,
+            'bg' => $bg != null ? $bg : $frontOverlay->bg,
         ]);
         return back()->with(['update' => 'success']);
     }
@@ -280,7 +280,7 @@ class FrontController extends Controller
             'sub' => $request->sub,
             'link_title' => $request->link_title,
             'link' => $request->link,
-            'bg' => $bg ?? $frontCallTo->bg,
+            'bg' =>  $bg != null ? $bg : $frontCallTo->bg,
         ]);
         return back()->with(['update' => 'success']);
     }

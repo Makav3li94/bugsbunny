@@ -52,8 +52,8 @@ class ReplyController extends Controller
         $this->notifyAdmin($user->id, $user->name, $user->mobile, 'reply', $reply->id, 0,'کاربر کامنت جدیدی ارسال کرده است.');
 
         LogActivity::addToLog('کامنت جدیدی ارسال کرد.','reply',$reply->id);
-        return redirect()->back()->with(['store'=>'success']);
-
+//        return redirect()->back()->with(['store'=>'success']);
+        return redirect(url()->previous().'#replies')->with(['store'=>'success']);
     }
 
     /**

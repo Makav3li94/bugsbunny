@@ -18,19 +18,24 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">ویرایش {{$type == 'challenge' ? "چالش" :"سوال"}} </h4>
-                    <p class="card-subtitle">در اینجا میتوانید {{$type == 'challenge' ? "چالش" :"سوال"}}  را ویرایش کنید.</p>
+                    <p class="card-subtitle">در اینجا میتوانید {{$type == 'challenge' ? "چالش" :"سوال"}} را ویرایش
+                        کنید.</p>
                     <div class="row">
                         <div class="col-lg-2"></div>
                         <div class="col-lg-8">
-                            <form action="{{route('admin.challenge.update',$challenge->id)}}" class="form-horizontal clearfix" method="post"
+                            <form action="{{route('admin.challenge.update',$challenge->id)}}"
+                                  class="form-horizontal clearfix" method="post"
                                   enctype="multipart/form-data">
                                 @csrf
                                 @method('PATCH')
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">نام {{$type == 'challenge' ? "چالش" :"سوال"}} : <span
+                                    <label
+                                        class="col-sm-3 text-right control-label col-form-label">نام {{$type == 'challenge' ? "چالش" :"سوال"}}
+                                        : <span
                                             class="text-danger mr-1">*</span></label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="title" value="{{$challenge->title}}" class="form-control"
+                                        <input type="text" name="title" value="{{$challenge->title}}"
+                                               class="form-control"
                                                placeholder="">
                                         @if($errors->has('title'))
                                             <div class="alert alert-danger">
@@ -41,7 +46,9 @@
                                 </div>
 
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">نامک {{$type == 'challenge' ? "چالش" :"سوال"}} : <span
+                                    <label
+                                        class="col-sm-3 text-right control-label col-form-label">نامک {{$type == 'challenge' ? "چالش" :"سوال"}}
+                                        : <span
                                             class="text-danger mr-1">*</span></label>
                                     <div class="col-sm-9">
                                         <input type="text" name="slug" value="{{$challenge->slug}}" class="form-control"
@@ -55,7 +62,9 @@
                                 </div>
 
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">دسته {{$type == 'challenge' ? "چالش" :"سوال"}}: </label>
+                                    <label
+                                        class="col-sm-3 text-right control-label col-form-label">دسته {{$type == 'challenge' ? "چالش" :"سوال"}}
+                                        : </label>
                                     <div class="col-{{$type == 'challenge' ? '3' : '9'}}">
                                         <select class="select2 form-control custom-select" style="width: 100%;"
                                                 name="category_id">
@@ -63,12 +72,14 @@
                                             @forelse($categories as $cat)
                                                 @if($type == 'challenge' )
                                                     @if($cat->type == 0)
-                                                        <option value="{{$cat->id}}" {{$challenge->category_id == $cat->id ? 'selected':''}}  >{{$cat->title}}</option>
+                                                        <option
+                                                            value="{{$cat->id}}" {{$challenge->category_id == $cat->id ? 'selected':''}} >{{$cat->title}}</option>
 
                                                     @endif
                                                 @else
                                                     @if($cat->type == 1)
-                                                        <option value="{{$cat->id}}" {{$challenge->category_id == $cat->id ? 'selected':''}}  >{{$cat->title}}</option>
+                                                        <option
+                                                            value="{{$cat->id}}" {{$challenge->category_id == $cat->id ? 'selected':''}} >{{$cat->title}}</option>
 
                                                     @endif
                                                 @endif
@@ -81,27 +92,28 @@
                                         @endif
                                     </div>
                                     @if($type == 'challenge' )
-                                    <label class="col-sm-3 text-right control-label col-form-label">تاریخ
-                                        اتمام: </label>
-                                    <div class="col-3">
-                                        <input type="text" name="expire_date"
-                                               class="form-control text-center datepicker-day"
-                                               value="{{$challenge->expire_date}}" placeholder="">
-                                        @if($errors->has('expire_date'))
-                                            <div class="alert alert-danger">
-                                                {{$errors->first('expire_date')}}
-                                            </div>
-                                        @endif
+                                        <label class="col-sm-3 text-right control-label col-form-label">تاریخ
+                                            اتمام: </label>
+                                        <div class="col-3">
+                                            <input type="text" name="expire_date"
+                                                   class="form-control text-center datepicker-day"
+                                                   value="{{$challenge->expire_date}}" placeholder="">
+                                            @if($errors->has('expire_date'))
+                                                <div class="alert alert-danger">
+                                                    {{$errors->first('expire_date')}}
+                                                </div>
+                                            @endif
 
-                                    </div>
+                                        </div>
                                     @endif
                                 </div>
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">توضیحات {{$type == 'challenge' ? "چالش" :"سوال"}}
+                                    <label
+                                        class="col-sm-3 text-right control-label col-form-label">توضیحات {{$type == 'challenge' ? "چالش" :"سوال"}}
                                         : </label>
                                     <div class="col-12">
                                 <textarea name="description" id="editor1" rows="10"
-                                          cols="80">{!! $challenge->description !!}</textarea>
+                                          cols="80">{!! old('description') ?? $challenge->description !!}</textarea>
                                         @if($errors->has('description'))
                                             <div class="alert alert-danger">
                                                 {{$errors->first('description')}}
@@ -114,7 +126,7 @@
                                     <label class="col-sm-3 text-right control-label col-form-label">چکیده: </label>
                                     <div class="col-12">
                                 <textarea name="excerpt" class="form-control" rows="1"
-                                          cols="1">{!! $challenge->excerpt !!}</textarea>
+                                          cols="1">{!! strip_tags($challenge->excerpt) !!}</textarea>
                                         @if($errors->has('excerpt'))
                                             <div class="alert alert-danger">
                                                 {{$errors->first('excerpt')}}
@@ -123,36 +135,38 @@
                                     </div>
                                 </div>
                                 @if($type == 'challenge' )
-                                <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">متن جایزه: </label>
-                                    <div class="col-12">
+                                    <div class="row form-group">
+                                        <label class="col-sm-3 text-right control-label col-form-label">متن
+                                            جایزه: </label>
+                                        <div class="col-12">
                                 <textarea name="prize_text" class="form-control" rows="1"
                                           cols="1">{{$challenge->prize_text}}</textarea>
-                                        @if($errors->has('prize_text'))
-                                            <div class="alert alert-danger">
-                                                {{$errors->first('prize_text')}}
-                                            </div>
-                                        @endif
+                                            @if($errors->has('prize_text'))
+                                                <div class="alert alert-danger">
+                                                    {{$errors->first('prize_text')}}
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
                                 @endif
                                 <div class="row form-group">
                                     <div class="col-12">
                                         <p>
-                                        @if($type == 'challenge' )
-                                            وضعیت
-                                            {{$type == 'challenge' ? "چالش" :"سوال"}}
-                                            (لطفا پس از اتمام طراحی تمامی سوالات، وضعیت را تایید کنید):
-                                        @else
-                                            وضعیت
-                                            {{$type == 'challenge' ? "چالش" :"سوال"}}
-                                        @endif
+                                            @if($type == 'challenge' )
+                                                وضعیت
+                                                {{$type == 'challenge' ? "چالش" :"سوال"}}
+                                                (لطفا پس از اتمام طراحی تمامی سوالات، وضعیت را تایید کنید):
+                                            @else
+                                                وضعیت
+                                                {{$type == 'challenge' ? "چالش" :"سوال"}}
+                                            @endif
                                         </p>
                                         <input type="checkbox" name="status" class="form-control" data-on="تایید  شده."
                                                data-off="تایید نشده"
                                                data-toggle="toggle" data-size="bg" data-onstyle="success"
                                                data-style="ios"
-                                               @if($challenge->status=='2' || $challenge->status=='4') checked @endif id="{{$challenge->id}}"/>
+                                               @if($challenge->status=='2' || $challenge->status=='4') checked
+                                               @endif/>
 
                                     </div>
                                 </div>
@@ -186,7 +200,7 @@
                             <tr>
                                 <th class="text-center" style="width: 55px;">ردیف</th>
                                 <th class="text-center">سوال</th>
-                                <th class="text-center">نمره</th>
+                                <th class="text-center">امتیاز</th>
                                 <th class="text-center">وضعیت</th>
                                 <th class="text-center" style="width: 120px;">عملیات</th>
                             </tr>
@@ -211,15 +225,10 @@
                                         <button class="btn btn-success btn-sm edit-question" id="{{$question->id}}"><i
                                                 class="d-inline-flex align-middle ti-pencil ml-1"></i>ویرایش
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-sm delete-question"
-                                                id="{{$question->id}}"><i
-                                                class="d-inline-flex align-middle ti-close"></i></button>
-                                        <form method="post"
-                                              action="{{route('admin.question.destroy',$question->id)}}"
-                                              id="{{$question->id}}">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
+                                        <button type="button" onclick="deleteQuestion({{$question->id}})" class="btn btn-danger btn-sm">
+                                            <i class="d-inline-flex align-middle ti-close"></i>
+                                        </button>
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -269,7 +278,7 @@
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">نمره : <span
+                                    <label class="col-sm-3 text-right control-label col-form-label">امتیاز : <span
                                             class="text-danger mr-1">*</span></label>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" value="{{old('unit')}}" placeholder=""
@@ -302,8 +311,9 @@
 
                                     </div>
                                     <div class="col-sm-2">
-                                        <input type="checkbox" name="is_active_answer[{{0}}]" class="form-control"
-                                               data-on="درست"
+                                        <input type="checkbox" name="is_active_answer[{{0}}]"
+                                               class="form-control activy"
+                                               data-on="درست" id="is_active_answer-1"
                                                data-off="غلط" style="width: 100%"
                                                data-toggle="toggle" data-size="bg" data-onstyle="success"
                                                data-style="ios"
@@ -320,8 +330,9 @@
 
                                     </div>
                                     <div class="col-sm-2">
-                                        <input type="checkbox" name="is_active_answer[{{1}}]" class="form-control"
-                                               data-on="درست"
+                                        <input type="checkbox" name="is_active_answer[{{1}}]"
+                                               class="form-control activy"
+                                               data-on="درست" id="is_active_answer-2"
                                                data-off="غلط" style="width: 100%"
                                                data-toggle="toggle" data-size="bg" data-onstyle="success"
                                                data-style="ios"
@@ -337,8 +348,9 @@
 
                                     </div>
                                     <div class="col-sm-2">
-                                        <input type="checkbox" name="is_active_answer[{{2}}]" class="form-control"
-                                               data-on="درست"
+                                        <input type="checkbox" name="is_active_answer[{{2}}]"
+                                               class="form-control activy"
+                                               data-on="درست" id="is_active_answer-3"
                                                data-off="غلط" style="width: 100%"
                                                data-toggle="toggle" data-size="bg" data-onstyle="success"
                                                data-style="ios"
@@ -354,8 +366,9 @@
 
                                     </div>
                                     <div class="col-sm-2">
-                                        <input type="checkbox" name="is_active_answer[{{3}}]" class="form-control"
-                                               data-on="درست"
+                                        <input type="checkbox" name="is_active_answer[{{3}}]"
+                                               class="form-control activy"
+                                               data-on="درست" id="is_active_answer-4"
                                                data-off="غلط" style="width: 100%"
                                                data-toggle="toggle" data-size="bg" data-onstyle="success"
                                                data-style="ios"
@@ -450,10 +463,11 @@
 
                                     </div>
                                     <div class="col-sm-2">
-                                        <input type="checkbox" name="is_active_answer[{{0}}]" class="form-control"
-                                               data-on="درست"
+                                        <input type="checkbox" name="is_active_answer[{{0}}]"
+                                               class="form-control activy"
+                                               data-on="درست" id="is_active_answer0"
                                                data-off="غلط" style="width: 100%"
-                                               data-toggle="toggle" data-size="bg" id="is_active_answer0"
+                                               data-toggle="toggle" data-size="bg"
                                                data-onstyle="success"
                                                data-style="ios"
                                                @if((old('is_active_answer.1'))) checked @endif />
@@ -470,7 +484,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <input type="checkbox" name="is_active_answer[{{1}}]" id="is_active_answer1"
-                                               class="form-control"
+                                               class="form-control activy"
                                                data-on="درست"
                                                data-off="غلط" style="width: 100%"
                                                data-toggle="toggle" data-size="bg" data-onstyle="success"
@@ -488,7 +502,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <input type="checkbox" name="is_active_answer[{{2}}]" id="is_active_answer2"
-                                               class="form-control"
+                                               class="form-control activy"
                                                data-on="درست"
                                                data-off="غلط" style="width: 100%"
                                                data-toggle="toggle" data-size="bg" data-onstyle="success"
@@ -505,7 +519,9 @@
 
                                     </div>
                                     <div class="col-sm-2">
-                                        <input type="checkbox" name="is_active_answer[{{3}}]" class="form-control"
+
+                                        <input type="checkbox" name="is_active_answer[{{3}}]"
+                                               class="form-control activy"
                                                id="is_active_answer3"
                                                data-on="درست"
                                                data-off="غلط" style="width: 100%"
@@ -539,25 +555,43 @@
 @section('script')
     <script src="{{ asset('admin/assets/node_modules/ckeditor/ckeditor.js')}}"></script>
     <script>
-        CKEDITOR.replace('editor1', {
+        $(document).ready(function () {
+            $(".activy").change(function () {
+                if ($(this).is(":checked")) {
+                    $('[id^="is_active_answer"]').not(this).each(function () {
+                        $(this).bootstrapToggle('off');
+                    });
+                }
+            });
+            CKEDITOR.replace('editor1', {
 
-            contentsLangDirection: 'rtl',
-            // language: 'fa',
-            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
-            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
+                contentsLangDirection: 'rtl',
+                // language: 'fa',
+                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
+                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
 
-        });
-        CKEDITOR.replace('editor2', {
+            });
+            CKEDITOR.replace('editor2', {
 
-            contentsLangDirection: 'rtl',
-            // language: 'fa',
-            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
-            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
+                contentsLangDirection: 'rtl',
+                // language: 'fa',
+                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
+                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
 
-        });
+            });
+            var editor = CKEDITOR.replace('editor3', {
+                contentsLangDirection: 'rtl',
+                // language: 'fa',
+                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
+                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
+
+            });
+            });
     </script>
 @endsection

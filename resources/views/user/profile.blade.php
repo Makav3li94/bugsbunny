@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>'پروفایل',
+        'title'=>'پروفایل '.$user->username.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
-        'sub'=>'',
+        'sub'=>'پروفایل کاربری '.$user->name,
         'subLink'=>'',
-        'page'=>'پروفایل'
+         'page'=>'پروفایل '.$user->username.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
     )
 @section('style')
@@ -30,7 +30,7 @@
                             <div class="profile-head text-center mt-2">
                                 نام کاربری: {{$user->username}}
                             </div>
-                            <form method="post" class="text-center mt-2"  action=" {{route('logout')}}">
+                            <form method="post" class="text-center mt-2" action=" {{route('logout')}}">
                                 @csrf
                                 <button type="submit" style="font-size: 10px" class="btn btn-sm btn-danger p-1">
                                     <i class="fa fa-power-off"></i>
@@ -48,8 +48,6 @@
                                     <h3 class="title">چالش ساخته</h3>
                                 </div>
                                 <!-- /.funfact-box -->
-
-
 
 
                                 <div class="funfact-box text-center color-two wow fadeInRight" data-wow-delay="0.5s">
@@ -107,7 +105,7 @@
                             <hr>
                             <ul class="nav nav-tabs d-flex flex-column" style="border: none" id="myTab" role="tablist">
                                 <li class="nav-item p-1 active">
-                                    <a class="nav-link "
+                                    <a class="nav-link active"
                                        id="chalenges-tab" data-toggle="tab" href="#chalenges"
                                        role="tab"
                                        aria-controls="chalenges" aria-selected="false">چالش ها</a>
@@ -128,20 +126,19 @@
                                 </li>
 
 
-
                             </ul>
                         </div>
                         <div class="col-md-9">
                             <div class="tab-content profile-tab" id="myTabContent">
 
                                 {{--Section List--}}
-                                <div class="tab-pane fade" id="chalenges" role="tabpanel"
+                                <div class="tab-pane fade active show"  id="chalenges" role="tabpanel"
                                      aria-labelledby="chalenges-tab">
                                     <div class="card">
                                         <div class="card-body">
                                             <h4 class="card-title">چالش های {{$user->username}}</h4>
                                             <p class="card-subtitle">در اینجا چالش هایی که ادمین سامانه، یا سایر کاربران
-                                                ایجاد کرده اند را، بر اسا دسته های مورد علاقه خود مشاهده کنید.</p>
+                                                ایجاد کرده اند را، بر اساس دسته های مورد علاقه خود مشاهده کنید.</p>
                                             <div class="table-responsive">
                                                 <table class="sort-table table table_shortcode">
                                                     @if(count($userSections) > 0)
@@ -193,7 +190,7 @@
                                             <p class="card-subtitle">در اینجا سوال هایی که پرسیده اید را مشاهده می کنید.
                                             <div class="table-responsive">
                                                 <table class="sort-table table table_shortcode">
-                                                    @if( count($userSections) > 0)
+                                                    @if( count($threads) > 0)
                                                         <thead>
                                                         <tr>
                                                             <th>ردیف</th>
@@ -222,7 +219,7 @@
                                                             </td>
                                                         </tr>
                                                     @empty
-                                                        <div class="alert alert-warning">در حال حاضر، چالش اصلی موجود
+                                                        <div class="alert alert-warning">در حال حاضر، سوالی موجود
                                                             نیست.
                                                         </div>
                                                     @endforelse
@@ -364,7 +361,7 @@
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="default" role="tabpanel" aria-labelledby="defualt-tab">
+                                <div class="tab-pane fade " id="default" role="tabpanel" aria-labelledby="defualt-tab">
                                     <div class="card">
                                         <div class="card-body">
                                             <h4 class="card-title">پنل کاربری {{$user->username}}</h4>

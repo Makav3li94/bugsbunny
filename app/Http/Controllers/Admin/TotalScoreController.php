@@ -48,14 +48,14 @@ class TotalScoreController extends Controller
             }
             $score = $request->input('score');
             $type = $request->input('type');
-            $record = TotalScore::create([
+            TotalScore::create([
                 'user_id'=>$user->id,
                 'score' => $score,
                 'type' => $type,
                 'is_for'=>'love',
                 'model_id'=>0
             ]);
-            return response()->json(['scoreCreate' => 'submitted']);
+            return response()->json(['scoreCreate' => 'submitted','id'=>$user->id,'score'=>$user->score()['total']]);
 
         }
     }

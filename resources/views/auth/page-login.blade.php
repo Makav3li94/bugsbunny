@@ -112,7 +112,7 @@
                             @endif
                         </div>
                         <div class="col-sm-12 form-group">
-                            <small class="invalid-text">(حداقل 8 رقم با حرف uppercase و شامل !@#$% باشد.)</small>
+                            <small class="invalid-text">(حداقل 8 رقم با حرف uppercase و شامل !@#$% و عدد  باشد.)</small>
                             <label>رمز عبور</label>
                             <input dir="ltr" type="password" class="form-control text-left" value="" name="password" required>
                             @if($errors->has('password'))
@@ -120,8 +120,6 @@
                             @endif
                         </div>
                         <div class="col-sm-12 form-group">
-
-
                             <label>تایید رمز عبور</label>
                             <input dir="ltr" type="password" class="form-control text-left" value="" name="password_confirmation" required>
                             @if($errors->has('password_confirmation'))

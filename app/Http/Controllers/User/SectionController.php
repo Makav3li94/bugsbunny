@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Hekmatinasser\Verta\Verta;
+
 class SectionController extends Controller
 {
     use Numbers, Helpers;
@@ -34,11 +35,11 @@ class SectionController extends Controller
             $kind = 1;
             $status = 1;
             if ($validator->fails()) {
-                return back()->withErrors($validator)->withInput()->with('for','thread');
+                return back()->withErrors($validator)->withInput()->with('for', 'thread');
             }
-        }else{
+        } else {
             if ($validator->fails()) {
-                return back()->withErrors($validator)->withInput()->with('for','section');
+                return back()->withErrors($validator)->withInput()->with('for', 'section');
             }
         }
 
@@ -53,7 +54,7 @@ class SectionController extends Controller
         $challenge = Section::create([
             'title' => $request->title,
             'category_id' => $request->category_id,
-            'slug'=>str_slug_persian($request->title),
+            'slug' => str_slug_persian($request->title),
             'type' => 0,
             'kind' => $kind,
             'user_id' => auth()->id(),
@@ -65,13 +66,15 @@ class SectionController extends Controller
 
 
         $user = User::find(auth()->id());
-        $this->notifyAdmin($user->id, $user->name, $user->mobile, 'challenge', $challenge->id, 0, 'کاربر چالش یا سوال جدیدی ایجاد کرد.');
-        if (isset($request->thread)) {
-            LogActivity::addToLog('سوال جدیدی ایجاد کرد.','thread',$challenge->id);
-        }else{
-            LogActivity::addToLog('چالش جدیدی ایجاد کرد.','section',$challenge->id);
+        if ($challenge) {
+            $this->notifyAdmin($user->id, $user->name, $user->mobile, 'challenge', $challenge->id, 0, 'کاربر چالش یا سوال جدیدی ایجاد کرد.');
+            if (isset($request->thread)) {
+                LogActivity::addToLog('سوال جدیدی ایجاد کرد.', 'thread', $challenge->id);
+            } else {
+                LogActivity::addToLog('چالش جدیدی ایجاد کرد.', 'section', $challenge->id);
+            }
         }
-        return back()->with(['store' => 'success','crud'=> $kind == 0 ?'section_store' : 'thread_store' ,'section_id'=>$challenge->id]);
+        return back()->with(['store' => 'success', 'crud' => $kind == 0 ? 'section_store' : 'thread_store', 'section_id' => $challenge->id]);
     }
 
 

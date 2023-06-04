@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>'گروه ایزباگ - تضمین کیفیت و امنیت نرم افزار',
+        'title'=>' تضمین کیفیت و امنیت نرم افزار'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
-        'sub'=>'',
+        'sub'=>$setting->description,
         'subLink'=>'',
-        'page'=>'گروه ایزباگ - تضمین کیفیت و امنیت نرم افزار'
+        'page'=>' تضمین کیفیت و امنیت نرم افزار'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
     )
 @section('content')

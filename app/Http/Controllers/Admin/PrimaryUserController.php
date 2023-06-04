@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Traits\Helpers;
 use App\Traits\Numbers;
 use Illuminate\Http\Request;
-use File;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -116,6 +115,7 @@ class PrimaryUserController extends Controller
         if (isset($request->authStatus)) $status = 1; else $status = 0;
         if ($user->authStatus != $status) {
             $this->authStatus($status,$user);
+            $this->readMFNotification($user->id,'register',$user->id);
             $this->readMFNotification($user->id,'profileChange',$user->id);
         }
         $birthDate = $this->convertToGoregianDate($request->input('birthDate'));

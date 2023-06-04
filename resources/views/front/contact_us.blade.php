@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>'تماس با ما |  ایزباگ',
+        'title'=>'تماس با ما'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
-        'sub'=>'فرم تماس با ما ایزباگ',
+        'sub'=>'فرم تماس با ما'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'subLink'=>'',
-        'page'=>'تماس با ما |  ایزباگ'
+        'page'=>'تماس با ما'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
     )
 @section('content')

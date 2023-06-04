@@ -25,6 +25,18 @@
             , hideAfter: 3500
             , stack: 6
         });
+
+        @elseif(session()->get('quiz')=='success')
+        $.toast({
+            heading: 'موفقیت!'
+            , text: 'از شرکت شما در چالش ممنونیم'
+            , position: 'bottom-left'
+            , textAlign: 'right'
+            , loaderBg: '#03a9f3'
+            , icon: 'success'
+            , hideAfter: 3500
+            , stack: 6
+        });
         @elseif(session()->get('store')=='success')
         $.toast({
             heading: 'موفقیت!'

@@ -243,7 +243,7 @@
                     <thead class="bg-success text-white">
                     <tr>
                         <th class="text-center">سوال</th>
-                        <th class="text-center">نمره</th>
+                        <th class="text-center">امتیاز</th>
                         <th class="text-center">وضعیت</th>
                         <th class="text-center">عملیات</th>
                     </tr>

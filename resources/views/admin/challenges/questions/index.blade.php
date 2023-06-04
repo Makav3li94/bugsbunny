@@ -21,7 +21,7 @@
                             <tr>
                                 <th class="text-center" style="width: 55px;">ردیف</th>
                                 <th class="text-center">سوال</th>
-                                <th class="text-center">نمره</th>
+                                <th class="text-center">امتیاز</th>
                                 <th class="text-center">وضعیت</th>
                                 <th class="text-center" style="width: 120px;">عملیات</th>
                             </tr>
@@ -104,7 +104,7 @@
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label class="col-sm-3 text-right control-label col-form-label">نمره : <span
+                                    <label class="col-sm-3 text-right control-label col-form-label">امتیاز : <span
                                             class="text-danger mr-1">*</span></label>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" value="{{old('unit')}}" placeholder=""

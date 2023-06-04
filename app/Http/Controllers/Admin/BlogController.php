@@ -7,7 +7,8 @@ use App\Models\Blog;
 use App\Traits\Numbers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use File;
+use Illuminate\Support\Facades\File;
+
 use Illuminate\Support\Str;
 use Verta;
 use function App\Helpers\str_slug_persian;
@@ -146,33 +147,13 @@ class BlogController extends Controller
             $img_cover = null;
 
 
-        if (isset($request->published_at)) {
-
-            $published_at = $this->convertNumbers($request->published_at);
-            $published_at = explode('/', $published_at);
-            $published_at = Verta::getGregorian($published_at[0], $published_at[1], $published_at[2]);
-            $published_at = $published_at[0] . "-" . $published_at[1] . "-" . $published_at[2];
-            if (isset($request->publish_time)) {
-                if (strlen($request->publish_time) == 5) {
-                    $published_at .= " " . $request->publish_time . ":00";
-                } else {
-                    $published_at .= " " . $request->publish_time;
-                }
-            }
-            $published_at = Carbon::createFromFormat('Y-m-d H:i:s', $published_at)->toDateTimeString();
-
-        }
-
         $blog->update([
             'title' => $request->title,
             'slug' => !empty($request->slug) ? preg_replace('/\s+/', '-', $request->slug) : Str::slug($request->title, '-'),
             'img_cover' => $img_cover != null ? $img_cover : $blog->img_cover,
             'description' => $request->description,
             'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
-            'published_at' => $published_at,
         ]);
-        if (!empty($request->tags))
-            $blog->syncTags(explode(',', $request->tags));
         return redirect(route('admin.blog.index'))->with(['store' => 'success']);
     }
 

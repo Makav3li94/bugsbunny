@@ -28,7 +28,7 @@ class HandleGhosts extends Command
      */
     public function handle()
     {
-        $users = User::where('authStatus',0)->get();
+        $users = User::where([['authStatus',0],['username','']])->get();
         foreach ($users as $user){
             $user->notes()->delete();
             $user->smses()->delete();

@@ -776,14 +776,14 @@
     }
   });
 
-  $("input[type=search]").focus(function () {
-    $("body").addClass("search-focused");
-    $(".banner_search_form .input-group").css("z-index", "9999");
-  });
-
-  $("input[type=search]").focusout(function () {
-    $("body").removeClass("search-focused");
-  });
+  // $("input[type=search]").focus(function () {
+  //   $("body").addClass("search-focused");
+  //   $(".banner_search_form .input-group").css("z-index", "9999");
+  // });
+  //
+  // $("input[type=search]").focusout(function () {
+  //   $("body").removeClass("search-focused");
+  // });
 
   // === Video Autoplay on viewport
   $(document).ready(function () {

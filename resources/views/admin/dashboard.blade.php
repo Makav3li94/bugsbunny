@@ -12,32 +12,32 @@
             <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title font-12">تعداد کاربران  امروز</h5>
+                        <h5 class="card-title font-12">تعداد کاربران </h5>
                         <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
-                            <span class="text-truncate"><i class="icon-book-open display-5"></i></span>
-                            <a class="link font-28 ml-auto">{{number_format(1)}}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title font-12">تعداد چالش امروز</h5>
-                        <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
-                            <span class="text-info"><i class="icon-envelope-open display-5"></i></span>
-                            <a class="link font-28 ml-auto">{{number_format(1)}}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title font-12">تعداد کل کاربران</h5>
-                        <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
-                            <span class="text-success"><i class="icon-user display-5"></i></span>
+                            <span class="text-truncate"><i class="icon-user display-5"></i></span>
                             <a class="link font-28 ml-auto">{{number_format($primaryUsers)}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title font-12">تعداد چالش اصلی</h5>
+                        <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
+                            <span class="text-info"><i class="icon-question display-5"></i></span>
+                            <a class="link font-28 ml-auto">{{number_format($adminChallengeCount)}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title font-12">تعداد چالش کاربر</h5>
+                        <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
+                            <span class="text-success"><i class="icon-question display-5"></i></span>
+                            <a class="link font-28 ml-auto">{{number_format($userChallengeCount)}}</a>
                         </div>
                     </div>
                 </div>
@@ -47,36 +47,58 @@
                     <div class="card-body">
                         <h5 class="card-title font-12">تعداد تیکت های باز</h5>
                         <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
-                            <span class="text-primary"><i class="icon-bubbles display-5"></i></span>
+                            <span class="text-warning"><i class="icon-support display-5"></i></span>
                             <a class="link font-28 ml-auto">{{number_format($openTickets)}}</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title font-12">تعداد چالش ها</h5>
+                        <h5 class="card-title font-12">تعداد سوال ادمین</h5>
                         <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                             <span class="text-primary"><i class="icon-bubbles display-5"></i></span>
-                            <a class="link font-28 ml-auto">{{number_format($openTickets)}}</a>
+                            <a class="link font-28 ml-auto">{{number_format($adminThreadCount)}}</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title font-12">تعداد پاسخ ها</h5>
+                        <h5 class="card-title font-12">تعداد سوال کاربر</h5>
                         <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                             <span class="text-primary"><i class="icon-bubbles display-5"></i></span>
-                            <a class="link font-28 ml-auto">{{number_format($openTickets)}}</a>
+                            <a class="link font-28 ml-auto">{{number_format($userThreadCount)}}</a>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title font-12">تعداد کامنت ها</h5>
+                        <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
+                            <span class="text-danger"><i class="icon-speech display-5"></i></span>
+                            <a class="link font-28 ml-auto">{{number_format($commentCount)}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title font-12">تعداد آزمون دهنده ها</h5>
+                        <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
+                            <span class="text-success"><i class="icon-pencil display-5"></i></span>
+                            <a class="link font-28 ml-auto">{{number_format($quizHeaderCount)}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- End Status -->
         <!-- Chart Status -->

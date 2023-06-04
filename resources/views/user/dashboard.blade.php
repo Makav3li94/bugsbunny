@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>'پنل کاربری شما',
+        'title'=>'پنل کاربری '.$user->username.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
         'sub'=>'',
         'subLink'=>'',
-        'page'=>'پنل کاربری شما'
+        'page'=>'پنل کاربری'.$user->username.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
     )
 @section('style')
@@ -31,9 +31,9 @@
 
                             </div>
                             <div class="profile-head text-center mt-2">
-                                    نام کاربری: {{$user->username}}
+                                نام کاربری: {{$user->username}}
                             </div>
-                            <form method="post" class="text-center mt-2"  action=" {{route('logout')}}">
+                            <form method="post" class="text-center mt-2" action=" {{route('logout')}}">
                                 @csrf
                                 <button type="submit" style="font-size: 10px" class="btn btn-sm btn-danger p-1">
                                     <i class="fa fa-power-off"></i>
@@ -51,8 +51,6 @@
                                     <h3 class="title">چالش ساخته</h3>
                                 </div>
                                 <!-- /.funfact-box -->
-
-
 
 
                                 <div class="funfact-box text-center color-two wow fadeInRight" data-wow-delay="0.5s">
@@ -171,9 +169,7 @@
                             <div class="tab-content profile-tab" id="myTabContent">
 
                                 {{--Edit Profile--}}
-                                <div
-                                    class="tab-pane fade "
-                                    id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div class="card">
                                         <div class="card-body">
                                             <h4 class="card-title">اطلاعات کاربری شما</h4>
@@ -327,13 +323,12 @@
                                                         <thead>
                                                         <tr>
                                                             <th>ردیف</th>
-                                                            <th>چالش</th>
+                                                            <th style="width: 120px">چالش</th>
                                                             <th>دسته</th>
                                                             <th>مهلت</th>
                                                             <th>وضعیت</th>
                                                             <th>متعلق</th>
-                                                            <th>سوال</th>
-                                                            <th style="width: 210px">عملیات</th>
+                                                            <th style="width: 100px">عملیات</th>
                                                         </tr>
                                                         </thead>
                                                     @endif
@@ -342,17 +337,17 @@
                                                     @forelse($sections as $key=>$section)
                                                         <tr>
                                                             <th>{{$counter}}</th>
-                                                            <td>{{\Illuminate\Support\Str::limit($section->title,30)}}</td>
+                                                            <td style="width: 80px;font-size: 12px">{{\Illuminate\Support\Str::limit($section->title,30,' ...')}}</td>
                                                             <td>{{$section->category->title}}</td>
                                                             <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
                                                             <td>
                                                                 @include('layouts.components.status')
                                                             </td>
                                                             <td>سایر</td>
-                                                            <td>{{$section->questions_count." عدد"}}</td>
-                                                            <td style="width: 210px"><a class="btn btn-sm btn-warning"
+                                                            <td style="width: 100px"><a class="btn btn-sm btn-warning"
                                                                                         target="_blank"
-                                                                                        href="{{route('section',$section->slug)}}">مشاهده</a>
+                                                                                        href="{{route('section',$section->slug)}}"><i
+                                                                        class="fa fa-eye"></i></a>
                                                             </td>
                                                         </tr>
                                                         @php $counter ++; @endphp
@@ -361,28 +356,29 @@
                                                             نیست.
                                                         </div>
                                                     @endforelse
-                                                    <hr>
                                                     @forelse($userSections as $key=>$section)
                                                         <tr>
                                                             <th>{{$counter}}</th>
-                                                            <td>{{\Illuminate\Support\Str::limit($section->title,30)}}</td>
+                                                            <td style="width: 80px;font-size: 12px">{{\Illuminate\Support\Str::limit($section->title,30,' ...')}}</td>
                                                             <td>{{$section->category->title}}</td>
                                                             <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
                                                             <td>         @include('layouts.components.status')</td>
                                                             <td>{{$section->user->username == auth()->user()->username ? "شما"  : $section->user->username}}</td>
-                                                            <td>{{$section->questions_count." عدد"}}</td>
-                                                            <td style="width: 200px">
+                                                            <td style="width: 100px">
                                                                 @if($section->user->username == auth()->user()->username)
                                                                     <a href="javascript:void(0)"
                                                                        class="btn btn-sm btn-primary edit-section"
                                                                        id="section-{{$section->id}}"
-                                                                       onclick="editSection({{$section->id}})">ویرایش</a>
+                                                                       onclick="editSection({{$section->id}})"><i
+                                                                            class="fa fa-pencil"></i></a>
                                                                     <a href="javascript:void(0)"
                                                                        class="btn btn-sm btn-success"
-                                                                       onclick="getQuestions({{$section->id}})">سوالات</a>
+                                                                       onclick="getQuestions({{$section->id}})"><i
+                                                                            class="fa fa-question-circle"></i></a>
                                                                 @endif
                                                                 <a class="btn btn-sm btn-warning"
-                                                                   href="{{route('section',$section->slug)}}">مشاهده</a>
+                                                                   href="{{route('section',$section->slug)}}"><i
+                                                                        class="fa fa-eye"></i></a>
                                                             </td>
                                                         </tr>
                                                         @php $counter ++; @endphp
@@ -635,10 +631,12 @@
                                                                     <a href="javascript:void(0)"
                                                                        class="btn btn-sm btn-primary edit-thread"
                                                                        id="thread-{{$item->id}}"
-                                                                       onclick="editSection({{$item->id}})">ویرایش</a>
+                                                                       onclick="editSection({{$item->id}})"><i
+                                                                            class="fa fa-pencil"></i></a>
                                                                 @endif
                                                                 <a class="btn btn-sm btn-warning"
-                                                                   href="{{route('section',$item->slug)}}">مشاهده</a>
+                                                                   href="{{route('section',$item->slug)}}"><i
+                                                                        class="fa fa-eye"></i></a>
                                                             </td>
                                                         </tr>
                                                     @empty
@@ -728,7 +726,7 @@
                                         <div class="card-body">
                                             <h4 class="card-title">تاریخچه فعالیت ها</h4>
                                             <p class="card-subtitle">
-                                                هر غلتی تا الان کردید اینجا میبینید.
+                                                تمامی فعالیت های خود را اینجا می بینید.
                                             </p>
                                             <div class="table-responsive">
                                                 <table class="sort-table table table_shortcode">
@@ -767,8 +765,9 @@
                                                             <td>
 
                                                                 <a href="{{$activity->sectionLink($activity->model_id)}}"
-                                                                   target="_blank">مشاهده
-                                                                    <i class="fa fa-eye"></i></a>
+                                                                   class="btn btn-sm btn-warning"
+                                                                   target="_blank"><i class="fa fa-eye"></i>
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     @empty
@@ -791,6 +790,7 @@
                                                 تاریخچه تیکت هاتون با پشتیبانی ایزباگ
                                             </p>
                                             <div class="table-responsive ">
+                                                @if($tickets->count() > 0)
                                                 <table class="sort-table table table_shortcode mt-5">
                                                     <thead>
                                                     <tr>
@@ -801,7 +801,7 @@
                                                         <th>اهمیت</th>
                                                         <th>مرحله</th>
                                                         <th>وضعیت</th>
-                                                        <th width="180px">عملیات</th>
+                                                        <th>عملیات</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -831,7 +831,7 @@
                                            {{$ticket->status=='0' ? 'بسته' : 'باز'}}
                                         </span>
                                                             </td>
-                                                            <td width="180px">
+                                                            <td>
                                                                 <a href="javascript:void(0)"
                                                                    onclick="getTicket({{$ticket->id}})"
                                                                    class="btn btn-success btn-sm "><i
@@ -859,6 +859,11 @@
                                                         </div>
                                                     @endforelse
                                                 </table>
+                                                @else
+                                                    <div class="alert alert-warning">در حال حاضر، تیکتی موجود
+                                                        نیست.
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -1012,6 +1017,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
     </section>
     @include('layouts.user.dashboard_modal')
 @stop

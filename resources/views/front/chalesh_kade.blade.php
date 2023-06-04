@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>'محفل آزمون گرها ایزباگ',
+        'title'=>'محفل آزمون گرها'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
-        'sub'=>'چالش کده شامل تمامی چالش های ایزباگه',
+        'sub'=>'چالش کده شامل تمامی چالش های'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'subLink'=>'',
-        'page'=>'محفل آزمون گرها ایزباگ'
+        'page'=>'محفل آزمون گرها'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
     )
 @section('content')

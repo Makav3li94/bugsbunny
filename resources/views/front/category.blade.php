@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>'ایزباگ | دسته بندی های چالش',
+        'title'=>' دسته بندی های چالش'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
         'sub'=>'صفحه دسته بندی های چالش',
         'subLink'=>'',
-        'page'=>'ایزباگ | دسته بندی های چالش'
+        'page'=>' دسته بندی های چالش'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
     )
 @section('content')
@@ -47,7 +47,7 @@
                         <!-- /.action-content -->
 
                         <div class="action-button-container">
-                            <a href="#" class="action_btn btn-ans">چالش خودتو بساز</a>
+                            <a href="{{auth()->check() ? route('user.dashboard') : route('register')}}" class="action_btn btn-ans">چالش خودتو بساز</a>
                         </div>
                         <!-- /.action-button-container -->
                     </div>
@@ -96,9 +96,9 @@
                                 <div class="post-content">
                                     <div class="author-avatar">
                                         @if($item->type ==1)
-                                                <img src="{{asset('admin/assets/images/2.png')}}"  alt="cmm">
+                                                <img src="{{asset('admin/assets/images/2.png')}}"    alt="cmm">
                                         @else
-                                                <img src="{{asset('images/user/'.$item->user->avatar)}}"  alt="cmm">
+                                                <img src="@if($item->user->avatar!="" || $item->user->avatar !=null ) {{asset('images/user/'.$item->user->avatar) }}@else {{asset('front/img/home_one/1.png')}} @endif"    alt="cmm">
                                         @endif
                                     </div>
                                     <div class="entry-content">
@@ -107,8 +107,12 @@
                                         </h3>
                                         <ul class="meta">
                                             <li>
-                                                <img src="{{asset('images/user/'.$item->user->avatar)}}" width="30" alt="cmm">
-                                                <a href="#">آخرین ارسال: {{$item->user->name}}</a>
+                                                @if($item->type ==1)
+                                                    <img src="{{asset('admin/assets/images/2.png')}}"  width="15"  alt="cmm">
+                                                @else
+                                                    <img src="@if($item->user->avatar!="" || $item->user->avatar !=null ) {{asset('images/user/'.$item->user->avatar) }}@else {{asset('front/img/home_one/1.png')}} @endif" width="15"   alt="cmm">
+                                                @endif
+                                                <a href="{{$item->type == 1 ? 'javascript:void(0)' : route('user',$item->user->username)}}">آخرین ارسال: {{$item->user->name}}</a>
                                             </li>
                                             <li>
                                                 <i class="icon_calendar"></i> {{Verta::instance($item->updated_at)->format('Y-m-d')}}
@@ -118,8 +122,8 @@
                                 </div>
                                 <div class="post-meta-wrapper">
                                     <ul class="post-meta-info">
-                                        <li><a href="#"><i class="icon_chat_alt"></i>{{$item->replies->count()}}</a></li>
-                                        <li><a href="#"><i class="icon_pencil"></i>{{$item->quizHeaders->count()}}</a></li>
+                                        <li><a href="javascript:void(0)"><i class="icon_chat_alt"></i>{{$item->replies->count()}}</a></li>
+                                        <li><a href="javascript:void(0)"><i class="icon_pencil"></i>{{$item->quizHeaders->count()}}</a></li>
                                     </ul>
                                 </div>
                             </div>

@@ -14,11 +14,7 @@
                                 src="{{isset($setting) && $setting->first_logo!=null ? $setting->first_logo : asset('admin/assets/images/logo-light-text.png')}}"
                                 alt="{{!isset($setting) ? '' : $setting->brand}}" width="100"/></a>
 
-                        <h4 class="c_head">خبرنامه</h4>
-                        <form action="#" class="footer_subscribe_form">
-                            <input type="email" placeholder="Email" class="form-control">
-                            <button type="submit" class="s_btn">ارسال</button>
-                        </form>
+                            <p>{{isset($setting) ? $setting->description : ''}}</p>
                         <ul class="list-unstyled f_social_icon">
                             @forelse($frontSocail as $socail)
                                 <li><a href="{{$socail->link}}" title="{{$socail->title}}"><img src="{{asset('/images/front/socail/'.$socail->icon)}}" width="20" alt=""></a></li>

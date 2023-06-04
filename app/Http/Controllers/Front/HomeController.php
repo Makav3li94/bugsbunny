@@ -152,10 +152,11 @@ class HomeController extends Controller
                 'quiz_header_id' => $quizHeader->id,
                 'question_id' => $key,
                 'answer_id' => $value,
-                'is_correct' => $a->id == $ua->id ? $q->unit : 0
+                'is_correct' => $a->id == $ua->id ? 1 : 0,
+                'unit'=>$q->unit
             ]);
         }
-        return redirect()->back();
+        return redirect()->back()->with('quiz','success');
     }
 
     public function show($slug)

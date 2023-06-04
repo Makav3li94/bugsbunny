@@ -128,7 +128,7 @@
                     <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i
                                 class="icon-compass"></i><span class="hide-menu">پیامک</span></a>
                         <ul aria-expanded="false" class="collapse">
-                            <li><a href="{{route('admin.sms.index')}}">لیست پیامک های ارسال شده</a></li>
+{{--                            <li><a href="{{route('admin.sms.index')}}">لیست پیامک های ارسال شده</a></li>--}}
                             <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
                                    aria-expanded="false"><span class="hide-menu">مدیریت خطوط</span></a>
                                 <ul aria-expanded="false" class="collapse">

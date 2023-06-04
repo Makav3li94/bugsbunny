@@ -43,8 +43,6 @@ class SectionController extends Controller
             'title' => 'required|string',
             'category_id' => 'required|numeric',
             'slug' => 'unique:sections',
-            'excerpt' => 'string|min:3|max:255',
-            'prize_text' => 'string',
         ]);
         $kind = 0;
         $type = 'challenge';
@@ -67,12 +65,12 @@ class SectionController extends Controller
             'slug' => str_slug_persian($request->title),
             'kind' => $kind,
             'description' => $request->description,
-            'excerpt' => $request->excerpt ?? Str::limit($request->description->value, 50),
+            'excerpt' => $request->excerpt ?? Str::limit($request->description, 50),
             'prize_text' => $request->prize_text ?? "",
             'expire_date' => $published_at,
         ]);
         $challenges = Section::with(['user', 'category'])->get();
-        return view('admin.challenges.sections.index', compact('challenges'));
+        return view('admin.challenges.sections.index', compact('challenges'))->with('store','success');
     }
 
 

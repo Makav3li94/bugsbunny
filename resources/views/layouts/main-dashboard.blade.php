@@ -6,8 +6,6 @@
     <title>@yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="{{isset($setting) ? $setting->description : ''}}">
-    <meta name="keywords" content="{{isset($setting) ? $setting->keywords : ''}}">
-    <meta name="author" content="Parham Akbari">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon icon -->
@@ -175,12 +173,13 @@
 <script src="{{ asset('admin/assets/node_modules/bootstrap4-toggle-master/js/bootstrap4-toggle.min.js')}}"></script>
 
 @if(strpos(url()->current(), '/admin/dashboard') == true)
-    @yield('script');
 
     <!-- wysiwyg - Froala Editor Javascript -->
 
 
     <script src="{{asset('admin/assets/js/custom-admin.js')}}"></script>
+    @yield('script');
+
 
 @else
     @yield('user_script');

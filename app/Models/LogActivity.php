@@ -15,6 +15,11 @@ class LogActivity extends Model
 
     public function sectionLink($id){
         $section = Section::find($id);
-        return route('section',$section->slug);
+        if ($section){
+            $route = route('section',$section->slug);
+        }else{
+            $route = 'javascript:void(0)';
+        }
+        return $route;
     }
 }

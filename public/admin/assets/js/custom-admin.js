@@ -790,27 +790,24 @@ $(document).ready(function () {
             'dataType': 'json',
             data: {id: id},
             success: function (response) {
-                if (!$.isEmptyObject(response.question)) {
-                    $('#collapseQuestionForm input[name=question]').val(response.question[0].question);
-                    $('#collapseQuestionForm textarea[name=explanation]').val(response.question[0].explanation);
-                    $('#collapseQuestionForm input[name=unit]').val(response.question[0].unit);
-                    if (response.question[0].is_active == '1') {
-                        $('#questin_is_active').prop('checked', true).trigger('click');
-                    }
-                    CKEDITOR.replace('editor3', {
-                        contentsLangDirection: 'rtl',
-                        // language: 'fa',
-                        filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-                        filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
-                        filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-                        filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
+                if (!$.isEmptyObject(response)) {
 
-                    });
-                    var data = response.question[0].answers;
+                    $('#collapseQuestionForm input[name=question]').val(response.question);
+                    CKEDITOR.instances['editor3'].setData(response.explanation)
+                    $('#collapseQuestionForm input[name=unit]').val(response.unit);
+                    if (response.is_active == '1') {
+                        $('#questin_is_active').bootstrapToggle('on')
+                    } else {
+                        $('#questin_is_active').prop('checked', false).change()
+                    }
+
+                    var data = response.answers;
                     $.each(data, function (key) {
                         $('#collapseQuestionForm #answer' + key + '').val(data[key].answer);
                         if (data[key].is_checked == '1') {
-                            $('#collapseQuestionForm #is_active_answer' + key + '').prop('checked', true).trigger('click');
+                            $('#collapseQuestionForm #is_active_answer' + key + '').bootstrapToggle('on');
+                        } else {
+                            $('#collapseQuestionForm #is_active_answer' + key + '').prop('checked', false).change()
                         }
                     });
                     $('#collapseQuestionForm').attr('action', '/admin/dashboard/question/' + id,);
@@ -819,7 +816,50 @@ $(document).ready(function () {
         });
     });
 
+    function deleteQuestion(id) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            'url': 'admin/dashboard/question/' + id,
+            'type': 'DELETE',
+            'dataType': 'json',
+            beforeSend: function () {
+                $('.preloader').fadeIn();
+            },
+            complete: function () {
+                $('.preloader').fadeOut();
+            },
+            success: function (response) {
+                if (!$.isEmptyObject(response.questionError)) {
+                    $.toast({
+                        heading: 'خطا!',
+                        text: 'ورودی های خود را بررسی کنید',
+                        position: 'bottom-left',
+                        textAlign: 'right',
+                        loaderBg: '#ff6849',
+                        icon: 'error',
+                        hideAfter: 3500
+                    });
 
+                } else if (response.question == 'deleted') {
+                    $('.edit-question[id="' + id + '"]').parents('tr').fadeOut();
+                    $.toast({
+                        heading: 'موفقیت!',
+                        text: 'اطلاعات حذف شد',
+                        position: 'bottom-left',
+                        textAlign: 'right',
+                        loaderBg: '#ff6849',
+                        icon: 'success',
+                        hideAfter: 3500
+                    });
+
+                }
+            }
+        });
+    }
     //======================== Filters Todos ===========================================================================
     $(document).on('click', '#filterTodos', function () {
         var from_date = $('input[name=from_date]').val();
@@ -1267,6 +1307,9 @@ $(document).ready(function () {
                         hideAfter: 3500
                     });
                 }
+
+                var tr = $('button.edit-score[id="' + response.id + '"]').parents('tr');
+                tr.find('td:eq(6)').text(response.score);
             }
         });
     });

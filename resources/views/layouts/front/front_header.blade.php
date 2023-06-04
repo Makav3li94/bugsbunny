@@ -8,7 +8,7 @@
                     <h4 class="mt-2"><span>ایز</span>باگ</h4>
                 </div>
             </div>
-            <h2 class="head">در حال آماده هسازی</h2>
+            <h2 class="head">در حال آماده سازی</h2>
             <p></p>
         </div>
     </div>
@@ -68,9 +68,15 @@
                     <p class="wow fadeInUp" data-wow-delay="0.5s">
                         {{$frontHeros->sub}}
                     </p>
-                    <form action="#" class="banner_search_form">
-                        <input type="search" class="form-control" placeholder='{{$frontHeros->search_placeholder}}'>
-                        <button type="submit"><i class="icon_search"></i></button>
+
+                    <form action="#" class="app-search banner_search_form" autocomplete="off">
+                        <div class="input-group">
+                            <input type="search" class="form-control" id="s_val" placeholder='{{$frontHeros->search_placeholder}}'>
+                            <button type="button"><i class="icon_search"></i></button>
+                        </div>
+                        <br>
+                        <div class="list-group" style="position:absolute;bottom: 190px;text-align: right">
+                        </div>
                     </form>
                 </div>
             </div>

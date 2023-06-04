@@ -29,7 +29,7 @@
                 <h4 class="mt-2"><span>ایز</span>باگ</h4>
             </div>
         </div>
-        <h2 class="head">در حال آماده هسازی</h2>
+        <h2 class="head">در حال آماده سازی</h2>
         <p></p>
     </div>
 </div>

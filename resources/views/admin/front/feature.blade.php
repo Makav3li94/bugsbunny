@@ -133,7 +133,7 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label class="col-sm-3 text-right control-label col-form-label">زیرنویس : <span
+                            <label class="col-sm-3 text-right control-label col-form-label">تصویر : <span
                                     class="text-danger mr-1">*</span></label>
                             <div class="col-sm-9">
                                 <img id="frontFeatureIcon" src="" width="30" alt="">

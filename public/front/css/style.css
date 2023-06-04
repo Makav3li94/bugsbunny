@@ -2965,6 +2965,8 @@ ul.list-style li:last-child {
     border: 0;
     line-height: 24px;
     padding: 0 30px 35px;
+    direction: rtl;
+    text-align: right;
 }
 
 .doc_faq_info .card.active {
@@ -3171,10 +3173,11 @@ ul.list-style li:last-child {
 
 .funfact-boxes .funfact-box .fanfact-icon {
     margin-bottom: 20px;
+    overflow: hidden;
 }
 
 .funfact-boxes .funfact-box .fanfact-icon img {
-    filter: drop-shadow(0px 20px 40px #086174);
+    /*filter: drop-shadow(0px 20px 40px #086174);*/
 }
 
 .funfact-boxes .funfact-box .counter {
@@ -3192,7 +3195,7 @@ ul.list-style li:last-child {
 }
 
 .funfact-boxes .funfact-box.color-two .fanfact-icon img {
-    filter: drop-shadow(0px 20px 40px #734F08);
+    /*filter: drop-shadow(0px 20px 40px #734F08);*/
 }
 
 .funfact-boxes .funfact-box.color-two .counter {
@@ -3200,7 +3203,7 @@ ul.list-style li:last-child {
 }
 
 .funfact-boxes .funfact-box.color-three .fanfact-icon img {
-    filter: drop-shadow(0px 20px 40px #73083F);
+    /*filter: drop-shadow(0px 20px 40px #73083F);*/
 }
 
 .funfact-boxes .funfact-box.color-three .counter {
@@ -3208,7 +3211,7 @@ ul.list-style li:last-child {
 }
 
 .funfact-boxes .funfact-box.color-four .fanfact-icon img {
-    filter: drop-shadow(0px 20px 40px #087358);
+    /*filter: drop-shadow(0px 20px 40px #087358);*/
 }
 
 .funfact-boxes .funfact-box.color-four .counter {
@@ -3216,7 +3219,7 @@ ul.list-style li:last-child {
 }
 
 .funfact-boxes .funfact-box.color-five .fanfact-icon img {
-    filter: drop-shadow(0px 20px 40px #2C0873);
+    /*filter: drop-shadow(0px 20px 40px #2C0873);*/
 }
 
 .funfact-boxes .funfact-box.color-five .counter {
@@ -7255,7 +7258,7 @@ button.mfp-close {
 
 .table_shortcode th, .table_shortcode td {
     border: 0;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     color: #fff;
     vertical-align: middle;
@@ -11459,4 +11462,13 @@ pre{
     color: rgb(252, 252, 250);
     font-family: "JetBrains Mono", monospace;
     direction: ltr;
+}
+.carousel-item img{
+    width: 100%;
+    height: auto;
+}
+.tab-pane p.card-subtitle{
+    margin-top: 15px;
+    border-bottom: 1px dotted #17a2b8;
+    padding-bottom: 20px;
 }

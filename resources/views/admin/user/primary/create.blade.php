@@ -1,9 +1,9 @@
 @extends('layouts.main-dashboard')
-@section('title')افزودن حساب اصلی@stop
-@section('current-page-title')افزودن حساب اصلی@stop
+@section('title')افزودن کاربر@stop
+@section('current-page-title')افزودن کاربر@stop
 @section('breadcrumbs')
-    <li class="breadcrumb-item">حساب اصلی</li>
-    <li class="breadcrumb-item active">افزودن حساب اصلی</li>
+    <li class="breadcrumb-item">کاربر</li>
+    <li class="breadcrumb-item active">افزودن کاربر</li>
 @stop
 @section('content')
     <!-- Profile -->
@@ -11,7 +11,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">افزودن حساب اصلی</h4>
+                    <h4 class="card-title">افزودن کاربر</h4>
                     <p class="card-subtitle">پروفایل را تکمیل نمایید.</p>
                     <form class="clearfix" method="post" id="primaryEssentialForm"
                           action="{{route('admin.user.primary.store')}}" enctype="multipart/form-data">

@@ -24,7 +24,7 @@ class LikeController extends Controller
         ]);
         LogActivity::addToLog('نوشته ای را لایک کرد', 'like', $reply->id);
 //        return response()->json(['message' => 'Success']);
-        return back();
+        return redirect(url()->previous().'#replies')->with(['store'=>'success']);
     }
 
 
@@ -32,7 +32,7 @@ class LikeController extends Controller
     {
         User::find(auth()->id())->unlike($reply);
 
-        return back();
+        return redirect(url()->previous().'#replies')->with(['store'=>'success']);
     }
 
 
@@ -47,7 +47,7 @@ class LikeController extends Controller
              'model_id'=>$reply->section_id
         ]);
         LogActivity::addToLog('نوشته ای را دیسلایک کرد', 'like', $reply->id);
-        return back();
+        return redirect(url()->previous().'#replies')->with(['store'=>'success']);
     }
 
 }

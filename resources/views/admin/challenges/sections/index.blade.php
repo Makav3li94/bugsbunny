@@ -66,10 +66,10 @@
                                     </td>
 
                                     <td style="width: 120px;">
-                                        <a href="{{route('admin.question.index',['id'=>$challenge->id])}}"
-                                           class="btn btn-warning btn-sm"><i
-                                                class="d-inline-flex align-middle ti-pencil-alt  ml-1"></i>سوالات
-                                        </a>
+{{--                                        <a href="{{route('admin.question.index',['id'=>$challenge->id])}}"--}}
+{{--                                           class="btn btn-warning btn-sm"><i--}}
+{{--                                                class="d-inline-flex align-middle ti-pencil-alt  ml-1"></i>سوالات--}}
+{{--                                        </a>--}}
                                         <a href="{{route('admin.challenge.show',$challenge->id)}}"
                                            class="btn btn-secondary btn-sm"><i
                                                 class="d-inline-flex align-middle ti-pencil-alt  ml-1"></i>شرکت کنندگان
