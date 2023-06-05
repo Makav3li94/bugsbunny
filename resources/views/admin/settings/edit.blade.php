@@ -40,6 +40,20 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
+                                    <label>عنوان چالش کده</label>
+                                    <input type="text" class="form-control" placeholder="" name="chalesh_name"
+                                           value="{{$settings!=null ? $settings->chalesh_name : old('chalesh_name')}}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>متا چالشکده</label>
+                                    <input type="text" class="form-control" placeholder="" name="chalesh_description"
+                                           value="{{$settings!=null ? $settings->chalesh_description : old('chalesh_description')}}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
                                     <label>کلمات کلیدی</label>
                                     <input type="text" class="form-control" placeholder="" name="keywords"
                                            value="{{$settings!=null ? $settings->keywords : old('keywords')}}">

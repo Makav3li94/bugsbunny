@@ -52,6 +52,8 @@ class SettingController extends Controller
                 'brand' => $request['brand'],
                 'name' => $request['name'],
                 'description' => $request['description'],
+                'chalesh_name' => $request['chalesh_name'],
+                'chalesh_description' => $request['chalesh_description'],
                 'keywords' => $request['keywords'],
                 'domain' => $request['domain'],
                 'first_logo' => $first_logo,
@@ -66,6 +68,7 @@ class SettingController extends Controller
                 'reg_type' => $request['reg_type'],
                 'wysiwyg' => $request['wysiwyg'],
             ]);
+
 
 
 
@@ -86,6 +89,8 @@ class SettingController extends Controller
                 'brand' => $request['brand'],
                 'name' => $request['name'],
                 'description' => $request['description'],
+                'chalesh_name' => $request['chalesh_name'],
+                'chalesh_description' => $request['chalesh_description'],
                 'keywords' => $request['keywords'],
                 'domain' => $request['domain'],
                 'first_logo' => $first_logo,

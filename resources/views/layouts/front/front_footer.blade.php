@@ -14,10 +14,12 @@
                                 src="{{isset($setting) && $setting->first_logo!=null ? $setting->first_logo : asset('admin/assets/images/logo-light-text.png')}}"
                                 alt="{{!isset($setting) ? '' : $setting->brand}}" width="100"/></a>
 
-                            <p>{{isset($setting) ? $setting->description : ''}}</p>
+                        <p>{{isset($setting) ? $setting->description : ''}}</p>
                         <ul class="list-unstyled f_social_icon">
                             @forelse($frontSocail as $socail)
-                                <li><a href="{{$socail->link}}" title="{{$socail->title}}"><img src="{{asset('/images/front/socail/'.$socail->icon)}}" width="20" alt=""></a></li>
+                                <li><a href="{{$socail->link}}" title="{{$socail->title}}"><img
+                                            src="{{asset('/images/front/socail/'.$socail->icon)}}" width="20"
+                                            alt=""></a></li>
 
                             @empty
 
@@ -30,7 +32,15 @@
                         <h3 class="f_title">صغحات</h3>
                         <ul class="list-unstyled link_list">
                             @forelse($frontMenusFooter1 as $menu)
-                                <li ><a href="{{route($menu->link)}}">{{$menu->title}}</a></li>
+                                @php $route = ''; $bob = ''; @endphp
+                                @if (strpos($menu->link, "http://") !== false || strpos($menu->link, "https://") !== false)
+                                    @php $route = $menu->link; $bob = 1;@endphp
+
+                                @else
+                                    @php $route = route($menu->link); @endphp
+                                @endif
+
+                                <li><a href="{{$route}}"  {{$bob == 1? "target='_blank'": ''}}>{{$menu->title}}</a></li>
                             @empty
                             @endforelse
                         </ul>
@@ -41,7 +51,15 @@
                         <h3 class="f_title">کاربری</h3>
                         <ul class="list-unstyled link_list">
                             @forelse($frontMenusFooter2 as $menu)
-                                <li ><a href="{{route($menu->link)}}">{{$menu->title}}</a></li>
+                                @php $route = ''; $bob = ''; @endphp
+                                @if (strpos($menu->link, "http://") !== false || strpos($menu->link, "https://") !== false)
+                                    @php $route = $menu->link; $bob = 1;@endphp
+
+                                @else
+                                    @php $route = route($menu->link); @endphp
+                                @endif
+
+                                <li><a href="{{$route}}"  {{$bob == 1? "target='_blank'": ''}}>{{$menu->title}}</a></li>
                             @empty
                             @endforelse
                         </ul>
@@ -52,7 +70,15 @@
                         <h3 class="f_title">لینک مفید</h3>
                         <ul class="list-unstyled link_list">
                             @forelse($frontMenusFooter3 as $menu)
-                                <li ><a href="{{route($menu->link)}}">{{$menu->title}}</a></li>
+                                @php $route = ''; $bob = ''; @endphp
+                                @if (strpos($menu->link, "http://") !== false || strpos($menu->link, "https://") !== false)
+                                    @php $route = $menu->link; $bob = 1;@endphp
+
+                                @else
+                                    @php $route = route($menu->link); @endphp
+                                @endif
+
+                                <li><a href="{{$route}}"  {{$bob == 1? "target='_blank'": ''}}>{{$menu->title}}</a></li>
                             @empty
                             @endforelse
                         </ul>

@@ -26,14 +26,8 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-
-        if (Setting::all()->count() > 0) {
-            $setting = Setting::all()->first();
-        } else {
-            $setting = null;
-        }
         $array = $this->createRandomNumbers();
-        return view('auth.login', compact('array', 'setting'));
+        return view('auth.login', compact('array'));
     }
 
     protected function validateLogin(Request $request)

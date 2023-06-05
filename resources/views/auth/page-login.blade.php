@@ -74,7 +74,9 @@
                                     name="cats[]">
                                 <option></option>
                                 @forelse($categories as $cat)
+                                    @if($cat->type == 0)
                                     <option value="{{$cat->id}}" {{collect(old('cats'))->contains($cat->id) ? 'selected' : ''}}>{{$cat->title}}</option>
+                                    @endif
                                 @empty
 
                                 @endforelse

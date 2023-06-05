@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>' دسته بندی های چالش'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
+        'title'=>'چالش های '.$category->title.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
-        'sub'=>'صفحه دسته بندی های چالش',
+        'sub'=>'لیست چالش های کیفیت نرم افزار و امنیت '.$category->title.' ایزباگ در این صفحه قابل مشاهده هستند. مجموعه ای از چالش های  '.$category->title.' برای آزمونگرها آماده شده است.',
         'subLink'=>'',
-        'page'=>' دسته بندی های چالش'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
+        'page'=>'چالش های '.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
     )
 @section('content')
@@ -13,19 +13,21 @@
                 <div class="col-lg-8">
                     <div class="communities-boxes">
                         @forelse($categories as $cat)
+                            @if($cat->type == 0)
                             <div class="docly-com-box">
                                 <div class="icon-container">
                                     <img src="{{asset('front/img/home_support/rc1.png')}}" alt="communinity-box">
                                 </div>
 
                                 <div class="docly-com-box-content">
-                                    <h3 class="title"><a href="{{route('archive',$cat->title)}}">{{$cat->title}}</a>
+                                    <h3 class="title"><a href="{{route('category',$cat->title)}}">{{$cat->title}}</a>
                                     </h3>
                                     <p class="total-post">{{$cat->sections->count()}}</p>
                                 </div>
 
-
                             </div>
+                            @endif
+
                         @empty
                         @endforelse
                     </div>

@@ -1,8 +1,15 @@
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav menu ml-auto">
         @forelse($frontMenuHeader as $menu)
-            <li class="nav-item "><a href="{{route('page',$menu->link)}}" class="nav-link " role="button"
-                                     aria-expanded="false">{{$menu->title}}</a></li>
+            @php $route = ''; $bob = ''; @endphp
+            @if (strpos($menu->link, "http://") !== false || strpos($menu->link, "https://") !== false)
+                @php $route = $menu->link; $bob = 1;@endphp
+
+            @else
+                @php $route = route($menu->link); @endphp
+            @endif
+            <li class="nav-item "><a href="{{$route}}" {{$bob == 1? "target='_blank'": ''}} class="nav-link " role="button" aria-expanded="false">{{$menu->title}}</a></li>
+
         @empty
         @endforelse
     </ul>

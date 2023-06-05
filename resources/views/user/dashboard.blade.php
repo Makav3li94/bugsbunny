@@ -1,7 +1,7 @@
 @extends('layouts.main-front',[
         'title'=>'پنل کاربری '.$user->username.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
-        'sub'=>'',
+        'sub'=>'صفحه پروفایل '.$user->username.' یک کاربر در پلتفرم چالش آزمونگرهای ایزباگ در صنعت بررسی کیفیت و امنیت نرم افزار می باشد.',
         'subLink'=>'',
         'page'=>'پنل کاربری'.$user->username.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
@@ -318,8 +318,9 @@
                                             <p class="card-subtitle">در اینجا چالش هایی که ادمین سامانه، یا سایر کاربران
                                                 ایجاد کرده اند را، بر اسا دسته های مورد علاقه خود مشاهده کنید.</p>
                                             <div class="table-responsive">
+                                                @if(count($sections) > 0 || count($userSections) > 0)
+
                                                 <table class="sort-table table table_shortcode">
-                                                    @if(count($sections) > 0 || count($userSections) > 0)
                                                         <thead>
                                                         <tr>
                                                             <th>ردیف</th>
@@ -331,7 +332,6 @@
                                                             <th style="width: 100px">عملیات</th>
                                                         </tr>
                                                         </thead>
-                                                    @endif
                                                     <tbody>
                                                     @php $counter = 1; @endphp
                                                     @forelse($sections as $key=>$section)
@@ -389,6 +389,8 @@
                                                     @endforelse
                                                     </tbody>
                                                 </table>
+                                                @endif
+
                                             </div>
                                         </div>
                                     </div>
@@ -603,8 +605,9 @@
                                             <h4 class="card-title">سوال های شما</h4>
                                             <p class="card-subtitle">در اینجا سوال هایی که پرسیده اید را مشاهده می کنید.
                                             <div class="table-responsive">
+                                                @if(count($threads) > 0 )
+
                                                 <table class="sort-table table table_shortcode">
-                                                    @if(count($threads) > 0 )
                                                         <thead>
                                                         <tr>
                                                             <th>ردیف</th>
@@ -615,7 +618,6 @@
                                                             <th style="width: 210px">عملیات</th>
                                                         </tr>
                                                         </thead>
-                                                    @endif
                                                     <tbody>
                                                     @forelse($threads as $key=>$item)
                                                         <tr>
@@ -647,6 +649,8 @@
 
                                                     </tbody>
                                                 </table>
+                                                @endif
+
                                             </div>
                                         </div>
                                     </div>
@@ -660,6 +664,7 @@
                                                 از تایید ثبت می شوند.
                                             </p>
                                             <div class="table-responsive">
+                                                @if(count($user->totalScore) > 0 )
                                                 <table class="sort-table table table_shortcode">
                                                     <thead>
                                                     <tr>
@@ -717,6 +722,7 @@
 
                                                     </tbody>
                                                 </table>
+                                                    @endif
                                             </div>
                                         </div>
                                     </div>
@@ -729,6 +735,7 @@
                                                 تمامی فعالیت های خود را اینجا می بینید.
                                             </p>
                                             <div class="table-responsive">
+                                                @if(count($activities) > 0 )
                                                 <table class="sort-table table table_shortcode">
                                                     <thead>
                                                     <tr>
@@ -778,6 +785,7 @@
 
                                                     </tbody>
                                                 </table>
+                                                    @endif
                                             </div>
                                         </div>
                                     </div>
@@ -1027,7 +1035,6 @@
     <script src="{{asset('front/user/persian-datepicker/persian-datepicker.min.js')}}"></script>
     <script src="{{asset('front/user/select2/dist/js/select2.full.min.js')}}"></script>
     <script src="{{asset('admin/assets//node_modules/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{ asset('front/user/ckeditor/ckeditor.js')}}"></script>
     <script src="{{ asset('front/user/bootstrap4-toggle-master/js/bootstrap4-toggle.min.js')}}"></script>
     <script src="{{asset('admin/assets/node_modules/dropify/js/dropify.min.js')}}"></script>
     <script src="{{asset('front/assets/tinymce/tinymce.min.js')}}"></script>

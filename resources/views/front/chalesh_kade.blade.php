@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>'محفل آزمون گرها'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
+        'title'=>$setting->chalesh_name.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
-        'sub'=>'چالش کده شامل تمامی چالش های'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
+        'sub'=>$setting->chalesh_description,
         'subLink'=>'',
-        'page'=>'محفل آزمون گرها'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
+        'page'=>$setting->chalesh_name.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
     )
 @section('content')
@@ -20,7 +20,7 @@
                                 </div>
 
                                 <div class="docly-com-box-content">
-                                    <h3 class="title"><a href="{{route('archive',$cat->title)}}">{{$cat->title}}</a>
+                                    <h3 class="title"><a href="{{route('category',$cat->title)}}">{{$cat->title}}</a>
                                     </h3>
                                     <p class="total-post">{{$cat->activeSections->count()}}</p>
                                 </div>

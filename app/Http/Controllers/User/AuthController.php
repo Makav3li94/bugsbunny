@@ -41,13 +41,9 @@ class AuthController extends Controller
         if (auth()->check()) {
             return redirect(route('user.dashboard'));
         } else {
-            if (Setting::all()->count() > 0) {
-                $setting = Setting::all()->first();
-            } else {
-                $setting = null;
-            }
+
             $array = $this->createRandomNumbers();
-            return view('auth.register', compact('array', 'setting'));
+            return view('auth.register', compact('array'));
         }
     }
 
@@ -192,14 +188,9 @@ class AuthController extends Controller
     {
         strtok($_SERVER["REQUEST_URI"], '?');
         $familiarities = Familiarity::all();
-        $categories = Category::all();
-        if (Setting::all()->count() > 0) {
-            $setting = Setting::all()->first();
-        } else {
-            $setting = null;
-        }
+
         return view('auth.page-login',
-            compact('user', 'familiarities', 'categories', 'setting'));
+            compact('user', 'familiarities'));
     }
 
     protected function storeEssentials(Request $request, User $user)

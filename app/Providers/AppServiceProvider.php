@@ -32,12 +32,13 @@ class AppServiceProvider extends ServiceProvider
 //        }])->orderBy('posts_count', 'DESC')
 //            ->get();
         Schema::defaultStringLength(191);
-        $categories = Category::all();
+        $categories = Category::with(['sections','activeSections'])->get();
         $setting = Setting::all()->first();
-        $frontMenuHeader = FrontMenu::where('type', 0)->get();
-        $frontMenusFooter1 = FrontMenu::where('type', 1)->get();
-        $frontMenusFooter2 = FrontMenu::where('type', 2)->get();
-        $frontMenusFooter3 = FrontMenu::where('type', 3)->get();
+        $FrontMenu = FrontMenu::get();
+        $frontMenuHeader = $FrontMenu->where('type', 0);
+        $frontMenusFooter1 = $FrontMenu->where('type', 1);
+        $frontMenusFooter2 = $FrontMenu->where('type', 2);
+        $frontMenusFooter3 = $FrontMenu->where('type', 3);
         $frontSocail = FrontSocail::all();
 
 

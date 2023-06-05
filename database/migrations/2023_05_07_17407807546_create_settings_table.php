@@ -15,6 +15,8 @@ class CreateSettingsTable extends Migration
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->text('keywords')->nullable();
+            $table->string('chalesh_name')->nullable();
+            $table->text('chalesh_description')->nullable();
             $table->string('domain')->nullable();
             $table->string('first_logo')->nullable();
             $table->string('second_logo')->nullable();

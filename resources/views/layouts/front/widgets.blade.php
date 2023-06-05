@@ -82,7 +82,7 @@
         <h4 class="c_head">دسته ها</h4>
         <ul class="list-unstyled w_tag_list style-light">
             @forelse($categories as $cat)
-                <li><a href="{{route('archive',$cat->title)}}">{{$cat->title}}</a></li>
+                <li><a href="{{route('category',$cat->title)}}">{{$cat->title}}</a></li>
             @empty
             @endforelse
         </ul>

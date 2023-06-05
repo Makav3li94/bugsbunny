@@ -11,9 +11,10 @@
     @if(strpos(url()->current(),'/dashboard')==false)
         <div class="container custom_container">
 
-            <form action="#" class="app-search banner_search_form banner_search_form_two" autocomplete="off">
+            <form action="{{route('archive')}}" method="get" class="app-search banner_search_form banner_search_form_two" autocomplete="off">
+                @csrf
                 <div class="input-group">
-                    <input type="search" class="form-control" id="s_val" placeholder='دنبال چی میگردید ؟'>
+                    <input type="search" class="form-control" name="s_val" id="s_val" placeholder='دنبال چی میگردید ؟'>
                     <div class="input-group-append">
                         <select class="custom-select" name="category" id="s_cat">
                             <option value="all" selected>همه دسته ها</option>
@@ -24,7 +25,7 @@
                         </select>
                     </div>
 
-                    <button type="button"><i class="icon_search"></i></button>
+                    <button type="submit"><i class="icon_search"></i></button>
                 </div>
                 <br>
                 <div class="list-group" style="position:absolute;top: 70px;text-align: right">

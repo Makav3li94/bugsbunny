@@ -264,7 +264,7 @@ Route::get('/chaleshKade', 'Front\HomeController@chaleshKade')->name('chalesh_ka
 Route::get('/contact-us', 'Front\HomeController@contactUs')->name('contact_us');
 Route::post('/contact-store', 'Front\HomeController@contactUsStore')->name('contact_us_store')->middleware('checkRandom');;
 Route::get('chaleshKade/{slug}', 'Front\HomeController@section')->name('section');
-Route::get('category/{slug}', 'Front\HomeController@category')->name('archive');
+Route::get('category/{slug}', 'Front\HomeController@category')->name('category');
 Route::post('quiz/{section}', 'Front\HomeController@quiz')->name('quiz');
 Route::get('/markAsRead', function () {
     auth()->user()->unreadNotifications->markAsRead();
@@ -276,5 +276,6 @@ Route::post('/unlike-reply/{reply}', 'Front\LikeController@unlike')->name('unlik
 Route::post('/dislike-reply/{reply}', 'Front\LikeController@dislike')->name('dislikeReply');
 //Search
 Route::get('search', 'Front\HomeController@search');
+Route::get('archive', 'Front\HomeController@archive')->name('archive');
 // Front Pages !
 Route::get('page/{slug}', 'Front\HomeController@show')->name('page');

@@ -1,7 +1,7 @@
 @extends('layouts.main-front',[
         'title'=>'پروفایل '.$user->username.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
-        'sub'=>'پروفایل کاربری '.$user->name,
+         'sub'=>'صفحه پروفایل '.$user->name.' یک کاربر در پلتفرم چالش آزمونگرهای ایزباگ در صنعت بررسی کیفیت و امنیت نرم افزار می باشد.',
         'subLink'=>'',
          'page'=>'پروفایل '.$user->username.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
@@ -132,7 +132,7 @@
                             <div class="tab-content profile-tab" id="myTabContent">
 
                                 {{--Section List--}}
-                                <div class="tab-pane fade active show"  id="chalenges" role="tabpanel"
+                                <div class="tab-pane fade active show" id="chalenges" role="tabpanel"
                                      aria-labelledby="chalenges-tab">
                                     <div class="card">
                                         <div class="card-body">
@@ -140,8 +140,9 @@
                                             <p class="card-subtitle">در اینجا چالش هایی که ادمین سامانه، یا سایر کاربران
                                                 ایجاد کرده اند را، بر اساس دسته های مورد علاقه خود مشاهده کنید.</p>
                                             <div class="table-responsive">
-                                                <table class="sort-table table table_shortcode">
-                                                    @if(count($userSections) > 0)
+                                                @if(count($userSections) > 0)
+
+                                                <table id="dt-1"  class="sort-table table table_shortcode">
                                                         <thead>
                                                         <tr>
                                                             <th>ردیف</th>
@@ -154,7 +155,6 @@
                                                             <th style="width: 210px">عملیات</th>
                                                         </tr>
                                                         </thead>
-                                                    @endif
                                                     <tbody>
 
                                                     @forelse($userSections as $key=>$section)
@@ -179,6 +179,8 @@
                                                     @endforelse
                                                     </tbody>
                                                 </table>
+                                                @endif
+
                                             </div>
                                         </div>
                                     </div>
@@ -189,8 +191,9 @@
                                             <h4 class="card-title">سوال های {{$user->username}}</h4>
                                             <p class="card-subtitle">در اینجا سوال هایی که پرسیده اید را مشاهده می کنید.
                                             <div class="table-responsive">
-                                                <table class="sort-table table table_shortcode">
-                                                    @if( count($threads) > 0)
+                                                @if( count($threads) > 0)
+
+                                                <table id="dt-2"  class="sort-table table table_shortcode">
                                                         <thead>
                                                         <tr>
                                                             <th>ردیف</th>
@@ -201,7 +204,6 @@
                                                             <th style="width: 210px">عملیات</th>
                                                         </tr>
                                                         </thead>
-                                                    @endif
                                                     <tbody>
                                                     @forelse($threads as $key=>$item)
                                                         <tr>
@@ -226,6 +228,8 @@
 
                                                     </tbody>
                                                 </table>
+                                                @endif
+
                                             </div>
                                         </div>
                                     </div>
@@ -239,7 +243,8 @@
                                                 از تایید ثبت می شوند.
                                             </p>
                                             <div class="table-responsive">
-                                                <table class="sort-table table table_shortcode">
+                                                @if( count($user->totalScore) > 0)
+                                                <table id="dt-3" class="sort-table table table_shortcode">
                                                     <thead>
                                                     <tr>
                                                         <th>ردیف</th>
@@ -296,6 +301,7 @@
 
                                                     </tbody>
                                                 </table>
+                                                    @endif
                                             </div>
                                         </div>
                                     </div>
@@ -305,10 +311,11 @@
                                         <div class="card-body">
                                             <h4 class="card-title">تاریخچه فعالیت ها</h4>
                                             <p class="card-subtitle">
-                                                هر غلتی تا الان کردید اینجا میبینید.
+                                               تمامی فعالیت ها رو اینجا میبینید.
                                             </p>
                                             <div class="table-responsive">
-                                                <table class="sort-table table table_shortcode">
+                                                @if( count($activities) > 0)
+                                                <table id="dt-4" class="sort-table table table_shortcode">
                                                     <thead>
                                                     <tr>
                                                         <th>ردیف</th>
@@ -356,6 +363,7 @@
 
                                                     </tbody>
                                                 </table>
+                                                    @endif
                                             </div>
                                         </div>
                                     </div>
@@ -397,8 +405,40 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
     </section>
 
 @stop
 
 
+@section('scripts')
+    <script src="{{asset('admin/assets//node_modules/datatables/jquery.dataTables.min.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+        $('.sort-table').DataTable({
+            dom: 'tlip',
+            pageLength: 5,
+            autoWidth: false, // This parameter must be set to false
+            order: [[ 0, "asc" ]],
+            language: {
+                "search": "جستجو",
+                "lengthMenu": "نمایش _MENU_ رکورد در صفحه",
+                "zeroRecords": "موردی یافت نشد.",
+                "info": "نمایش صفحات _PAGE_ از _PAGES_",
+                "infoEmpty": "هیچ رکوردی موجود نیست",
+                "infoFiltered": "(فیتر شده از _MAX_ پرونده)",
+                "paginate": {
+                    "first": "اولین",
+                    "last": "آخرین",
+                    "next": "بعدی",
+                    "previous": "قبلی",
+                }
+            },
+            searching:false,
+            'info': false,
+
+        });
+        });
+    </script>
+@endsection

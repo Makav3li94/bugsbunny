@@ -95,10 +95,12 @@ class HomeController extends Controller
     }
     public function chaleshKade()
     {
-        $mainSection = Section::where([['status', 2], ['kind', 0], ['type', 1]])->with('category')->orderBy('id', 'desc')->get();
-        $userSection = Section::where([['status', 2], ['kind', 0], ['type', 0]])->with('category')->orderBy('id', 'desc')->get();
 
-        $threads = Section::where([['status', 2], ['kind', 1]])->with('category')->orderBy('id', 'desc')->get();
+        $section = Section::whereIn('status', [2, 4])->with('category')->orderBy('id', 'desc')->get();
+        $mainSection = $section->where('kind', 0)->where('type' ,1);
+        $userSection = $section->where('kind', 0)->where('type' ,0);
+        $threads = $section->where('kind', 1);
+
         list($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers,$HighLastWeekUsersScores) = $this->stats();
         return view('front.chalesh_kade', compact('mostViewed','HighLastWeekUsersUsers','HighLastWeekUsersScores','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular','mainSection', 'userSection', 'threads'));
     }
@@ -126,7 +128,7 @@ class HomeController extends Controller
         $category = Category::where('title', $slug)->first();
         $section = Section::where('category_id', $category->id)->with('category')->orderBy('id', 'desc')->get();
         list($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers,$HighLastWeekUsersScores) = $this->stats();
-        return view('front.category', compact('mostViewed','HighLastWeekUsersScores','HighLastWeekUsersUsers','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular','section'));
+        return view('front.category', compact('category','mostViewed','HighLastWeekUsersScores','HighLastWeekUsersUsers','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular','section'));
     }
 
     public function quiz(Request $request, Section $section)
@@ -169,6 +171,18 @@ class HomeController extends Controller
     }
 
 
+
+    public function archive(Request $request){
+        $val = $request->input('val');
+        $cat = $request->input('cat');
+        if ($cat == 'all') {
+            $sections = Section::with('category')->where('title', 'like', "%$val%")->whereIn('status',[2,4])->paginate(5);
+        } else {
+            $sections = Section::with('category')->where([['category_id', $cat ?? true], ['title', 'like', "%$val%"]])->whereIn('status',[2,4])->paginate(5);
+        }
+        list($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers,$HighLastWeekUsersScores) = $this->stats();
+        return view('front.archive', compact('sections','mostViewed','HighLastWeekUsersScores','HighLastWeekUsersUsers','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular'));
+    }
     public function search(Request $request)
     {
         if ($request->ajax()) {
@@ -204,9 +218,13 @@ class HomeController extends Controller
      */
     protected function stats(): array
     {
-        $mostViewed = Section::where('status', 2)->orWhere('status', 4)->orderBy('total_views', 'desc')->take(5)->get();
-        $mostPopular = Section::where('status', 2)->orWhere('status', 4)->withCount('replies')->orderBy('replies_count', 'desc')->take(5)->get();
-        $latestComment = Section::with('replies')->has('replies')->get()->sortByDesc('latestReply.created_at');
+        $section = Section::with(['replies','category','latestReply'])->withCount('replies')->has('replies')->whereIn('status', [2, 4])->get();
+        $mostViewed = $section->take(5)->sortByDesc("total_views");
+        $mostPopular = $section->take(5)->sortByDesc("replies_count");
+        $latestComment = $section->take(5)->sortByDesc("latestReply.created_at");
+//        $mostViewed = Section::where('status', 2)->orWhere('status', 4)->orderBy('total_views', 'desc')->take(5)->get();
+//        $mostPopular = Section::where('status', 2)->orWhere('status', 4)->withCount('replies')->orderBy('replies_count', 'desc')->take(5)->get();
+//        $latestComment = Section::with('replies')->has('replies')->get()->sortByDesc('latestReply.created_at');
         $HighAllTimeUsersScores = (DB::select(DB::raw("SELECT y.*
                   FROM (SELECT
                         t.id,

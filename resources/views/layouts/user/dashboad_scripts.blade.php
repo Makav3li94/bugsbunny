@@ -490,9 +490,10 @@
     getQuestions({{session()->get('section_id')}})
     @endif
     $('.sort-table').DataTable({
-        dom: 'Bfrtip',
+        dom: 'tlip',
         pageLength: 5,
-        order: [[ 0, "desc" ], [ 1, "desc" ]],
+        autoWidth: false, // This parameter must be set to false
+        order: [[ 0, "asc" ]],
         language: {
             "search": "جستجو",
             "lengthMenu": "نمایش _MENU_ رکورد در صفحه",

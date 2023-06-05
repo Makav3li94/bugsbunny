@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>' تضمین کیفیت و امنیت نرم افزار'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
+        'title'=>(!isset($setting) ? $setting->brand.' - '.$setting->name: 'ایزباگ'),
         'sl'=> false,
         'sub'=>$setting->description,
         'subLink'=>'',
-        'page'=>' تضمین کیفیت و امنیت نرم افزار'.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
+        'page'=>(!isset($setting) ? $setting->brand.' - '.$setting->name: 'ایزباگ'),
         ]
     )
 @section('content')
@@ -38,7 +38,7 @@
                 @forelse($categories as $key=> $cat)
                     <li class="nav-item wow fadeInLeft">
                         <a class="nav-link {{$key==1 ? 'active':''}}" id="or-tab" data-toggle="tab"
-                           href="#{{$cat->title}}" role="tab"
+                           href="{{route('category',$cat->title)}}{{$cat->title}}" role="tab"
                            aria-controls="or" aria-selected="true">{{$cat->title}}</a>
                     </li>
                 @empty

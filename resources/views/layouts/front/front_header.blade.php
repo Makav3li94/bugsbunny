@@ -69,10 +69,12 @@
                         {{$frontHeros->sub}}
                     </p>
 
-                    <form action="#" class="app-search banner_search_form" autocomplete="off">
+                    <form action="{{route('archive')}}" class="app-search banner_search_form" autocomplete="off" method="get">
+                        @csrf
                         <div class="input-group">
-                            <input type="search" class="form-control" id="s_val" placeholder='{{$frontHeros->search_placeholder}}'>
-                            <button type="button"><i class="icon_search"></i></button>
+                            <input type="hidden" name="category" id="s_cat" value="all">
+                            <input type="search" name="s_val" class="form-control" id="s_val" placeholder='{{$frontHeros->search_placeholder}}'>
+                            <button type="submit"><i class="icon_search"></i></button>
                         </div>
                         <br>
                         <div class="list-group" style="position:absolute;bottom: 190px;text-align: right">

@@ -46,7 +46,7 @@ class AdminLoginController extends Controller
 
         $request->session()->invalidate();
 
-        return $this->loggedOut($request) ?: redirect('/admin/login');
+        return $this->loggedOut($request) ?: redirect('/bugbuggy/login');
     }
 
     protected function loggedOut(Request $request)
