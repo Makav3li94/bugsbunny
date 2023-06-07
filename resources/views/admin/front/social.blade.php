@@ -93,6 +93,7 @@
                                         {{$errors->first('icon')}}
                                     </div>
                                 @endif
+                                <span class="invalid-text">سایز آیکون 20 پیکسل در  20 پیکسل باشد.</span>
                             </div>
                             <div class="col-sm-3">
                                 <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ثبت

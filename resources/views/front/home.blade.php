@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>(!isset($setting) ? $setting->brand.' - '.$setting->name: 'ایزباگ'),
+        'title'=>(isset($setting) ? $setting->brand.' - '.$setting->name: 'ایزباگ'),
         'sl'=> false,
-        'sub'=>$setting->description,
+          'sub'=>\Illuminate\Support\Str::limit($setting->description,150),
         'subLink'=>'',
-        'page'=>(!isset($setting) ? $setting->brand.' - '.$setting->name: 'ایزباگ'),
+        'page'=>(isset($setting) ? $setting->brand.' - '.$setting->name: 'ایزباگ'),
         ]
     )
 @section('content')
@@ -11,13 +11,13 @@
         <div class="container">
             <div class="row">
                 @forelse($frontFeatures as $item)
-                    <div class="col-lg-4 col-sm-6">
+                    <div class="col-lg-4 col-sm-6 mb-3">
                         <div class="media doc_features_item_one wow fadeInLeft" data-wow-delay="0.2s">
-                            <img src="{{asset('images/front/feature/'.$item->icon)}}" alt="{{$item->title}}">
+                            <img src="{{asset('images/front/feature/'.$item->icon)}}" width="50" alt="{{$item->title}}">
                             <div class="media-body">
-                                <a href="javascript:void(0)">
+                                <span>
                                     <h3>{{$item->title}}</h3>
-                                </a>
+                                </span>
                                 <p>{{$item->sub}}</p>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                 @forelse($categories as $key=> $cat)
                     <li class="nav-item wow fadeInLeft">
                         <a class="nav-link {{$key==1 ? 'active':''}}" id="or-tab" data-toggle="tab"
-                           href="{{route('category',$cat->title)}}{{$cat->title}}" role="tab"
+                           href="#{{$cat->title}}" role="tab"
                            aria-controls="or" aria-selected="true">{{$cat->title}}</a>
                     </li>
                 @empty
@@ -47,12 +47,12 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 @forelse($categories as $key=> $cat)
-                    <div class="tab-pane doc_tab_pane fade show {{$key==1 ? 'active':''}}" id="{{$cat->title}}"
+                    <div class="tab-pane doc_tab_pane front_tab show {{$key==1 ? 'active':''}}" id="{{$cat->title}}"
                          role="tabpanel"
                          aria-labelledby="or-tab">
-                        <div class="row">
+                        <div class="row front_tab">
                             <div class="col-lg-4 col-sm-6">
-                                <div class="doc_tag_item wow fadeInUp">
+                                <div class="doc_tag_item">
                                     <div class="doc_tag_title">
                                         <h4>چالش های مرتبط با {{$cat->title}}</h4>
                                         <div class="line"></div>
@@ -87,7 +87,7 @@
                 <div class="col-lg-4">
                     <div dir="rtl" class="documentation_text ">
                         <div class="round wow fadeInUp">
-                            <img src="{{asset('images/front/way/'.$frontWays[1]->icon)}}" alt="">
+                            <img src="{{asset('images/front/way/'.$frontWays[1]->icon)}}" width="50" alt="">
                         </div>
                         <h4 class="wow fadeInUp" data-wow-delay="0.2s">{{$frontWays[1]->title}}</h4>
                         <p class="wow fadeInUp" data-wow-delay="0.3s">
@@ -99,15 +99,15 @@
                     <div class="row">
                         @forelse($frontWays as $key => $item)
                             @if($key>1)
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 mb-3">
                                     <div class="media documentation_item wow fadeInUp">
                                         <div class="icon">
-                                            <img src="{{asset('images/front/way/'.$item->icon)}}" alt="">
+                                            <img src="{{asset('images/front/way/'.$item->icon)}}" width="50" alt="">
                                         </div>
                                         <div class="media-body">
-                                            <a href="#">
+                                            <span>
                                                 <h5>{{$item->title}}</h5>
-                                            </a>
+                                            </span>
                                             <p>
                                                 {{$item->sub}}
                                             </p>
@@ -151,20 +151,21 @@
                     @forelse($frontFaqs as $key => $item)
                         @if($key != 0)
                             <div class="col-lg-6">
-                                <div class="accordion doc_faq_info" id="accordionExample">
-                                    <div class="card active">
-                                        <div class="card-header" id="headingOne">
+                                <div class="accordion doc_faq_info" id="accordionExample{{$key}}">
+                                    <div class="card {{$key == 1 ? "active" : "" }}">
+                                        <div class="card-header" id="headingOne{{$key}}">
                                             <h2 class="mb-0">
                                                 <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                        data-target="#collapseOne" aria-expanded="true"
-                                                        aria-controls="collapseOne">
+                                                        data-target="#collapseOne{{$key}}" aria-expanded="true"
+                                                        aria-controls="collapseOne{{$key}}">
                                                     {{$item->question}}<i class="icon_plus"></i><i
                                                         class="icon_minus-06"></i>
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                             data-parent="#accordionExample">
+                                        <div id="collapseOne{{$key}}" class="collapse {{$key == 1 ? "show" : "" }}"
+                                             aria-labelledby="headingOne{{$key}}"
+                                             data-parent="#accordionExample{{$key}}">
                                             <div class="card-body">
                                                 {{$item->answer}}
                                             </div>

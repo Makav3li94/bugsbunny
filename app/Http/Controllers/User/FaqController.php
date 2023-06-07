@@ -27,12 +27,13 @@ class FaqController extends Controller
             } else {
                 $file = null;
             }
-            Faq::create([
+            $faq = Faq::create([
                 'ticket_id' => $ticket->id,
                 'user_file' => $file,
                 'question' => $request['question'],
             ]);
-//            $this->notifyAdmin($user->id, $user->name, $user->company->company_name, $user->mobile, 'ticket', $ticket->id, 0,'کاربر به تیکت پاسخ داده است.');
+            $ticket->update(['answer' => '0']);
+            $this->notifyAdmin($user->id, $user->name, $user->mobile, 'ticket', $ticket->id, 0,'کاربر تیکت جدیدی ارسال کرده است.');
             return redirect()->back()->with([
                 'message' => 'sent','crud'=>'ticket_store'
             ]);

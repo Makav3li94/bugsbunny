@@ -24,7 +24,7 @@
 <div class="preloader">
     <div class="loader">
         <div class="loader__figure"></div>
-        <h4 class="mt-2"><span>ایز</span>باگ</h4>
+        <span class="mt-2"><span>ایز</span>باگ</span>
     </div>
 </div>
 <!-- Main wrapper -->
@@ -35,7 +35,7 @@
             <!-- Logo -->
             <div class="navbar-header">
                 <a class="navbar-brand"
-                   href="@if(strpos(url()->current(),'/admin/dashboard')==true){{route('admin.dashboard')}} @else {{route('user.dashboard')}} @endif">
+                   href="{{route('home')}}" target="_blank">
                     <b>
                         {{!isset($setting) ? '' : $setting->brand}}
                     </b>
@@ -152,7 +152,7 @@
 <script src="{{asset('admin/assets/node_modules/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js')}}"></script>
 <!-- Select 2 -->
 <script src="{{asset('admin/assets/node_modules/select2/dist/js/select2.full.min.js')}}"></script>
-<!-- Wave Effects -->bootstrap chalesh kade
+<!-- Wave Effects -->
 <script src="{{asset('admin/assets/node_modules/waves/waves.js')}}"></script>
 <!-- Toast Massage -->
 <script src="{{asset('admin/assets/node_modules/toast-master/js/jquery.toast.js')}}"></script>

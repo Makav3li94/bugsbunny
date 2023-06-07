@@ -1,7 +1,7 @@
 @extends('layouts.main-front',[
         'title'=>$setting->chalesh_name.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
-        'sub'=>$setting->chalesh_description,
+        'sub'=>\Illuminate\Support\Str::limit($setting->chalesh_description,150),
         'subLink'=>'',
         'page'=>$setting->chalesh_name.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
@@ -155,7 +155,7 @@
                                 </div>
                                 <div class="col-md-6 post-meta-wrapper">
                                     <ul class="chaleshkade-titles">
-                                        <li class="chaleshkade-topic-count">{{$item->category->title}}</li>
+                                        <li class="chaleshkade-topic-count">{{$item->category->title ?? ""}}</li>
                                         <li class="chaleshkade-freshness">
                                             <div class="freshness-box">
                                                 <div class="freshness-top">

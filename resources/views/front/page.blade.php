@@ -1,7 +1,7 @@
 @extends('layouts.main-front',[
         'title'=>$page->title.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
-        'sub'=>\Illuminate\Support\Str::limit($page->description,100),
+        'sub'=>!empty($page->excerpt) ?$page->excerpt :\Illuminate\Support\Str::limit(trim(preg_replace('/\s\s+/', ' ', $page->description)),150),
         'subLink'=>'',
         'page'=>$page->title.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]

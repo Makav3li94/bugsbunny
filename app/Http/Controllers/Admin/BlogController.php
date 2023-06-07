@@ -50,7 +50,7 @@ class BlogController extends Controller
             'title' => 'required',
             'description' => 'required',
             'img_cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'excerpt' => 'string|min:3|max:255',
+            'excerpt' => 'max:150',
         ]);
 
         if (isset($request->published_at)) {
@@ -88,10 +88,7 @@ class BlogController extends Controller
             'published_at' => $published_at,
             'is_page' => 1,
         ]);
-        if (!empty($request->tags) && $blog) {
-            $blog->attachTags(explode(',', $request->tags));
 
-        }
         return redirect(route('admin.blog.index'))->with(['store' => 'success']);
     }
 
@@ -165,9 +162,6 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        $tags = $blog->tags()->get();
-        if (!empty($tags))
-            $blog->detachTags($tags);
         $blog->delete();
         return redirect()->back()->with('delete', 'success');
     }

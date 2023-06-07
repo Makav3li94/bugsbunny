@@ -24,6 +24,8 @@
                                 <th class="text-center">ریپلای</th>
                                 <th class="text-center">کاربر</th>
                                 <th class="text-center">بخش</th>
+                                <th class="text-center">تاریخ</th>
+                                <th class="text-center">وضعیت</th>
                                 <th class="text-center" style="width: 120px;">عملیات</th>
                             </tr>
                             </thead>
@@ -31,11 +33,13 @@
                             @foreach($replies as $key=>$item)
                                 <tr>
                                     <td style="width: 55px;">{{$key+1}}</td>
-                                    <td>{{$item->body}}</td>
+                                    <td>{{\Illuminate\Support\Str::limit($item->body,50,'...')}}</td>
                                     <td>{{$item->user->name ." | ".$item->user->username}}</td>
                                     <td>{{$item->section->title}}</td>
+                                    <td>{{verta($item->created_at)->format('Y/n/j')}}</td>
+                                    <td><span class="badge badge-{{$item->status == 0 ? "danger" : "success"}}">{{$item->status == 0 ? "معلق" : "تایید شده"}}</span></td>
                                     <td style="width: 160px;">
-                                        <button type="button" class="btn btn-{{$item->status == 1 ? "danger" : "success"}} btn-sm "
+                                        <button type="button" class="btn btn-{{$item->status == 1 ? "danger" : "info"}} btn-sm "
                                                 onclick="$('#stat-{{$item->id}}').submit()"
                                                 id="{{$item->id}}">{{$item->status == 1 ? "معلق" : "تایید"}}
                                         </button>

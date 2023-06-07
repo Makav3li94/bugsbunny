@@ -89,7 +89,7 @@ Route::group(['prefix' => 'admin/dashboard', 'namespace' => 'Admin', 'middleware
     Route::resource('challenge', 'SectionController', ['names' => 'admin.challenge']);
     Route::resource('reply', 'ReplyController', ['names' => 'admin.reply'])->only(['index', 'update', 'destroy', 'edit']);
     Route::resource('question', 'QuestionController', ['names' => 'admin.question'])->except(['create', 'show']);
-    Route::resource('score', 'TotalScoreController', ['names' => 'admin.score'])->except(['create', 'edit', 'show']);
+    Route::resource('score', 'TotalScoreController', ['names' => 'admin.score'])->except(['create', 'edit', 'show','store']);
     Route::post('score/{user}', 'TotalScoreController@store')->name('admin.score.store');
     //========================== AJAX ROUTES START =====================================================================
     //Search Ajax

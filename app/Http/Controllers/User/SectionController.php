@@ -132,6 +132,7 @@ class SectionController extends Controller
                 2 => $section->category->title,
                 3 => $this->convertNumbers($request->expire_date),
                 4 => $section->kind,
+                5 => $section->status,
             ];
             return response()->json(['collapseSectionEdit' => 'success', 'section' => $section]);
         }

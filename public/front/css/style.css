@@ -2529,6 +2529,7 @@ ul.list-style li:last-child {
     background: transparent;
     border-radius: 0;
     padding: 0;
+    align-items: center;
 }
 
 .breadcrumb .breadcrumb-item {
@@ -11114,6 +11115,7 @@ body {
 .select2-container--default .select2-selection--single {
     border-color: #ccced0;
     height: 38px;
+    text-align: right;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -11471,4 +11473,16 @@ pre{
     margin-top: 15px;
     border-bottom: 1px dotted #17a2b8;
     padding-bottom: 20px;
+}
+.reprep{
+    background: #fcfcfc !important;
+    margin-top: 5px !important;
+    margin-right: 20px !important;
+    border-right: 3px solid #d1d1d1 !important;
+    border-radius: 0 0 0 100px !important;
+}
+.front_tab{
+    justify-content: center;
+    background: #f6fcff;
+    padding: 20px;
 }

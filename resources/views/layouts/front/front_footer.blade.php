@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="f_widget link_widget pl_30">
-                        <h3 class="f_title">صغحات</h3>
+                        <h3 class="f_title">صفحات</h3>
                         <ul class="list-unstyled link_list">
                             @forelse($frontMenusFooter1 as $menu)
                                 @php $route = ''; $bob = ''; @endphp

@@ -32,27 +32,28 @@
                                     <td>{{$blog->title}}</td>
                                     <td>
                                         <div class="position-relative">
-                                            <input type="text" value="{{$blog->slug}}"
+                                            <input type="text" disabled value="{{$blog->slug}}"
                                                    class="form-control text-left w-75 mr-3" id="link-{{$blog->id}}">
 
                                         </div>
                                     </td>
                                     <td style="width: 120px;">
-                                        <button class="btn btn-sm btn-success "
-                                                style="top:5px;right: 0px" onclick="copyText('link-{{$blog->id}}')"><i class="fa fa-copy"></i></button>
                                         <a href="{{route('page',$blog->slug)}}" target="_blank"
                                            class="btn btn-sm btn-primary "
                                            style="top:5px;right: 100px"><i class="fa fa-eye"></i></a>
                                         <a href="{{route('admin.blog.edit',$blog->id)}}" class="btn btn-success btn-sm">
                                             <i class="d-inline-flex align-middle ti-pencil"></i>
                                         </a>
-                                        <form action="{{ route('admin.blog.destroy',$blog->id) }}" id="{{ $blog->id}}" method="post" class="d-inline">
+                                        <button type="button" class="btn btn-danger btn-sm delete-user"
+                                                id="{{$blog->id}}"><i
+                                                class="d-inline-flex align-middle ti-close"></i></button>
+
+
+                                        <form action="{{ route('admin.blog.destroy',$blog->id) }}" id="{{ $blog->id}}"
+                                              method="post" class="d-inline">
                                             @csrf
-                                            {{ method_field('DELETE') }}
-                                            <button type="submit" class="btn btn-danger btn-sm delete-alert text-white"
-                                               id="{{ $blog->id}}">
-                                                <i class="d-inline-flex align-middle ti-close"></i>
-                                            </button>
+                                            @method('DELETE')
+
                                         </form>
                                     </td>
                                 </tr>

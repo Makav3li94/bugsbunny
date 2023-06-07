@@ -26,10 +26,10 @@
             <div class="spinner"></div>
             <div class="text">
                 <img src="{{asset('front/img/favicon.png')}}" width="30px" alt="">
-                <h4 class="mt-2"><span>ایز</span>باگ</h4>
+                <span class="mt-2"><span>ایز</span>باگ</span>
             </div>
         </div>
-        <h2 class="head">در حال آماده سازی</h2>
+        <span class="head">در حال آماده سازی</span>
         <p></p>
     </div>
 </div>

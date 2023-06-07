@@ -22,10 +22,10 @@ class CreateForeignKeys extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-        Schema::table('sms', function (Blueprint $table) {
-            $table->foreign('sms_sender_id')->references('id')->on('sms_senders')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        });
+//        Schema::table('sms', function (Blueprint $table) {
+//            $table->foreign('sms_sender_id')->references('id')->on('sms_senders')->onDelete('cascade');
+//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+//        });
         Schema::table('tickets', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

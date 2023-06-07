@@ -148,7 +148,7 @@
                                 <li class="nav-item p-1 ">
                                     <a class="nav-link "
                                        id="ticket-tab" data-toggle="tab" href="#ticket" role="tab"
-                                       aria-controls="ticket" aria-selected="false">تیکت ها</a>
+                                       aria-controls="ticket" aria-selected="false">تیکت ها </a>
                                 </li>
                                 <li class="nav-item p-1 ">
                                     <a class="nav-link"
@@ -320,7 +320,7 @@
                                             <div class="table-responsive">
                                                 @if(count($sections) > 0 || count($userSections) > 0)
 
-                                                <table class="sort-table table table_shortcode">
+                                                    <table class="sort-table table table_shortcode">
                                                         <thead>
                                                         <tr>
                                                             <th>ردیف</th>
@@ -329,66 +329,68 @@
                                                             <th>مهلت</th>
                                                             <th>وضعیت</th>
                                                             <th>متعلق</th>
-                                                            <th style="width: 100px">عملیات</th>
+                                                            <th style="width: 150px">عملیات</th>
                                                         </tr>
                                                         </thead>
-                                                    <tbody>
-                                                    @php $counter = 1; @endphp
-                                                    @forelse($sections as $key=>$section)
-                                                        <tr>
-                                                            <th>{{$counter}}</th>
-                                                            <td style="width: 80px;font-size: 12px">{{\Illuminate\Support\Str::limit($section->title,30,' ...')}}</td>
-                                                            <td>{{$section->category->title}}</td>
-                                                            <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
-                                                            <td>
-                                                                @include('layouts.components.status')
-                                                            </td>
-                                                            <td>سایر</td>
-                                                            <td style="width: 100px"><a class="btn btn-sm btn-warning"
-                                                                                        target="_blank"
-                                                                                        href="{{route('section',$section->slug)}}"><i
-                                                                        class="fa fa-eye"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                        @php $counter ++; @endphp
-                                                    @empty
-                                                        <div class="alert alert-info">در حال حاضر، چالش اصلی موجود
-                                                            نیست.
-                                                        </div>
-                                                    @endforelse
-                                                    @forelse($userSections as $key=>$section)
-                                                        <tr>
-                                                            <th>{{$counter}}</th>
-                                                            <td style="width: 80px;font-size: 12px">{{\Illuminate\Support\Str::limit($section->title,30,' ...')}}</td>
-                                                            <td>{{$section->category->title}}</td>
-                                                            <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
-                                                            <td>         @include('layouts.components.status')</td>
-                                                            <td>{{$section->user->username == auth()->user()->username ? "شما"  : $section->user->username}}</td>
-                                                            <td style="width: 100px">
-                                                                @if($section->user->username == auth()->user()->username)
-                                                                    <a href="javascript:void(0)"
-                                                                       class="btn btn-sm btn-primary edit-section"
-                                                                       id="section-{{$section->id}}"
-                                                                       onclick="editSection({{$section->id}})"><i
-                                                                            class="fa fa-pencil"></i></a>
-                                                                    <a href="javascript:void(0)"
-                                                                       class="btn btn-sm btn-success"
-                                                                       onclick="getQuestions({{$section->id}})"><i
-                                                                            class="fa fa-question-circle"></i></a>
-                                                                @endif
-                                                                <a class="btn btn-sm btn-warning"
-                                                                   href="{{route('section',$section->slug)}}"><i
-                                                                        class="fa fa-eye"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                        @php $counter ++; @endphp
-                                                    @empty
-                                                        <div class="alert alert-warning">در حال حاضر، چالش کاربر موجود
-                                                            نیست.
-                                                        </div>
-                                                    @endforelse
-                                                    </tbody>
-                                                </table>
+                                                        <tbody>
+                                                        @php $counter = 1; @endphp
+                                                        @forelse($sections as $key=>$section)
+                                                            <tr>
+                                                                <th>{{$counter}}</th>
+                                                                <td style="width: 80px;font-size: 12px">{{\Illuminate\Support\Str::limit($section->title,30,' ...')}}</td>
+                                                                <td>{{$section->category->title}}</td>
+                                                                <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
+                                                                <td>
+                                                                    @include('layouts.components.status',['section'=>$section])
+                                                                </td>
+                                                                <td>سایر</td>
+                                                                <td style="width: 150px"><a
+                                                                        class="btn btn-sm btn-warning"
+                                                                        target="_blank"
+                                                                        href="{{route('section',$section->slug)}}"><i
+                                                                            class="fa fa-eye"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                            @php $counter ++; @endphp
+                                                        @empty
+                                                            <div class="alert alert-info">در حال حاضر، چالش اصلی موجود
+                                                                نیست.
+                                                            </div>
+                                                        @endforelse
+                                                        @forelse($userSections as $key=>$section)
+                                                            <tr>
+                                                                <th>{{$counter}}</th>
+                                                                <td style="width: 80px;font-size: 12px">{{\Illuminate\Support\Str::limit($section->title,30,' ...')}}</td>
+                                                                <td>{{$section->category->title}}</td>
+                                                                <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
+                                                                <td>           @include('layouts.components.status',['section'=>$section])</td>
+                                                                <td>{{$section->user->username == auth()->user()->username ? "شما"  : $section->user->username}}</td>
+                                                                <td style="width: 150px">
+                                                                    @if($section->user->username == auth()->user()->username)
+                                                                        <a href="javascript:void(0)"
+                                                                           class="btn btn-sm btn-primary edit-section"
+                                                                           id="section-{{$section->id}}"
+                                                                           onclick="editSection({{$section->id}})"><i
+                                                                                class="fa fa-pencil"></i></a>
+                                                                        <a href="javascript:void(0)"
+                                                                           class="btn btn-sm btn-success"
+                                                                           onclick="getQuestions({{$section->id}})"><i
+                                                                                class="fa fa-question-circle"></i></a>
+                                                                    @endif
+                                                                    <a class="btn btn-sm btn-warning"
+                                                                       href="{{route('section',$section->slug)}}"><i
+                                                                            class="fa fa-eye"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                            @php $counter ++; @endphp
+                                                        @empty
+                                                            <div class="alert alert-warning">در حال حاضر، چالش کاربر
+                                                                موجود
+                                                                نیست.
+                                                            </div>
+                                                        @endforelse
+                                                        </tbody>
+                                                    </table>
                                                 @endif
 
                                             </div>
@@ -607,48 +609,51 @@
                                             <div class="table-responsive">
                                                 @if(count($threads) > 0 )
 
-                                                <table class="sort-table table table_shortcode">
+                                                    <table class="sort-table table table_shortcode">
                                                         <thead>
                                                         <tr>
                                                             <th>ردیف</th>
                                                             <th>سوال</th>
                                                             <th>دسته</th>
                                                             <th>وضعیت</th>
-                                                            <th>متعلق</th>
+                                                            <th>تاریخ</th>
+
                                                             <th style="width: 210px">عملیات</th>
                                                         </tr>
                                                         </thead>
-                                                    <tbody>
-                                                    @forelse($threads as $key=>$item)
-                                                        <tr>
-                                                            <th>{{$key+1}}</th>
-                                                            <td>{{$item->title}}</td>
-                                                            <td>{{$item->category->title}}</td>
-                                                            <td>     {{Verta::instance($item->expire_date)->format('Y/m/d')}}</td>
-                                                            <td>
-                                                                @include('layouts.components.status')
-                                                            </td>
-                                                            <td style="width: 210px">
-                                                                @if($item->user->username == auth()->user()->username)
-                                                                    <a href="javascript:void(0)"
-                                                                       class="btn btn-sm btn-primary edit-thread"
-                                                                       id="thread-{{$item->id}}"
-                                                                       onclick="editSection({{$item->id}})"><i
-                                                                            class="fa fa-pencil"></i></a>
-                                                                @endif
-                                                                <a class="btn btn-sm btn-warning"
-                                                                   href="{{route('section',$item->slug)}}"><i
-                                                                        class="fa fa-eye"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                    @empty
-                                                        <div class="alert alert-warning">در حال حاضر، چالش اصلی موجود
-                                                            نیست.
-                                                        </div>
-                                                    @endforelse
+                                                        <tbody>
+                                                        @forelse($threads as $key=>$item)
+                                                            <tr>
+                                                                <th>{{$key+1}}</th>
+                                                                <td>{{$item->title}}</td>
+                                                                <td>{{$item->category->title}}</td>
+                                                                <td>
+                                                                    @include('layouts.components.status',['section'=>$item])
+                                                                </td>
+                                                                <td>     {{Verta::instance($item->created_at)->format('Y/m/d')}}</td>
 
-                                                    </tbody>
-                                                </table>
+                                                                <td style="width: 210px">
+                                                                    @if($item->user->username == auth()->user()->username)
+                                                                        <a href="javascript:void(0)"
+                                                                           class="btn btn-sm btn-primary edit-thread"
+                                                                           id="thread-{{$item->id}}"
+                                                                           onclick="editThread({{$item->id}})"><i
+                                                                                class="fa fa-pencil"></i></a>
+                                                                    @endif
+                                                                    <a class="btn btn-sm btn-warning"
+                                                                       href="{{route('section',$item->slug)}}"><i
+                                                                            class="fa fa-eye"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                        @empty
+                                                            <div class="alert alert-warning">در حال حاضر، چالش اصلی
+                                                                موجود
+                                                                نیست.
+                                                            </div>
+                                                        @endforelse
+
+                                                        </tbody>
+                                                    </table>
                                                 @endif
 
                                             </div>
@@ -665,64 +670,64 @@
                                             </p>
                                             <div class="table-responsive">
                                                 @if(count($user->totalScore) > 0 )
-                                                <table class="sort-table table table_shortcode">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>ردیف</th>
-                                                        <th>امتیاز</th>
-                                                        <th>نوع</th>
-                                                        <th>برای</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @forelse($user->totalScore as $key=>$score)
+                                                    <table class="sort-table table table_shortcode">
+                                                        <thead>
                                                         <tr>
-                                                            <th>{{$key+1}}</th>
-                                                            <td>{{$score->score}}</td>
-                                                            <td><span
-                                                                    class="badge badge-{{$score->type == 1 ? 'success' : 'danger'}}">{{$score->type == 1 ? 'مثبت' : 'منفی'}}</span>
-                                                            </td>
-                                                            <td>
-                                                                @switch($score->is_for)
-                                                                    @case('thread')
-                                                                    ساخت سوال(تاپیک)
-                                                                    @break
-                                                                    @case('challenge')
-                                                                    ایجاد چالش
-                                                                    @break
-                                                                    @case('like')
-                                                                    لایک گرفتید
-                                                                    @break
-                                                                    @case('like')
-                                                                    لایک گرفتید
-                                                                    @break
-                                                                    @case('unlike')
-                                                                    لایک پس گرفته شد !
-                                                                    @break
-                                                                    @case('dislike')
-                                                                    دیسلایک گرفتید
-                                                                    @break
-                                                                    @case('partiSection')
-                                                                    شرکت در چالش
-                                                                    @break
-                                                                    @case('skipSection')
-                                                                    عدم شرکت در چالش
-                                                                    @break
-
-                                                                    @default
-                                                                    همینطوری !
-                                                                @endswitch
-                                                            </td>
+                                                            <th>ردیف</th>
+                                                            <th>امتیاز</th>
+                                                            <th>نوع</th>
+                                                            <th>برای</th>
                                                         </tr>
-                                                    @empty
-                                                        <div class="alert alert-warning">در حال حاضر، امتیازی موجود
-                                                            نیست.
-                                                        </div>
-                                                    @endforelse
+                                                        </thead>
+                                                        <tbody>
+                                                        @forelse($user->totalScore as $key=>$score)
+                                                            <tr>
+                                                                <th>{{$key+1}}</th>
+                                                                <td>{{$score->score}}</td>
+                                                                <td><span
+                                                                        class="badge badge-{{$score->type == 1 ? 'success' : 'danger'}}">{{$score->type == 1 ? 'مثبت' : 'منفی'}}</span>
+                                                                </td>
+                                                                <td>
+                                                                    @switch($score->is_for)
+                                                                        @case('thread')
+                                                                        ساخت سوال(تاپیک)
+                                                                        @break
+                                                                        @case('challenge')
+                                                                        ایجاد چالش
+                                                                        @break
+                                                                        @case('like')
+                                                                        لایک گرفتید
+                                                                        @break
+                                                                        @case('like')
+                                                                        لایک گرفتید
+                                                                        @break
+                                                                        @case('unlike')
+                                                                        لایک پس گرفته شد !
+                                                                        @break
+                                                                        @case('dislike')
+                                                                        دیسلایک گرفتید
+                                                                        @break
+                                                                        @case('partiSection')
+                                                                        شرکت در چالش
+                                                                        @break
+                                                                        @case('skipSection')
+                                                                        عدم شرکت در چالش
+                                                                        @break
 
-                                                    </tbody>
-                                                </table>
-                                                    @endif
+                                                                        @default
+                                                                        همینطوری !
+                                                                    @endswitch
+                                                                </td>
+                                                            </tr>
+                                                        @empty
+                                                            <div class="alert alert-warning">در حال حاضر، امتیازی موجود
+                                                                نیست.
+                                                            </div>
+                                                        @endforelse
+
+                                                        </tbody>
+                                                    </table>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -736,56 +741,58 @@
                                             </p>
                                             <div class="table-responsive">
                                                 @if(count($activities) > 0 )
-                                                <table class="sort-table table table_shortcode">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>ردیف</th>
-                                                        <th>فعالیت</th>
-                                                        <th>نوع</th>
-                                                        <th>لینک</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @forelse($activities as $key=>$activity)
+                                                    <table class="sort-table table table_shortcode">
+                                                        <thead>
                                                         <tr>
-                                                            <th>{{$key+1}}</th>
-                                                            <td>{{$activity->subject}}</td>
-                                                            <td>
-                                                                @switch($activity->model_type)
-                                                                    @case("like")
-                                                                    <span
-                                                                        class="badge badge-success"> لایک/دیسلاک</span>
-                                                                    @break
-                                                                    @case("reply")
-                                                                    <span class="badge badge-success">کامنت</span>
-                                                                    @break
-                                                                    @case("section")
-                                                                    <span class="badge badge-success">ساخت چالش</span>
-                                                                    @break
-                                                                    @case("thread")
-                                                                    <span class="badge badge-success">ساخت سوال</span>
-                                                                    @break
-                                                                    @default
-
-                                                                @endswitch
-                                                            </td>
-                                                            <td>
-
-                                                                <a href="{{$activity->sectionLink($activity->model_id)}}"
-                                                                   class="btn btn-sm btn-warning"
-                                                                   target="_blank"><i class="fa fa-eye"></i>
-                                                                </a>
-                                                            </td>
+                                                            <th>ردیف</th>
+                                                            <th>فعالیت</th>
+                                                            <th>نوع</th>
+                                                            <th>لینک</th>
                                                         </tr>
-                                                    @empty
-                                                        <div class="alert alert-warning">در حال حاضر، فعالیتی موجود
-                                                            نیست.
-                                                        </div>
-                                                    @endforelse
+                                                        </thead>
+                                                        <tbody>
+                                                        @forelse($activities as $key=>$activity)
+                                                            <tr>
+                                                                <th>{{$key+1}}</th>
+                                                                <td>{{$activity->subject}}</td>
+                                                                <td>
+                                                                    @switch($activity->model_type)
+                                                                        @case("like")
+                                                                        <span
+                                                                            class="badge badge-success"> لایک/دیسلاک</span>
+                                                                        @break
+                                                                        @case("reply")
+                                                                        <span class="badge badge-success">کامنت</span>
+                                                                        @break
+                                                                        @case("section")
+                                                                        <span
+                                                                            class="badge badge-success">ساخت چالش</span>
+                                                                        @break
+                                                                        @case("thread")
+                                                                        <span
+                                                                            class="badge badge-success">ساخت سوال</span>
+                                                                        @break
+                                                                        @default
 
-                                                    </tbody>
-                                                </table>
-                                                    @endif
+                                                                    @endswitch
+                                                                </td>
+                                                                <td>
+
+                                                                    <a href="{{$activity->sectionLink($activity->model_id)}}"
+                                                                       class="btn btn-sm btn-warning"
+                                                                       target="_blank"><i class="fa fa-eye"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        @empty
+                                                            <div class="alert alert-warning">در حال حاضر، فعالیتی موجود
+                                                                نیست.
+                                                            </div>
+                                                        @endforelse
+
+                                                        </tbody>
+                                                    </table>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -799,74 +806,74 @@
                                             </p>
                                             <div class="table-responsive ">
                                                 @if($tickets->count() > 0)
-                                                <table class="sort-table table table_shortcode mt-5">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>شماره</th>
-                                                        <th>عنوان</th>
-                                                        <th>ایجاد</th>
-                                                        <th>بخش</th>
-                                                        <th>اهمیت</th>
-                                                        <th>مرحله</th>
-                                                        <th>وضعیت</th>
-                                                        <th>عملیات</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @forelse($tickets as $key=>$ticket)
+                                                    <table class="sort-table table table_shortcode mt-5">
+                                                        <thead>
                                                         <tr>
-                                                            <td>{{$key+1}}</td>
-                                                            <td>{{$ticket->title}}</td>
-                                                            <td>{{Verta::instance($ticket->created_at)->format('Y/n/j')}}</td>
-                                                            <td>{{$ticket->section}}</td>
-                                                            <td>{{$ticket->priority}}</td>
-                                                            <td>
-                                                                @if($ticket->answer=='0')
-                                                                    <span class="label label-info">پیام کاربر</span>
-                                                                @elseif($ticket->answer=='1')
-                                                                    <span class="label label-info">در حال رسیدگی</span>
-                                                                @elseif($ticket->answer=='2')
-                                                                    <span class="label label-info">پیام مدیر</span>
-                                                                @endif
-                                                                @if($ticket->faqs()->where('seen','2')->get()->count()>0)
-                                                                    <span
-                                                                        class="label label-danger">{{ $ticket->faqs()->where('seen','2')->get()->count()}}</span>
-                                                                @endif
-                                                            </td>
-                                                            <td>
+                                                            <th>شماره</th>
+                                                            <th>عنوان</th>
+                                                            <th>ایجاد</th>
+                                                            <th>بخش</th>
+                                                            <th>اهمیت</th>
+                                                            <th>مرحله</th>
+                                                            <th>وضعیت</th>
+                                                            <th>عملیات</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @forelse($tickets as $key=>$ticket)
+                                                            <tr>
+                                                                <td>{{$key+1}}</td>
+                                                                <td>{{$ticket->title}}</td>
+                                                                <td>{{Verta::instance($ticket->created_at)->format('Y/n/j')}}</td>
+                                                                <td>{{$ticket->section}}</td>
+                                                                <td>{{$ticket->priority}}</td>
+                                                                <td>
+                                                                    @if($ticket->answer=='0')
+                                                                        <span class="label label-info">پیام کاربر</span>
+                                                                    @elseif($ticket->answer=='1')
+                                                                        <span
+                                                                            class="label label-info">در حال رسیدگی</span>
+                                                                    @elseif($ticket->answer=='2')
+                                                                        <span class="label label-info">پیام مدیر</span>
+                                                                    @endif
+                                                                    @if($ticket->faqs()->where('seen','2')->get()->count()>0)
+                                                                        <span class="badge badge-danger">{{ $ticket->faqs()->where('seen','2')->get()->count()}}</span>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
                                         <span
                                             class="label label-table label-{{$ticket->status=='0' ? 'danger' : 'success'}}">
                                            {{$ticket->status=='0' ? 'بسته' : 'باز'}}
                                         </span>
-                                                            </td>
-                                                            <td>
-                                                                <a href="javascript:void(0)"
-                                                                   onclick="getTicket({{$ticket->id}})"
-                                                                   class="btn btn-success btn-sm "><i
-                                                                        class="d-inline-flex align-middle ti-eye ml-1"></i>
-                                                                </a>
-                                                                @if($ticket->status=='1')
-                                                                    <a href="#"
-                                                                       class="btn btn-danger btn-sm close-ticket "
-                                                                       data-toggle="tooltip"
-                                                                       title="بستن تیکت" id="{{$ticket->id}}">
-                                                                        <i class="d-inline-flex align-middle ti-lock"></i>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="javascript:void(0)"
+                                                                       onclick="getTicket({{$ticket->id}})"
+                                                                       class="btn btn-success btn-sm "><i
+                                                                            class="d-inline-flex align-middle ti-eye ml-1"></i>
                                                                     </a>
-                                                                    <form method="post"
-                                                                          action="{{route('user.ticket.toggle',$ticket->id)}}"
-                                                                          id="form-{{$ticket->id}}" class="d-none">
-                                                                        @csrf
-                                                                        @method('PATCH')
-                                                                    </form>
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                    @empty
-                                                        <div class="alert alert-warning">در حال حاضر، تیکتی موجود
-                                                            نیست.
-                                                        </div>
-                                                    @endforelse
-                                                </table>
+                                                                    @if($ticket->status=='1')
+                                                                        <a href="#"
+                                                                           class="btn btn-danger btn-sm close-ticket "
+                                                                           data-toggle="tooltip"
+                                                                           title="بستن تیکت" id="{{$ticket->id}}">
+                                                                            <i class="d-inline-flex align-middle ti-lock"></i>
+                                                                        </a>
+                                                                        <form method="post"
+                                                                              action="{{route('user.ticket.toggle',$ticket->id)}}"
+                                                                              id="form-{{$ticket->id}}" class="d-none">
+                                                                            @csrf
+                                                                            @method('PATCH')
+                                                                        </form>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @empty
+                                                            <div class="alert alert-warning">در حال حاضر، تیکتی موجود
+                                                                نیست.
+                                                            </div>
+                                                        @endforelse
+                                                    </table>
                                                 @else
                                                     <div class="alert alert-warning">در حال حاضر، تیکتی موجود
                                                         نیست.

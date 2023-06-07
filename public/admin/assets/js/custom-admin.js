@@ -327,7 +327,7 @@ $(function () {
     $('#sort-table, #sort-table-1').DataTable({
         dom: 'Bfrtip',
         buttons: [
-            'excel', 'pdf', 'print'
+            'excel', 'print'
         ],
         language: {
             "search": "جستجو",
@@ -1203,7 +1203,7 @@ $(document).ready(function () {
                 'dataType': 'json',
                 context: this,
                 success: function (response) {
-                    if (response.deleteCash == 'success') {
+                    if (response.deleteCat == 'success') {
                         $('.remove-cat[id="' + id + '"]').parents('tr').fadeOut();
                         swal({
                             title: "اطلاعات با موفقیت حذف شد!",

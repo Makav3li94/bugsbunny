@@ -11,6 +11,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
+                    <div class="alert alert-info text-center">جستجو برای {{request()->s_val??""}} ...</div>
                     @forelse($sections as $section)
                     <div class="blog_top_post blog_classic_item">
                         <div class="b_top_post_content">

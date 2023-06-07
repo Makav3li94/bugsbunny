@@ -16,7 +16,7 @@ class ReplyController extends Controller
 
     public function index()
     {
-        $replies = Reply::with(['section', 'user'])->get();
+        $replies = Reply::with(['section', 'user'])->orderBy('id','desc')->get();
         return view('admin.replies.index', compact('replies'));
     }
 
@@ -47,7 +47,7 @@ class ReplyController extends Controller
             }else{
                 $count = TotalScore::where([['is_for' ,'reply'], ['model_id' , $reply->id]])->get()->count();
                 if ($count == 1) {
-                    TotalScore::where([['user_id'=>$reply->user_id],['type'=>1],['is_for' => 'reply'], ['model_id' => $reply->id]])->delete();
+                    TotalScore::where([['user_id',$reply->user_id],['type',1],['is_for' , 'reply'], ['model_id' , $reply->id]])->delete();
                 }
             }
             $reply->update(['status' => $prev == 1 ? 0 : 1]);

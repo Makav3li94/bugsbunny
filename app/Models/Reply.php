@@ -19,7 +19,7 @@ class Reply extends Model implements Likeable
     }
 
     public function children(){
-        return $this->hasMany(Reply::class, 'parent_id')->where('status',1);
+        return $this->hasMany(Reply::class, 'parent_id');
     }
 
     public function section()

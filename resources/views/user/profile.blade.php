@@ -30,13 +30,7 @@
                             <div class="profile-head text-center mt-2">
                                 نام کاربری: {{$user->username}}
                             </div>
-                            <form method="post" class="text-center mt-2" action=" {{route('logout')}}">
-                                @csrf
-                                <button type="submit" style="font-size: 10px" class="btn btn-sm btn-danger p-1">
-                                    <i class="fa fa-power-off"></i>
-                                    خروج
-                                </button>
-                            </form>
+
                         </div>
                         <div class="col-md-9">
                             <div class="funfact-boxes">
@@ -161,9 +155,9 @@
                                                         <tr>
                                                             <th>{{$key+1}}</th>
                                                             <td>{{\Illuminate\Support\Str::limit($section->title,30)}}</td>
-                                                            <td>{{$section->category->title}}</td>
+                                                            <td>{{$section->category->title ?? ""}}</td>
                                                             <td>     {{Verta::instance($section->expire_date)->format('Y/m/d')}}</td>
-                                                            <td>         @include('layouts.components.status')</td>
+                                                            <td>         @include('layouts.components.status',['section'=>$section])</td>
                                                             <td>{{$user->username}}</td>
                                                             <td>{{$section->questions_count." عدد"}}</td>
                                                             <td style="width: 200px">
@@ -212,7 +206,7 @@
                                                             <td>{{$item->category->title}}</td>
                                                             <td>     {{Verta::instance($item->expire_date)->format('Y/m/d')}}</td>
                                                             <td>
-                                                                @include('layouts.components.status')
+                                                                @include('layouts.components.status',['section'=>$item])
                                                             </td>
                                                             <td style="width: 210px">
 

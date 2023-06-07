@@ -88,6 +88,11 @@
                             </p>
 
                         </div>
+                        <div class="col-lg-12 form-group">
+                            <div class="social" dir="rtl">
+                                <a href="{{route('register')}}"  class="text-info ">شماره اشتباه وارد کردم.</a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

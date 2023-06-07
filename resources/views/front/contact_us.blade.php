@@ -42,7 +42,7 @@
                             @endif
                         </div>
                         <div class="col-lg-6 form-group">
-                            <h6>کپجا</h6>
+                            <h6>کپچا</h6>
                             <input class="form-control text-center" type="text" required       style="direction: rtl"
                                    placeholder="{{$array[2].' '.$array[1].' '.$array[0]}} برابر با چه عددی است؟ "
                                    name="result">

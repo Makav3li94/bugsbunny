@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <h4 class="card-title">ویرایش اسلایدر</h4>
                     <p class="card-subtitle">در اینجا می توانید اسلایدر را ویرایش کنید.</p>
-                    <form class="clearfix" action="{{route('admin.slider.update',['id'=>$slider->id])}}"
+                    <form class="clearfix" action="{{route('admin.slider.update',$slider->id)}}"
                           method="post">
                         @csrf
                         @method('PATCH')

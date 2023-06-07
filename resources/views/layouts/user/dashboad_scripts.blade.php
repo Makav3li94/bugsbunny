@@ -236,7 +236,7 @@
             },
             success: function (response) {
                 var html
-                var chats
+                var chats = ''
                 var ticket = response.ticket;
                 var answer
                 var status
@@ -270,13 +270,6 @@
                         name = ticket.user_name
                         user = 'کاربر'
                         pic = '{{asset('images/user/'.$user->avatar)}}'
-                        if (faq.user_file != null) {
-                            link = '<div class="alert alert-success alert-rounded font-12 mt-2 mb-0 p-1">' +
-                                '<i class="fa fa-check-circle fa-lg align-middle text-success"></i>' +
-                                '<a href="">دانلود فایل ضمیمه ' + user + '</a></div>'
-                        } else {
-                            link = ''
-                        }
                         chats = '<ul class="list-unstyled p-0"><li class="media mb-3 mt-2 p-3" style="border:1px dotted #000">\n' +
                             '<img class="d-none d-sm-block ml-3" src="' + pic + '" width="60">\n' +
                             '<div class="media-body">\n' +
@@ -291,13 +284,7 @@
                         name = 'مدیریت'
                         user = 'مدیر'
                         pic = "{{asset('admin/assets/images/2.png')}}"
-                        if (faq.admin_file != null) {
-                            link = '<div class="alert alert-success alert-rounded font-12 mt-2 mb-0 p-1">' +
-                                '<i class="fa fa-check-circle fa-lg align-middle text-success"></i>' +
-                                '<a href="">دانلود فایل ضمیمه ' + user + '</a></div>'
-                        } else {
-                            link = ''
-                        }
+
                         chats += '<ul class="list-unstyled p-0"><li class="media mb-3 mt-2 p-3" style="border:1px dotted #000">\n' +
                             '<img class="d-none d-sm-block ml-3" src="' + pic + '" width="60">\n' +
                             '<div class="media-body">\n' +
@@ -408,14 +395,137 @@
                         var tr = $('#thread-' + response.section[1]).parents('tr');
                     }
 
+                    switch(response.section[5]) {
+                        case 0:
+                            stat = '<span class="badge badge-pill badge-info">معلق</span>'
+                            break;
+                        case 1:
+                            stat = '<span class="badge badge-pill badge-warning">درحال بررسی</span>'
+                            break;
+                        case 2:
+                            stat = '   <span class="badge badge-pill badge-success"> تایید شده</span>'
+                            break;
+                        case 3:
+                            stat = '<span class="badge badge-pill badge-secondary"> رد شده</span>'
+                            break;
+                        case 4:
+                            stat = '<span class="badge badge-pill badge-primary"> پایان یافته</span>'
+                            break;
+                        default:
+                            stat = ''
+                    }
+
                     tr.find('td:eq(0)').text(response.section[0]);
                     tr.find('td:eq(1)').text(response.section[2]);
                     tr.find('td:eq(2)').text(response.section[3]);
+                    tr.find('td:eq(4)').html(stat);
                 }
             }
         });
     });
 
+
+    function editThread(id) {
+        $('#collapseThreadEdit').modal('show');
+        $.ajax({
+            'url': '/dashboard/challenge/' + id + '/edit',
+            'type': 'get',
+            'dataType': 'json',
+
+            success: function (response) {
+                if (!$.isEmptyObject(response.section)) {
+                    $('#collapseThreadForm input[name=title]').val(response.section.title);
+                    $('#collapseThreadForm textarea[name=excerpt]').val(response.section.excerpt);
+                    $('#collapseThreadForm select[name=category_id]').val(response.section.category_id).prop('selected', true).trigger('change.select2');
+                    ;
+                    tinymce.get('thread_info').setContent(response.section.description);
+
+                    $('#submitCollapseThread').attr('data-id', response.section.id);
+                }
+            }
+        });
+    }
+
+    $('#submitCollapseThread').on('click', function () {
+        var id = $('#submitCollapseThread').attr('data-id');
+        var title = $('#collapseThreadForm input[name=title]').val();
+        tinymce.triggerSave()
+
+        var description = $('#thread_info').val();
+        var excerpt = $('#collapseThreadForm textarea[name=excerpt]').val();
+        var category_id = $('#collapseThreadForm select[name=category_id]').val();
+        $.ajax({
+            'url': '/dashboard/challenge/' + id,
+            'type': 'patch',
+            'dataType': 'json',
+            data: {
+                title: title,
+                description: description,
+                excerpt: excerpt,
+                category_id: category_id,
+            },
+            success: function (response) {
+                $('#toEditCollapseSection').text('');
+                if (!$.isEmptyObject(response.collapseSectionError)) {
+                    if (!$.isEmptyObject(response.collapseSectionError.title)) {
+                        $('#toEditCollapseThreadTitle').text(response.collapseSectionError.title[0]);
+                    }
+                    if (!$.isEmptyObject(response.collapseSectionError.category_id)) {
+                        $('#toEditCollapseThreadCat').text(response.collapseSectionError.category_id[0]);
+                    }
+
+                    if (!$.isEmptyObject(response.collapseSectionError.description)) {
+                        $('#toEditCollapseThreadDescription').text(response.collapseSectionError.description[0]);
+                    }
+                    if (!$.isEmptyObject(response.collapseSectionError.excerpt)) {
+                        $('#toEditCollapseThreadExcerpt').text(response.collapseSectionError.excerpt[0]);
+                    }
+
+                } else {
+                    $('#collapseThreadEdit').modal('hide');
+                    $.toast({
+                        heading: 'موفقیت!',
+                        text: 'اطلاعات به روزرسانی شد',
+                        position: 'bottom-left',
+                        textAlign: 'right',
+                        loaderBg: '#ff6849',
+                        icon: 'success',
+                        hideAfter: 3500
+                    });
+                    if (response.section[4] == 0) {
+                        var tr = $('#section-' + response.section[1]).parents('tr');
+                    } else {
+                        var tr = $('#thread-' + response.section[1]).parents('tr');
+                    }
+                    var stat
+
+                    switch(response.section[5]) {
+                        case 0:
+                            stat = '<span class="badge badge-pill badge-info">معلق</span>'
+                            break;
+                        case 1:
+                            stat = '<span class="badge badge-pill badge-warning">درحال بررسی</span>'
+                            break;
+                        case 2:
+                            stat = '   <span class="badge badge-pill badge-success"> تایید شده</span>'
+                            break;
+                        case 3:
+                            stat = '<span class="badge badge-pill badge-secondary"> رد شده</span>'
+                            break;
+                        case 4:
+                            stat = '<span class="badge badge-pill badge-primary"> پایان یافته</span>'
+                            break;
+                        default:
+                            stat = ''
+                    }
+                    tr.find('td:eq(0)').text(response.section[0]);
+                    tr.find('td:eq(1)').text(response.section[2]);
+                    tr.find('td:eq(2)').html(stat);
+                    tr.find('td:eq(3)').text(response.section[3]);
+                }
+            }
+        });
+    });
     function deleteQuestion(id) {
         $.ajaxSetup({
             headers: {

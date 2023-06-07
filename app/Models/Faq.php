@@ -24,7 +24,7 @@ class Faq extends Model
     protected function createdAt(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => verta($value)->formatDifference()
+            get: fn ($value) => verta($value)->format('Y/n/j - H:i')
         );
     }
 

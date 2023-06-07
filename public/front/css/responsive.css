@@ -1158,7 +1158,7 @@
         max-width: 40px;
     }
     .action-button-container{
-        display: none;
+        /*display: none;*/
     }
     .question-icon{
         font-size: 25px;

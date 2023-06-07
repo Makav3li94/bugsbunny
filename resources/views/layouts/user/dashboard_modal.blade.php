@@ -460,8 +460,10 @@
                                     name="category_id">
                                 <option></option>
                                 @forelse($categories as $cat)
+                                    @if($cat->type == 0)
                                 <option value="{{$cat->id}}"
                                         @if(collect(old('category_id'))->contains($cat->id)) selected @endif>{{$cat->title}}</option>
+                                    @endif
                                 @empty
 
                                 @endforelse
@@ -503,6 +505,73 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
                 <button type="button" class="btn btn-success waves-effect waves-light" id="submitCollapseSection"
+                        data-id="">ثبت ویرایش
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true" id="collapseThreadEdit">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form-horizontal clearfix" id="collapseThreadForm">
+                    <div class="row form-group">
+                        <label class="col-sm-3 text-right control-label col-form-label">عنوان سوال :
+                            <span
+                                class="text-danger mr-1">*</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="title" value="{{{old('title')}}}"
+                                   class="form-control"
+                                   placeholder="">
+                            <small class="invalid-text" style="float:right" id="toEditCollapseThreadTitle"></small>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-3 text-right control-label col-form-label">دسته
+                            سوال: </label>
+                        <div class="col-9">
+                            <select class="select2 form-control custom-select text-right" style="width: 100%;"
+                                    name="category_id">
+                                <option></option>
+                                @forelse($categories as $cat)
+                                    @if($cat->type == 1)
+                                    <option value="{{$cat->id}}"
+                                            @if(collect(old('category_id'))->contains($cat->id)) selected @endif>{{$cat->title}}</option>
+                                    @endif
+                                @empty
+
+                                @endforelse
+
+                            </select>
+                            <small class="invalid-text" style="float:right" id="toEditCollapseThreadCat"></small>
+                        </div>
+
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-3 text-right control-label col-form-label">توضیحات سوال
+                            : </label>
+                        <div class="col-12">
+                            <textarea class="tinymce-editor" id="thread_info" name="description">{!! old("description") !!}</textarea>
+                            <small class="invalid-text" style="float:right" id="toEditCollapseThreadDescription"></small>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <label
+                            class="col-sm-3 text-right control-label col-form-label">چکیده: </label>
+                        <div class="col-12">
+                                <textarea name="excerpt" class="form-control" rows="1"
+                                          cols="1">{{old('excerpt')}}</textarea>
+                            <small class="invalid-text" style="float:right"  id="toEditCollapseThreadExcerpt"></small>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-success waves-effect waves-light" id="submitCollapseThread"
                         data-id="">ثبت ویرایش
                 </button>
             </div>

@@ -51,7 +51,6 @@ class DatabaseSeeder extends Seeder
         Admin::find(1)->assignRole('مدیر ارشد');
 
         Blog::create(['title' => 'درباره ما', 'excerpt' => 'صفحه درباره ما', 'slug' => 'about-us', 'description' => 'متن درباره ما', 'is_page' => 1, 'published_at' => Carbon::now()->toDateTimeString(),]);
-        Blog::create(['title' => 'تماس با ما', 'excerpt' => '', 'slug' => 'contact-us', 'description' => 'متن تماس با ما', 'is_page' => 1, 'published_at' => Carbon::now()->toDateTimeString(),]);
         Blog::create(['title' => 'چراایزباگ', 'excerpt' => '', 'slug' => 'why-isbug', 'description' => 'متن چرا ایزباگ', 'is_page' => 1, 'published_at' => Carbon::now()->toDateTimeString(),]);
         Blog::create(['title' => 'قوانین چالش کده', 'excerpt' => '', 'slug' => 'rules', 'description' => 'متن قوانین چالش کده', 'is_page' => 1, 'published_at' => Carbon::now()->toDateTimeString(),]);
         Blog::create(['title' => 'سوالات متداول', 'excerpt' => '', 'slug' => 'faqs', 'description' => 'متن سوالات متداول', 'is_page' => 1, 'published_at' => Carbon::now()->toDateTimeString(),]);

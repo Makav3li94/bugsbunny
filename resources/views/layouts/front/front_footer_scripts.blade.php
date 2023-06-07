@@ -26,6 +26,17 @@
             , stack: 6
         });
 
+        @elseif(session()->get('verified')==true)
+        $.toast({
+            heading: 'موفقیت!'
+            , text: 'ایمیل شما با موفقیت تایید شد.'
+            , position: 'bottom-left'
+            , textAlign: 'right'
+            , loaderBg: '#03a9f3'
+            , icon: 'success'
+            , hideAfter: 3500
+            , stack: 6
+        });
         @elseif(session()->get('quiz')=='success')
         $.toast({
             heading: 'موفقیت!'

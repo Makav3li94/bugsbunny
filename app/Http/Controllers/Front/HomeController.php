@@ -83,7 +83,7 @@ class HomeController extends Controller
             'name'=>'required|string',
             'email'=>'required|email',
             'tel'=>'required|numeric',
-            'message'=>'required|string|max:255',
+            'message'=>'required|string|max:1000',
         ]);
         Contact::create([
             'name'=>$request->name,
@@ -126,7 +126,7 @@ class HomeController extends Controller
     public function category($slug)
     {
         $category = Category::where('title', $slug)->first();
-        $section = Section::where('category_id', $category->id)->with('category')->orderBy('id', 'desc')->get();
+        $section = Section::where('category_id', $category->id)->whereIn('status',[2,4])->with('category')->orderBy('id', 'desc')->get();
         list($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers,$HighLastWeekUsersScores) = $this->stats();
         return view('front.category', compact('category','mostViewed','HighLastWeekUsersScores','HighLastWeekUsersUsers','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular','section'));
     }
@@ -181,7 +181,7 @@ class HomeController extends Controller
             $sections = Section::with('category')->where([['category_id', $cat ?? true], ['title', 'like', "%$val%"]])->whereIn('status',[2,4])->paginate(5);
         }
         list($mostViewed, $mostPopular, $latestComment, $HighAllTimeUsersScores, $HighAllTimeUsers, $HighLastWeekUsersUsers,$HighLastWeekUsersScores) = $this->stats();
-        return view('front.archive', compact('sections','mostViewed','HighLastWeekUsersScores','HighLastWeekUsersUsers','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular'));
+        return view('front.archive', compact('val','sections','mostViewed','HighLastWeekUsersScores','HighLastWeekUsersUsers','HighAllTimeUsersScores','HighAllTimeUsers','latestComment','mostPopular'));
     }
     public function search(Request $request)
     {
