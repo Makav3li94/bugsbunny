@@ -76,13 +76,13 @@
                             <div class="community-post style-two chaleshkade-item bug">
                                 <div class="col-md-6 post-content">
                                     <div class="author-avatar chaleshkade-icon">
-                                        <img src="@if($item['avatar']!="" || $item['avatar'] !=null ) {{asset('images/user/'.$item['avatar']) }}@else {{asset('front/img/home_one/1.png')}} @endif" alt="{{$item['username']}}" width="30">
+                                        <img src="@if( ($item['avatar']!="" || $item['avatar'] !=null) && $item['authStatus'] == 1 ) {{asset('images/user/'.$item['avatar']) }}@else {{asset('front/img/home_one/1.png')}} @endif" alt="{{$item['username']}}" width="30">
                                     </div>
                                     <div class="entry-content">
                                         <h3 class="post-title">
-                                            <a href="{{route('user',$item['username'])}}">{{$item['username']}}</a>
+                                            <a href="{{route('user',$item['username'])}}">{{$item['authStatus'] == 0 ? "کاربر ایزباگ" : $item['username']}}</a>
                                         </h3>
-                                        <p>{{$item['name']}}</p>
+                                        <p>{{$item['authStatus'] == 0 ? "-" : $item['name']}}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 post-meta-wrapper">
@@ -292,6 +292,30 @@
                     @endforelse
                     <!-- /.community-posts-wrapper -->
                     </div>
+
+
+                    <div class="answer-action mt-5">
+                        <div class="action-content">
+                            <div class="image-wrap">
+                                <img src="{{asset('front/img/home_support/answer.png')}}" alt="answer action">
+                            </div>
+
+                            <div class="content">
+                                <h2 class="ans-title">سوالتو  پیدا نکردی؟</h2>
+                                <p>
+                                    از بقیه اعضا ایزباگ کمک بگیر !
+                                </p>
+                            </div>
+                        </div>
+                        <!-- /.action-content -->
+
+                        <div class="action-button-container">
+                            <a href="{{auth()->check() ? route('user.dashboard') : route('register')}}"
+                               class="action_btn btn-ans">سوال خودتو بساز</a>
+                        </div>
+                        <!-- /.action-button-container -->
+                    </div>
+                    <!-- /.answer-action -->
                 </div>
                 <!-- /.col-lg-8 -->
 

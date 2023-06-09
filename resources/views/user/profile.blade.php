@@ -23,16 +23,21 @@
                         <div class="col-md-3">
                             <div class="profile-img">
                                 <img
-                                    src="@if($user->avatar!="" || $user->avatar !=null ) {{asset('images/user/'.$user->avatar) }}@else {{asset('front/img/home_one/1.png')}} @endif"
+                                    src="@if(($user->avatar!="" || $user->avatar !=null) && $user->authStatus == 1 ) {{asset('images/user/'.$user->avatar) }}@else {{asset('front/img/home_one/1.png')}} @endif"
                                     width="100" alt=""/>
 
                             </div>
                             <div class="profile-head text-center mt-2">
-                                نام کاربری: {{$user->username}}
+                                نام کاربری: {{$user->authStatus == 1 ? $user->username : 'کاربر ایزباگ'}}
+                                <br>
+                                نام : {{$user->authStatus == 1 ? $user->name : ''}}
                             </div>
 
                         </div>
                         <div class="col-md-9">
+                            @if($user->authStatus == 0)
+                                <div class="alert alert-info p-5 text-center">وضعیت کاربر در دست بررسی است.</div>
+                            @else
                             <div class="funfact-boxes">
                                 <div class="funfact-box text-center color-one wow fadeInRight" data-wow-delay="0.3s">
                                     <div class="fanfact-icon">
@@ -77,17 +82,20 @@
                                     <h3 class="title">امتیاز کلی</h3>
                                 </div>
                             </div>
+                            @endif
                         </div>
 
                     </div>
                     <hr>
+                    @if($user->authStatus == 1)
                     <div class="row">
                         <div class="col-md-3">
                             <div class="profile-work text-center">
-                                دسته ها:
+                                دسته های مورد علاقه:
+                                <br>
                                 @forelse($cats as $cat)
                                     @if(in_array($cat->id,json_decode($user->cats)))
-                                        <span class="badge badge-info">  {{$cat->title}}  </span>
+                                        <span class="badge badge-info">  <a href="{{route('category',$cat->title)}}" class="text-white">{{$cat->title}}</a>  </span>
                                     @endif
                                 @empty
 
@@ -398,6 +406,7 @@
                             </div>
                         </div>
                     </div>
+                        @endif
                 </div>
             </div>
         </div>

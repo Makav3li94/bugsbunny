@@ -31,6 +31,9 @@
                                         <td style="width: 55px;">{{$key+1}}</td>
                                         <td>{{$item->title}}</td>
                                         <td style="width: 120px;">
+                                            <a href="{{route('category',$item->title)}}" target="_blank" class="btn btn-sm btn-warning">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
                                             <button class="btn btn-success btn-sm edit-cat" id="{{$item->id}}"><i
                                                     class="d-inline-flex align-middle ti-pencil ml-1"></i>ویرایش
                                             </button>
@@ -93,6 +96,9 @@
                                         <td style="width: 55px;">{{$key+1}}</td>
                                         <td>{{$item->title}}</td>
                                         <td style="width: 120px;">
+                                            <a href="{{route('category',$item->title)}}" target="_blank" class="btn btn-sm btn-warning">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
                                             <button class="btn btn-success btn-sm edit-cat" id="{{$item->id}}"><i
                                                     class="d-inline-flex align-middle ti-pencil ml-1"></i>ویرایش
                                             </button>

@@ -79,6 +79,7 @@ class ReplyController extends Controller
 
     public function destroy(Reply $reply)
     {
+        $this->readMFNotification($reply->user_id, 'reply', $reply->id);
         $reply->delete();
         return redirect()->back()->with(['delete' => 'success']);
     }

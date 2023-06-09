@@ -12,8 +12,8 @@
         <ul class="list-unstyled ticket_categories">
             @forelse($HighAllTimeUsers as $item)
                 <li>
-                    <img src="@if($item['avatar']!="" || $item['avatar'] !=null ) {{asset('images/user/'.$item['avatar']) }}@else {{asset('front/img/home_one/1.png')}} @endif" alt="{{$item['username']}}" width="30">
-                    <a href="{{route('user',$item['username'])}}">{{$item['username']}}</a>
+                    <img src="@if(($item['avatar']!="" || $item['avatar'] !=null) && $item['authStatus'] == 1 ) {{asset('images/user/'.$item['avatar']) }}@else {{asset('front/img/home_one/1.png')}} @endif" alt="{{$item['username']}}" width="30">
+                    <a href="{{route('user',$item['username'])}}">{{$item['authStatus'] == 0 ? "کاربر ایزباگ" : $item['username']}}</a>
                     <span class="count">
                         @foreach($HighAllTimeUsersScores as $score)
                             @if($score->user_id == $item['id'])

@@ -278,5 +278,6 @@ return array(
         'is_active' => 'وضعیت',
         'explanation' => 'توضیحات',
         'is_active_answer' => 'پاسخ صحیح',
+        'answer' => 'پاسخ ',
     ),
 );

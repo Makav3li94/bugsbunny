@@ -34,7 +34,7 @@
                                 <tr>
                                     <td style="width: 55px;">{{$key+1}}</td>
                                     <td>{{\Illuminate\Support\Str::limit($item->body,50,'...')}}</td>
-                                    <td>{{$item->user->name ." | ".$item->user->username}}</td>
+                                    <td>{{isset($item->user->name) ? ($item->user->name ." | ".$item->user->username) : "--"}}</td>
                                     <td>{{$item->section->title}}</td>
                                     <td>{{verta($item->created_at)->format('Y/n/j')}}</td>
                                     <td><span class="badge badge-{{$item->status == 0 ? "danger" : "success"}}">{{$item->status == 0 ? "معلق" : "تایید شده"}}</span></td>

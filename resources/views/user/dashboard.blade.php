@@ -31,11 +31,13 @@
 
                             </div>
                             <div class="profile-head text-center mt-2">
-                                نام کاربری: {{$user->username}}
+                         <span class="mb-1">       نام کاربری: {{$user->username}}</span>
+                                <br>
+                               <span> نام : {{$user->name}}</span>
                             </div>
                             <form method="post" class="text-center mt-2" action=" {{route('logout')}}">
                                 @csrf
-                                <button type="submit" style="font-size: 10px" class="btn btn-sm btn-danger p-1">
+                                <button type="submit" style="font-size: 10px" class="btn btn-sm btn-danger p-1 mb-2">
                                     <i class="fa fa-power-off"></i>
                                     خروج
                                 </button>
@@ -93,10 +95,11 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="profile-work text-center">
-                                دسته ها:
+                                دسته های مورد علاقه:
+                                <br>
                                 @forelse($cats as $cat)
                                     @if(in_array($cat->id,json_decode($user->cats)))
-                                        <span class="badge badge-info">  {{$cat->title}}  </span>
+                                        <span class="badge badge-info">  <a href="{{route('category',$cat->title)}}"class="text-white">{{$cat->title}}</a>  </span>
                                     @endif
                                 @empty
 
@@ -316,7 +319,7 @@
                                         <div class="card-body">
                                             <h4 class="card-title">چالش های شما</h4>
                                             <p class="card-subtitle">در اینجا چالش هایی که ادمین سامانه، یا سایر کاربران
-                                                ایجاد کرده اند را، بر اسا دسته های مورد علاقه خود مشاهده کنید.</p>
+                                                ایجاد کرده اند را، بر اساس دسته های مورد علاقه خود مشاهده کنید.</p>
                                             <div class="table-responsive">
                                                 @if(count($sections) > 0 || count($userSections) > 0)
 
@@ -343,7 +346,7 @@
                                                                 <td>
                                                                     @include('layouts.components.status',['section'=>$section])
                                                                 </td>
-                                                                <td>سایر</td>
+                                                                <td>ادمین</td>
                                                                 <td style="width: 150px"><a
                                                                         class="btn btn-sm btn-warning"
                                                                         target="_blank"

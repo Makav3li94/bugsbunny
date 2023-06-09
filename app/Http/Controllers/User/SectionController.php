@@ -126,6 +126,7 @@ class SectionController extends Controller
                 'expire_date' => $published_at,
                 'status' => 1
             ]);
+            $this->notifyAdmin($user->id, $user->name, $user->mobile, 'challenge', $challenge->id, 0, 'کاربر چالش یا سوال جدید خود را ویرایش کرد.');
             $section = [
                 0 => $section->title,
                 1 => $section->id,

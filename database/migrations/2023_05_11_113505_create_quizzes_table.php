@@ -23,6 +23,8 @@ return new class extends Migration
             $table->tinyInteger('is_correct')->nullable()->default(0);
             $table->tinyInteger('unit')->nullable()->default(1);
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

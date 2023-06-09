@@ -1,9 +1,9 @@
 @extends('layouts.main-front',[
-        'title'=>$category->type == 0 ? 'چالش های' : 'سوال های'.$category->title.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
+        'title'=>($category->type == 0 ? 'چالش های' : 'سوال های') .$category->title.' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         'sl'=> false,
         'sub'=>'لیست سوال های کیفیت نرم افزار و امنیت '.$category->title.' ایزباگ در این صفحه قابل مشاهده هستند. مجموعه ای از سوال ها  '.$category->title.' برای آزمونگرها آماده شده است.',
         'subLink'=>'',
-        'page'=>$category->type == 0 ? 'چالش های' : 'سوال های' .' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
+        'page'=>($category->type == 0 ? 'چالش های' : 'سوال های') .' - '.(!isset($setting) ? 'ایزباگ' : $setting->brand),
         ]
     )
 @section('content')

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->boolean('status')->default(false)->comment('show score only if time expired');
             $table->integer('score')->default(0);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

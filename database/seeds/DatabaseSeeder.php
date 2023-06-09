@@ -71,13 +71,13 @@ class DatabaseSeeder extends Seeder
         Category::create(['title' => 'PHP']);
         Category::create(['title' => 'GoLang']);
         Category::create(['title' => 'Python']);
-        Category::create(['title' => 'thread','type'=>1]);
+        Category::create(['title' => 'Android','type'=>1]);
 
 
         //Front
         FrontMenu::create(['title' => 'خانه', 'link' => 'home', 'type' => 0]);
         FrontMenu::create(['title' => 'چالش کده', 'link' => 'chalesh_kade', 'type' => 0]);
-        FrontMenu::create(['title' => 'تماس با ما', 'link' => 'contact-us', 'type' => 0]);
+        FrontMenu::create(['title' => 'تماس با ما', 'link' => 'contact_us', 'type' => 0]);
 
         FrontMenu::create(['title' => 'چالش کده', 'link' => 'chalesh_kade', 'type' => 1]);
         FrontMenu::create(['title' => 'چالش کده', 'link' => 'chalesh_kade', 'type' => 2]);

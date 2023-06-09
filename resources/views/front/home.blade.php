@@ -131,7 +131,8 @@
             <div class="doc_feedback_info">
                 <div class="doc_feedback_slider">
                     <div class="item">
-                        <p>
+                        <p style="background: rgb(89 89 89 / 60%);
+">
                             {{$frontOverlay->body ??''}}
                         </p>
                     </div>

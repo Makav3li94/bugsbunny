@@ -175,8 +175,9 @@ class PrimaryUserController extends Controller
     {
 
         $user->notes()->delete();
-
-
+        $user->quizHeader()->delete();
+        $user->replies()->delete();
+        $user->totalScore()->delete();
         $user->smses()->delete();
         $user->delete();
         return back()->with([

@@ -36,7 +36,7 @@
 
                                     <td>{{$challenge->title}}</td>
                                     <td>{{$challenge->category->title }}</td>
-                                    <td>{{$challenge->type == 1 ? 'Admin' : $challenge->user->username }}</td>
+                                    <td>{!!$challenge->type == 1 ? '<span class="badge badge-warning">Admin</span>' : $challenge->user->username !!}</td>
 
                                     <td>
                                         {{Verta::instance($challenge->expire_date)->format('Y/m/d')}}
@@ -45,7 +45,7 @@
                                         @switch($challenge->status)
                                             @case(0)
                                             <span
-                                                class="badge badge-pill badge-info">معلق</span>
+                                                class="badge badge-pill badge-info">در انتظار تعریف آزمون</span>
                                             @break
                                             @case(1)
 

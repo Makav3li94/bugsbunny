@@ -22,7 +22,7 @@ class SectionController extends Controller
 
     public function index()
     {
-        $challenges = Section::with(['user', 'category'])->get();
+        $challenges = Section::with(['user', 'category'])->orderBy('id', 'desc')->get();
         return view('admin.challenges.sections.index', compact('challenges'));
     }
 
@@ -64,13 +64,14 @@ class SectionController extends Controller
             'user_id' => 1,
             'slug' => str_slug_persian($request->title),
             'kind' => $kind,
+            'status' => $kind == 1 ? 1 : 0,
             'description' => $request->description,
             'excerpt' => $request->excerpt ?? Str::limit($request->description, 50),
             'prize_text' => $request->prize_text ?? "",
             'expire_date' => $published_at,
         ]);
         $challenges = Section::with(['user', 'category'])->get();
-        return view('admin.challenges.sections.index', compact('challenges'))->with('store','success');
+        return view('admin.challenges.sections.index', compact('challenges'))->with('store', 'success');
     }
 
 
@@ -120,7 +121,7 @@ class SectionController extends Controller
                 } elseif ($status == 2) {
                     $details = ['type' => 'وضعیت چالش', 'status' => 'تایید شده'];
                     $setting = Setting::all()->first();
-                    $count = TotalScore::where([['is_for' , 'challenge'], ['model_id' , $challenge->id]])->get()->count();
+                    $count = TotalScore::where([['is_for', 'challenge'], ['model_id', $challenge->id]])->get()->count();
                     if ($count == 0) {
                         TotalScore::create([
                             'user_id' => $user->id,
@@ -139,7 +140,7 @@ class SectionController extends Controller
                 } elseif ($status == 2) {
                     $details = ['type' => 'وضعیت سوال', 'status' => 'تایید شده'];
                     $setting = Setting::all()->first();
-                    $count = TotalScore::where([['is_for' , 'thread'], ['model_id' , $challenge->id]])->get()->count();
+                    $count = TotalScore::where([['is_for', 'thread'], ['model_id', $challenge->id]])->get()->count();
                     if ($count == 0) {
                         TotalScore::create([
                             'user_id' => $user->id,
@@ -175,6 +176,7 @@ class SectionController extends Controller
     public function destroy($id)
     {
         $challenge = Section::findOrFail($id);
+        $this->readMFNotification($challenge->user_id, 'challenge', $challenge->id);
         $challenge->delete();
         return redirect()->back()->with('delete', 'success');
     }

@@ -176,7 +176,7 @@
             , text: 'لطفا اطلاعات وارد شده را بررسی کنید.'
             , position: 'bottom-left'
             , textAlign: 'right'
-            , loaderBg: '#03a9f3'
+            , loaderBg: '#danger'
             , icon: 'warning'
             , hideAfter: 3500
             , stack: 6
