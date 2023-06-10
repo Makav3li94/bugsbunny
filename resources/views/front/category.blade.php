@@ -105,7 +105,7 @@
                                                         width="15" alt="cmm">
                                                 @endif
                                                 <a href="{{$item->type == 1 ? 'javascript:void(0)' : route('user',$item->user->username)}}">آخرین
-                                                    ارسال: {{$item->user->name}}</a>
+                                                    ارسال: {{$item->type == 1 ? "Admin" :$item->user->name}}</a>
                                             </li>
                                             <li>
                                                 <i class="icon_calendar"></i> {{Verta::instance($item->updated_at)->format('Y-m-d')}}

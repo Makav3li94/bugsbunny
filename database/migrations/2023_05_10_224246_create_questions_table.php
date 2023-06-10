@@ -23,7 +23,6 @@ return new class extends Migration
             $table->unsignedBigInteger('section_id')->index();
             $table->timestamps();
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

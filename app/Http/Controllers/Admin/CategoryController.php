@@ -83,6 +83,11 @@ class CategoryController extends Controller
     public function destroy(Request $request,Category $category)
     {
         if ($request->ajax()) {
+            foreach ($category->sections as $section){
+                $section->replies()->delete();
+                $section->questions()->delete();
+                $section->delete();
+            }
             $category->delete();
             return response()->json(['deleteCat' => 'success']);
         }

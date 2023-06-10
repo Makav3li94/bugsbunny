@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasFactory, HasLikeable;
@@ -52,6 +53,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Sms::class);
     }
 
+    public function sections()
+    {
+        return $this->hasMany(Section::class)->where('type', 0);
+    }
+
     public function replies()
     {
         return $this->hasMany(Reply::class);
@@ -73,7 +79,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $negative = 0;
         $positive = 0;
 
-        foreach ($this->totalScore as  $value) {
+        foreach ($this->totalScore as $value) {
             if ($value->type) {
                 $positive += $value->score;
             } else {
@@ -82,22 +88,25 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         $total = $positive - $negative;
-        return  [
+        return [
             'positive' => $positive,
             'negative' => $negative,
             'total' => $total,
         ];
     }
+
     public function posScore()
     {
         return $this->hasMany(TotalScore::class)->where('type', 1);
     }
+
     public function negScore()
     {
         return $this->hasMany(TotalScore::class)->where('type', 0);
     }
-    public function sendUserTicketNotification($user,$ticket)
+
+    public function sendUserTicketNotification($user, $ticket)
     {
-        $this->notify(new UserTicketNotification($user,$ticket));
+        $this->notify(new UserTicketNotification($user, $ticket));
     }
 }

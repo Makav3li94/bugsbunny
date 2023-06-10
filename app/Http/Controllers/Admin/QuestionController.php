@@ -88,6 +88,8 @@ class QuestionController extends Controller
 
     public function destroy(Question $question)
     {
-        //
+         $question->answers()->delete();
+         $question->delete();
+        return redirect()->back()->with('delete', 'success');
     }
 }

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->enum('is_checked', ['0', '1'])->default('0');
             $table->unsignedBigInteger('question_id')->index();
             $table->timestamps();
-            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 

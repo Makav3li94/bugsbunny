@@ -45,8 +45,8 @@ class UserController extends Controller
         $sliders = Slider::all();
         $date = $this->convertToJalaliDate($user->birthDate, TRUE);
         $user['birthDate'] = $date;
-        $sections = Section::withCount('questions')->where([['type', 1], ['status', 2]])->orWhere('status',4)->whereIn('category_id', json_decode($user->cats))->orderBy('id','desc')->get();
-        $userSections = Section::withCount('questions')->where([['type', 0],['status', 2] ])->orWhere('user_id', auth()->id())->whereIn('category_id', json_decode($user->cats))->orderBy('id','desc')->get();
+        $sections = Section::withCount('questions')->where('type', 1)->whereIn('status', [2, 4])->whereIn('category_id', json_decode($user->cats))->orderBy('id','desc')->get();
+        $userSections = Section::withCount('questions')->where([['type', 0],['status', 2] ])->orWhere([['type', 0],['user_id', auth()->id()] ])->whereIn('category_id', json_decode($user->cats))->orderBy('id','desc')->get();
         $threads = Section::where([['kind', 1], ['user_id', auth()->id()]])->get();
         $activities = LogActivity::where('user_id', auth()->id())->get();
 //          Like::query()->whereMorphedTo('userable', $user)->where('likeable_id',2)->get();

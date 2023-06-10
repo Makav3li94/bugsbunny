@@ -30,7 +30,6 @@ return new class extends Migration
             $table->tinyInteger('status')->default(0)->comment(' 0 for not show and 1 for show');
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

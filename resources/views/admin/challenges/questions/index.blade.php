@@ -46,7 +46,7 @@
                                         <button class="btn btn-success btn-sm edit-question" id="{{$question->id}}"><i
                                                 class="d-inline-flex align-middle ti-pencil ml-1"></i>ویرایش
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-sm delete-question"
+                                        <button type="button" class="btn btn-danger btn-sm delete-user"
                                                 id="{{$question->id}}"><i
                                                 class="d-inline-flex align-middle ti-close"></i></button>
                                         <form method="post"

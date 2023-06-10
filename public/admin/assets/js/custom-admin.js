@@ -816,50 +816,7 @@ $(document).ready(function () {
         });
     });
 
-    function deleteQuestion(id) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            'url': 'admin/dashboard/question/' + id,
-            'type': 'DELETE',
-            'dataType': 'json',
-            beforeSend: function () {
-                $('.preloader').fadeIn();
-            },
-            complete: function () {
-                $('.preloader').fadeOut();
-            },
-            success: function (response) {
-                if (!$.isEmptyObject(response.questionError)) {
-                    $.toast({
-                        heading: 'خطا!',
-                        text: 'ورودی های خود را بررسی کنید',
-                        position: 'bottom-left',
-                        textAlign: 'right',
-                        loaderBg: '#ff6849',
-                        icon: 'error',
-                        hideAfter: 3500
-                    });
 
-                } else if (response.question == 'deleted') {
-                    $('.edit-question[id="' + id + '"]').parents('tr').fadeOut();
-                    $.toast({
-                        heading: 'موفقیت!',
-                        text: 'اطلاعات حذف شد',
-                        position: 'bottom-left',
-                        textAlign: 'right',
-                        loaderBg: '#ff6849',
-                        icon: 'success',
-                        hideAfter: 3500
-                    });
-
-                }
-            }
-        });
-    }
     //======================== Filters Todos ===========================================================================
     $(document).on('click', '#filterTodos', function () {
         var from_date = $('input[name=from_date]').val();

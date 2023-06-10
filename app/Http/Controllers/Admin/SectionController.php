@@ -177,6 +177,8 @@ class SectionController extends Controller
     {
         $challenge = Section::findOrFail($id);
         $this->readMFNotification($challenge->user_id, 'challenge', $challenge->id);
+        $challenge->replies()->delete();
+        $challenge->questions()->delete();
         $challenge->delete();
         return redirect()->back()->with('delete', 'success');
     }

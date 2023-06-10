@@ -1,6 +1,6 @@
 @switch($section->status)
     @case(0)
-    <span class="badge badge-pill badge-info">معلق</span>
+    <span class="badge badge-pill badge-info">در انتظار تعریف آزمون</span>
     @break
     @case(1)
 
