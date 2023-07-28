@@ -88,7 +88,7 @@
                     <a class="navbar-brand sticky_logo" href="{{route('home')}}">
                         <img
                             src="{{isset($setting) && $setting->first_logo!=null ? $setting->first_logo : asset('admin/assets/images/logo-light-text.png')}}"
-                            alt="{{!isset($setting) ? '' : $setting->brand}}"/>
+                            alt="{{!isset($setting) ? '' : $setting->brand}}" width="100"/>
                     </a>
                     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

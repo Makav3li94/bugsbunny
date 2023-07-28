@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <h4 class="card-title">تنظیمات پیامک</h4>
                     <p class="card-subtitle">در اینجا میتوانید نام کاربری و رمز عبور سرویس های پیامکی را اختصاص دهید.</p>
-                    <form class="clearfix" action="{{route('admin.sms.setting.updateOrCreate')}}" method="post">
+                    <form class="clearfix" id="main" action="{{route('admin.sms.setting.updateOrCreate')}}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
@@ -120,7 +120,7 @@
                             <div class="col-12">
                                 <div class="form-group m-b-0">
                                     <div class="float-left">
-                                        <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">
+                                        <button type="button" class="btn btn-success btn-rounded waves-effect waves-light delete-main">
                                             ذخیره
                                         </button>
                                     </div>

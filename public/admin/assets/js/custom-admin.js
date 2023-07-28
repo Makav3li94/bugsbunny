@@ -613,6 +613,21 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on('click', '.delete-main', function () {
+        var id = $(this).attr('id');
+        swal({
+            title: "اخطار بسیار مهم !!",
+            text: "تغییر این موارد بدون هماهنگی باعث اختلال در سایت می گردد.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "بله",
+            cancelButtonText: "خیر",
+            closeOnConfirm: false
+        }, function () {
+            $('#main').submit();
+        });
+    });
     //======================== Deletes Admin ===========================================================================
     $(document).on('click', '.delete-admin', function () {
         var id = $(this).attr('id');

@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <h4 class="card-title">تنظیمات</h4>
                     <p class="card-subtitle">تنظیمات سایت را تکمیل نمایید.</p>
-                    <form class="clearfix" action="{{route('admin.settings.updateOrCreate')}}" method="post"
+                    <form class="clearfix" id="main" action="{{route('admin.settings.updateOrCreate')}}" method="post"
                           enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -168,8 +168,8 @@
                             <div class="col-12">
                                 <div class="form-group m-b-0">
                                     <div class="btn-group float-left" role="group">
-                                        <button type="submit"
-                                                class="btn btn-success btn-rounded waves-effect waves-light">ثبت و ذخیره
+                                        <button type="button"
+                                                class="btn btn-success btn-rounded waves-effect waves-light delete-main">ثبت و ذخیره
                                         </button>
                                     </div>
                                 </div>

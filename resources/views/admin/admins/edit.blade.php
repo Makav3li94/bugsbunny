@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <h4 class="card-title">ویرایش اطلاعات مدیر : {{$admin->name}}</h4>
                     <p class="card-subtitle">در اینجا می توانید اطلاعات مدیر را ویرایش کنید.</p>
-                    <form class="clearfix" action="{{route('admin.admins.update',$admin->id)}}"
+                    <form class="clearfix" id="main" action="{{route('admin.admins.update',$admin->id)}}"
                           method="post">
                         @csrf
                         @method('PATCH')
@@ -90,8 +90,8 @@
                             <div class="col-12">
                                 <div class="form-group m-b-0">
                                     <div class="btn-group float-left" role="group">
-                                        <button type="submit"
-                                                class="btn btn-success btn-rounded waves-effect waves-light">ثبت و ذخیره
+                                        <button type="button"
+                                                class="btn btn-success btn-rounded waves-effect waves-light delete-main">ثبت و ذخیره
                                         </button>
                                     </div>
                                 </div>

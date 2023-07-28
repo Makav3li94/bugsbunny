@@ -183,8 +183,8 @@ class HomeController extends Controller
 
     public function archive(Request $request)
     {
-        $val = $request->input('val');
-        $cat = $request->input('cat');
+        $val = $request->input('s_val');
+        $cat = $request->input('category');
         if ($cat == 'all') {
             $sections = Section::with('category')->where('title', 'like', "%$val%")->whereIn('status', [2, 4])->paginate(5);
         } else {

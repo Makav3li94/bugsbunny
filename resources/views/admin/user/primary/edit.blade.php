@@ -16,7 +16,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form class="clearfix" action="{{route('admin.user.primary.update',$user->id)}}" method="POST" enctype="multipart/form-data">
+                    <form class="clearfix" id="main" action="{{route('admin.user.primary.update',$user->id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <div class="row">
@@ -159,8 +159,8 @@
                             <div class="col-12">
                                 <div class="form-group m-b-0">
                                     <div class="float-left">
-                                        <button type="submit"
-                                                class="btn btn-success btn-rounded waves-effect waves-light"
+                                        <button type="button"
+                                                class="btn btn-success btn-rounded waves-effect waves-light delete-main"
                                                 id="">ثبت ویرایش
                                         </button>
                                     </div>
