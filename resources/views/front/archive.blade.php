@@ -31,7 +31,7 @@
                                             <img src="{{asset('admin/assets/images/2.png')}}" width="50" alt="cmm">
                                         @else
                                             <img
-                                                src="@if($section->user->avatar!="" || $section->user->avatar !=null ) {{asset('images/user/'.$section->user->avatar) }}@else {{asset('front/img/home_one/1.png')}} @endif"
+                                                src="@if($section->user->avatar!="" || $section->user->avatar !=null ) {{asset('/storage2/user/avatar/' . $section->user->avatar)}}@else {{asset('front/img/home_one/1.png')}} @endif"
                                                 width="50"
                                                 alt="cmm">
                                         @endif

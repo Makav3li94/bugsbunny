@@ -25,18 +25,6 @@ trait Helpers
         Notification::send($users, new AdminNotifications($details));
     }
 
-    public function storeFile($file, $title, $file_title_id = null, $path = null)
-    {
-
-        $fc = $this->FileUploader($file, $path);
-        $file = File::create([
-            'user_id' => auth()->id(),
-            'file_title_id' => $file_title_id,
-            'title' => $title,
-            'file' => $fc,
-        ]);
-        return $file->id;
-    }
 
     protected function FileUploader($file, $path)
     {

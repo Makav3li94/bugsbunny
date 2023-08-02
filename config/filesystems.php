@@ -40,6 +40,10 @@ return [
     | Supported Drivers: "local", "ftp", "sftp", "s3", "rackspace"
     |
     */
+    'links' => [
+        public_path('storage') => storage_path('app/public'),
+        public_path('storage2') =>  __DIR__ . '/../../uploads',
+    ],
 
     'disks' => [
 
@@ -54,7 +58,11 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-
+        'public2' => [
+            'driver' => 'local',
+            'root' => __DIR__ . '/../../uploads',
+            'visibility' => 'public',
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

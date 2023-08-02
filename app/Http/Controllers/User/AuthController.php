@@ -120,7 +120,7 @@ class AuthController extends Controller
                             'bulk_id' => $bulk['VerificationCodeId'],
                             'status' => 0
                         ]);
-                        return response()->json(['code' => 'sent', 'bulk' => $bulk, 'mobile' => $mobile]);
+                        return response()->json(['code' => 'sent', 'mobile' => $mobile]);
                     }
                 }
 
@@ -143,7 +143,7 @@ class AuthController extends Controller
         } else {
             $mobile = $request->input('mobile');
             $code = $request->input('code');
-            $preRegisterCount = PreRegister::where([['mobile', $mobile], ['code', $code]])->get()->count();
+            $preRegisterCount = PreRegister::where([['mobile', $mobile], ['code', $code],['times','<=',2]])->get()->count();
             if ($preRegisterCount > 0) {
 
                 PreRegister::where([['mobile', $mobile], ['code', $code]])->delete();
@@ -161,6 +161,8 @@ class AuthController extends Controller
                     return response()->json(['code' => 'correct', 'id' => $user->id]);
                 }
             } else {
+                $preRegister = PreRegister::where([['mobile', $mobile], ['code', $code]])->first();
+                $preRegister->increment('times');
                 return response()->json(['verificationError' => 'incorrectCode']);
             }
         }
@@ -220,12 +222,11 @@ class AuthController extends Controller
                     'cats' => 'required',
                 ]);
             }
-            $password = Hash::make($request['password']);
-
+            $password = $this->passHasher($request['password']);
 
             if (request()->hasFile('avatar')) {
                 $avatar = time() . '.' . request()->avatar->getClientOriginalExtension();
-                request()->avatar->move(public_path('images/user/'), $avatar);
+                request()->avatar->move(public_path('storage2/user/avatar/'), $avatar);
             } else
                 $avatar = null;
             $setting = Setting::all()->first();
@@ -248,6 +249,8 @@ class AuthController extends Controller
                 'authStatus' => 0,
                 'is_primary' => "1"
             ]);
+            DB::table('pre_registers')->where('mobile', $user->mobile)
+                ->delete();
             Auth::login($user);
             event(new Registered($user));
             $this->notifyAdmin($user->id, $user->name, $user->mobile, 'register', $user->id, 0, 'کاربر ثبت نام کرد.');
@@ -289,21 +292,22 @@ class AuthController extends Controller
         if ($field == 'mobile') {
             $user = User::where([['mobile', $username], ['is_primary', '1']])->orWhere('email', $username)->get()->first();
             $smsSetting = SmsSetting::first();
+
             if ($user->mobile === $username) {
-                $randomDigits = rand(100000, 999999);
+                $mobile = $user->mobile;
+                $token = $this->randomDigits();
+                $this->preRegister($token, $username);
                 $bulk = $this->sendFastSmsMokhaberat($username, $smsSetting->p_password,
-                    ["NewPass" => $randomDigits]);
+                    ["NewPass" => $token]);
                 if ($bulk != null) {
                     Sms::create([
                         'sms_sender_id' => 1,
-                        'description' => 'ثبت نام',
+                        'description' => 'تغییر رمز عبور',
                         'bulk_id' => $bulk['VerificationCodeId'],
                         'status' => 0
                     ]);
                 }
-                $newPassword = Hash::make($randomDigits);
-                $user->update(['password' => $newPassword]);
-                return redirect(route('login'))->with(['resetPass' => 'sent']);
+                return view('auth.passwords.restePassForm', compact('mobile'));
             } else {
                 return back()->withInput()->with(['date' => 'incorrect', 'reset' => 'error']);
             }
@@ -325,42 +329,83 @@ class AuthController extends Controller
         return view('auth.passwords.reset', compact('token', 'email'));
     }
 
+    public function resetPassForm(Request $request)
+    {
+        $token = $request->token;
+        $mobile = $request->username;
+        return view('auth.passwords.restePassForm', compact('token', 'mobile'));
+    }
+
     protected function resetPassword(Request $request)
     {
         //Validate input
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|confirmed',
-            'token' => 'required']);
-        if ($validator->fails()) {
-            return back()->withErrors($validator->errors())->withInput();
-        }
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->setRememberToken(Str::random(60));
-
-                $user->save();
-                Auth::login($user);
-
-                //Delete the token
-                DB::table('password_resets')->where('email', $user->email)
-                    ->delete();
-                return redirect()->route('user.dashboard');
+        if (isset($request->email)) {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email|exists:users,email',
+                'password' => 'required|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|min:8',
+                'token' => 'required']);
+            if ($validator->fails()) {
+                return back()->withErrors($validator->errors())->withInput();
             }
-        );
+            $status = Password::reset(
+                $request->only('email', 'password', 'password_confirmation', 'token'),
+                function ($user, $password) {
+                    $user->forceFill([
+                        'password' => $this->passHasher($password, $user)
+                    ])->setRememberToken(Str::random(60));
 
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with(['resetPass' => 'sent'])
-            : back()->withErrors(['email' => [__($status)]]);
+                    $user->save();
+                    Auth::login($user);
+
+                    //Delete the token
+                    DB::table('password_resets')->where('email', $user->email)
+                        ->delete();
+                    return redirect()->route('user.dashboard')->with(['login' => 'success']);
+                }
+            );
+
+            return $status === Password::PASSWORD_RESET
+                ? redirect()->route('login')->with(['resetPass' => 'sent'])
+                : back()->withErrors(['email' => [__($status)]]);
+        } else {
 
 
+            $mobile = $request->input('mobile');
+            $code = $request->input('token');
+            $preRegisterCount = PreRegister::where([['mobile', $mobile], ['code', $code],['times','<=',2]])->get()->count();
+
+            if ($preRegisterCount > 0) {
+                $validator = Validator::make($request->all(), [
+                    'mobile' => 'required|exists:users,mobile',
+                    'password' => 'required|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|min:8',
+                    'token' => 'required|numeric|digits:4']);
+                if ($validator->fails()) {
+                    $preRegister = PreRegister::where([['mobile', $mobile], ['code', $code]])->first();
+                    $preRegister->increment('times');
+                    return back()->withErrors($validator->errors())->withInput($request->all());
+                }
+                PreRegister::where([['mobile', $mobile], ['code', $code]])->delete();
+                $user = User::whereMobile($mobile)->first();
+                if ($user) {
+                    $user->forceFill([
+                        'password' => $this->passHasher($request->password, $user)
+                    ])->setRememberToken(Str::random(60));
+
+                    $user->save();
+                    Auth::login($user);
+
+                    //Delete the token
+                    DB::table('pre_registers')->where('mobile', $user->mobile)
+                        ->delete();
+                    return redirect()->route('user.dashboard')->with(['login' => 'success']);
+                }
+            } else {
+                return back()->withErrors(["token" => "توکن یا اشتباه است یا منقضی شده است."])->withInput($request->all());
+            }
+        }
     }
 
-    protected
-    function resendSms(Request $request)
+    protected function resendSms(Request $request)
     {
         if ($request->ajax()) {
             $mobile = $request->input('mobile');
@@ -385,6 +430,27 @@ class AuthController extends Controller
             }
 
         }
+    }
+
+    /**
+     * @param $password1
+     * @return false|string
+     */
+    private function passHasher($password1, $user = null): string|false
+    {
+        if ($user == null) {
+            if (User::withTrashed()->orderBy('id', 'desc')->count() == 0) {
+                $peper = 1;
+            } else {
+                $peper = User::withTrashed()->orderBy('id', 'desc')->first()->id + 1;
+            }
+        } else {
+            $peper = $user->id + 1;
+        }
+        $salt = md5($peper * 2020 + 22);
+        $password = \hash('sha512', $salt . $password1);
+//        dd($peper . " - " .$salt. " - " .$password);
+        return $password;
     }
 
 }

@@ -54,13 +54,15 @@ class PrimaryUserController extends Controller
 
         if ($request->hasFile('avatar')) {
             if ($user->avatar != null) {
-                $userAvatar = public_path("images/user/{$user->avatar}"); // get previous image from folder
+                $userAvatar = public_path("storage2/user/avatar/{$user->avatar}"); // get previous image from folder
                 if (File::exists($userAvatar)) { // unlink or remove previous image from folder
                     unlink($userAvatar);
                 }
             }
+//            $avatar = time() . '.' . request()->avatar->getClientOriginalExtension();
+//            request()->avatar->move(public_path('images/user/'), $avatar);
             $avatar = time() . '.' . request()->avatar->getClientOriginalExtension();
-            request()->avatar->move(public_path('images/user/'), $avatar);
+            request()->avatar->move(public_path('storage2/user/avatar/'), $avatar);
         } else
             $avatar = $user->avatar;
 

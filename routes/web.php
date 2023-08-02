@@ -192,6 +192,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::post('register', 'Auth\RegisterController@register')->name('post.register');
 // User Password Reset Routes...
 Route::post('password/reset', 'User\AuthController@reset')->name('mpassword.reset')->middleware('checkRandom');
+Route::get('password/reset', 'User\AuthController@resetPassForm');
 Route::get('pass/resetForm', 'User\AuthController@resetForm')->name('password.reset');
 Route::post('pass/update', 'User\AuthController@resetPassword')->name('password.update');
 
@@ -279,3 +280,8 @@ Route::get('search', 'Front\HomeController@search');
 Route::get('archive', 'Front\HomeController@archive')->name('archive');
 // Front Pages !
 Route::get('page/{slug}', 'Front\HomeController@show')->name('page');
+
+
+Route::get('test', function (){
+
+});

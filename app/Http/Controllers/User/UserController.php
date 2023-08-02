@@ -21,7 +21,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
-
+use Illuminate\Support\Facades\Validator;
 
 
 class UserController extends Controller
@@ -67,18 +67,20 @@ class UserController extends Controller
     protected function update(Request $request, User $user)
     {
         $familiaritiesCount = Familiarity::all()->count();
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/',
             'mobile' => "required|numeric",
             'email' => "nullable|email|string",
-            'password' => 'nullable|string|min:6',
+            'password' => 'nullable|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|min:8',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:512',
             'familiarity' => 'nullable|numeric|integer|min:1|max:' . $familiaritiesCount,
             'birthDate' => 'required',
             'cats' => 'required',
         ]);
-
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->with('for','user_update');
+        }
         $birthDate = $this->convertToGoregianDate($request->input('birthDate'));
         $password = $request->input('password');
 
@@ -101,19 +103,25 @@ class UserController extends Controller
             ]);
         } else {
             //Updates User With Password
-            $password = Hash::make($password);
-            $user->update([
-                'name' => $request['name'],
-                'mobile' => $request['mobile'],
-                'email' => $request['email'],
-                'familiarity_id' => $request['familiarity'],
-                'birthDate' => $birthDate,
-                'password' => $password,
-                'username' => $request['username'],
-                'avatar' => $avatar,
-                'cats' => json_encode($request->cats),
-                'authStatus' => $status,
-            ]);
+            $hash = $this->hashCheck($user, $request);
+            if (\hash_equals($user->getAuthPassword(), $hash)){
+                $password = $this->passHasher($user->id,$password);
+                $user->update([
+                    'name' => $request['name'],
+                    'mobile' => $request['mobile'],
+                    'email' => $request['email'],
+                    'familiarity_id' => $request['familiarity'],
+                    'birthDate' => $birthDate,
+                    'password' => $password,
+                    'username' => $request['username'],
+                    'avatar' => $avatar,
+                    'cats' => json_encode($request->cats),
+                    'authStatus' => $status,
+                ]);
+            }else{
+                return back()->withErrors(["old_password" => "رمز عبور قبلی شما درست نیست."])->withInput()->with('for','user_update');
+            }
+
         }
         if ($status == 0) $this->notifyAdmin($user->id, $user->name, $user->mobile, 'profileChange', $user->id, 0, 'کاربر پروفایل خود را آپدیت کرد.');
         return back()->with('update', 'success')->with('crud', 'user_update');
@@ -134,17 +142,39 @@ class UserController extends Controller
         }
         if ($request->hasFile('avatar')) {
             if ($user->avatar != null) {
-                $userAvatar = public_path("images/user/{$user->avatar}"); // get previous image from folder
+                $userAvatar = public_path("storage2/user/avatar/{$user->avatar}"); // get previous image from folder
                 if (File::exists($userAvatar)) { // unlink or remove previous image from folder
                     unlink($userAvatar);
                 }
             }
+//            $avatar = time() . '.' . request()->avatar->getClientOriginalExtension();
+//            request()->avatar->move(public_path('images/user/'), $avatar);
             $avatar = time() . '.' . request()->avatar->getClientOriginalExtension();
-            request()->avatar->move(public_path('images/user/'), $avatar);
+            request()->avatar->move(public_path('storage2/user/avatar/'), $avatar);
             $status = 0;
         } else
             $avatar = $user->avatar;
         return array($status, $avatar);
+    }
+
+    private function passHasher($id,$password1): string|false
+    {
+        $salt = md5(($id + 1) * 2020 + 22);
+        $password = \hash('sha512', $salt . $password1);
+        return $password;
+    }
+
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return false|string
+     */
+    private function hashCheck(User $user, Request $request): string|false
+    {
+
+        $salt = md5(($user->id + 1) * 2020 + 22);
+        $hash = \hash('sha512', $salt . $request->old_password);
+        return $hash;
     }
 
 }

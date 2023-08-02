@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use App\Traits\Helpers;
-use function App\Helpers\fileUploader;
 use App\Models\Faq;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -22,11 +21,9 @@ class FaqController extends Controller
                 'question' => 'required',
                 'file' => 'nullable|file|max:5000|mimes:jpg,jpeg,png,pdf,docx,doc,zip,rar'
             ]);
-            if ($request->file('file')) {
-                $file = fileUploader($request->file('file'), '/uploads/tickets/user/');
-            } else {
+
                 $file = null;
-            }
+
             $faq = Faq::create([
                 'ticket_id' => $ticket->id,
                 'user_file' => $file,

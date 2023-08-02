@@ -42,9 +42,9 @@
                             @endif
                         </div>
                         <div class="col-lg-6 form-group">
-                            <h6>کپچا</h6>
-                            <input class="form-control text-center" type="text" required       style="direction: rtl"
-                                   placeholder="{{$array[2].' '.$array[1].' '.$array[0]}} برابر با چه عددی است؟ "
+                            @include('layouts.components.captcha')
+                            <input class="form-control text-center" type="text" required  style="direction: rtl"
+                                   placeholder="پاسخ را به صورت عدد وارد کنید." autocomplete="off"
                                    name="result">
                             @if(session()->get('result')=='incorrect')
                                 <small class="invalid-text">حاصل عبارت فوق نادرست می باشد</small>

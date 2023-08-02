@@ -581,6 +581,9 @@
     @if(session()->get('for')=='ticket' )
     activaTab('add_ticket');
     @endif
+    @if(session()->get('for')=='user_update' )
+    activaTab('profile');
+    @endif
     @if(session()->get('crud')=='ticket_store' )
     activaTab('ticket');
     @endif

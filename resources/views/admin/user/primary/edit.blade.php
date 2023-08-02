@@ -134,9 +134,12 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
+
                                     <label>رمز عبور جدید </label>
                                     <input type="password" class="form-control" placeholder=""
                                            value="" name="password">
+                                    <small class="invalid-text" style="font-size: 12px">(حداقل 8 کارکتر دارای حرف کوچک، حرف
+                                        بزرگ، یک عدد، یک کارکتر خاص باشد)</small>
                                     @if($errors->has('password'))
                                         <small class="invalid-text">{{$errors->first('password')}}</small>
                                     @endif

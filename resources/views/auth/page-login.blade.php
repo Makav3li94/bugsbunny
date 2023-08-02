@@ -32,7 +32,7 @@
                         </div>
                         <div class="col-sm-12 form-group">
                             <label>نام کاربری<span class="text-danger mr-1">*</span></label>
-                            <input type="text" class="form-control" placeholder=""
+                            <input type="text" class="form-control" placeholder=""  autocomplete="off"
                                    value="{{old('username')}}" name="username" required>
                             @if($errors->has('username'))
                                 <small class="invalid-text">{{$errors->first('username')}}</small>
@@ -114,16 +114,17 @@
                             @endif
                         </div>
                         <div class="col-sm-12 form-group">
-                            <small class="invalid-text">(حداقل 8 رقم با حرف uppercase و شامل !@#$% و عدد  باشد.)</small>
+                            <small class="invalid-text" style="font-size: 12px">(حداقل 8 کارکتر دارای حرف کوچک، حرف
+                                بزرگ، یک عدد، یک کارکتر خاص باشد)</small>
                             <label>رمز عبور</label>
-                            <input dir="ltr" type="password" class="form-control text-left" value="" name="password" required>
+                            <input dir="ltr" type="password"  autocomplete="off" class="form-control text-left" value="" name="password" required>
                             @if($errors->has('password'))
                                 <small class="invalid-text">{{$errors->first('password')}}</small>
                             @endif
                         </div>
                         <div class="col-sm-12 form-group">
                             <label>تایید رمز عبور</label>
-                            <input dir="ltr" type="password" class="form-control text-left" value="" name="password_confirmation" required>
+                            <input dir="ltr" type="password"  autocomplete="off" class="form-control text-left" value="" name="password_confirmation" required>
                             @if($errors->has('password_confirmation'))
                                 <small class="invalid-text">{{$errors->first('password_confirmation')}}</small>
                             @endif

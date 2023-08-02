@@ -32,8 +32,9 @@
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12 text-center">
+                                @include('layouts.components.captcha')
                                 <input class="form-control text-center" type="text" required
-                                       placeholder="{{$array[2].' '.$array[1].' '.$array[0]}} برابر با چه عددی است؟ "
+                                       placeholder="پاسخ را به صورت عدد وارد کنید."
                                        name="result">
                                 @if(session()->get('result')=='incorrect')
                                     <small class="invalid-text">حاصل عبارت فوق نادرست می باشد</small>

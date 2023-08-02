@@ -126,10 +126,13 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
+
                                     <label>رمز عبور</label>
                                     <input dir="ltr" type="text" class="form-control text-left"
                                            placeholder="پیش فرض : شماره همراه"
                                            value="" name="password">
+                                    <small class="invalid-text" style="font-size: 12px">(حداقل 8 کارکتر دارای حرف کوچک، حرف
+                                        بزرگ، یک عدد، یک کارکتر خاص باشد)</small>
                                     @if($errors->has('password'))
                                         <small class="invalid-text">{{$errors->first('password')}}</small>
                                     @endif

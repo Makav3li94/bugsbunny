@@ -20,7 +20,7 @@ class ProfileController extends Controller
                 'name' => 'required',
                 'email' => "required|email|unique:admins,email,{$admin->id}",
                 'mobile' => "required|regex:/09[0-9]{9}/|unique:admins,mobile,{$admin->id}",
-                'password' => 'nullable|min:6|confirmed'
+                'password' => 'nullable|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|min:8'
             ]);
             if ($request['password'] != null) {
                 $password = bcrypt($request['password']);

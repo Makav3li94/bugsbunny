@@ -33,12 +33,19 @@
                         </div>
 
                         <div class="col-sm-12 form-group">
+                            <canvas hidden id="myCanvas" width="100" height="30" style="border:1px solid #d3d3d3;">
+                            </canvas>
+
+                            <div id="CanvasContainer" style="display: inline-block">
+
+                            </div>
+                            @include('layouts.components.captcha')
                             <div id="registerResultWrapper">
                                 <input class="form-control text-center"
                                        style="direction: rtl;text-align: center"
                                        type="text"
                                        required=""
-                                       placeholder="{{$array[2].' '.$array[1].' '.$array[0]}} برابر با چه عددی است؟ "
+                                       placeholder="پاسخ به صورت عدد وارد شود."
                                        name="result">
                                 <input type="hidden" name="a" value="{{$array[0]}}">
                                 <input type="hidden" name="operator" value="{{$array[1]}}">

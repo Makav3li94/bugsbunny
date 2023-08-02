@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use App\Models\User;
 use App\Traits\Randomable;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -57,15 +58,46 @@ class LoginController extends Controller
         ]);
     }
 
+
+    protected function attemptLogin(Request $request)
+    {
+
+
+        if ($this->username() == 'mobile') {
+            $user = User::where('mobile', $request->username)->first();
+
+        } elseif ($this->username() == 'email') {
+            $user = User::where('email', $request->username)->first();
+        } else {
+            $user = User::where('username', $request->username)->first();
+        }
+
+
+        if ($user) {
+            $salt = md5(($user->id + 1) * 2020 + 22);
+
+            $hash = \hash('sha512', $salt . $request->password);
+            if (\hash_equals($user->getAuthPassword(), $hash)){
+
+                $this->guard()->login($user, $request->has('remember'));
+                return true;
+            }
+
+        }
+
+
+        return false;
+    }
+
     public function username()
     {
         $login = request()->input('username');
 
-        if(is_numeric($login)){
+        if (is_numeric($login)) {
             $field = 'mobile';
         } elseif (filter_var($login, FILTER_VALIDATE_EMAIL)) {
             $field = 'email';
-        }else{
+        } else {
             $field = 'username';
         }
 

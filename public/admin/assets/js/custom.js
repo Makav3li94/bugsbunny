@@ -512,6 +512,25 @@ $(document).ready(function () {
             }
         });
     });
+    function drawHelloWorld(canvas,op) {
+
+        const ctx = canvas.getContext("2d");
+        // Draw the background
+        ctx.rect(0, 0, 100, 30);
+        ctx.fillStyle = "#17a2b8";
+        ctx.fill();
+
+        // Draw the text
+        ctx.font = "20px Helvetica";
+        ctx.fillStyle = "ghostwhite";
+        ctx.fillText(op, 30, 20);
+
+        const imgElement = document.createElement('img');
+        imgElement.src = canvas.toDataURL('image/jpeg');
+        document.getElementById('CanvasContainer').innerHTML = ''
+        $("#dont_show").hide()
+        document.getElementById('CanvasContainer').appendChild(imgElement);
+    }
     $('#toRegister').on("click", function () {
         var mobile = $('#registerForm input[name=mobile]').val();
         var result = $('#registerForm input[name=result]').val();
@@ -542,8 +561,16 @@ $(document).ready(function () {
                     var a = response.array[0].toString();
                     var b = response.array[2].toString();
                     var operator = response.array[1].toString();
-                    var placeholder = b + ' ' + operator + ' ' + a + ' ' + 'برابر با چه عددی است؟';
-                    $('input[name=result]').attr('placeholder', placeholder);
+                    var placeholder = a + ' ' + operator + ' ' + b ;
+
+                    const canvas = document.getElementById('myCanvas');
+                    drawHelloWorld(canvas,placeholder);
+
+
+
+                    // Make canvas to data URI
+
+                    // $('input[name=result]').attr('placeholder', placeholder);
                     if (response.registerError == 'userAlreadyExists') {
                         $('#toRegisterError').text('کاربری با این شماره از قبل ثبت نام شده است');
                     } else if (!$.isEmptyObject(response.registerError.mobile)) {
@@ -559,8 +586,12 @@ $(document).ready(function () {
                     var a = response.array[0].toString();
                     var b = response.array[2].toString();
                     var operator = response.array[1].toString();
-                    var placeholder = b + ' ' + operator + ' ' + a + ' ' + 'برابر با چه عددی است؟';
-                    $('input[name=result]').attr('placeholder', placeholder);
+                    var placeholder = a + ' ' + operator + ' ' + b ;
+                    // $('input[name=result]').attr('placeholder', placeholder);
+
+                    const canvas = document.getElementById('myCanvas');
+                    drawHelloWorld(canvas,placeholder);
+
                 } else if (response.sms == 'error') {
                     $('input[name=a]').val(response.array[0]);
                     $('input[name=b]').val(response.array[2]);
@@ -568,8 +599,11 @@ $(document).ready(function () {
                     var a = response.array[0].toString();
                     var b = response.array[2].toString();
                     var operator = response.array[1].toString();
-                    var placeholder = b + ' ' + operator + ' ' + a + ' ' + 'برابر با چه عددی است؟';
-                    $('input[name=result]').attr('placeholder', placeholder);
+                    var placeholder = a + ' ' + operator + ' ' + b ;
+                    // $('input[name=result]').attr('placeholder', placeholder);
+                    const canvas = document.getElementById('myCanvas');
+                    drawHelloWorld(canvas,placeholder);
+
                     swal({
                         title: "خطا!",
                         text: "در فرآیند ارسال پیامک مشکلی رخ داده است ، لطفا چند دقیقه دیگر مجددا تلاش کنید.",

@@ -61,7 +61,7 @@
     <script>
         $.toast({
             heading: 'موفقیت!'
-            , text: 'رمز عبور جدید ارسال شد.'
+            , text: 'توکن تغییر رمز ارسال شد.'
             , position: 'bottom-left'
             , textAlign: 'right'
             , loaderBg: '#03a9f3'

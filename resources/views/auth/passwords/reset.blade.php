@@ -32,7 +32,8 @@
                             </div>
 
                         <div class="col-lg-12 form-group">
-
+                            <small class="invalid-text" style="font-size: 12px">(حداقل 8 کارکتر دارای حرف کوچک، حرف
+                                بزرگ، یک عدد، یک کارکتر خاص باشد)</small>
                                 <input id="password" type="password" placeholder="رمز عبور جدید" class="form-control text-center @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                                 @error('password')

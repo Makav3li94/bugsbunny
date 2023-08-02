@@ -143,7 +143,7 @@ class AdminController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:admins,email',
             'mobile' => 'required|numeric|regex:/09[0-9]{9}/|unique:admins,mobile',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|min:8'
         ]);
 
         $admin = Admin::create([
@@ -173,7 +173,7 @@ class AdminController extends Controller
             'name' => 'required',
             'email' => "required|email|unique:admins,email,{$admin->id}",
             'mobile' => "required|numeric|regex:/09[0-9]{9}/|unique:admins,mobile,{$admin->id}",
-            'password' => 'nullable|min:6|confirmed'
+            'password' => 'nullable|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|min:8'
         ]);
         if ($request['password'] != null) {
 

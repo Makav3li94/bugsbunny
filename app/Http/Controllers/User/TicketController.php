@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use function App\Helpers\fileUploader;
+
 
 /**
  * @method fileUploader($file, string $string)
@@ -46,11 +46,9 @@ class TicketController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->with('for','ticket');
         }
-        if ($request->file('file')) {
-            $file = fileUploader($request->file('file'), '/uploads/tickets/user/');
-        } else {
+
             $file = null;
-        }
+
         $user  = User::find(auth()->id());
         $ticket = Ticket::create([
             'user_id' => $user->id,

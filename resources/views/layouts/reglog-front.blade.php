@@ -67,6 +67,7 @@
 <script src="{{asset('admin/assets/node_modules/persian-datepicker/persian-datepicker.min.js')}}"></script>
 <script src="{{ asset('admin/assets/node_modules/bootstrap4-toggle-master/js/bootstrap4-toggle.min.js')}}"></script>
 <script src="{{asset('front/assets/wow/wow.min.js')}}"></script>
+<script src="{{asset('front/assets/canvas/html2canvas.js')}}"></script>
 <!-- Count Down js -->
 <script src="{{asset('admin/assets/node_modules/countdown/jquery.countdown.min.js')}}"></script>
 <script>

@@ -13,6 +13,7 @@ class CreatePreRegistersTable extends Migration
             $table->id();
             $table->string('mobile',11)->comment('It should be unique but must handled in validation not here in migration because of soft delete feature');
             $table->integer('code')->comment('4 characters length string sent to user mobile phone before leading to essential information page');
+            $table->tinyText('times')->default(0)->nullable();
             $table->timestamps();
             $table->engine = 'InnoDB';
         });

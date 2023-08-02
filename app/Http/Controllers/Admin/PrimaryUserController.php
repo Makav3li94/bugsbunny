@@ -45,7 +45,7 @@ class PrimaryUserController extends Controller
             'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/',
             'mobile' => 'required|numeric|unique:users,mobile,NULL,id,deleted_at,NULL',
             'email' => 'required|email|string|unique:users,email,NULL,id,deleted_at,NULL',
-            'password' => 'nullable|string|min:6',
+            'password' => 'required|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|min:8',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:512',
             'familiarity' => 'nullable|numeric|integer|min:1|max:' . $familiaritiesCount,
             'birthDate' => 'required',
@@ -105,7 +105,7 @@ class PrimaryUserController extends Controller
             'name' => 'required|string',
             'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/',
             'email' => "nullable|email|string",
-            'password' => 'nullable|string|min:6',
+            'password' => 'nullable|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|min:8',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:512',
             'familiarity' => 'nullable|numeric|integer|min:1|max:' . $familiaritiesCount,
             'birthDate' => 'required',
@@ -150,7 +150,7 @@ class PrimaryUserController extends Controller
             ]);
         } else {
             //Updates User With Password
-            $password = Hash::make($password);
+            $password = $this->passHasher($user->id,$password);
             $user->update([
                 'name' => $request['name'],
                 'mobile' => $request['mobile'],
@@ -201,5 +201,10 @@ class PrimaryUserController extends Controller
                     break;
             }
     }
-
+    private function passHasher($id,$password1): string|false
+    {
+        $salt = md5(($id + 1) * 2020 + 22);
+        $password = \hash('sha512', $salt . $password1);
+        return $password;
+    }
 }

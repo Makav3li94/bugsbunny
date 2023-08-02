@@ -26,7 +26,7 @@
                         <div class="col-md-3">
                             <div class="profile-img">
                                 <img
-                                    src="@if($user->avatar!="" || $user->avatar !=null ) {{asset('images/user/'.$user->avatar) }}@else {{asset('front/img/home_one/1.png')}} @endif"
+                                    src="@if($user->avatar!="" || $user->avatar !=null ){{asset('/storage2/user/avatar/' . $user->avatar)}} @else {{asset('front/img/home_one/1.png')}} @endif"
                                     width="100" alt=""/>
 
                             </div>
@@ -283,12 +283,27 @@
                                                     </div>
                                                 </div>
                                                 <hr>
+                                                <p class="mb-0"> در اینجا میتونید رمز عبور رو اپدیت کنید.</p>
+                                                <span class="invalid-text" style="color:#1eb1d0;">اگر نمیخواهید رمز خود را تغییر دهید، این قسمت را خالی بگذارید.</span>
+                                                <div class="row form-group mt-2">
+                                                    <label class="col-sm-3">رمز عبور حال حاضر </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="password" class="form-control" placeholder=""
+                                                               value="" name="old_password">
+
+
+                                                        @if($errors->has('old_password'))
+                                                            <small
+                                                                class="invalid-text">{{$errors->first('old_password')}}</small>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                                 <div class="row form-group">
                                                     <label class="col-sm-3">رمز عبور جدید </label>
                                                     <div class="col-sm-9">
                                                         <input type="password" class="form-control" placeholder=""
                                                                value="" name="password">
-                                                        <span class="invalid-text">اگر نمیخواهید رمز خود را تغییر دهید، این قسمت را خالی بگذارید.</span>
+
 
                                                         @if($errors->has('password'))
                                                             <small
