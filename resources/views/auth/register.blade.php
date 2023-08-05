@@ -20,11 +20,11 @@
                         <div class="col-sm-12 form-group">
                             <div id="registerInputWrapper">
                                 @if($setting->reg_type == 0 || $setting->reg_type == 2)
-                                    <input dir="ltr" class="form-control text-center" type="text" required=""
+                                    <input dir="ltr" class="form-control text-center" autocomplete="off" type="text" required=""
                                            placeholder="تلفن همراه"
                                            value="{{old('mobile')}}" name="mobile">
                                 @elseif($setting->reg_type == 1)
-                                    <input dir="ltr" class="form-control" type="text" required=""
+                                    <input dir="ltr" class="form-control" autocomplete="off" type="text" required=""
                                            placeholder="پست الکترونیک"
                                            value="{{old('mobile')}}" name="email">
                                 @endif

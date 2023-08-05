@@ -28,7 +28,7 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Arr;
 
-class HomeController extends Controller
+class  HomeController extends Controller
 {
     use Randomable;
 

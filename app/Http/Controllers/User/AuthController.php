@@ -307,7 +307,7 @@ class AuthController extends Controller
                         'status' => 0
                     ]);
                 }
-                return view('auth.passwords.restePassForm', compact('mobile'));
+                return view('auth.passwords.resetPassForm', compact('mobile'));
             } else {
                 return back()->withInput()->with(['date' => 'incorrect', 'reset' => 'error']);
             }
@@ -333,7 +333,7 @@ class AuthController extends Controller
     {
         $token = $request->token;
         $mobile = $request->username;
-        return view('auth.passwords.restePassForm', compact('token', 'mobile'));
+        return view('auth.passwords.resetPassForm', compact('token', 'mobile'));
     }
 
     protected function resetPassword(Request $request)

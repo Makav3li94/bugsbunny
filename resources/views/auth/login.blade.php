@@ -80,7 +80,7 @@
                         </div>
 
                         <div class="col-lg-12 form-group">
-                            <input dir="ltr" class="form-control text-center" type="text" required="" name="username"
+                            <input dir="ltr" class="form-control text-center" type="text" required="" autocomplete="off" name="username"
                                    placeholder="شماره یا ایمیل" value="{{old('username')}}">
                             @if($errors->has('username'))
                                 <small class="invalid-text">کاربری یا این اطلاعات یافت نشد</small>
